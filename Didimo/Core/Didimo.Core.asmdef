@@ -1,0 +1,23 @@
+{
+    "name": "Didimo.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:516274028df58d04d856b8dd0b6c1f4d",
+        "GUID:f620b241ece4c3d44b4b300894716741"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.live-capture",
+            "expression": "1.0.0",
+            "define": "USING_LIVE_CAPTURE"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: URP Shaders
+  m_Shaders:
+  - first: {fileID: -6465566751694194690, guid: f6ab9f5b6ddd73949867c73e60a52f46, type: 3}
+    second:
+      variants: []
+  - first: {fileID: -6465566751694194690, guid: 44c91b7e09ca249409e715cf8abb0b9d, type: 3}
+    second:
+      variants: []
