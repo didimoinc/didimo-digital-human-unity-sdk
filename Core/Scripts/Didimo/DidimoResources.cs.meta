@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: c2a7e177be35a564dab2590e91c124bc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - didimoConfig: {fileID: 11400000, guid: 04a969f451d3e724eaecc6b40b76c609, type: 2}
+  - expressionDatabase: {fileID: 11400000, guid: 7996e93326796a7479d63d0fcebb277d, type: 2}
+  - mocapDatabase: {fileID: 11400000, guid: 343572a60adf8f04d8b88a4db67d822b, type: 2}
+  - deformableDatabase: {fileID: 11400000, guid: 23ad53446de415140948036f9fab1cc7, type: 2}
+  - irisDatabase: {fileID: 11400000, guid: fe5619be571d7c644a5e09c67d092d52, type: 2}
+  - cameraConfig: {fileID: 11400000, guid: 9c2c1344d0eac044b8bc39c8878db51b, type: 2}
+  - shaderResources: {instanceID: 0}
+  - screenshotCamera: {instanceID: 0}
+  - screenshotOverlay: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

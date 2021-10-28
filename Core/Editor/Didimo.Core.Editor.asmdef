@@ -1,0 +1,33 @@
+{
+    "name": "Didimo.Core.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:95b459ff379a9424ea557aacf5fe885a",
+        "GUID:516274028df58d04d856b8dd0b6c1f4d",
+        "GUID:a04b887ce849ad54aadcd3cdc6ea089a",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:f620b241ece4c3d44b4b300894716741"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "USING_UNITY_URP"
+        },
+        {
+            "name": "com.unity.live-capture",
+            "expression": "1.0.0",
+            "define": "USING_LIVE_CAPTURE"
+        }
+    ],
+    "noEngineReferences": false
+}

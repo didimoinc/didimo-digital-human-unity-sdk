@@ -1,0 +1,20 @@
+{
+    "name": "Didimo.Mobile.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:95b459ff379a9424ea557aacf5fe885a",
+        "GUID:5a2491151132c744da2f588a4e241f32",
+        "GUID:753795d7bd603de4289ef1d632a72f22"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

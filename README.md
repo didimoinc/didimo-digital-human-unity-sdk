@@ -6,8 +6,7 @@ from a simple selfie, we call these didimos.
 Utilising this code library and tools, you can easily integrate digital humans into your existing software and enable
 your users to easily generate and load digital doubles of themselves directly into your experience, all at runtime.
 
-Detailed documentation can be read on our [Developer Portal](https://link.didimo.co/3Ckogna) and all you need to get up
-and running after download is included in this README.
+All you need to get up and running after download is included in this README.
 
 ---
 
@@ -15,7 +14,70 @@ Following your decision to download this repo - our goal is to make it as easy a
 building software. Your didimos can be imported into the project by simple drag-and-drop at edit time, or they can be
 loaded into the scene at runtime. No matter which approach you need, we've got you covered.
 
-## Key functionality
+## Pre-requisites
+
+This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 onwards).
+
+
+## Setup Process
+
+1. The `Didimo` folder in this repo MUST be placed at the root of your Unity projects `Assets` folder. The didimos will not 
+render if you don't do this.
+
+
+2. The Newtonsoft Json package is required. We recommend adding it this way:
+     
+   2.1 Open the Package Manager
+   
+   2.2 Click the `+` button, select `Add package from git URL...` 
+   
+   2.3 Enter `com.unity.nuget.newtonsoft-json` and press add.
+
+
+3. Install the package [Universal RP](https://link.didimo.co/3lw3NF5) through Unity's Package Manager and follow
+instructions in Configuration section
+
+4. Restart Unity
+
+5. Go to Project Settings → Graphics, and select `UniversalRP-HighQuality` as the render pipeline asset.
+
+6. Go to Project Settings → Quality, and select `UniversalRP-HighQuality` as the render pipeline asset, for your desired
+   quality level.
+
+7. Go to Project Settings → Player → Other Settings → Rendering. Set the colour space to linear.
+
+
+8. Open the `MeetADidimo` scene.
+
+9. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
+   Import TMP Essentials, which is required for the examples.
+
+10. You should now be able to press play and see the included talking didimos. If you do not, then Please
+   see [Known Import Issues](#Known-Import-Issues) and [Support](#Support).
+
+11. Its now possible to generate a new didimo via the didimo API directly from Unity. Simply [Create an account](https://developer.didimo.co/docs/creating-your-account) and then see [Generating a didimo](https://developer.didimo.co/docs/creating-a-didimo).
+
+
+---
+
+# SDK Contents
+
+This project contains a single folder, the `Didimo` folder. Within it, there are the following modules:
+
+* **Core** - Everything core to the SDK, including loading didimos where it handles animations, materials, speech, etc.
+* **Mobile** - Add the ability of bi-directional communication between Unity and native Android or iOS applications.
+* **Networking** - Allows for immediate interaction with the Didimo API.
+* **Oculus** - Example integration with Oculus quest.
+* **submodules** - Contains the GLTFUtility repository, that allows for loading gltf files.
+
+Every module may contain an `Examples` folder, where example assets and scenes of said module can be found. To reduce
+clutter, any `Examples` folder can be removed. Any module other than `Core` and `submodules` can also be deleted.
+
+
+
+---
+
+## Included
 
 * Code Examples
 * Set up tools / authentication
@@ -29,29 +91,13 @@ loaded into the scene at runtime. No matter which approach you need, we've got y
 Be sure to check out the [Digital Human Specifications](https://link.didimo.co/39dkEH0), best practices and
 the [SDK Guide](https://link.didimo.co/3tPAWPY) on our [Developer Portal](https://link.didimo.co/3Ckogna).
 
----
-
-## Pre-requisites
-
-1. This SDK has been built to work with Unity 2020.3 LTS
-2. We strongly encourage the use of Unity Hub, where the correct unity version and build modules can be installed.
-3. If you want to use our API with your own account, generate an API key in our [Customer Portal](HTTP://app.didimo.co)
 
 ---
 
-# Installation
+## Oculus Integration
 
-This repository, although not being a Unity Project, can be copied straight into an existing Unity Project. This can be
-done in any way, such as downloading the project's zip and extracting to your Unity Project, or through a git submodule,
-git subtree, etc. The only requirement is that it is placed directly under the `Assets` folder.
 
-### Dependencies
-
-For the project to compile, please follow these instructions to resolve dependencies
-
-### Optional
-
-1. **If you wish to build for Oculus**, install the package [Oculus Integration](https://link.didimo.co/3tJLcJs)
+1. If you wish to build for Oculus, install the package [Oculus Integration](https://link.didimo.co/3tJLcJs)
    
    1.1 Add the `Oculus Integration` package to your account through Unity's Asset Store
    
@@ -65,13 +111,16 @@ You may be asked to update a number of Oculus related tools and restart Unity BE
 you restart - check to see if the plugin still needs to be installed. A successful install will result in an `Oculus`
 folder in the Assets folder.
 
-_**Warning:**
-If you are not developing for Oculus and don't want to install the package, you will need to remove the `Oculus` module,
-otherwise you will get compilation errors._
-
 _Didimo has tested this against version 32.0 which was published on the 30th August 2021._
 
-2. **If you wish to capture and record face movements using ARKit**, install the package [Live Capture](https://link.didimo.co/3ABEI1G) from Unity.
+
+2. [Continue with setting up the SDK](#Setup-Process).
+
+---
+
+## ARKit Integration
+
+1. **If you wish to capture and record face movements using ARKit**, install the package [Live Capture](https://link.didimo.co/3ABEI1G) from Unity.
    
    2.1 Open Unity's Package Manager
    
@@ -84,62 +133,21 @@ Additionally, you will need the companion app [Unity Face Capture](https://apple
 _**Warning:**
 This package is marked as preview and therefore the installation process may be subject to changes._
 
-
-### Required
-
-1. If at this point you have compiler errors, you need to install the Newtonsoft Json package. 
-     
-   1.1 Open the Package Manager
-   
-   1.2 Click the `+` button, select `Add package from git URL...` 
-   
-   1.3 Enter `com.unity.nuget.newtonsoft-json` and press add
-
-
-2. Install the package [Universal RP](https://link.didimo.co/3lw3NF5) through Unity's Package Manager and follow
-instructions in Configuration section
-
-3. TextMeshPro will be automatically installed by Unity. Unity may prompt you to "Import TMP Essentials". If that happens,
-please comply.
-
-## Configuration
-
-1. Go to Project Settings → Graphics, and select `UniversalRP-HighQuality` as the render pipeline asset.
-2. Go to Project Settings → Quality, and select `UniversalRP-HighQuality` as the render pipeline asset, for your desired
-   quality level.
-3. Go to Project Settings → Player → Other Settings → Rendering. Set color space to linear
-4. Add a `csc.rsp` file to the Assets' folder, with the following contents, to add the compression assemblies required
-   when unzipping a didimo package:
-
-```
--r:System.IO.Compression.dll
--r:System.IO.Compression.FileSystem.dll
-```
+2. [Continue with setting up the SDK](#Setup-Process).
 
 ---
 
-# Code Modules
+## Known Import Issues
 
-This project contains a single folder, the `Didimo` folder. Within it, there are the following modules:
-
-* **Core** - Everything core to the SDK, including loading didimos where it handles animations, materials, speech, etc.
-* **Networking** - Allows for immediate interaction with the Didimo API.
-* **Oculus** - Example integration with Oculus quest.
-* **submodules** - Contains the GLTFUtility repository, that allows for loading gltf files.
-
-Every module may contain an `Examples` folder, where example assets and scenes of said module can be found. To reduce
-clutter, any `Examples` folder can be removed. Any module other than `Core` and `submodules` can also be deleted.
+* We cannot control the order with which Unity imports assets. If the .glTF files of your didimos get imported before any of
+  its dependencies, then the didimo will fail to import.
+* If you open the `MeetADidimo` scene and don't see any didimos, go to Didimo → Didimo Manager, and click the `Reimport didimos`
+  button.
+* The SDK folders `Core`, `Networking`, etc., must be in `/Assets/Didimo/`, otherwise the didimos will fail to render.
 
 ---
 
-# Getting Started
-
-## Explore the Examples
-
-Head to the examples to "Meet a didimo". You can press play immediately to hear a didimo tell you a bit about itself and
-how it's being animated.
-
-## Quick Start
+# Further Documentation
 
 Further detail is explained in the [Developer Portal](https://link.didimo.co/3Ckogna) - "Getting Started" docs related
 to software creation are:
@@ -149,14 +157,6 @@ to software creation are:
 * [Accessory Fitting Service](https://link.didimo.co/3nzssv8)
 * [Cloud API](https://link.didimo.co/39aNgAL)
 
-## Creating Your first Digital Human from Unity
-
-1. Sign up for an account in the Customer Portal
-2. Create yourself a developer key
-3. Follow the instructions above to get the SDK installed
-4. After SDK installation - Use the Unity Didimo Manager to add the developer key
-5. Follow the instructions
-
 ---
 
 # Contributing and Reporting bugs
@@ -164,12 +164,14 @@ to software creation are:
 Thank you for contributing and trying our product!
 For bug reports, use github's issue tracker.
 
-For pull request:
+For pull requests:
 
-1. Clone the repository and make a new branch
-2. Commit your code changes
-3. Open a pull request, with a detailed description of your changes
-4. We will test your changes internally, and if everything goes well, we will include them in our next release
+1. Fork the repository to your GitHub account
+2. Clone the repository to your machine
+3. Create a new branch with a short descriptive name
+4. Commit your code changes
+5. Open a pull request, with a detailed description of your changes
+6. We will test your changes internally, and if everything goes well, we will include them in our next release
 
 ---
 
@@ -182,12 +184,9 @@ our [Privacy](https://link.didimo.co/3AiXniS) page for more information on our l
 
 # Support
 
+
+Detailed documentation can be read on our [Developer Portal](https://link.didimo.co/3Ckogna) and 
+
 * Feature Request: [featurerequest@didimo.co](mailto:featurerequest@didimo.co)
 * Technical Support: [support@didimo.co](mailto:support@didimo.co)
 * Service Uptime Checker: https://status.didimo.co/
-
-# Known issues
-
-* On Unity we cannot control when assets get imported. If the .glTF files of your didimos get imported before any of
-  its dependencies (e.g. textures), then the didimo will fail to import. If you open the `MeetADidimo` scene and don't
-  see a didimo, search your project for assets named `avatar`, right click them and select reimport.
