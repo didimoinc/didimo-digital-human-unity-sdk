@@ -1,0 +1,22 @@
+{
+    "name": "Didimo.Oculus.Examples",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core",
+        "Unity.TextMeshPro",
+        "Oculus.VR",
+        "Oculus.LipSync"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

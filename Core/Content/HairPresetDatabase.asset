@@ -1,0 +1,691 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621be5918441b314f9168af311377ea8, type: 3}
+  m_Name: HairPresetDatabase
+  m_EditorClassIdentifier: 
+  _hairs:
+  - name: Black
+    list:
+    - color: {r: 0.3301887, g: 0.29436633, b: 0.29436633, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.3490566, g: 0.33094516, b: 0.33094516, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 4
+      key: 
+      hairLayer: 1
+    - color: {r: 0.16037738, g: 0.13389999, b: 0.13389999, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_003
+      hairLayer: 0
+    - color: {r: 0.1509434, g: 0.14026344, b: 0.14026344, a: 1}
+      glossiness1: 267
+      glossiness2: 57
+      shineMultiplier: 3.8
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 7.5
+      key: hair_003
+      hairLayer: 1
+    - color: {r: 0.1509434, g: 0.14311142, b: 0.14311142, a: 1}
+      glossiness1: 162
+      glossiness2: 63
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.254717, g: 0.24390353, b: 0.24390353, a: 1}
+      glossiness1: 185
+      glossiness2: 91
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 4
+      key: hair_001
+      hairLayer: 1
+  - name: Dark Brown
+    list:
+    - color: {r: 0.21698111, g: 0.1484069, b: 0.1484069, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.1981132, g: 0.14671591, b: 0.14671591, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.4339623, g: 0.2845319, b: 0.2845319, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_003
+      hairLayer: 0
+    - color: {r: 0.3301887, g: 0.2289516, b: 0.2289516, a: 1}
+      glossiness1: 295
+      glossiness2: 194
+      shineMultiplier: 5.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 14
+      key: hair_003
+      hairLayer: 1
+    - color: {r: 0.21698111, g: 0.1484069, b: 0.1484069, a: 1}
+      glossiness1: 105
+      glossiness2: 70
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.1981132, g: 0.14671591, b: 0.14671591, a: 1}
+      glossiness1: 174
+      glossiness2: 108
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Brown2
+    list:
+    - color: {r: 0.38679248, g: 0.23171058, b: 0.23171058, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.5, g: 0.2806604, b: 0.2806604, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.38679248, g: 0.23171058, b: 0.23171058, a: 1}
+      glossiness1: 72
+      glossiness2: 75
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.5, g: 0.2806604, b: 0.2806604, a: 1}
+      glossiness1: 192
+      glossiness2: 84
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Light Brown
+    list:
+    - color: {r: 0.5471698, g: 0.43118265, b: 0.40521538, a: 1}
+      glossiness1: 93
+      glossiness2: 82
+      shineMultiplier: 1
+      specShift1: 0.026
+      specShift2: 0.009
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.5943396, g: 0.43677127, b: 0.378471, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.5471698, g: 0.43118265, b: 0.40521538, a: 1}
+      glossiness1: 93
+      glossiness2: 82
+      shineMultiplier: 1
+      specShift1: 0.026
+      specShift2: 0.009
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.5943396, g: 0.43677127, b: 0.378471, a: 1}
+      glossiness1: 261
+      glossiness2: 53
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Dark Blonde
+    list:
+    - color: {r: 0.7830189, g: 0.42940244, b: 0.0701762, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.8396226, g: 0.4643897, b: 0.13069598, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.735849, g: 0.58486116, b: 0.43387324, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 0
+    - color: {r: 0.7830189, g: 0.62825984, b: 0.49123356, a: 1}
+      glossiness1: 303
+      glossiness2: 39
+      shineMultiplier: 3
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 1
+    - color: {r: 0.9528302, g: 0.7123754, b: 0.4719206, a: 1}
+      glossiness1: 77
+      glossiness2: 85
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.9716981, g: 0.7310273, b: 0.5179334, a: 1}
+      glossiness1: 178
+      glossiness2: 88
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Blonde
+    list:
+    - color: {r: 0.8867924, g: 0.5249644, b: 0.16313636, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.9339623, g: 0.5671146, b: 0.24230155, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.9339623, g: 0.7335129, b: 0.53306335, a: 1}
+      glossiness1: 107
+      glossiness2: 85
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.9245283, g: 0.7577726, b: 0.6061766, a: 1}
+      glossiness1: 181
+      glossiness2: 81
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Bright Blonde
+    list:
+    - color: {r: 0.9245283, g: 0.70865965, b: 0.49279103, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.9528302, g: 0.840457, b: 0.57079923, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.9622642, g: 0.9100659, b: 0.8578676, a: 1}
+      glossiness1: 65
+      glossiness2: 68
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.9622642, g: 0.9364809, b: 0.87602353, a: 1}
+      glossiness1: 244
+      glossiness2: 25
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Ginger
+    list:
+    - color: {r: 0.6509434, g: 0.12703161, b: 0, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.9245283, g: 0.44054428, b: 0.12646852, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.6509434, g: 0.12703161, b: 0, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 0
+    - color: {r: 0.9245283, g: 0.44054428, b: 0.12646852, a: 1}
+      glossiness1: 148
+      glossiness2: 22
+      shineMultiplier: 1.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 1
+    - color: {r: 0.9339623, g: 0.50206685, b: 0.2775454, a: 1}
+      glossiness1: 95
+      glossiness2: 82
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.9245283, g: 0.4967672, b: 0.2921858, a: 1}
+      glossiness1: 105
+      glossiness2: 29
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Red
+    list:
+    - color: {r: 0.7264151, g: 0.09158222, b: 0.07195621, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.9245283, g: 0.44054428, b: 0.12646852, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.7264151, g: 0.09158222, b: 0.07195621, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 0
+    - color: {r: 0.9622642, g: 0.46316066, b: 0.34950158, a: 1}
+      glossiness1: 49
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 1
+    - color: {r: 0.9150943, g: 0.37039778, b: 0.22014059, a: 1}
+      glossiness1: 93
+      glossiness2: 61
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.8867924, g: 0.35329595, b: 0.15477037, a: 1}
+      glossiness1: 216
+      glossiness2: 98
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Auburn
+    list:
+    - color: {r: 0.4339623, g: 0.05072126, b: 0.038892835, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.6320754, g: 0.1565215, b: 0.056648254, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.4339623, g: 0.05072126, b: 0.038892835, a: 1}
+      glossiness1: 81
+      glossiness2: 68
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.4245283, g: 0.13277747, b: 0.07008721, a: 1}
+      glossiness1: 157
+      glossiness2: 74
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Dark Grey
+    list:
+    - color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+      glossiness1: 58
+      glossiness2: 33
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+      glossiness1: 157
+      glossiness2: 105
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Medium Grey
+    list:
+    - color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: hair_002
+      hairLayer: 0
+    - color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+      glossiness1: 257
+      glossiness2: 63
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_002
+      hairLayer: 1
+    - color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+      glossiness1: 171
+      glossiness2: 53
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: Grey
+    list:
+    - color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: 
+      hairLayer: 0
+    - color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: hair_003
+      hairLayer: 0
+    - color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+      glossiness1: 66
+      glossiness2: 96
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 19.1
+      key: hair_003
+      hairLayer: 1
+    - color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+      glossiness1: 104
+      glossiness2: 103
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+      glossiness1: 185
+      glossiness2: 101
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1
+  - name: White
+    list:
+    - color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: 
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: 
+      hairLayer: 1
+    - color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+      glossiness1: 5
+      glossiness2: 15
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 54.5
+      key: hair_003
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 246
+      glossiness2: 3
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_003
+      hairLayer: 1
+    - color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+      glossiness1: 49
+      glossiness2: 42
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1
+      key: hair_001
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 95
+      glossiness2: 25
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 1.5
+      key: hair_001
+      hairLayer: 1

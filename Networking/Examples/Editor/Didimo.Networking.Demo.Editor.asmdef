@@ -1,0 +1,22 @@
+{
+    "name": "Didimo.Networking.Demo.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:89f57564793cc764ebdf0b7fdd9c84ad",
+        "GUID:78f284975f50f1f48aa55eae66b33ad9",
+        "GUID:95b459ff379a9424ea557aacf5fe885a",
+        "GUID:753795d7bd603de4289ef1d632a72f22",
+        "GUID:860a9f389f9697b46b9dea7502dffd37"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
