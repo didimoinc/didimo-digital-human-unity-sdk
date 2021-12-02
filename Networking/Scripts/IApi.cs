@@ -42,5 +42,7 @@ namespace Didimo.Networking
         Task<bool> DeleteDidimo(string didimoKey);
 
         Task<(bool success, DidimoDetailsResponse status)> CheckDidimoStatus(GetQuery<DidimoDetailsResponse> detailsQuery);
+
+        Task<(bool success, DidimoComponents didimo)> DidimoFromKey(string didimoKey, Configuration configuration = null, Action<float> creationProgress = null);
     }
 }

@@ -4,8 +4,9 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AOT;
 using UnityEngine;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class TextToSpeech : BiDirectionalNativeInterface
     {

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Didimo.Core.Model;
+using Didimo.Core.Utility;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -51,7 +53,8 @@ namespace Didimo.Builder.JSON
             return false;
         }
 
-        private bool GetOrCreateRenderer(DidimoBuildContext context, DidimoModelDataObject.Mesh srcMesh, out Renderer renderer)
+        private bool GetOrCreateRenderer(
+            DidimoBuildContext context, DidimoModelDataObject.Mesh srcMesh, out Renderer renderer)
         {
             if (!context.MeshHierarchyRoot.TryFindRecursive(srcMesh.Name, out Transform meshGO))
             {
@@ -92,12 +95,16 @@ namespace Didimo.Builder.JSON
 
             for (int i = 0; i < srcMesh.Vertices.Length; i += 3)
             {
-                vertices.Add(new Vector3(-srcMesh.Vertices[i], srcMesh.Vertices[i + 1], srcMesh.Vertices[i + 2]) / context.UnitsPerMeter);
+                vertices.Add(new Vector3(
+                    -srcMesh.Vertices[i],
+                    srcMesh.Vertices[i + 1],
+                    srcMesh.Vertices[i + 2]) / context.UnitsPerMeter);
             }
 
             for (int i = 0; i < srcMesh.Normals.Length; i += 3)
             {
-                normals.Add(new Vector3(-srcMesh.Normals[i], srcMesh.Normals[i + 1], srcMesh.Normals[i + 2]));
+                normals.Add(new Vector3(
+                    -srcMesh.Normals[i], srcMesh.Normals[i + 1], srcMesh.Normals[i + 2]));
             }
 
             // Only one uv set supported

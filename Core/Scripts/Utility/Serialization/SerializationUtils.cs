@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public class SerializationUtils
     {

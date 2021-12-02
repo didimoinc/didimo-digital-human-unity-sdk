@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {

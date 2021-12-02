@@ -2,7 +2,7 @@
 using System.Globalization;
 using UnityEngine;
 
-namespace DigitalSalmon.Extensions
+namespace Didimo.Extensions
 {
     [Flags]
     public enum RGBA
@@ -43,7 +43,12 @@ namespace DigitalSalmon.Extensions
         /// <param name="maxDelta">The maximum delta.</param>
         public static Color MoveTowards(this Color self, Color b, float maxDelta)
         {
-            Color result = new Color {r = Mathf.MoveTowards(self.r, b.r, maxDelta), g = Mathf.MoveTowards(self.g, b.g, maxDelta), b = Mathf.MoveTowards(self.b, b.b, maxDelta), a = Mathf.MoveTowards(self.a, b.a, maxDelta)};
+            Color result = new Color {
+                r = Mathf.MoveTowards(self.r, b.r, maxDelta),
+                g = Mathf.MoveTowards(self.g, b.g, maxDelta),
+                b = Mathf.MoveTowards(self.b, b.b, maxDelta),
+                a = Mathf.MoveTowards(self.a, b.a, maxDelta)
+                };
 
             self.r = result.r;
             self.g = result.g;
@@ -58,7 +63,9 @@ namespace DigitalSalmon.Extensions
         /// </summary>
         /// <param name="self">The color.</param>
         /// <returns>new Color(r, g, b, a)</returns>
-        public static string ToCSharpColor(this Color self) => "new Color(" + TrimFloat(self.r) + "f, " + TrimFloat(self.g) + "f, " + TrimFloat(self.b) + "f, " + TrimFloat(self.a) + "f)";
+        public static string ToCSharpColor(this Color self)
+            => "new Color(" + TrimFloat(self.r) + "f, " + TrimFloat(self.g) +
+                "f, " + TrimFloat(self.b) + "f, " + TrimFloat(self.a) + "f)";
 
         /// <summary>
         /// Pows the color with the specified factor.

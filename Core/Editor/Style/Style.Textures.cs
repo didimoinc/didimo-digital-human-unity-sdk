@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {
         public class Textures
         {
-            //-----------------------------------------------------------------------------------------
-            // Helper Methods:
-            //-----------------------------------------------------------------------------------------
-
             public static Texture2D FlatTexture(Color color)
             {
                 Texture2D returnTex = new Texture2D(1, 1, TextureFormat.RGBA32, false, IsLinear) {filterMode = FilterMode.Point};

@@ -1,12 +1,17 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Didimo.Inspector;
+using Didimo.Core.Editor;
+using Didimo.Core.Inspector;
 using UnityEditor;
 using UnityEngine;
 
 namespace Didimo.Editor.Inspector
 {
+    /// <summary>
+    /// Attribute Drawer for a slider where you can control a minimum and a max values.
+    /// Useful for setting ranges of valid values.
+    /// </summary>
     [CustomPropertyDrawer(typeof(OnValueChangedAttribute))]
     public class OnValueChangedAttributeDrawer : PropertyDrawer
     {

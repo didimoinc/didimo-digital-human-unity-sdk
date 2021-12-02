@@ -2,23 +2,14 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {
         public class Box
         {
-            //-----------------------------------------------------------------------------------------
-            // Public GUIStyles:
-            //-----------------------------------------------------------------------------------------
-
             private static readonly Dictionary<int, GUIStyle> styleLookup = new Dictionary<int, GUIStyle>();
 
-            //-----------------------------------------------------------------------------------------
-            // Public Methods:
-            //-----------------------------------------------------------------------------------------
-
-            // ReSharper disable once MemberHidesStaticFromOuterClass
             public static void ClearCache()
             {
                 FieldInfo[] fields = typeof(Box).GetFields(BindingFlags.NonPublic | BindingFlags.Static);

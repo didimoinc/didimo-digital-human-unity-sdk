@@ -51,23 +51,23 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 0.5, g: 0.2806604, b: 0.2806604, a: 1}
-    glossiness1: 500
-    glossiness2: 300
-    shineMultiplier: 1.8
-    specShift1: 0.1
-    specShift2: 0.2
-    flowMultiply: 1.5
-  innerHairLayer:
-    color: {r: 0.38679248, g: 0.23171058, b: 0.23171058, a: 1}
-    glossiness1: 72
-    glossiness2: 75
+    color: {r: 0.9622642, g: 0.9364809, b: 0.87602353, a: 1}
+    glossiness1: 244
+    glossiness2: 25
     shineMultiplier: 1
     specShift1: 0.1
     specShift2: 0.2
-    flowMultiply: 1.5
+    flowMultiply: 0.56
+  innerHairLayer:
+    color: {r: 0.9622642, g: 0.9100659, b: 0.8578676, a: 1}
+    glossiness1: 65
+    glossiness2: 68
+    shineMultiplier: 1
+    specShift1: 0.1
+    specShift2: 0.2
+    flowMultiply: 0.16
   Preset:
-    value: 2
+    value: 6
 --- !u!1001 &4028821280359404117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122,15 +122,15 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0d2ed75952f96984094f4f341e11f45f, type: 2}
+      objectReference: {fileID: 2100000, guid: 71599cc3f1515f948afa7a6ecc14c8c7, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: f4fb3a30f67cb684e8753abd4cece6e5, type: 2}
+      objectReference: {fileID: 2100000, guid: 0d2ed75952f96984094f4f341e11f45f, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 4b6d8140ba516914d94a961893d6ef4c, type: 2}
+      objectReference: {fileID: 2100000, guid: f4fb3a30f67cb684e8753abd4cece6e5, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
@@ -138,7 +138,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
-      objectReference: {fileID: 2100000, guid: 0d2ed75952f96984094f4f341e11f45f, type: 2}
+      objectReference: {fileID: 2100000, guid: 52d5d0eb49e18ed4db15f268eec49041, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[5]
       value: 

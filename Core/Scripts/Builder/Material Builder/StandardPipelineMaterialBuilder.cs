@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Didimo.Core.Utility;
+using System;
 using UnityEngine;
 
 namespace Didimo.Builder
@@ -40,7 +41,8 @@ namespace Didimo.Builder
             return false;
         }
 
-        protected override bool RequiresMaterialModification(string name, out Action<Material> modificationAction)
+        protected override bool RequiresMaterialModification(
+            string name, out Action<Material> modificationAction)
         {
             switch (name)
             {
@@ -56,8 +58,11 @@ namespace Didimo.Builder
             return false;
         }
 
-        // protected override bool RequiresTextureModification(string name, out Func<Texture, Texture> modificationAction) {
-        // 	switch (name) {
+        //TODO: What was this for? Remove if no longer needed
+        // protected override bool RequiresTextureModification(
+        //      string name, out Func<Texture, Texture> modificationAction) {
+        // 	switch (name)
+        //  {
         // 		case "roughness":
         // 		case "roughSampler":
         // 			modificationAction = TextureUtility.RoughnessToMetallicAlpha;

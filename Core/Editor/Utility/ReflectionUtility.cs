@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Editor
 {
     public static class ReflectionUtility
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Deformables
 {
     public abstract class DeformationUtility
     {

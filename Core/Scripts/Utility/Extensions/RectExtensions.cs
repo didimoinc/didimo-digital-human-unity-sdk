@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DigitalSalmon.Extensions
+namespace Didimo.Extensions
 {
     [Flags]
     public enum RectAnchor
@@ -19,28 +19,58 @@ namespace DigitalSalmon.Extensions
         // Size Methods:
         //-----------------------------------------------------------------------------------------
 
-        public static Rect WithWidth(this Rect self, float size, RectAnchor anchor = RectAnchor.Left) => WithTrimX(self, self.width - size, anchor);
-        public static Rect WithHeight(this Rect self, float size, RectAnchor anchor = RectAnchor.Top) => WithTrimY(self, self.height - size, anchor);
+        public static Rect WithWidth(this Rect self, float size,
+            RectAnchor anchor = RectAnchor.Left)
+            => WithTrimX(self, self.width - size, anchor);
+        public static Rect WithHeight(this Rect self, float size,
+            RectAnchor anchor = RectAnchor.Top)
+            => WithTrimY(self, self.height - size, anchor);
 
-        public static Rect WithSize(this Rect self, float size, RectAnchor anchor = RectAnchor.Top | RectAnchor.Left) => WithTrim(self, new Vector2(self.size.x - size, self.size.y - size), anchor);
+        public static Rect WithSize(this Rect self, float size,
+            RectAnchor anchor = RectAnchor.Top | RectAnchor.Left)
+            => WithTrim(self, new Vector2(self.size.x - size, self.size.y - size), anchor);
 
-        public static Rect WithSize(this Rect self, Vector2Int size, RectAnchor anchor = RectAnchor.Top | RectAnchor.Left) => WithTrim(self, self.size - size, anchor);
-        public static Rect WithSize(this Rect self, Vector2 size, RectAnchor anchor = RectAnchor.Top | RectAnchor.Left) => WithTrim(self, self.size - size, anchor);
+        public static Rect WithSize(this Rect self, Vector2Int size,
+            RectAnchor anchor = RectAnchor.Top | RectAnchor.Left)
+            => WithTrim(self, self.size - size, anchor);
+        public static Rect WithSize(this Rect self, Vector2 size,
+            RectAnchor anchor = RectAnchor.Top | RectAnchor.Left)
+            => WithTrim(self, self.size - size, anchor);
 
-        public static Rect WithTrimX(this Rect self, float trim, RectAnchor anchor = RectAnchor.Left) => WithTrim(self, new Vector2(trim, 0), anchor);
-        public static Rect WithTrimY(this Rect self, float trim, RectAnchor anchor = RectAnchor.Top) => WithTrim(self, new Vector2(0, trim), anchor);
+        public static Rect WithTrimX(this Rect self, float trim,
+            RectAnchor anchor = RectAnchor.Left)
+            => WithTrim(self, new Vector2(trim, 0), anchor);
+        public static Rect WithTrimY(this Rect self, float trim,
+            RectAnchor anchor = RectAnchor.Top)
+            => WithTrim(self, new Vector2(0, trim), anchor);
 
-        public static Rect WithTrim(this Rect self, float trim, RectAnchor anchor = RectAnchor.Left) => WithTrim(self, new Vector2(trim, trim), anchor);
-        public static Rect WithTrim(this Rect self, Vector2Int trim, RectAnchor anchor = RectAnchor.Top) => WithTrim(self, new Vector2(trim.x, trim.y), anchor);
+        public static Rect WithTrim(this Rect self, float trim,
+            RectAnchor anchor = RectAnchor.Left)
+            => WithTrim(self, new Vector2(trim, trim), anchor);
 
-        public static Rect WithTrim(this Rect self, Vector2 trim, RectAnchor anchor = RectAnchor.Center)
+        public static Rect WithTrim(this Rect self, Vector2Int trim,
+            RectAnchor anchor = RectAnchor.Top)
+            => WithTrim(self, new Vector2(trim.x, trim.y), anchor);
+
+        public static Rect WithTrim(this Rect self, Vector2 trim,
+            RectAnchor anchor = RectAnchor.Center)
         {
             self.size -= trim;
 
-            if (anchor.HasFlag(RectAnchor.Center)) { self.position += trim / 2; }
+            if (anchor.HasFlag(RectAnchor.Center))
+            {
+                self.position += trim / 2;
+            }
 
-            if (anchor.HasFlag(RectAnchor.Right)) self.x = self.x + trim.x;
-            if (anchor.HasFlag(RectAnchor.Bottom)) self.y = self.y + trim.y;
+            if (anchor.HasFlag(RectAnchor.Right))
+            {
+                 self.x = self.x + trim.x;
+            }
+
+            if (anchor.HasFlag(RectAnchor.Bottom))
+            {
+                self.y = self.y + trim.y;
+            }
 
             return self;
         }
@@ -49,10 +79,14 @@ namespace DigitalSalmon.Extensions
         // Padding Methods:
         //-----------------------------------------------------------------------------------------
 
-        public static Rect WithPadX(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center) => WithPadding(self, new Vector2(padding, 0), anchor);
-        public static Rect WithPadY(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center) => WithPadding(self, new Vector2(0, padding), anchor);
-        public static Rect WithPadding(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center) => WithPadding(self, new Vector2(padding, padding), anchor);
-        public static Rect WithPadding(this Rect self, Vector2Int padding, RectAnchor anchor = RectAnchor.Center) => self.WithPadding(new Vector2(padding.x, padding.y), anchor);
+        public static Rect WithPadX(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center)
+            => WithPadding(self, new Vector2(padding, 0), anchor);
+        public static Rect WithPadY(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center)
+            => WithPadding(self, new Vector2(0, padding), anchor);
+        public static Rect WithPadding(this Rect self, float padding, RectAnchor anchor = RectAnchor.Center)
+            => WithPadding(self, new Vector2(padding, padding), anchor);
+        public static Rect WithPadding(this Rect self, Vector2Int padding, RectAnchor anchor = RectAnchor.Center)
+            => self.WithPadding(new Vector2(padding.x, padding.y), anchor);
 
         public static Rect WithPadding(this Rect self, Vector2 padding, RectAnchor anchor = RectAnchor.Center)
         {
@@ -74,9 +108,15 @@ namespace DigitalSalmon.Extensions
         {
             self.position = new Vector2(position, self.position.y);
 
-            if (anchor.HasFlag(RectAnchor.Center)) { self.position = self.position - new Vector2(0, self.size.y / 2); }
+            if (anchor.HasFlag(RectAnchor.Center))
+            {
+                self.position = self.position - new Vector2(0, self.size.y / 2);
+            }
 
-            if (anchor.HasFlag(RectAnchor.Bottom)) { self.position = self.position - new Vector2(0, self.size.y); }
+            if (anchor.HasFlag(RectAnchor.Bottom))
+            {
+                self.position = self.position - new Vector2(0, self.size.y);
+            }
 
             return self;
         }
@@ -85,21 +125,37 @@ namespace DigitalSalmon.Extensions
         {
             self.position = new Vector2(self.position.x, position);
 
-            if (anchor.HasFlag(RectAnchor.Center)) { self.position = self.position - new Vector2(self.size.x / 2, 0); }
+            if (anchor.HasFlag(RectAnchor.Center))
+            {
+                self.position = self.position - new Vector2(self.size.x / 2, 0);
+            }
 
-            if (anchor.HasFlag(RectAnchor.Right)) { self.position = self.position - new Vector2(self.size.x, 0); }
+            if (anchor.HasFlag(RectAnchor.Right))
+            {
+                self.position = self.position - new Vector2(self.size.x, 0);
+            }
 
             return self;
         }
 
-        public static Rect WithPosition(this Rect self, Vector2 position, RectAnchor anchor = RectAnchor.Left | RectAnchor.Top)
+        public static Rect WithPosition(
+            this Rect self, Vector2 position, RectAnchor anchor = RectAnchor.Left | RectAnchor.Top)
         {
             self.position = position;
 
-            if (anchor.HasFlag(RectAnchor.Center)) { self.position -= self.size / 2; }
+            if (anchor.HasFlag(RectAnchor.Center))
+            {
+                self.position -= self.size / 2;
+            }
 
-            if (anchor.HasFlag(RectAnchor.Right)) self.x = self.x - self.width;
-            if (anchor.HasFlag(RectAnchor.Bottom)) self.y = self.y - self.height;
+            if (anchor.HasFlag(RectAnchor.Right))
+            {
+                self.x = self.x - self.width;
+            }
+            if (anchor.HasFlag(RectAnchor.Bottom))
+            {
+                self.y = self.y - self.height;
+            }
 
             return self;
         }
@@ -107,7 +163,8 @@ namespace DigitalSalmon.Extensions
         /// <summary>
         /// Offsets the rect by 'offset'.
         /// </summary>
-        public static Rect WithOffset(this Rect self, Vector2 offset) => WithOffset(self, new Vector2Int((int) offset.x, (int) offset.y));
+        public static Rect WithOffset(this Rect self, Vector2 offset)
+            => WithOffset(self, new Vector2Int((int) offset.x, (int) offset.y));
 
         public static Rect WithOffset(this Rect self, Vector2Int offset)
         {

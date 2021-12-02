@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo
 {
     public class HarmonicFloat
     {
@@ -15,7 +15,8 @@ namespace DigitalSalmon
 
         public bool IsRunning { get; private set; }
 
-        public HarmonicFloat(Func<float> getValue, Action<float> setValue, Func<float> getDampingRatio, Func<float> getAngularFrequency)
+        public HarmonicFloat(Func<float> getValue, Action<float> setValue,
+        Func<float> getDampingRatio, Func<float> getAngularFrequency)
         {
             this.getValue = getValue;
             this.setValue = setValue;
@@ -23,7 +24,8 @@ namespace DigitalSalmon
             this.getAngularFrequency = getAngularFrequency;
         }
 
-        public HarmonicFloat(Func<float> getValue, Action<float> setValue, float dampingRatio, float angularFrequency)
+        public HarmonicFloat(Func<float> getValue, Action<float> setValue,
+            float dampingRatio, float angularFrequency)
         {
             this.getValue = getValue;
             this.setValue = setValue;
@@ -40,7 +42,8 @@ namespace DigitalSalmon
         public void Update()
         {
             float state = getValue();
-            HarmonicMotion.DampenedSpringMotionParams springParams = HarmonicMotion.CalcDampedSpringMotionParams(getDampingRatio(), getAngularFrequency());
+            HarmonicMotion.DampenedSpringMotionParams springParams
+                = HarmonicMotion.CalcDampedSpringMotionParams(getDampingRatio(), getAngularFrequency());
             HarmonicMotion.Calculate(ref state, ref velocity, targetValue, springParams);
             setValue(state);
             IsRunning = velocity > 0.0001f || Mathf.Abs(state - targetValue) > 0.00001f;

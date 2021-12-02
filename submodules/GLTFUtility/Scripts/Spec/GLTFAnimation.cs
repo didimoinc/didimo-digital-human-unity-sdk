@@ -105,9 +105,9 @@ namespace Didimo.GLTFUtility {
 							posZ.AddKey(CreateKeyframe(k, keyframeInput, pos, x => x.z, interpolationMode));
 						}
 
-						if (importSettings.animationSettings.compressLinearAnimationKeyFrames
-							&& (interpolationMode != InterpolationMode.LINEAR
-								|| IsTransformAnimationCurveUseful(posX, posY, posZ, importSettings.animationSettings.minimumTranslationThreshold)))
+						if (!importSettings.animationSettings.compressLinearAnimationKeyFrames
+							|| interpolationMode != InterpolationMode.LINEAR
+							|| IsTransformAnimationCurveUseful(posX, posY, posZ, importSettings.animationSettings.minimumTranslationThreshold))
 						{
 							result.clip.SetCurve(relativePath, typeof(Transform), "localPosition.x", posX);
 							result.clip.SetCurve(relativePath, typeof(Transform), "localPosition.y", posY);
@@ -142,9 +142,9 @@ namespace Didimo.GLTFUtility {
 							rotW.AddKey(CreateKeyframe(k, keyframeInput, rot, x => x.w, interpolationMode));
 						}
 
-						if (importSettings.animationSettings.compressLinearAnimationKeyFrames
-							&& (interpolationMode != InterpolationMode.LINEAR
-								|| IsRotationAnimationCurveUseful(rotX, rotY, rotZ, rotW, importSettings.animationSettings.minimumRotationThreshold)))
+						if (!importSettings.animationSettings.compressLinearAnimationKeyFrames
+							|| interpolationMode != InterpolationMode.LINEAR
+							|| IsRotationAnimationCurveUseful(rotX, rotY, rotZ, rotW, importSettings.animationSettings.minimumRotationThreshold))
 						{
 							result.clip.SetCurve(relativePath, typeof(Transform), "localRotation.x", rotX);
 							result.clip.SetCurve(relativePath, typeof(Transform), "localRotation.y", rotY);
@@ -178,9 +178,9 @@ namespace Didimo.GLTFUtility {
 							scaleZ.AddKey(CreateKeyframe(k, keyframeInput, scale, x => x.z, interpolationMode));
 						}
 
-						if (importSettings.animationSettings.compressLinearAnimationKeyFrames
-							&& (interpolationMode != InterpolationMode.LINEAR
-								|| IsTransformAnimationCurveUseful(scaleX, scaleY, scaleZ, importSettings.animationSettings.minimumScaleChangeThreshold)))
+						if (!importSettings.animationSettings.compressLinearAnimationKeyFrames
+							|| interpolationMode != InterpolationMode.LINEAR
+							|| IsTransformAnimationCurveUseful(scaleX, scaleY, scaleZ, importSettings.animationSettings.minimumScaleChangeThreshold))
 						{
 							result.clip.SetCurve(relativePath, typeof(Transform), "localScale.x", scaleX);
 							result.clip.SetCurve(relativePath, typeof(Transform), "localScale.y", scaleY);

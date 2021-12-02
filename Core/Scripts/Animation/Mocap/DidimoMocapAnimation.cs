@@ -6,6 +6,11 @@ using Newtonsoft.Json;
 
 namespace Didimo.Mocap
 {
+    /// <summary>
+    /// Class with the information of our mocap animations.
+    /// This is used to serialize and deserialize between this format
+    /// and our custom JSON format.
+    /// </summary>
     public class DidimoAnimationJson
     {
         [JsonProperty("source", Required = Required.Always)]
@@ -13,7 +18,7 @@ namespace Didimo.Mocap
 
         [JsonProperty("poses", Required = Required.Always)]
         public Dictionary<string, List<float>> MocapValues;
-        
+
         [JsonProperty("skeleton", Required = Required.Default)]
         public Dictionary<string, List<float[]>> SkeletonValues;
 
@@ -25,20 +30,25 @@ namespace Didimo.Mocap
 
         [JsonProperty("animationLength", Required = Required.Always)]
         public float AnimationLength;
-        
+
         [JsonProperty("frameCount", Required = Required.Always)]
         public int FrameCount;
 
 
-        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues, int fps = DidimoAnimation.DEFAULT_FPS, float? animationLength = null, int? frameCount = null)
+        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues,
+            int fps = DidimoAnimation.DEFAULT_FPS,
+            float? animationLength = null, int? frameCount = null)
         {
             MocapValues = mocapValues;
             FPS = fps;
             FrameCount = frameCount ?? MocapValues.Values.Max(e => e.Count);
             AnimationLength = animationLength ??  (float) FrameCount / fps;
         }
-        
-        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues, [CanBeNull] Dictionary<string, List<float[]>> skeletonValues, int fps = DidimoAnimation.DEFAULT_FPS, float? animationLength = null, int? frameCount = null)
+
+        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues,
+            [CanBeNull] Dictionary<string, List<float[]>> skeletonValues,
+            int fps = DidimoAnimation.DEFAULT_FPS, float? animationLength = null,
+            int? frameCount = null)
         {
             MocapValues = mocapValues;
             SkeletonValues = skeletonValues;
@@ -47,7 +57,8 @@ namespace Didimo.Mocap
             AnimationLength = animationLength ??  (float) FrameCount / fps;
         }
 
-        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues, List<float> timestamps, int? fps, float? animationLength = null, int? frameCount = null)
+        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues,
+            List<float> timestamps, int? fps, float? animationLength = null, int? frameCount = null)
         {
             MocapValues = mocapValues;
             Timestamps = timestamps;
@@ -55,8 +66,10 @@ namespace Didimo.Mocap
             FrameCount = frameCount ?? timestamps.Count;
             AnimationLength = animationLength ?? timestamps.Last();
         }
-        
-        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues, [CanBeNull] Dictionary<string, List<float[]>> skeletonValues, List<float> timestamps, int? fps, float? animationLength = null, int? frameCount = null)
+
+        public DidimoAnimationJson(Dictionary<string, List<float>> mocapValues,
+            [CanBeNull] Dictionary<string, List<float[]>> skeletonValues,
+            List<float> timestamps, int? fps, float? animationLength = null, int? frameCount = null)
         {
             MocapValues = mocapValues;
             SkeletonValues = skeletonValues;
@@ -67,7 +80,11 @@ namespace Didimo.Mocap
         }
 
         [JsonConstructor]
-        public DidimoAnimationJson(string source, Dictionary<string, List<float>> mocapValues, [CanBeNull] Dictionary<string, List<float[]>> skeletonValues, [CanBeNull] List<float> timestamps, int? fps, float animationLength, int frameCount)
+        public DidimoAnimationJson(string source,
+            Dictionary<string, List<float>> mocapValues,
+            [CanBeNull] Dictionary<string, List<float[]>> skeletonValues,
+            [CanBeNull] List<float> timestamps, int? fps,
+            float animationLength, int frameCount)
         {
             Source = source;
             MocapValues = mocapValues;

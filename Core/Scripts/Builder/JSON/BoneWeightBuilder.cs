@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using Didimo.Core.Model;
+using Didimo.Core.Utility;
 
 namespace Didimo.Builder.JSON
 {
@@ -25,7 +27,8 @@ namespace Didimo.Builder.JSON
                 {
                     if (meshData.skin_weights[vertId].Count >= 255)
                     {
-                        Debug.LogError("ERROR: exceeded maximum number of weights: " + meshData.skin_weights[vertId].Count);
+                        Debug.LogError("ERROR: exceeded maximum number of weights: "
+                            + meshData.skin_weights[vertId].Count);
                     }
 
                     bonesPerVertex[vertId] = (byte) meshData.skin_weights[vertId].Count;
@@ -40,8 +43,11 @@ namespace Didimo.Builder.JSON
                     }
                 }
 
-                NativeArray<byte> bonesPerVertexArray = new NativeArray<byte>(bonesPerVertex, Allocator.Temp);
-                NativeArray<BoneWeight1> weightsArray = new NativeArray<BoneWeight1>(boneWeights.ToArray(), Allocator.Temp);
+                NativeArray<byte> bonesPerVertexArray
+                    = new NativeArray<byte>(bonesPerVertex, Allocator.Temp);
+
+                NativeArray<BoneWeight1> weightsArray
+                    = new NativeArray<BoneWeight1>(boneWeights.ToArray(), Allocator.Temp);
 
                 if (!context.MeshHierarchyRoot.TryFindRecursive(meshData.Name, out SkinnedMeshRenderer smr))
                 {

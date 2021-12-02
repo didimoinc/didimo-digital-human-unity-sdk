@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Didimo.Speech
 {
+    /// <summary>
+    /// Class that holds the data for a generated TTS phrase.
+    /// This contains both the animation data and the audio clip.
+    /// </summary>
     public class Phrase
     {
         public List<TTSElement> Elements;

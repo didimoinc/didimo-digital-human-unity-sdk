@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public abstract class ASingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static T _instance;
+        private static T instance;
 
         public static T Instance
         {
             get
             {
-                if (_instance == null)
+                if (instance == null)
                 {
                     GameObject gameObject = GameObject.Find(typeof(T).Name);
                     if (gameObject == null)
@@ -18,18 +18,18 @@ namespace Didimo
                         gameObject = new GameObject(typeof(T).Name);
                     }
 
-                    _instance = gameObject.AddComponent<T>();
+                    instance = gameObject.AddComponent<T>();
                 }
 
-                return _instance;
+                return instance;
             }
         }
 
-        public static bool Exists => _instance != null;
+        public static bool Exists => instance != null;
 
         private void Awake()
         {
-            if (_instance != null)
+            if (instance != null)
             {
                 Debug.LogWarning($"Singleton behaviour '{Instance.name}' already exists, destroying duplicate...");
                 Destroy(gameObject);
@@ -37,7 +37,7 @@ namespace Didimo
                 return;
             }
 
-            _instance = this as T;
+            instance = this as T;
             DontDestroyOnLoad(this);
 
             OnAwake();

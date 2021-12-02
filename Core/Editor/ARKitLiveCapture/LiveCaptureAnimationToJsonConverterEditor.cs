@@ -12,8 +12,20 @@ using UnityEngine;
 
 namespace Didimo.Editor
 {
+    /// <summary>
+    /// Class for Unity's ARKit LiveCapture Integration. It contains methods to convert
+    /// the data from the LiveCapture into our custom animation JSON format.
+    /// Serves as support for the <c>LiveCaptureAnimationToJsonConverterEditor</c>.
+    /// </summary>
     public static class LiveCaptureAnimationToJsonConverter
     {
+        /// <summary>
+        /// Convert the AnimationClip produced by Unity's LiveCapture system into
+        /// our a <c>DidimoAnimationJSON</c> object that can be transformed into a <c>DidimoAnimation</c>
+        /// object or be saved as our custom JSON animation format.
+        /// </summary>
+        /// <param name="animationClip">AnimationClip saved by LiveCapture containing the facial animation</param>
+        /// <returns><c>DidimoAnimationJson</c> object with the facial animation data.</returns>
         public static DidimoAnimationJson ConvertToMocapAnimationObject(AnimationClip animationClip)
         {
             Dictionary<string, List<float>> poseData = new Dictionary<string, List<float>>();
@@ -79,13 +91,25 @@ namespace Didimo.Editor
             return new DidimoAnimationJson(poseData, skeletonValues, timestamps, (int) animationClip.frameRate, timestamps.Last(), frameCount);
         }
         
-        
+        /// <summary>
+        /// Convert the AnimationClip produced by Unity's LiveCapture system into
+        /// a string with our custom JSON animation format.
+        /// </summary>
+        /// <param name="animationClip">AnimationClip saved by LiveCapture containing the facial animation</param>
+        /// <returns>JSON string with the facial animation</returns>
         public static string ConvertToJSONString(AnimationClip animationClip)
         {
             DidimoAnimationJson didimoAnimationJson = ConvertToMocapAnimationObject(animationClip);
             return didimoAnimationJson.ToJSONString();
         }
         
+        /// <summary>
+        /// Convert the AnimationClip produced by Unity's LiveCapture system a save it
+        /// as our custom JSON animation format.
+        /// </summary>
+        /// <param name="animationClip">AnimationClip saved by LiveCapture containing the facial animation</param>
+        /// <param name="saveFolder">Path of the folder to save the file in.</param>
+        /// <param name="filename">Name of the file to be saved. If null or an empty string, it will default to the animation name.</param>
         public static void ConvertAndSaveToFolder(AnimationClip animationClip, string saveFolder, string filename="")
         {
             if (string.IsNullOrEmpty(filename)) filename = $"{animationClip.name}.json";
@@ -93,13 +117,19 @@ namespace Didimo.Editor
             ConvertAndSaveToFile(animationClip, savePath);
         }
 
+        /// <summary>
+        /// Convert the AnimationClip produced by Unity's LiveCapture system a save it
+        /// as our custom JSON animation format.
+        /// </summary>
+        /// <param name="animationClip">AnimationClip saved by LiveCapture containing the facial animation</param>
+        /// <param name="savePath">Path to the file to be saved.</param>
         public static void ConvertAndSaveToFile(AnimationClip animationClip, string savePath)
         {
             string jsonString = ConvertToJSONString(animationClip);
             File.WriteAllText(savePath, jsonString);
             AssetDatabase.Refresh();
         }
-
+        
         private static List<float> GetAnimationCurveFloatValues(AnimationCurve animationCurve, float frameDeltaTime)
         {
             if (animationCurve.length == 0) return new List<float>();
@@ -180,6 +210,9 @@ namespace Didimo.Editor
     }
 
 
+    /// <summary>
+    /// Editor to convert LiveCapture animation files into our custom animation JSON format.
+    /// </summary>
     public class LiveCaptureAnimationToJsonConverterEditor : EditorWindow
     {
 
@@ -232,6 +265,11 @@ namespace Didimo.Editor
             if (GUILayout.Button("SAVE MOCAP", GUILayout.ExpandWidth(true))) Convert(saveLocation);
         }
         
+        /// <summary>
+        /// Convert the <c>mocapAnimationClip</c> as save it as our custom
+        /// animation JSON format.
+        /// </summary>
+        /// <param name="filepath"></param>
         private void Convert(string filepath)
         {
             if (mocapAnimationClip == null)

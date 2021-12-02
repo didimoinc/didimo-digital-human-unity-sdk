@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -8,7 +8,7 @@ using JsonSubTypes;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Model
 {
     [JsonConverter(typeof(JsonSubtypes))]
     [JsonSubtypes.FallBackSubTypeAttribute(typeof(MaterialDataContainer))]
@@ -23,11 +23,13 @@ namespace Didimo
 
         [JsonIgnore] public IReadOnlyList<MaterialData> MaterialData => materialData;
 
-        [JsonIgnore] public IReadOnlyDictionary<string, List<string>> MaterialToHierarchyNodes => materialToHierarchyNodes; // Shallow immutable.
+        [JsonIgnore] public IReadOnlyDictionary<string, List<string>> MaterialToHierarchyNodes
+            => materialToHierarchyNodes; // Shallow immutable.
 
         [JsonIgnore] public IReadOnlyList<string> AllHierarchyNodes { get; private set; }
 
-        [JsonIgnore] public IReadOnlyDictionary<string, MaterialData> HierarchyNodeToMaterialData { get; private set; }
+        [JsonIgnore] public IReadOnlyDictionary<string, MaterialData>
+            HierarchyNodeToMaterialData { get; private set; }
 
         public virtual void ApplyToHierarchy(DidimoBuildContext context, MaterialBuilder builder)
         {
@@ -97,7 +99,8 @@ namespace Didimo
             }
         }
 
-        public bool TryFindDataForHierarchyNode(string hierarchyName, out MaterialData data) => HierarchyNodeToMaterialData.TryGetValue(hierarchyName, out data);
+        public bool TryFindDataForHierarchyNode(string hierarchyName, out MaterialData data)
+            => HierarchyNodeToMaterialData.TryGetValue(hierarchyName, out data);
 
         public bool TryFindData(string materialName, out MaterialData data)
         {
@@ -105,9 +108,16 @@ namespace Didimo
             return data != null;
         }
 
-        public static MaterialDataContainer CreateNew(List<MaterialData> materialData, Dictionary<string, List<string>> materialToHierarchyNodes) => new MaterialDataContainer {materialData = materialData, materialToHierarchyNodes = materialToHierarchyNodes};
+        public static MaterialDataContainer CreateNew(
+            List<MaterialData> materialData, Dictionary<string, List<string>> materialToHierarchyNodes)
+            => new MaterialDataContainer {
+                    materialData = materialData, materialToHierarchyNodes = materialToHierarchyNodes
+                };
 
-        public static async Task PrepareParameter(DidimoBuildContext context, MaterialBuilder builder, MaterialDataParameter parameter)
+        public static async Task PrepareParameter(
+            DidimoBuildContext context,
+            MaterialBuilder builder,
+            MaterialDataParameter parameter)
         {
             if (builder.NameToProperty(parameter.Name, out string propertyName))
             {
@@ -119,7 +129,8 @@ namespace Didimo
             {
                 string name = Path.GetFileName(textureParameter.Value);
 
-                Task<(bool success, Texture2D texture)> localLoadTask = context.DidimoComponents.TextureCache.TryGetOrLoad(context, name);
+                Task<(bool success, Texture2D texture)> localLoadTask
+                    = context.DidimoComponents.TextureCache.TryGetOrLoad(context, name);
                 await localLoadTask;
                 if (localLoadTask.Result.success)
                 {

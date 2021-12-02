@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using Didimo.Networking;
+using Didimo.Core.Utility;
 
-namespace Didimo.Networking
+namespace Didimo.Core.Editor
 {
     public class NetworkingDidimoManagerTab : DidimoManagerTab
     {

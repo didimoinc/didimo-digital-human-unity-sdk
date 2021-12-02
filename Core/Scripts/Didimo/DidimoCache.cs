@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 #pragma warning disable 4014
 namespace Didimo
@@ -10,7 +11,8 @@ namespace Didimo
         public const string ALL_ID = "All";
         public const string ANY_ID = "Any";
 
-        private static readonly Dictionary<string, DidimoComponents> didimos = new Dictionary<string, DidimoComponents>();
+        private static readonly Dictionary<string, DidimoComponents> didimos
+            = new Dictionary<string, DidimoComponents>();
 
         public static bool TryDestroy(string id)
         {
@@ -27,6 +29,7 @@ namespace Didimo
 
             DestroyDidimo(didimo);
             didimos.Remove(id);
+            Resources.UnloadUnusedAssets();
             return true;
         }
 
@@ -38,6 +41,7 @@ namespace Didimo
             }
 
             didimos.Clear();
+            Resources.UnloadUnusedAssets();
         }
 
         public static bool TryFindDidimo(string id, out DidimoComponents didimoComponents)
@@ -62,7 +66,17 @@ namespace Didimo
             didimos[didimoComponents.DidimoKey] = didimoComponents;
         }
 
-        private static void DestroyDidimo(DidimoComponents didimoComponents) { Object.Destroy(didimoComponents.gameObject); }
+        private static void DestroyDidimo(DidimoComponents didimoComponents)
+        {
+            if (Application.isPlaying)
+            {
+                Object.Destroy(didimoComponents.gameObject);
+            }
+            else
+            {
+                Object.DestroyImmediate(didimoComponents.gameObject);
+            }
+        }
     }
 }
 #pragma warning restore 4014

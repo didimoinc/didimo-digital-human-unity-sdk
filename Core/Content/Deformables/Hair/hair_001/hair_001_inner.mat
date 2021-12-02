@@ -131,8 +131,10 @@ Material:
     m_Floats:
     - Boolean_0eae9ea6f89b4dc69ac6a90555a90130: 0
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
+    - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
     - Vector1_020df71d02674f1fafad427a0a87e029: 3.58
     - Vector1_04a92e2cdf2b4369a4043697151bc5e7: 0
+    - Vector1_0586c13dde9241098b96e356887aff11: 0
     - Vector1_1ba96e4bde054710be3e0e15ac7e7c5f: 0.03
     - Vector1_68710ef1732d4141a522a8ce9b9bb571: 1
     - Vector1_c3b13bc0bc314753b4dbbd881d578cc5: 17.94
@@ -143,7 +145,7 @@ Material:
     - Vector1_edbee027f473426b8ceb7e31b86d7534: 0.991
     - _AlphaClip: 0
     - _AlphaLODbias: 0
-    - _AnisoHighlightRotation: -1.56
+    - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -153,12 +155,13 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EnvRough: 1
-    - _EnvRough_1: 0.1
+    - _EnvRough: 0.77
+    - _EnvRough_1: 0.33
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _MeshTangentRotation: 180
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -169,20 +172,24 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TangentFlowMapRotation: 0
+    - _UseFlowMap: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _alphaClipThreshold: 0.041
-    - _flowMultiplier: 10.5
+    - _alphaClipThreshold: 0.066
+    - _envSpecMul: 0
+    - _flowMultiplier: 1.025
     - _hairAlbedoMultiply: 0.54
-    - _specExp1: 103
-    - _specExp2: 92
-    - _specMultiply: 10.9
-    - _specShift: 0.08
-    - _specShift2: 0.1
+    - _specExp1: 110.3
+    - _specExp2: 72
+    - _specMultiply: 10
+    - _specShift: 3.6
+    - _specShift2: 1.4
     m_Colors:
+    - Vector3_347d0541ec414879bcd39a3c2c070edb: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HairColor: {r: 0.3018868, g: 0.19666943, b: 0.11249555, a: 0}
+    - _HairColor: {r: 0.3018867, g: 0.19666937, b: 0.11249549, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

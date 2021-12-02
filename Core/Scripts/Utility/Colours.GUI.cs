@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo
 {
     public static partial class Colours
     {

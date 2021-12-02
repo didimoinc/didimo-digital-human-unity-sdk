@@ -1,21 +1,14 @@
-﻿using System.Reflection;
+﻿using Didimo.Core.Utility;
+using System.Reflection;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {
         public class Buttons
         {
-            //-----------------------------------------------------------------------------------------
-            // Backing Fields:
-            //-----------------------------------------------------------------------------------------
-
             private static StyleGroup _serviceMenuButtonGroup;
-
-            //-----------------------------------------------------------------------------------------
-            // Public StyleGroups:
-            //-----------------------------------------------------------------------------------------
 
             public static StyleGroup ServiceMenuButtonGroup
             {
@@ -45,10 +38,6 @@ namespace DigitalSalmon.UI
                 }
             }
 
-            //-----------------------------------------------------------------------------------------
-            // Public GUIStyles:
-            //-----------------------------------------------------------------------------------------
-
             public static GUIStyle MenuButton => ServiceMenuButtonGroup.Style;
 
             public static GUIStyle MenuButtonHighlighted => ServiceMenuButtonGroup.Instance(nameof(MenuButtonHighlighted)).SetColor(Colours.LIGHT_BLUE).Style;
@@ -57,9 +46,6 @@ namespace DigitalSalmon.UI
 
             public static GUIStyle MenuButtonHighlightedCentered => ServiceMenuButtonGroup.Instance(nameof(MenuButtonHighlightedCentered)).SetAnchor(TextAnchor.MiddleCenter).SetColor(Colours.LIGHT_BLUE).Style;
 
-            //-----------------------------------------------------------------------------------------
-            // Public Methods:
-            //-----------------------------------------------------------------------------------------
 
             // ReSharper disable once MemberHidesStaticFromOuterClass
             public static void ClearCache()

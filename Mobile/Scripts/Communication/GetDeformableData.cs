@@ -3,8 +3,10 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
+using Didimo.Core.Utility;
+using Didimo.Core.Deformables;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class GetDeformableData : BiDirectionalNativeInterface
     {

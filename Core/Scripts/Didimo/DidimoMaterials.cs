@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEditor;
+﻿using Didimo.Core.Utility;
+using System;
 using UnityEngine;
 
 namespace Didimo
@@ -44,7 +44,8 @@ namespace Didimo
             }
         }
 
-        private (string propertyName, string overridePropertyName) GetPropertyNames(DidimoColorPropertyOverride propertyOverride)
+        private (string propertyName, string overridePropertyName)
+            GetPropertyNames(DidimoColorPropertyOverride propertyOverride)
         {
             string property = $"_{propertyOverride}";
             string overrideProperty = $"_Override{propertyOverride}";

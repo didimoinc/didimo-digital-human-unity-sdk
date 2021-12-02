@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public abstract class BiDirectionalNativeInterface
     {

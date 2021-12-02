@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo.Core.Utility
 {
     /// <summary>
-    /// A sequence component maintains active delayed actions and sequences of actions, whether method invokes, coroutines, or
+    /// A sequence component maintains active delayed actions and sequences of actions,
+    /// whether method invokes, coroutines, or
     /// tweens,
     /// and provides a simple way to cancel them.
     /// </summary>
@@ -51,13 +52,13 @@ namespace DigitalSalmon
         // Events:
         //-----------------------------------------------------------------------------------------
 
-        public event Didimo.EventHandler<CancelledStatus> Cancelled;
+        public event Action<CancelledStatus> Cancelled;
 
         //-----------------------------------------------------------------------------------------
         // Private Fields:
         //-----------------------------------------------------------------------------------------
 
-        private MonoBehaviour _monoBehaviour;
+        private MonoBehaviour monoBehaviour;
 
         // Unqueued Coroutine Cache
         private readonly HashSet<IEnumerator> coroutines = new HashSet<IEnumerator>();
@@ -73,16 +74,16 @@ namespace DigitalSalmon
         //-----------------------------------------------------------------------------------------
 
         /// <summary>
-        /// The MonoBehaviour this sequence is running on. Changing the MonoBehaviour will necessarily cause the sequence to
-        /// cancel.
+        /// The MonoBehaviour this sequence is running on. Changing the
+        /// MonoBehaviour will necessarily cause the sequence to cancel.
         /// </summary>
         public MonoBehaviour MonoBehaviour
         {
-            get => _monoBehaviour;
+            get => monoBehaviour;
             set
             {
                 Cancel();
-                _monoBehaviour = value;
+                monoBehaviour = value;
             }
         }
 
@@ -90,7 +91,7 @@ namespace DigitalSalmon
         /// Is the sequence's underlying MonoBehaviour active and enabled and ready to run coroutines.
         /// </summary>
         // ReSharper disable once SimplifyConditionalTernaryExpression
-        public bool IsActiveAndEnabled => _monoBehaviour == null ? false : _monoBehaviour.isActiveAndEnabled;
+        public bool IsActiveAndEnabled => monoBehaviour == null ? false : monoBehaviour.isActiveAndEnabled;
 
         /// <summary>
         /// Do we have any active running delayed actions, queued actions or coroutines?
@@ -143,7 +144,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Invokes an action after a given number of frames.
         /// </summary>
-        /// <param name="numFrames">The number of frames after the present frame in which to execute the action.</param>
+        /// <param name="numFrames">The number of frames after the present frame
+        /// in which to execute the action.</param>
         /// <param name="action">The action to be performed in the determined frame.</param>
         public Sequence AfterFrames(int numFrames, Action action)
         {
@@ -170,7 +172,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Invokes a function each frame until the function returns false.
         /// </summary>
-        /// <param name="func">The function to be executed each frame. When it returns false it will no longer be called.</param>
+        /// <param name="func">The function to be executed each frame. When it
+        /// returns false it will no longer be called.</param>
         public Sequence EachFrame(Func<bool> func)
         {
             if (func == null) return this;
@@ -181,7 +184,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Invokes a function each end of frame until the function returns false.
         /// </summary>
-        /// <param name="func">The function to be executed each end of frame. When it returns false it will no longer be called.</param>
+        /// <param name="func">The function to be executed each end of frame.
+        /// When it returns false it will no longer be called.</param>
         public Sequence EachEndOfFrame(Func<bool> func)
         {
             if (func == null) return this;
@@ -192,7 +196,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Invokes a function each fixed update until the function returns false.
         /// </summary>
-        /// <param name="func">The function to be executed each fixed update. When it returns false it will no longer be called.</param>
+        /// <param name="func">The function to be executed each fixed update.
+        /// When it returns false it will no longer be called.</param>
         public Sequence EachFixedUpdate(Func<bool> func)
         {
             if (func == null) return this;
@@ -257,9 +262,11 @@ namespace DigitalSalmon
         //-----------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Queues up an action to be invoked after all other queued actions are processed and the given delay has elapsed.
+        /// Queues up an action to be invoked after all other queued actions are
+        /// processed and the given delay has elapsed.
         /// </summary>
-        /// <param name="delay">The delay before invoking the action, after the existing queue has been processed.</param>
+        /// <param name="delay">The delay before invoking the action, after the
+        /// existing queue has been processed.</param>
         /// <param name="action">The action to invoke.</param>
         public Sequence Queue(float delay, Action action)
         {
@@ -268,10 +275,12 @@ namespace DigitalSalmon
         }
 
         /// <summary>
-        /// Queues up an action to be invoked after all other queued actions are processed and the given realtime delay has
+        /// Queues up an action to be invoked after all other queued actions
+        /// are processed and the given realtime delay has
         /// elapsed.
         /// </summary>
-        /// <param name="delay">The realtime delay before invoking the action, after the existing queue has been processed.</param>
+        /// <param name="delay">The realtime delay before invoking the action,
+        /// after the existing queue has been processed.</param>
         /// <param name="action">The action to invoke.</param>
         public Sequence QueueRealtime(float delay, Action action)
         {
@@ -289,7 +298,8 @@ namespace DigitalSalmon
         public void Cancel()
         {
             // don't cancel if we're not running, invoke event and return.
-            // N.B. this event might be useful for cancelling other things in response even if we didn't have to cancel ourselves.
+            // N.B. this event might be useful for cancelling other things in
+            // response even if we didn't have to cancel ourselves.
             if (!IsRunning || !IsActiveAndEnabled)
             {
                 Cancelled?.Invoke(CancelledStatus.NotRunning);
@@ -300,13 +310,14 @@ namespace DigitalSalmon
             foreach (IEnumerator coroutine in coroutines)
             {
                 if (coroutine == null) continue;
-                _monoBehaviour.StopCoroutine(coroutine);
+                monoBehaviour.StopCoroutine(coroutine);
             }
 
             coroutines.Clear();
 
             // null the queue coroutine reference, and clear the queue if it exists and has queued actions.
-            // N.B. we don't need to stop the queue coroutine, because it exists in the coroutines list which is cancelled above.
+            // N.B. we don't need to stop the queue coroutine, because it exists
+            // in the coroutines list which is cancelled above.
             actionQueueCoroutine = null;
             actionQueue.Clear();
 
@@ -331,7 +342,8 @@ namespace DigitalSalmon
         }
 
         /// <summary>
-        /// Coroutine that processes the queue of actions, waiting the specified time for an action then invoking it, then
+        /// Coroutine that processes the queue of actions, waiting the specified
+        /// time for an action then invoking it, then
         /// continuing through the queue.
         /// </summary>
         /// <returns>Enumerator.</returns>
@@ -389,17 +401,22 @@ namespace DigitalSalmon
             IEnumerator enumerator = DoCoroutine(delay, action, isRealtime);
             coroutines.Add(enumerator);
 
-            // start a coroutine that yields on the enumerator and removes it from the list of coroutines on completion.
-            // N.B. this StartCoroutine is "hanging" in the sense that we don't keep track of it; however, because we keep track of the
-            // inner enumerator, when the inner one is cancelled, this outer coroutine will also stop yielding over it.
+            // start a coroutine that yields on the enumerator and removes it
+            // from the list of coroutines on completion.
+            // N.B. this StartCoroutine is "hanging" in the sense that we don't
+            // keep track of it; however, because we keep track of the
+            // inner enumerator, when the inner one is cancelled, this outer
+            // coroutine will also stop yielding over it.
             MonoBehaviour.StartCoroutine(YieldCoroutineAndRemoveOnComplete(enumerator, coroutines));
         }
 
         /// <summary>
-        /// Queues up an action to be invoked after all other queued actions are processed and the given delay (either
+        /// Queues up an action to be invoked after all other queued actions
+        /// are processed and the given delay (either
         /// time-scale-influenced or realtime).
         /// </summary>
-        /// <param name="delay">The delay before invoking the action, after the existing queue has been processed.</param>
+        /// <param name="delay">The delay before invoking the action, after the
+        /// existing queue has been processed.</param>
         /// <param name="action">The action to invoke.</param>
         /// <param name="isRealtime">Is the delay realtime or time scale influenced?</param>
         private void EnqueueAction(float delay, Action action, bool isRealtime = false)
@@ -428,7 +445,8 @@ namespace DigitalSalmon
         //-----------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Coroutine that invokes the action after waiting for the specified time (either time-scale-influenced or realtime).
+        /// Coroutine that invokes the action after waiting for the specified
+        /// time (either time-scale-influenced or realtime).
         /// </summary>
         /// <param name="delay">The delay in seconds before invoking the action.</param>
         /// <param name="action">The action to invoke.</param>
@@ -454,9 +472,11 @@ namespace DigitalSalmon
         //-----------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Coroutine that executes the action after waiting for the specified number of frames.
+        /// Coroutine that executes the action after waiting for the specified
+        /// number of frames.
         /// </summary>
-        /// <param name="numFrames">The number of frames after the present frame in which to execute the action.</param>
+        /// <param name="numFrames">The number of frames after the present
+        /// frame in which to execute the action.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns>Enumerator.</returns>
         private static IEnumerator AfterFramesCoroutine(int numFrames, Action action)
@@ -474,7 +494,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Coroutine that executes the action after yielding over a given wait object..
         /// </summary>
-        /// <param name="wait">The wait <c>YieldInstruction</c> to yield over before executing the action.</param>
+        /// <param name="wait">The wait <c>YieldInstruction</c> to yield over
+        /// before executing the action.</param>
         /// <param name="action">The action to execute.</param>
         /// <returns>Enumerator.</returns>
         private static IEnumerator AfterWaitCoroutine(YieldInstruction wait, Action action)
@@ -486,7 +507,8 @@ namespace DigitalSalmon
         /// <summary>
         /// Coroutine that executes a given function each frame until the function returns false.
         /// </summary>
-        /// <param name="func">The function to execute. When this returns false the coroutine will stop.</param>
+        /// <param name="func">The function to execute. When this returns false
+        /// the coroutine will stop.</param>
         /// <returns>Enumerator.</returns>
         private static IEnumerator EachFrameCoroutine(Func<bool> func)
         {
@@ -498,7 +520,8 @@ namespace DigitalSalmon
         }
 
         /// <summary>
-        /// Coroutine that executes a given function after yielding over a given wait object until the function returns false.
+        /// Coroutine that executes a given function after yielding over a
+        /// given wait object until the function returns false.
         /// </summary>
         /// <param name="wait">The wait <c>YieldInstruction</c> to yield over before executing the function.</param>
         /// <param name="func">The function to execute. When this returns false the coroutine will stop.</param>
@@ -515,14 +538,19 @@ namespace DigitalSalmon
         /// <summary>
         /// Yields a given coroutine then removes that coroutine from a given hashset when complete.
         /// </summary>
-        private static IEnumerator YieldCoroutineAndRemoveOnComplete(IEnumerator coroutine, ICollection<IEnumerator> cache)
+        private static IEnumerator YieldCoroutineAndRemoveOnComplete(
+            IEnumerator coroutine, ICollection<IEnumerator> cache)
         {
             yield return coroutine;
 
-            // N.B. we won't make it here if the above nested coroutine is cancelled, but that's fine, as the act of cancelling will
+            // N.B. we won't make it here if the above nested coroutine is
+            // cancelled, but that's fine, as the act of cancelling will
             // itself do what we wanted to do below.
 
-            if (cache.Contains(coroutine)) { cache.Remove(coroutine); }
+            if (cache.Contains(coroutine))
+            {
+                cache.Remove(coroutine);
+            }
         }
     }
 }

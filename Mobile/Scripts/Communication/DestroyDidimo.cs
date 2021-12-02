@@ -3,8 +3,10 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class DestroyDidimo : BiDirectionalNativeInterface
     {
@@ -31,12 +33,12 @@ namespace Didimo.Mobile.Scripts
         protected override void RegisterNativeCall(AndroidJavaObject didimoUnityInterface) { didimoUnityInterface.Call("RegisterForCommunication", new MessageInterface()); }
 
 #elif UNITY_IOS
-        protected override void RegisterNativeCall() { registerCacheAnimation(CbMessage); }
+        protected override void RegisterNativeCall() { registerDestroyDidimo(CbMessage); }
 
         public delegate void InputDelegate(IntPtr obj, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void registerCacheAnimation(InputDelegate cb);
+        private static extern void registerDestroyDidimo(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
@@ -47,6 +49,7 @@ namespace Didimo.Mobile.Scripts
                 try
                 {
                     DidimoCache.TryDestroy(didimoKey);
+
                     successDelegate(obj);
                 }
                 catch (Exception e)

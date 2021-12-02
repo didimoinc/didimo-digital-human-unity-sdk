@@ -1,17 +1,20 @@
 using System;
-using DigitalSalmon;
 using UnityEngine;
+#if USING_UNITY_URP
 using UnityEngine.Rendering.Universal;
+#endif
 
 namespace Didimo
 {
     public class DragOrbit : MonoBehaviour
     {
+        public CameraConfig config;
+
         public class DragOrbitState : ICloneable
         {
-            public float inputYaw;
-            public float inputPitch;
-            public float inputZoom;
+            public float Yaw;
+            public float Pitch;
+            public float Zoom;
 
             // The actual camera values
             public float   harmonicYaw;
@@ -34,28 +37,33 @@ namespace Didimo
 
         public Vector3 HarmonicDir => EquirectangularProjection(HarmonicRot);
 
-        protected float Distance => CameraConfig.Distance + state.harmonicZoom;
+        protected float Distance => config.distance + state.harmonicZoom;
 
         private Vector2 HarmonicRot => new Vector2(state.harmonicYaw, state.harmonicPitch);
-        private Vector2 MousePosition => new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        private Vector2 MousePosition => Input.mousePosition;
 
         protected void Awake()
         {
             pinchZoom = new PinchZoom();
 
             // Create harmonics
-            yawHarmonic = new HarmonicFloat(() => state.harmonicYaw, (v) => state.harmonicYaw = v, () => 0.8f, () => 10);
-            pitchHarmonic = new HarmonicFloat(() => state.harmonicPitch, (v) => state.harmonicPitch = v, () => 0.8f, () => 10);
-            zoomHarmonic = new HarmonicFloat(() => state.harmonicZoom, (v) => state.harmonicZoom = v, () => 0.8f, () => 10);
+            yawHarmonic = new HarmonicFloat(() =>
+                state.harmonicYaw, (v) => state.harmonicYaw = v,
+                () => 0.8f, () => 10);
+            pitchHarmonic = new HarmonicFloat(() =>
+                state.harmonicPitch, (v) => state.harmonicPitch = v,
+                () => 0.8f, () => 10);
+            zoomHarmonic = new HarmonicFloat(() => state.harmonicZoom,
+                (v) => state.harmonicZoom = v, () => 0.8f, () => 10);
 
             // Set default values
             state.harmonicYaw = 0.5f;
-            state.harmonicPitch = CameraConfig.DefaultPitch;
+            state.harmonicPitch = config.defaultPitch;
             state.harmonicZoom = 0;
 
-            state.inputYaw = state.harmonicYaw;
-            state.inputPitch = state.harmonicPitch;
-            state.inputZoom = state.harmonicZoom;
+            state.Yaw = state.harmonicYaw;
+            state.Pitch = state.harmonicPitch;
+            state.Zoom = state.harmonicZoom;
 
             yawHarmonic.SetValue(state.harmonicYaw);
             pitchHarmonic.SetValue(state.harmonicPitch);
@@ -78,15 +86,15 @@ namespace Didimo
         public void ResetView(bool instant)
         {
             // Set default values
-            state.inputYaw = 0.5f;
-            state.inputPitch = CameraConfig.DefaultPitch;
-            state.inputZoom = 0;
+            state.Yaw = 0.5f;
+            state.Pitch = config.defaultPitch;
+            state.Zoom = 0;
 
             if (instant)
             {
-                yawHarmonic.SetValue(state.inputYaw);
-                pitchHarmonic.SetValue(state.inputPitch);
-                zoomHarmonic.SetValue(state.inputZoom);
+                yawHarmonic.SetValue(state.Yaw);
+                pitchHarmonic.SetValue(state.Pitch);
+                zoomHarmonic.SetValue(state.Zoom);
             }
 
             HandleTransform();
@@ -94,16 +102,31 @@ namespace Didimo
 
         private void HandlePostProcessing()
         {
-            if (SceneContext.Volume != null)
+#if USING_UNITY_URP
+            if (SceneContext.Volume == null)
             {
-                if (SceneContext.Volume.profile.TryGet(out DepthOfField depthOfField))
-                {
-                    depthOfField.focusDistance.value = Distance + CameraConfig.DepthOfFieldDistanceBias;
-                    depthOfField.focalLength.value = Distance + CameraConfig.FocalLength;
-                    depthOfField.gaussianStart.value = Distance + CameraConfig.DepthOfFieldDistanceBias;
-                    depthOfField.gaussianEnd.value = Distance + CameraConfig.DepthOfFieldDistanceBias + CameraConfig.FocalLength;
-                }
+                return;
             }
+
+            if (SceneContext.Volume.profile
+                .TryGet(out DepthOfField depthOfField) == false)
+            {
+                return;
+            }
+
+            depthOfField.focusDistance.value
+                = Distance + config.depthOfFieldDistanceBias;
+
+            depthOfField.focalLength.value
+                = Distance + config.focalLength;
+
+            depthOfField.gaussianStart.value
+                = Distance + config.depthOfFieldDistanceBias;
+
+            depthOfField.gaussianEnd.value
+                = Distance + config.depthOfFieldDistanceBias
+                + config.focalLength;
+#endif
         }
 
         private void HandleInput()
@@ -115,16 +138,14 @@ namespace Didimo
             {
                 pinchZoom.Update();
 
+                // Drag to rotate
                 if (Input.touchCount == 1 || Input.touchCount > 2)
                 {
-                    // Drag to rotate.
-                    (Vector2 position, Vector2 delta) avgTouch = GetAverageTouch();
-                    delta = avgTouch.delta * -1;
+                    delta = GetAverageTouch().delta;
                 }
-
-                if (Input.touchCount == 2)
+                else if (Input.touchCount == 2)
                 {
-                    zoomDelta = pinchZoom.GetZoomDelta() * -1;
+                    zoomDelta = pinchZoom.GetZoomDelta();
                 }
             }
             else
@@ -137,22 +158,22 @@ namespace Didimo
                 zoomDelta = -Input.mouseScrollDelta.y;
             }
 
-            state.inputYaw += delta.x * CameraConfig.Sensitivity.x * -0.0001f;
-            state.inputPitch += delta.y * CameraConfig.Sensitivity.y * -0.0001f;
-            state.inputZoom += zoomDelta * CameraConfig.ZoomSensitivity * 0.01f;
+            state.Yaw += delta.x * config.sensitivity.x * Time.deltaTime;
+            state.Pitch += delta.y * config.sensitivity.y * Time.deltaTime;
+            state.Zoom += zoomDelta * config.zoomSensitivity * Time.deltaTime;
 
-            if (state.inputPitch < CameraConfig.PitchLimit.x) state.inputPitch = CameraConfig.PitchLimit.x;
-            if (state.inputPitch > CameraConfig.PitchLimit.y) state.inputPitch = CameraConfig.PitchLimit.y;
+            state.Yaw = Mathf.Clamp(state.Yaw,
+                config.yawLimit.x, config.yawLimit.y);
 
-            if (state.inputYaw < CameraConfig.YawLimit.x) state.inputYaw = CameraConfig.YawLimit.x;
-            if (state.inputYaw > CameraConfig.YawLimit.y) state.inputYaw = CameraConfig.YawLimit.y;
+            state.Pitch = Mathf.Clamp(state.Pitch,
+                config.pitchLimit.x, config.pitchLimit.y);
 
-            if (state.inputZoom > CameraConfig.ZoomLimit.y) state.inputZoom = CameraConfig.ZoomLimit.y;
-            if (state.inputZoom < CameraConfig.ZoomLimit.x) state.inputZoom = CameraConfig.ZoomLimit.x;
+            state.Zoom = Mathf.Clamp(state.Zoom,
+                config.zoomLimit.x, config.zoomLimit.y);
 
-            yawHarmonic.SetTarget(state.inputYaw);
-            pitchHarmonic.SetTarget(state.inputPitch);
-            zoomHarmonic.SetTarget(state.inputZoom);
+            yawHarmonic.SetTarget(state.Yaw);
+            pitchHarmonic.SetTarget(state.Pitch);
+            zoomHarmonic.SetTarget(state.Zoom);
 
             state.prevPosition = MousePosition;
         }
@@ -165,9 +186,7 @@ namespace Didimo
             Vector2 avgDelta = Vector2.zero;
 
             if (touchCount == 0)
-            {
                 return (avgPosition, avgDelta);
-            }
 
             for (int i = 0; i < touchCount; i++)
             {
@@ -188,16 +207,22 @@ namespace Didimo
 
         private void HandleWrapping()
         {
-            if (yawHarmonic.IsRunning || pitchHarmonic.IsRunning) return;
+            if (yawHarmonic.IsRunning || pitchHarmonic.IsRunning)
+            {
+                return;
+            }
 
-            state.inputYaw = state.inputYaw % 360;
-            if (state.inputYaw < 0) state.inputYaw += 360;
-            state.harmonicYaw = state.inputYaw;
+            state.Yaw = state.Yaw % 360;
+            if (state.Yaw < 0)
+            {
+                state.Yaw += 360;
+            }
+            state.harmonicYaw = state.Yaw;
         }
 
         private void HandleTransform()
         {
-            Vector3 focus = CameraConfig.Focus;
+            Vector3 focus = config.focus;
             transform.position = focus + HarmonicDir * -Distance;
             transform.LookAt(focus, Vector3.up);
         }
@@ -206,11 +231,14 @@ namespace Didimo
         {
             inputVector.y = 1 - inputVector.y;
 
-            float xx = Mathf.Lerp(0, 1, (Mathf.Sin(inputVector.x * (2 * Mathf.PI)) * -1 + 1) / 2);
+            float xx = Mathf.Lerp(0, 1,
+                (Mathf.Sin(inputVector.x * (2 * Mathf.PI)) * -1 + 1) / 2);
             float xy = Mathf.Cos((inputVector.y + 0.5f) / 2 * (2 * Mathf.PI)) + 1;
             float x = Mathf.Lerp(xx, 0.5f, xy);
 
-            float yx = Mathf.Lerp(0, 1, (Mathf.Sin((inputVector.x + 0.25f) * (2 * Mathf.PI)) * -1 + 1) / 2);
+            float yx = Mathf.Lerp(0, 1,
+                (Mathf.Sin((inputVector.x + 0.25f) *
+                (2 * Mathf.PI)) * -1 + 1) / 2);
             float yy = Mathf.Cos((inputVector.y + 0.5f) / 2 * (2 * Mathf.PI)) + 1;
             float y = Mathf.Lerp(yx, 0.5f, yy);
 

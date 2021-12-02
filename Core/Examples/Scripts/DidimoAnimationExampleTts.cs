@@ -1,21 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using Didimo.Inspector;
+using Didimo.Core.Inspector;
+using Didimo.Core.Utility;
 using UnityEngine;
 
 namespace Didimo.Example
 {
+    /// <summary>
+    /// Example component to play an AWS Polly TTS file on your didimo.
+    /// Should be attached/added to the same object where the DidimoComponents component is.
+    /// </summary>
     public class DidimoAnimationExampleTts : DidimoBehaviour
     {
         [SerializeField]
-        [InspectorName("TTS Data")]
+        [Tooltip("JSON file that contains the TTS data to be played")]
         protected TextAsset ttsData;
 
         [SerializeField]
-        [InspectorName("TTS Audio Clip")]
+        [Tooltip("Audio file that contains the audio to be played along with the animation")]
         protected AudioClip ttsClip;
         
-        
+        /// <summary>
+        /// Play with sound the TTS animation provided.
+        /// This method only works in PlayMode.
+        /// </summary>
         [Button]
         private void PlaySelectedTts()
         {

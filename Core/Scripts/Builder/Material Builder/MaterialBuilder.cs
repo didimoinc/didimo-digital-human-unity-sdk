@@ -1,7 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using Didimo.Core.Config;
+using Didimo.Core.Model;
+using Didimo.Core.Utility;
 
 namespace Didimo.Builder
 {
@@ -27,7 +30,8 @@ namespace Didimo.Builder
         {
             if (!FindIdealShader(data.ShaderName, out Shader shader))
             {
-                Debug.LogWarning($"Failed to load Material Instance. Could not locate appropriate shader ({data.ShaderName})");
+                Debug.LogWarning($"Failed to load Material Instance. " +
+                    "Could not locate appropriate shader ({data.ShaderName})");
                 material = null;
                 return false;
             }
@@ -94,7 +98,10 @@ namespace Didimo.Builder
 
         public abstract bool FindIdealShader(string shaderName, out Shader shader);
 
-        public static void ProcessPropertyBlocksInHierarchy(Transform transform, Component callingComponent, Action<MaterialPropertyBlock, Component, Renderer, Material> onPropertyBlock)
+        public static void ProcessPropertyBlocksInHierarchy(
+            Transform transform,
+            Component callingComponent,
+            Action<MaterialPropertyBlock, Component, Renderer, Material> onPropertyBlock)
         {
             foreach (Renderer renderer in transform.GetComponentsInChildren<Renderer>())
             {
@@ -116,23 +123,31 @@ namespace Didimo.Builder
         public static bool CreateBuilderForCurrentPipeline(out MaterialBuilder builder)
         {
             builder = null;
-            switch (DidimoConfig.Pipeline)
+
+            var buildConfig = Resources.Load<DidimoBuildConfig>("DidimoBuildConfig");
+
+            switch (buildConfig.Pipeline)
             {
                 case SupportedRenderPipelines.Standard:
                     builder = new StandardPipelineMaterialBuilder();
                     return true;
+
                 case SupportedRenderPipelines.UniversalRenderPipeline:
                     builder = new UniversalRenderingPipelineMaterialBuilder();
                     return true;
+
                 case SupportedRenderPipelines.HighDefinitionRenderPipeline:
                     break;
             }
 
-            Debug.LogWarning($"No valid material builder available for pipeline: {DidimoConfig.Pipeline}");
+            Debug.LogWarning($"No valid material builder available " +
+                $"for pipeline: {buildConfig.Pipeline}");
+
             return false;
         }
 
-        protected virtual bool RequiresMaterialModification(string name, out Action<Material> modificationAction)
+        protected virtual bool RequiresMaterialModification(string name,
+            out Action<Material> modificationAction)
         {
             modificationAction = null;
             return false;

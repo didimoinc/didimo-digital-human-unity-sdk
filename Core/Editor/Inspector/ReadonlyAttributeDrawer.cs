@@ -1,9 +1,14 @@
-using Didimo.Inspector;
+using Didimo.Core.Inspector;
 using UnityEditor;
 using UnityEngine;
 
 namespace Didimo.Editor.Inspector
 {
+    /// <summary>
+    /// Read-Only attribute to show on the inspector.
+    /// Allows you to show any property on the editor that
+    /// is grayed out and cannot be changed. 
+    /// </summary>
     [CustomPropertyDrawer(typeof(ReadonlyAttribute))]
     public class ReadonlyAttributeDrawer : PropertyDrawer
     {

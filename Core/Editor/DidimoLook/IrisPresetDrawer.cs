@@ -1,14 +1,14 @@
-using Didimo;
+using Didimo.Core.Config;
 using UnityEditor;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Editor
 {
     [CustomPropertyDrawer(typeof(IrisPreset))]
     public class IrisPresetDrawer : PropertyDrawer
     {
-        const int   ICON_SIZE = 64;
-        const float MARGIN    = 2;
+        const int ICON_SIZE = 64;
+        const float MARGIN = 2;
 
         public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
         {
@@ -30,7 +30,9 @@ namespace Didimo
 
             try
             {
-                irises = IrisDatabase.Irises;
+                var irisDatabase = UnityEngine.Resources
+                    .Load<IrisDatabase>("IrisDatabase");
+                irises = irisDatabase.Irises;
             }
             catch
             {
@@ -61,7 +63,7 @@ namespace Didimo
                 if (crect.xMax > pos.width)
                 {
                     crect.x = pos.x;
-                    crect.y += (float) ICON_SIZE + MARGIN;
+                    crect.y += ICON_SIZE + MARGIN;
                 }
             }
 
@@ -71,11 +73,11 @@ namespace Didimo
             EditorGUILayout.EndVertical();
             if (EditorGUI.EndChangeCheck())
             {
-                DidimoIrisController IrisControl = (DidimoIrisController) prop.serializedObject.targetObject;
-                if (IrisControl)
+                DidimoIrisController irisControl = (DidimoIrisController)prop.serializedObject.targetObject;
+                if (irisControl)
                 {
                     prop.serializedObject.ApplyModifiedProperties();
-                    IrisControl.ApplyPreset();
+                    irisControl.ApplyPreset();
                 }
             }
         }

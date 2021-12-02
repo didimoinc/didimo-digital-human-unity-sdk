@@ -1,9 +1,10 @@
-
-using Didimo;
 using UnityEditor;
 using UnityEngine;
+using Didimo.Core.Deformables;
+using Didimo.Core.Config;
 
-
+namespace Didimo.Core.Editor
+{
     public class DrawHelpers
     {
         static public void DrawOutlineRect(Rect bounds, Color color, float border)
@@ -24,37 +25,42 @@ using UnityEngine;
     {
         SerializedProperty activeProperty = null;
         HairLayerDatabaseGroupEntry activeHairDB = null;
-        void SaveAsPreset() 
-        {   
-            if (activeHairDB != null)
-            {
-                Hair hair = (Hair)activeProperty.serializedObject.targetObject;
-                if (hair)
-                {
-                    activeHairDB.SetEntry(hair.innerHairLayer, "", HairLayer.Inner);
-                    activeHairDB.SetEntry(hair.outerHairLayer, "", HairLayer.Outer);
-                    activeProperty.serializedObject.Update();
-                    activeProperty.serializedObject.ApplyModifiedProperties();
-                    EditorUtility.SetDirty(DidimoResources.HairPresetDatabase);
-                    activeProperty.serializedObject.UpdateIfRequiredOrScript();
-            }        
-            }
-        }
-      
-        void SaveAsMeshPreset() 
+        void SaveAsPreset()
         {
             if (activeHairDB != null)
             {
                 Hair hair = (Hair)activeProperty.serializedObject.targetObject;
                 if (hair)
                 {
+                    var hairPresetDatabase = UnityEngine.Resources
+                        .Load<HairPresetDatabase>("HairPresetDatabase");
+
+                    activeHairDB.SetEntry(hair.innerHairLayer, "", HairLayer.Inner);
+                    activeHairDB.SetEntry(hair.outerHairLayer, "", HairLayer.Outer);
+                    activeProperty.serializedObject.Update();
+                    activeProperty.serializedObject.ApplyModifiedProperties();
+                    EditorUtility.SetDirty(hairPresetDatabase);
+                    activeProperty.serializedObject.UpdateIfRequiredOrScript();
+                }
+            }
+        }
+
+        void SaveAsMeshPreset()
+        {
+            if (activeHairDB != null)
+            {
+                Hair hair = (Hair)activeProperty.serializedObject.targetObject;
+                if (hair)
+                {
+                    var hairPresetDatabase = UnityEngine.Resources
+                        .Load<HairPresetDatabase>("HairPresetDatabase");
                     var hairpieceName = HairLayerSettings.GetHairIDFromObject(hair);
                     activeHairDB.SetEntry(hair.innerHairLayer, hairpieceName, HairLayer.Inner);
                     activeHairDB.SetEntry(hair.outerHairLayer, hairpieceName, HairLayer.Outer);
                     activeProperty.serializedObject.Update();
-                    activeProperty.serializedObject.ApplyModifiedProperties();                               
-                    EditorUtility.SetDirty(DidimoResources.HairPresetDatabase);           
-                    activeProperty.serializedObject.UpdateIfRequiredOrScript();                    
+                    activeProperty.serializedObject.ApplyModifiedProperties();
+                    EditorUtility.SetDirty(hairPresetDatabase);
+                    activeProperty.serializedObject.UpdateIfRequiredOrScript();
                 }
             }
         }
@@ -73,18 +79,22 @@ using UnityEngine;
             const float margin = 2;
             Rect selRect = new Rect();
             Rect crect = new Rect(cr.position, rectSize);
-            EditorGUI.BeginChangeCheck();        
-            if (HairPresetDatabase.hairs != null)
+            EditorGUI.BeginChangeCheck();
+
+            var hairPresetDatabase = UnityEngine.Resources
+                .Load<HairPresetDatabase>("HairPresetDatabase");
+
+            if (hairPresetDatabase.Hairs != null)
             {
-                Event e = Event.current;           
-                for (int i = 0; i < HairPresetDatabase.hairs.Length; ++i)
+                Event e = Event.current;
+                for (int i = 0; i < hairPresetDatabase.Hairs.Length; ++i)
                 {
                     var oldColor = GUI.backgroundColor;
                     var oldContentColor = GUI.contentColor;
                     GUI.contentColor = Color.white;
-                    var hdb = HairPresetDatabase.hairs[i];                    
+                    var hdb = hairPresetDatabase.Hairs[i];
                     var hairPresetEntry = hdb.list.Count > 0 ? hdb.list[0] : null;
-                    Color ic = hairPresetEntry != null ? hairPresetEntry.color : new Color(0.0f,0.0f,0.0f,0.0f);
+                    Color ic = hairPresetEntry != null ? hairPresetEntry.color : new Color(0.0f, 0.0f, 0.0f, 0.0f);
                     Color c = new Color(ic.r, ic.g, ic.b, 1.0f);
                     GUI.backgroundColor = c;
                     SerializedProperty myenum = prop.FindPropertyRelative("value");
@@ -113,7 +123,7 @@ using UnityEngine;
                     crect = new Rect(new Vector2(crect.x + rectSize.x + margin, crect.y), rectSize);
                 }
             }
-            DrawHelpers.DrawOutlineRect(selRect, Color.white, 2);                        
+            DrawHelpers.DrawOutlineRect(selRect, Color.white, 2);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
             if (EditorGUI.EndChangeCheck())
@@ -131,3 +141,5 @@ using UnityEngine;
             }
         }
     }
+
+}

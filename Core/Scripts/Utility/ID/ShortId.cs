@@ -1,23 +1,23 @@
 using System;
 using System.Text;
 
-namespace DigitalSalmon.DarkestFayte
+namespace Didimo.DarkestFayte
 {
     /*
         MIT License
-        
+
         Copyright (c) 2017 Bolorunduro Winner-Timothy B
-        
+
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
         in the Software without restriction, including without limitation the rights
         to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
         copies of the Software, and to permit persons to whom the Software is
         furnished to do so, subject to the following conditions:
-        
+
         The above copyright notice and this permission notice shall be included in all
         copies or substantial portions of the Software.
-        
+
         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
         IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
         FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,8 +36,8 @@ namespace DigitalSalmon.DarkestFayte
         private const string SPECIALS = "-_";
 
         // app variables
-        private static Random _random = new Random();
-        private static string _pool   = $"{LOWERS}{UPPERS}";
+        private static Random random = new Random();
+        private static string pool   = $"{LOWERS}{UPPERS}";
 
         // thread management variables
         private static readonly object ThreadLock = new object();
@@ -49,8 +49,8 @@ namespace DigitalSalmon.DarkestFayte
         {
             lock (ThreadLock)
             {
-                _random = new Random();
-                _pool = $"{LOWERS}{UPPERS}";
+                random = new Random();
+                pool = $"{LOWERS}{UPPERS}";
             }
         }
 
@@ -62,7 +62,7 @@ namespace DigitalSalmon.DarkestFayte
         /// <returns>A random string</returns>
         public static string Generate(bool useNumbers = false, bool useSpecial = true)
         {
-            int length = _random.Next(7, 15);
+            int length = random.Next(7, 15);
             return Generate(useNumbers, useSpecial, length);
         }
 
@@ -85,8 +85,8 @@ namespace DigitalSalmon.DarkestFayte
 
             lock (ThreadLock)
             {
-                __pool = _pool;
-                rand = _random;
+                __pool = ShortId.pool;
+                rand = random;
             }
 
             StringBuilder poolBuilder = new StringBuilder(__pool);
@@ -123,7 +123,8 @@ namespace DigitalSalmon.DarkestFayte
         /// Changes the character set that id's are generated from
         /// </summary>
         /// <param name="characters">The new character set</param>
-        /// <exception cref="InvalidOperationException">Thrown when the new character set is less than 20 characters</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the new character
+        /// set is less than 20 characters</exception>
         public static void SetCharacters(string characters)
         {
             if (string.IsNullOrWhiteSpace(characters))
@@ -142,10 +143,11 @@ namespace DigitalSalmon.DarkestFayte
 
             if (stringBuilder.Length < 20)
             {
-                throw new InvalidOperationException("The replacement characters must be at least 20 letters in length and without whitespace.");
+                throw new InvalidOperationException("The replacement characters must be at "
+                    + "least 20 letters in length and without whitespace.");
             }
 
-            _pool = stringBuilder.ToString();
+            pool = stringBuilder.ToString();
         }
 
         /// <summary>
@@ -156,7 +158,7 @@ namespace DigitalSalmon.DarkestFayte
         {
             lock (ThreadLock)
             {
-                _random = new Random(seed);
+                random = new Random(seed);
             }
         }
     }

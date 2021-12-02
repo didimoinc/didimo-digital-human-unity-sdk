@@ -7,9 +7,17 @@ using UnityEngine;
 
 namespace Didimo.LiveCapture
 {
+    /// <summary>
+    /// FaceMapper class to use didimos along with Unity's ARKit LiveCapture Integration.
+    /// Maps the names of the shapes received from ARKit and triggers the appropriate animations.
+    /// </summary>
     [CreateAssetMenu(fileName = "DidimoFaceMapper", menuName = "Didimo/ARKit Face Capture/DidimoFaceMapper")]
     public class DidimoLiveCaptureMapper : FaceMapper
     {
+        /// <summary>
+        /// Cache object that contains a map of the received blendshapes to their proper names
+        /// and a reference to the PoseController to trigger the animations.
+        /// </summary>
         private class Cache : FaceMapperCache
         {
             private readonly DidimoComponents didimoComponents;
@@ -25,24 +33,25 @@ namespace Didimo.LiveCapture
                     string shapeName = shape.ToString();
                     PoseNameMapper[shape] = $"ARKit_{RemapShapeName(shapeName)}";
                 }
-            } 
+            }
         }
 
         public static string RemapShapeName(string shapeName)
         {
             return  $"{shapeName.First().ToString().ToLower()}{shapeName.Substring(1)}";
         }
-        
+
         public override FaceMapperCache CreateCache(FaceActor actor)
         {
             DidimoComponents didimoComponents = actor.GetComponent<DidimoComponents>();
-            
+
             if (didimoComponents != null) return new Cache(didimoComponents);
             return null;
         }
 
-        
-        public override void ApplyBlendShapesToRig(FaceActor actor, FaceMapperCache cache, ref FaceBlendShapePose pose, bool continuous)
+
+        public override void ApplyBlendShapesToRig(
+            FaceActor actor, FaceMapperCache cache, ref FaceBlendShapePose pose, bool continuous)
         {
             // Possible improvements at DefaultFaceMapper.ApplyBlendShapesToRig (line 231)
             if (!Application.isPlaying) return;
@@ -53,9 +62,10 @@ namespace Didimo.LiveCapture
             }
         }
 
-        public override void ApplyHeadPositionToRig(FaceActor actor, FaceMapperCache cache, ref Vector3 headPosition, bool continuous)
+        public override void ApplyHeadPositionToRig(
+            FaceActor actor, FaceMapperCache cache, ref Vector3 headPosition, bool continuous)
         {
-            // Not Implemented
+            //TODO: Implemente or remove?
         }
 
         public override void ApplyHeadRotationToRig(FaceActor actor, FaceMapperCache cache, ref Quaternion headOrientation, bool continuous)
@@ -68,7 +78,7 @@ namespace Didimo.LiveCapture
 
         public override void ApplyEyeRotationToRig(FaceActor actor, FaceMapperCache cache, ref FaceBlendShapePose pose, ref Quaternion leftEyeRotation, ref Quaternion rightEyeRotation, bool continuous)
         {
-            // Not Implemented
+            //TODO Implemente or remove?
         }
     }
 }

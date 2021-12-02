@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System;
+using Didimo.Core.Utility;
 
 namespace Didimo
 {
+    /// <summary>
+    /// Abstract class for low-level control of the didimo's animation system.
+    /// </summary>
     public abstract class DidimoPoseController : DidimoBehaviour
     {
+        /// <summary>
+        /// Flags for the supported movement types.
+        /// </summary>
         [Flags]
         public enum ESupportedMovements: short
         {

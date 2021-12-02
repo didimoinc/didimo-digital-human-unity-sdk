@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Editor
 {
     class DidimoImportUtils : AssetPostprocessor
     {
@@ -36,9 +36,10 @@ namespace Didimo
 
         private static void DelayedReimportDidimos()
         {
+            //TODO: Check now that we are loading SO resources on demand, if this Reloading is still required
             // If we failed to import didimos due to null resources, reimport them
-            // This happens when we first import the SDK, because we don't have DidimoResources available when we're trying to import the gltf didimos
-            // We need DidimoResources to be able to create materials
+            // This happens when we first import the SDK,
+            // because we don't have some available when we're trying to import the gltf didimos
             if (GLTFImporter.CanImportDidimos())
             {
                 foreach (string didimoPath in didimosToReimport)

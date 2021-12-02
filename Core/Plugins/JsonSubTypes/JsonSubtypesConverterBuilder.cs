@@ -1,22 +1,22 @@
-﻿using System;
+using System;
 using Newtonsoft.Json;
 
 namespace JsonSubTypes
 {
     //  MIT License
-    //  
+    //
     //  Copyright (c) 2017 Emmanuel Counasse
-    //  
+    //
     //  Permission is hereby granted, free of charge, to any person obtaining a copy
     //  of this software and associated documentation files (the "Software"), to deal
     //  in the Software without restriction, including without limitation the rights
     //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     //  copies of the Software, and to permit persons to whom the Software is
     //  furnished to do so, subject to the following conditions:
-    //  
+    //
     //  The above copyright notice and this permission notice shall be included in all
     //  copies or substantial portions of the Software.
-    //  
+    //
     //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,19 +27,19 @@ namespace JsonSubTypes
 
     public class JsonSubtypesConverterBuilder
     {
-        private Type _baseType;
-        private string _discriminatorProperty;
-        private readonly NullableDictionary<object, Type> _subTypeMapping = new NullableDictionary<object, Type>();
-        private bool _serializeDiscriminatorProperty;
-        private bool _addDiscriminatorFirst;
-        private Type _fallbackSubtype;
+        private Type baseType;
+        private string discriminatorProperty;
+        private readonly NullableDictionary<object, Type> subTypeMapping = new NullableDictionary<object, Type>();
+        private bool serializeDiscriminatorProperty;
+        private bool addDiscriminatorFirst;
+        private Type fallbackSubtype;
 
         public static JsonSubtypesConverterBuilder Of(Type baseType, string discriminatorProperty)
         {
             var customConverterBuilder = new JsonSubtypesConverterBuilder
             {
-                _baseType = baseType,
-                _discriminatorProperty = discriminatorProperty
+                baseType = baseType,
+                discriminatorProperty = discriminatorProperty
             };
             return customConverterBuilder;
         }
@@ -56,14 +56,14 @@ namespace JsonSubTypes
 
         public JsonSubtypesConverterBuilder SerializeDiscriminatorProperty(bool addDiscriminatorFirst)
         {
-            _serializeDiscriminatorProperty = true;
-            _addDiscriminatorFirst = addDiscriminatorFirst;
+            serializeDiscriminatorProperty = true;
+            this.addDiscriminatorFirst = addDiscriminatorFirst;
             return this;
         }
 
         public JsonSubtypesConverterBuilder RegisterSubtype(Type subtype, object value)
         {
-            _subTypeMapping.Add(value, subtype);
+            subTypeMapping.Add(value, subtype);
             return this;
         }
 
@@ -74,7 +74,7 @@ namespace JsonSubTypes
 
         public JsonSubtypesConverterBuilder SetFallbackSubtype(Type fallbackSubtype)
         {
-            _fallbackSubtype = fallbackSubtype;
+            this.fallbackSubtype = fallbackSubtype;
             return this;
         }
 
@@ -85,7 +85,10 @@ namespace JsonSubTypes
 
         public JsonConverter Build()
         {
-            return new JsonSubtypesByDiscriminatorValueConverter(_baseType, _discriminatorProperty, _subTypeMapping, _serializeDiscriminatorProperty, _addDiscriminatorFirst, _fallbackSubtype);
+            return new JsonSubtypesByDiscriminatorValueConverter(
+                baseType, discriminatorProperty, subTypeMapping,
+                serializeDiscriminatorProperty, addDiscriminatorFirst,
+                fallbackSubtype);
         }
     }
 }

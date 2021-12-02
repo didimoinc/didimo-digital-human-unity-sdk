@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace Didimo.Oculus.Example
 {
+    /// <summary>
+    /// Class that validates if the Oculus Integration package is installed.
+    /// If this is the case, enables the rest of the files on this Oculus module
+    /// to be compiled.
+    /// </summary>
     public static class OculusAssemblyValidator
     {
         

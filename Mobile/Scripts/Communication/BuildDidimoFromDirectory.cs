@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using AOT;
 using Didimo.Builder;
 using UnityEngine;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class BuildDidimoFromDirectory : BiDirectionalNativeInterface
     {

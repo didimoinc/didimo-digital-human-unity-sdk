@@ -4,8 +4,9 @@ using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class SetOrbitControls : BiDirectionalNativeInterface
     {

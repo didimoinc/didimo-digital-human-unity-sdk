@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Didimo.Core.Model;
 
 namespace Didimo.Builder.JSON
 {
@@ -19,7 +20,8 @@ namespace Didimo.Builder.JSON
             GameObject go = parent.Find(node.Name).gameObject;
             if (go == null)
             {
-                throw new Exception("Failed to get transform named " + node.Name + ", when creating the didimo hierarchy.");
+                throw new Exception("Failed to get transform named " +
+                    node.Name + ", when creating the didimo hierarchy.");
             }
 
             SetTransformValues(node, go.transform);

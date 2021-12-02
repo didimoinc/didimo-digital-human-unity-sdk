@@ -1,42 +1,51 @@
-﻿using System;
+using Didimo.Core.Config;
+using System;
 using UnityEngine;
 
 namespace Didimo.Builder
 {
     public class UniversalRenderingPipelineMaterialBuilder : MaterialBuilder
     {
-        public override bool FindIdealShader(string shaderName, out Shader shader)
+        public override bool FindIdealShader(
+            string shaderName, out Shader shader)
         {
             shader = null;
+
+            var shaderResources = Resources
+                .Load<ShaderResources>("ShaderResources");
 
             switch (shaderName.ToLowerInvariant())
             {
                 case "eye":
-                    shader = ShaderResources.Eye;
+                    shader = shaderResources.Eye;
                     break;
                 case "skin":
-                    shader = ShaderResources.Skin;
+                    shader = shaderResources.Skin;
                     break;
                 case "mouth":
-                    shader = ShaderResources.Mouth;
+                    shader = shaderResources.Mouth;
                     break;
                 case "transcolor":
-                    shader = ShaderResources.Eyelash;
+                    shader = shaderResources.Eyelash;
                     break;
                 case "texturelighting":
-                    shader = ShaderResources.UnlitTexture;
+                    shader = shaderResources.UnlitTexture;
                     break;
                 case "hair":
-                    shader = ShaderResources.Hair;
+                    shader = shaderResources.Hair;
                     break;
             }
 
-            if (shader == null) shader = Shader.Find(shaderName);
+            if (shader == null)
+            {
+                shader = Shader.Find(shaderName);
+            }
 
             return shader != null;
         }
 
-        public override bool NameToProperty(string name, out string propertyName)
+        public override bool NameToProperty(
+            string name, out string propertyName)
         {
             propertyName = name;
 
@@ -88,7 +97,8 @@ namespace Didimo.Builder
             return true;
         }
 
-        protected override bool RequiresMaterialModification(string name, out Action<Material> modificationAction)
+        protected override bool RequiresMaterialModification(
+            string name, out Action<Material> modificationAction)
         {
             void ModifyMaterial(Material material)
             {

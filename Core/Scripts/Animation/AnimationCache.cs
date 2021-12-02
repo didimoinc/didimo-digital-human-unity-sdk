@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Didimo
 {
     public static class AnimationCache
     {
-        private static readonly List<DidimoAnimation>               allAnimations;
+        private static readonly List<DidimoAnimation> allAnimations;
         private static readonly Dictionary<string, DidimoAnimation> idToAnimation;
 
         public static IReadOnlyList<DidimoAnimation> AllAnimations => allAnimations;
@@ -108,6 +107,41 @@ namespace Didimo
             return false;
         }
 
-        private static void RegisterDefaults() { ExpressionDatabase.RegisterDefaults(); }
+        public static void RegisterDefaults()
+        {
+            var expressionDatabase = Resources
+                .Load<ExpressionDatabase>("ExpressionDatabase");
+
+            foreach (TextAsset expression in expressionDatabase.Expressions)
+            {
+                RegisterAnimation(expression);
+            }
+        }
+
+        private static void RegisterAnimation(TextAsset expression)
+        {
+            if (expression == null)
+            {
+                Debug.LogWarning("Cannot deserialize null expression, skipping");
+                return;
+            }
+
+            DidimoAnimation didimoAnimation = DidimoAnimation.FromJSONContent(expression.name, expression.text);
+
+            if (didimoAnimation == null)
+            {
+                Debug.LogWarning("Failed to deserialize animation json in expression database");
+                return;
+            }
+
+            if (TryGet(didimoAnimation.AnimationName, out _))
+            {
+                Debug.LogWarning($"Animation with id {didimoAnimation.AnimationName} already cached, skipping.");
+                return;
+            }
+
+            didimoAnimation.WrapMode = WrapMode.ClampForever;
+            Add(didimoAnimation.AnimationName, didimoAnimation);
+        }
     }
 }

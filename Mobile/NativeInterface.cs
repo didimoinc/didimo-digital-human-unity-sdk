@@ -7,10 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Didimo.Builder;
 using Didimo.Builder.JSON;
-using DigitalSalmon;
+using Didimo;
 using JsonSubTypes;
 using Newtonsoft.Json;
 using UnityEngine;
+using Didimo.Core.Deformables;
+using Didimo.Core.Utility;
 
 namespace Didimo
 {

@@ -30,10 +30,14 @@ namespace Didimo
 
         public float GetZoomDelta()
         {
-            if (Input.touchCount != 2) return 0;
+            if (Input.touchCount != 2)
+            {
+                return 0;
+            }
 
             float startDistance = (touch1Start - touch0Start).magnitude;
-            float currentDistance = (Input.GetTouch(1).position - Input.GetTouch(0).position).magnitude;
+            float currentDistance = (Input.GetTouch(1).position
+                - Input.GetTouch(0).position).magnitude;
 
             return currentDistance - startDistance;
         }

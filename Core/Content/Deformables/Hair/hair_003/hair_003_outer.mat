@@ -76,7 +76,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _flowMap:
-        m_Texture: {fileID: 2800000, guid: 53d120863ae2df641b91646f52a0871e, type: 3}
+        m_Texture: {fileID: 2800000, guid: c9faaf8ad24d5a24cb9d3e1d1df42fa4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _rootToTip:
@@ -97,11 +97,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_0eae9ea6f89b4dc69ac6a90555a90130: 0
+    - Boolean_12d4173d5eae4d73b1ae847c0d1952a3: 0
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
+    - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
+    - Vector1_0586c13dde9241098b96e356887aff11: 0
+    - Vector1_1f8421e6e8b64fffbcb6451c1343b97f: 0.29
+    - Vector1_29d4e3c6f80041fa9ce2f9667003d0ce: 0
+    - Vector1_2e2d8077b0814b96b763e04567755d9f: 0
+    - Vector1_51402fcc57ad4ce1aa8aa1a6cd2190c1: 0
     - Vector1_68710ef1732d4141a522a8ce9b9bb571: 1.36
     - _AlphaClip: 0
     - _AlphaLODbias: -0.8
-    - _AnisoHighlightRotation: 0
+    - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -117,6 +124,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _MeshTangentRotation: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -127,17 +135,21 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TangentFlowMapRotation: 270
+    - _UseFlowMap: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _alphaClipThreshold: 0.5
+    - _envSpecMul: 0
     - _flowMultiplier: -12.2
     - _hairAlbedoMultiply: 0.518
-    - _specExp1: 150
+    - _specExp1: 127
     - _specExp2: 48
     - _specMultiply: 3.3
     - _specShift: 0.1
     - _specShift2: 0.12
     m_Colors:
+    - Vector3_347d0541ec414879bcd39a3c2c070edb: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

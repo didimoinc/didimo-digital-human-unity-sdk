@@ -1,7 +1,7 @@
-﻿using DigitalSalmon.Resources;
+﻿using Didimo.Resources;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public abstract class FontGroup
     {

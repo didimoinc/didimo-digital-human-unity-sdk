@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace Didimo.Oculus.Example
 {
+    /// <summary>
+    /// Class that moves the didimo closer of further to the camera.
+    /// You can view this script in action on the OculusTestApplication scene.
+    /// </summary>
     public class OculusSceneDistanceViewer : MonoBehaviour
     {
 #if USING_OCULUS_INTEGRATION_PACKAGE

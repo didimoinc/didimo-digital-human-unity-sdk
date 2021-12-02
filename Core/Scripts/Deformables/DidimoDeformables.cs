@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using DigitalSalmon.Extensions;
 using UnityEngine;
+using Didimo.Extensions;
+using Didimo.Core.Utility;
 
-namespace Didimo
+namespace Didimo.Core.Deformables
 {
     public class DidimoDeformables : DidimoBehaviour
     {
@@ -33,9 +34,15 @@ namespace Didimo
             return instance != null;
         }
 
-        public bool TryCreate<TDeformable>(string deformableId, out TDeformable instance) where TDeformable : Deformable
+        public bool TryCreate<TDeformable>(
+            string deformableId, out TDeformable instance)
+            where TDeformable : Deformable
         {
-            if (!DeformableDatabase.TryFindDeformable(deformableId, out TDeformable deformable))
+            var deformableDatabase = Resources
+                .Load<DeformableDatabase>("DeformableDatabase");
+
+            if (TryFindDeformable(deformableDatabase.Deformables,
+                deformableId, out TDeformable deformable) == false)
             {
                 Debug.LogWarning($"No database deformable found with ID: {deformableId}");
                 instance = null;
@@ -69,7 +76,8 @@ namespace Didimo
 
             if (idealBone == null)
             {
-                Debug.LogWarning($"Cannot find ideal deformable bone with any of the names: '{string.Join(",", instance.IdealBoneNames)}'");
+                Debug.LogWarning($"Cannot find ideal deformable bone with any of "
+                    + $"the names: '{string.Join(",", instance.IdealBoneNames)}'");
             }
 
             Transform instanceTransform = instance.transform;
@@ -96,11 +104,33 @@ namespace Didimo
             deformables.RemoveWhere(d => d.Value is TDeformable, OnRemove);
         }
 
-        private bool Exists<TDeformable>() where TDeformable : Deformable => TryFindAllDeformables<TDeformable>().Any();
+        private bool Exists<TDeformable>() where TDeformable : Deformable
+        {
+            return TryFindAllDeformables<TDeformable>().Any();
+        }
 
         private IEnumerable<TDeformable> TryFindAllDeformables<TDeformable>() where TDeformable : Deformable
         {
             return deformables.Where(d => d.Value is TDeformable).Select(d => d.Value).Cast<TDeformable>();
+        }
+
+        public static bool TryFindDeformable(Deformable[] deformableArray,
+            string id, out Deformable deformable)
+        {
+            deformable = deformableArray.FirstOrDefault(h => h.ID == id);
+
+            return deformable != null;
+        }
+
+        public static bool TryFindDeformable<TDeformable>
+            (Deformable[] deformableArray, string id,
+            out TDeformable deformable)
+            where TDeformable : Deformable
+        {
+            deformable = deformableArray.Where(d => d is TDeformable)
+                .Cast<TDeformable>().FirstOrDefault(h => h.ID == id);
+
+            return deformable != null;
         }
     }
 }
