@@ -1,0 +1,16 @@
+{
+    "name": "Didimo.Networking",
+    "rootNamespace": "",
+    "references": [
+        "GUID:95b459ff379a9424ea557aacf5fe885a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

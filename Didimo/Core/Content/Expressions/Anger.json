@@ -1,0 +1,12 @@
+{
+  "source": "defaultExpressions",
+  "poses": {
+    "Anger": [
+      1
+    ]
+  },
+  "fps": 1,
+  "wrapMode": 8,
+  "animationLength": 1,
+  "frameCount": 1
+}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5effd1059e3345a4a423f89a6eafbd67, type: 3}
+  m_Name: CameraConfig MeetADidimo
+  m_EditorClassIdentifier: 
+  focus: {x: 0, y: 1.712, z: 0}
+  distance: 0.614
+  sensitivity: {x: -0.08, y: -0.12}
+  zoomSensitivity: 2
+  defaultYaw: 0.5
+  defaultPitch: 0.5
+  pitchLimit: {x: 0.3274171, y: 0.5235871}
+  yawLimit: {x: 0.23203298, y: 0.8031126}
+  zoomLimit: {x: -0.15602982, y: 0.44372058}
+  depthOfFieldDistanceBias: -0.1
+  focalLength: 85
