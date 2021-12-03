@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,18 +75,18 @@ namespace JsonSubTypes
 
         protected readonly string JsonDiscriminatorPropertyName;
 
-        [ThreadStatic] private static bool _isInsideRead;
+        [ThreadStatic] private static bool isInsideRead;
 
-        [ThreadStatic] private static JsonReader _reader;
+        [ThreadStatic] private static JsonReader reader;
 
         public override bool CanRead
         {
             get
             {
-                if (!_isInsideRead)
+                if (!isInsideRead)
                     return true;
 
-                return !string.IsNullOrEmpty(_reader.Path);
+                return !string.IsNullOrEmpty(reader.Path);
             }
         }
 
@@ -136,7 +136,8 @@ namespace JsonSubTypes
                         var elementType = GetElementType(objectType);
                         if (elementType == null)
                         {
-                            throw CreateJsonReaderException(reader, $"Impossible to read JSON array to fill type: {objectType.Name}");
+                            throw CreateJsonReaderException(reader,
+                                $"Impossible to read JSON array to fill type: {objectType.Name}");
                         }
                         value = ReadArray(reader, objectType, elementType, serializer);
                         break;
@@ -202,7 +203,8 @@ namespace JsonSubTypes
         private object ReadObject(JsonReader reader, Type objectType, JsonSerializer serializer)
         {
             // I would prefer to create a new reader, but can't work out how to
-            // This seems a reasonable alternative - https://github.com/JamesNK/Newtonsoft.Json/issues/1605#issuecomment-602673364
+            // This seems a reasonable alternative
+            // https://github.com/JamesNK/Newtonsoft.Json/issues/1605#issuecomment-602673364
             var savedDateParseSettings = reader.DateParseHandling;
             reader.DateParseHandling = DateParseHandling.None;
             var jObject = JObject.Load(reader);
@@ -273,9 +275,11 @@ namespace JsonSubTypes
             }
 
             var jsonConverterAttribute = GetAttribute<JsonConverterAttribute>(targetType);
-            if (jsonConverterAttribute != null && ToTypeInfo(typeof(JsonSubtypes)).IsAssignableFrom(ToTypeInfo(jsonConverterAttribute.ConverterType)))
+            if (jsonConverterAttribute != null
+                && ToTypeInfo(typeof(JsonSubtypes)).IsAssignableFrom(ToTypeInfo(jsonConverterAttribute.ConverterType)))
             {
-                return (JsonSubtypes)Activator.CreateInstance(jsonConverterAttribute.ConverterType, jsonConverterAttribute.ConverterParameters);
+                return (JsonSubtypes)Activator.CreateInstance(
+                    jsonConverterAttribute.ConverterType, jsonConverterAttribute.ConverterParameters);
             }
 
             return jsonConverterCollection
@@ -310,7 +314,8 @@ namespace JsonSubTypes
 
             if (types.Length > 1)
             {
-                throw new JsonSerializationException("Ambiguous type resolution, expected only one type but got: " + String.Join(", ", types.Select(t => t.FullName).ToArray()));
+                throw new JsonSerializationException("Ambiguous type resolution, expected only one type but got: "
+                    + String.Join(", ", types.Select(t => t.FullName).ToArray()));
             }
 
             return null;
@@ -352,7 +357,8 @@ namespace JsonSubTypes
 
             var matchingProperty = jObject
                 .Keys
-                .FirstOrDefault(jsonProperty => string.Equals(jsonProperty, propertyName, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(jsonProperty => string.Equals(
+                    jsonProperty, propertyName, StringComparison.OrdinalIgnoreCase));
 
             if (matchingProperty == null)
             {
@@ -377,7 +383,8 @@ namespace JsonSubTypes
             var typeByName = insideAssembly.GetType(typeName);
             if (parentTypeFullName != null && typeByName == null)
             {
-                var searchLocation = parentTypeFullName.Substring(0, parentTypeFullName.Length - parentType.Name.Length);
+                var searchLocation = parentTypeFullName
+                    .Substring(0, parentTypeFullName.Length - parentType.Name.Length);
                 typeByName = insideAssembly.GetType(searchLocation + typeName, false, true);
             }
 
@@ -390,7 +397,8 @@ namespace JsonSubTypes
             return null;
         }
 
-        private static Type GetTypeFromMapping(NullableDictionary<object, Type> typeMapping, JToken discriminatorToken, JsonSerializer serializer)
+        private static Type GetTypeFromMapping(
+            NullableDictionary<object, Type> typeMapping, JToken discriminatorToken, JsonSerializer serializer)
         {
             if (discriminatorToken.Type == JTokenType.Null)
             {
@@ -430,17 +438,18 @@ namespace JsonSubTypes
             return GetAttribute<FallBackSubTypeAttribute>(ToTypeInfo(type))?.SubType;
         }
 
-        private static object ThreadStaticReadObject(JsonReader reader, JsonSerializer serializer, JToken jToken, Type targetType)
+        private static object ThreadStaticReadObject(
+            JsonReader reader, JsonSerializer serializer, JToken jToken, Type targetType)
         {
-            _reader = CreateAnotherReader(jToken, reader);
-            _isInsideRead = true;
+            JsonSubtypes.reader = CreateAnotherReader(jToken, reader);
+            isInsideRead = true;
             try
             {
-                return serializer.Deserialize(_reader, targetType);
+                return serializer.Deserialize(JsonSubtypes.reader, targetType);
             }
             finally
             {
-                _isInsideRead = false;
+                isInsideRead = false;
             }
         }
 

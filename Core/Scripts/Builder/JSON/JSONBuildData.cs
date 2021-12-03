@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Didimo.Core.Model;
 using Newtonsoft.Json;
 using UnityEngine;
 

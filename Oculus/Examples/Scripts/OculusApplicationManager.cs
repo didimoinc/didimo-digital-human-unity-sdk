@@ -8,6 +8,9 @@ using UnityEngine.Serialization;
 
 namespace Didimo.Oculus.Example
 {
+    /// <summary>
+    /// Class that manages and controls some FPS settings for Oculus apps.
+    /// </summary>
     public class OculusApplicationManager : MonoBehaviour
     {
 
@@ -33,6 +36,11 @@ namespace Didimo.Oculus.Example
         [SerializeField]
         private TextMeshPro fpsText;
 
+        /// <summary>
+        /// Transform the chosen <c>targetDisplayFrequency</c> value into a float.
+        /// </summary>
+        /// <param name="fpsTarget"><c>FPSTarget</c> chosen in the inspector for the current scene.</param>
+        /// <returns>FPS target float as a float.</returns>
         private static float GetTargetFrequencyAsFloat(FPSTarget fpsTarget)
         {
             switch (fpsTarget)

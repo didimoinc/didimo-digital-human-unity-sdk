@@ -26,7 +26,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3003
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -131,19 +131,23 @@ Material:
     m_Floats:
     - Boolean_0eae9ea6f89b4dc69ac6a90555a90130: 0
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
+    - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
     - Vector1_020df71d02674f1fafad427a0a87e029: 3.58
     - Vector1_04a92e2cdf2b4369a4043697151bc5e7: 0
+    - Vector1_0586c13dde9241098b96e356887aff11: 0
     - Vector1_1ba96e4bde054710be3e0e15ac7e7c5f: 0.03
-    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0.15
+    - Vector1_50bfbd5a2e9f4e31a29842727dc32fbf: 0
+    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0
     - Vector1_c3b13bc0bc314753b4dbbd881d578cc5: 17.94
     - Vector1_d094b76bbae74915ab74ff23c382037e: 683
     - Vector1_d094b76bbae74915ab74ff23c382037e_1: 106
     - Vector1_d094b76bbae74915ab74ff23c382037e_2: 0.1
     - Vector1_d094b76bbae74915ab74ff23c382037e_3: 0.12
+    - Vector1_dd562d33afc34b87845d49fb36e47f2e: 44.4
     - Vector1_edbee027f473426b8ceb7e31b86d7534: 0.991
     - _AlphaClip: 0
-    - _AlphaLODbias: 4.3
-    - _AnisoHighlightRotation: 1.59
+    - _AlphaLODbias: 1.3
+    - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BlendModeToggle: 0
     - _BumpScale: 1
@@ -154,38 +158,46 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EnvRough: 0.46
-    - _EnvRough_1: 0.22
+    - _EnvRough: 0.79
+    - _EnvRough_1: 1.6
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HairColourBlendFactor: 1
+    - _MeshTangentRotation: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SDF_Gamma: 0
+    - _SDF_antialiasing: 3.6
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TangentFlowMapRotation: 270
+    - _UseFlowMap: 1
+    - _UsingSDF: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _alphaClipThreshold: 0
-    - _flowMultiplier: -2.1
-    - _hairAlbedoMultiply: 0.316
-    - _specExp1: 389
-    - _specExp2: 251
+    - _alphaClipThreshold: 0.013
+    - _envSpecMul: 0
+    - _flowMultiplier: 0.11
+    - _hairAlbedoMultiply: 0.242
+    - _specExp1: 193
+    - _specExp2: 165
     - _specMultiply: 1.7
-    - _specShift: -4.9
+    - _specShift: -1.7
     - _specShift2: 0.1
     m_Colors:
+    - Vector3_347d0541ec414879bcd39a3c2c070edb: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HairColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0}
+    - _HairColor: {r: 0.7264151, g: 0.21586864, b: 0.21586864, a: 0}
     - _HairColourBoost: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

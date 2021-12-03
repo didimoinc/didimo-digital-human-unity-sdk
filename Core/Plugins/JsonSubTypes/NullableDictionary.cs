@@ -1,62 +1,62 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace JsonSubTypes
 {
     public class NullableDictionary<TKey, TValue>
     {
-        private bool _hasNullKey;
-        private TValue _nullKeyValue;
-        private readonly Dictionary<TKey, TValue> _dictionary = new Dictionary<TKey, TValue>();
+        private bool hasNullKey;
+        private TValue nullKeyValue;
+        private readonly Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
 
         public bool TryGetValue(TKey key, out TValue value)
         {
             if (Equals(key, default(TKey)))
             {
-                if (!_hasNullKey)
+                if (!hasNullKey)
                 {
                     value = default(TValue);
                     return false;
                 }
 
-                value = _nullKeyValue;
+                value = nullKeyValue;
                 return true;
             }
 
-            return _dictionary.TryGetValue(key, out value);
+            return dictionary.TryGetValue(key, out value);
         }
 
         public void Add(TKey key, TValue value)
         {
             if (Equals(key, default(TKey)))
             {
-                if (_hasNullKey)
+                if (hasNullKey)
                 {
                     throw new ArgumentException();
                 }
 
-                _hasNullKey = true;
-                _nullKeyValue = value;
+                hasNullKey = true;
+                nullKeyValue = value;
             }
             else
             {
-                _dictionary.Add(key, value);
+                dictionary.Add(key, value);
             }
         }
 
         public IEnumerable<TKey> NotNullKeys()
         {
-            return _dictionary.Keys;
+            return dictionary.Keys;
         }
 
         public IEnumerable<KeyValuePair<TKey, TValue>> Entries()
         {
-            if (_hasNullKey)
+            if (hasNullKey)
             {
-                yield return new KeyValuePair<TKey, TValue>(default(TKey), _nullKeyValue);
+                yield return new KeyValuePair<TKey, TValue>(default(TKey), nullKeyValue);
             }
 
-            foreach (var value in _dictionary)
+            foreach (var value in dictionary)
             {
                 yield return value;
             }

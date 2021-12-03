@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Didimo.Inspector;
-using DigitalSalmon.Extensions;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Didimo.Core.Deformables;
+using Didimo.Core.Inspector;
+using Didimo.Core.Utility;
+using Didimo.Extensions;
 
 namespace Didimo.Networking
 {
-    public class NetworkDemo : MonoBehaviour
+    public class NetworkDemo : MonoBehaviour, ListToPopupAttribute.IListToPopup
     {
         [SerializeField, Readonly]
         protected string didimoKey;
@@ -16,11 +18,16 @@ namespace Didimo.Networking
         [SerializeField, Readonly]
         protected DidimoComponents didimoComponents;
 
-        [SerializeField]
-        protected string downloadArtifactType = "gltf";
+        private List<string> didimoList;
+
+        [ListToPopup]
+        public int selectedDidimo;
+
+        public List<string> ListToPopupGetValues() => didimoList;
 
 #if UNITY_EDITOR
 
+        public void ListToPopupSetSelectedValue(int i) { selectedDidimo = i; }
         public string ProgressMessage { get; private set; }
         public float Progress { get; private set; }
 
@@ -86,14 +93,43 @@ namespace Didimo.Networking
         [Button("List didimos")]
         public async Task ListDidimos()
         {
+            didimoList.Clear();
             Task<(bool success, List<DidimoDetailsResponse> didimos)> listTask = Api.Instance.GetAllDidimos();
             await listTask;
             if (!listTask.Result.success) return;
+            
+            didimoList.AddRange(listTask.Result.didimos.Select(item => item.DidimoKey));
+        }
 
-            foreach (DidimoDetailsResponse didimoStatus in listTask.Result.didimos)
+        [Button]
+        public async Task ImportFromKey()
+        {
+            if (ProgressMessage != null)
             {
-                Debug.Log($"didimo key: {didimoStatus.DidimoKey}, percent: {didimoStatus.Percent}");
+                EditorUtility.DisplayDialog("Error", "Please wait for the current request to complete.", "OK");
+                return;
+
             }
+
+            string chosenKey = didimoList[selectedDidimo];
+
+            if (string.IsNullOrEmpty(chosenKey)) return;
+
+            ProgressMessage = "Importing your didimo";
+            Progress = 0f;
+            Task<(bool success, DidimoComponents didimo)> importFromKeyTask = Api.Instance.DidimoFromKey(chosenKey, null, progress => { Progress = progress; });
+            await importFromKeyTask;
+            ProgressMessage = null;
+
+            if (!importFromKeyTask.Result.success)
+            {
+                EditorUtility.DisplayDialog("Failed to import didimo", "Failed to import your didimo. Please check the console for logs.", "OK");
+                return;
+            }
+
+            EditorUtility.DisplayDialog("Imported didimo", "Imported your didimo with success. You can inspect it in the scene.", "OK");
+            didimoKey = importFromKeyTask.Result.didimo.DidimoKey;
+            didimoComponents = importFromKeyTask.Result.didimo;
         }
 
         [Button]
@@ -118,7 +154,8 @@ namespace Didimo.Networking
                 return;
             }
 
-            string deformableId = DeformableDatabase.AllIDs.RandomOrDefault();
+            var deformableDatabase = UnityEngine.Resources.Load<DeformableDatabase>("DeformableDatabase");
+            string deformableId = deformableDatabase.AllIDs.RandomOrDefault();
             if (!didimoComponents.Deformables.TryCreate(deformableId, out Deformable deformable))
             {
                 EditorUtility.DisplayDialog("Error", "Failed to create deformable", "OK");
@@ -145,6 +182,12 @@ namespace Didimo.Networking
         [Button]
         private void ChangeHairColor()
         {
+            if (didimoComponents == null)
+            {
+                EditorUtility.DisplayDialog("Error", "First, create a didimo", "OK");
+                return;
+            }
+            
             if (didimoComponents.Deformables.TryFind(out Hair hair))
             {
                 Selection.objects = new Object[] { hair };
@@ -156,7 +199,7 @@ namespace Didimo.Networking
                 EditorUtility.DisplayDialog("Error", "Please add a hairstyle to your didimo first", "OK");
             }
         }
-
+        
         [Button]
         private void RemoveHair()
         {

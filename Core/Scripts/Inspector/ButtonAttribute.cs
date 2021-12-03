@@ -1,6 +1,6 @@
 using System;
 
-namespace Didimo.Inspector
+namespace Didimo.Core.Inspector
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ButtonAttribute : Attribute

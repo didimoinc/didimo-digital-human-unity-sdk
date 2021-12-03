@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Didimo
+namespace Didimo.Core.Model
 {
     public class MaterialData
     {
@@ -17,7 +17,10 @@ namespace Didimo
 
         public void MergeParameters(IReadOnlyList<MaterialDataParameter> parametersToMerge) { }
 
-        public static MaterialData FromMaterial(Material material) => new MaterialData {Name = material.name, ShaderName = material.shader.name, parameters = GetParameters(material)};
+        public static MaterialData FromMaterial(Material material) => new MaterialData {
+            Name = material.name,
+            ShaderName = material.shader.name,
+            parameters = GetParameters(material)};
 
         private static List<MaterialDataParameter> GetParameters(Material material)
         {
@@ -33,23 +36,29 @@ namespace Didimo
                 {
                     case ShaderPropertyType.Color:
                         Color cValue = material.GetColor(propertyName);
-                        Vector4MaterialDataParameter cParameter = Vector4MaterialDataParameter.CreateNew(propertyName, cValue);
+                        Vector4MaterialDataParameter cParameter
+                            = Vector4MaterialDataParameter.CreateNew(propertyName, cValue);
                         parameters.Add(cParameter);
                         break;
+
                     case ShaderPropertyType.Vector:
                         Vector4 vValue = material.GetVector(propertyName);
-                        Vector4MaterialDataParameter vParameter = Vector4MaterialDataParameter.CreateNew(propertyName, vValue);
+                        Vector4MaterialDataParameter vParameter
+                            = Vector4MaterialDataParameter.CreateNew(propertyName, vValue);
                         parameters.Add(vParameter);
                         break;
+
                     case ShaderPropertyType.Float:
                     case ShaderPropertyType.Range:
                         float fValue = material.GetFloat(propertyName);
-                        FloatMaterialDataParameter fParameter = FloatMaterialDataParameter.CreateNew(propertyName, fValue);
+                        FloatMaterialDataParameter fParameter
+                            = FloatMaterialDataParameter.CreateNew(propertyName, fValue);
                         parameters.Add(fParameter);
                         break;
                     case ShaderPropertyType.Texture:
                         Texture tValue = material.GetTexture(propertyName);
-                        TextureMaterialDataParameter tParameter = TextureMaterialDataParameter.CreateNew(propertyName, tValue);
+                        TextureMaterialDataParameter tParameter
+                            = TextureMaterialDataParameter.CreateNew(propertyName, tValue);
                         parameters.Add(tParameter);
                         break;
                 }

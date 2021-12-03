@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo
 {
     /// <summary>
     /// Harmonic motion allows spring dampened calculations in ND space.
@@ -26,7 +26,8 @@ namespace DigitalSalmon
         // Public Methods:
         //-----------------------------------------------------------------------------------------
 
-        public static void Calculate(ref Vector3 state, ref Vector3 velocity, Vector3 targetState, DampenedSpringMotionParams springMotionParams)
+        public static void Calculate(ref Vector3 state, ref Vector3 velocity, Vector3 targetState,
+            DampenedSpringMotionParams springMotionParams)
         {
             float velocityX = velocity.x;
             float stateX = state.x;
@@ -47,7 +48,8 @@ namespace DigitalSalmon
             state = new Vector3(stateX, stateY, stateZ);
         }
 
-        public static void Calculate(ref Vector2 state, ref Vector2 velocity, Vector2 targetState, DampenedSpringMotionParams springMotionParams)
+        public static void Calculate(ref Vector2 state, ref Vector2 velocity, Vector2 targetState,
+            DampenedSpringMotionParams springMotionParams)
         {
             float velocityX = velocity.x;
             float stateX = state.x;
@@ -68,7 +70,8 @@ namespace DigitalSalmon
         /// <param name="velocity">velocity value to update</param>
         /// <param name="targetState">velocity value to update</param>
         /// <param name="springMotionParams">motion parameters to use</param>
-        public static void Calculate(ref float state, ref float velocity, float targetState, DampenedSpringMotionParams springMotionParams)
+        public static void Calculate(ref float state, ref float velocity, float targetState,
+        DampenedSpringMotionParams springMotionParams)
         {
             float oldPos = state - targetState; // update in equilibrium relative space
             float oldVel = velocity;
@@ -81,7 +84,8 @@ namespace DigitalSalmon
         /// </summary>
         /// <param name="angularFrequency"> angular frequency of motion</param>
         /// <param name="dampingRatio">damping ratio of motion</param>
-        public static DampenedSpringMotionParams CalcDampedSpringMotionParams(float dampingRatio, float angularFrequency)
+        public static DampenedSpringMotionParams CalcDampedSpringMotionParams(
+            float dampingRatio,float angularFrequency)
         {
             const float epsilon = 0.0001f;
 
@@ -93,7 +97,9 @@ namespace DigitalSalmon
             // return identity
             if (angularFrequency < epsilon)
             {
-                return new DampenedSpringMotionParams {PosPosCoef = 1.0f, PosVelCoef = 0.0f, VelPosCoef = 0.0f, VelVelCoef = 1.0f};
+                return new DampenedSpringMotionParams {
+                    PosPosCoef = 1.0f, PosVelCoef = 0.0f, VelPosCoef = 0.0f,
+                    VelVelCoef = 1.0f};
             }
 
             if (dampingRatio > 1.0f + epsilon)
@@ -115,7 +121,10 @@ namespace DigitalSalmon
                 float z1e1_Over_TwoZb = z1 * e1_Over_TwoZb;
                 float z2e2_Over_TwoZb = z2 * e2_Over_TwoZb;
 
-                return new DampenedSpringMotionParams {PosPosCoef = e1_Over_TwoZb * z2 - z2e2_Over_TwoZb + e2, PosVelCoef = -e1_Over_TwoZb + e2_Over_TwoZb, VelPosCoef = (z1e1_Over_TwoZb - z2e2_Over_TwoZb + e2) * z2, VelVelCoef = -z1e1_Over_TwoZb + z2e2_Over_TwoZb};
+                return new DampenedSpringMotionParams {PosPosCoef = e1_Over_TwoZb
+                    * z2 - z2e2_Over_TwoZb + e2, PosVelCoef = -e1_Over_TwoZb + e2_Over_TwoZb,
+                    VelPosCoef = (z1e1_Over_TwoZb - z2e2_Over_TwoZb + e2) * z2,
+                    VelVelCoef = -z1e1_Over_TwoZb + z2e2_Over_TwoZb};
             }
 
             if (dampingRatio < 1.0f - epsilon)
@@ -134,7 +143,10 @@ namespace DigitalSalmon
                 float expCos = expTerm * cosTerm;
                 float expOmegaZetaSin_Over_Alpha = expTerm * omegaZeta * sinTerm * invAlpha;
 
-                return new DampenedSpringMotionParams {PosPosCoef = expCos + expOmegaZetaSin_Over_Alpha, PosVelCoef = expSin * invAlpha, VelPosCoef = -expSin * alpha - omegaZeta * expOmegaZetaSin_Over_Alpha, VelVelCoef = expCos - expOmegaZetaSin_Over_Alpha};
+                return new DampenedSpringMotionParams {PosPosCoef = expCos + expOmegaZetaSin_Over_Alpha,
+                    PosVelCoef = expSin * invAlpha, VelPosCoef =
+                    -expSin * alpha - omegaZeta * expOmegaZetaSin_Over_Alpha,
+                    VelVelCoef = expCos - expOmegaZetaSin_Over_Alpha};
             }
             else
             {
@@ -143,7 +155,9 @@ namespace DigitalSalmon
                 float timeExp = Time.deltaTime * expTerm;
                 float timeExpFreq = timeExp * angularFrequency;
 
-                return new DampenedSpringMotionParams {PosPosCoef = timeExpFreq + expTerm, PosVelCoef = timeExp, VelPosCoef = -angularFrequency * timeExpFreq, VelVelCoef = -timeExpFreq + expTerm};
+                return new DampenedSpringMotionParams {PosPosCoef = timeExpFreq + expTerm,
+                PosVelCoef = timeExp, VelPosCoef = -angularFrequency * timeExpFreq,
+                VelVelCoef = -timeExpFreq + expTerm};
             }
         }
     }

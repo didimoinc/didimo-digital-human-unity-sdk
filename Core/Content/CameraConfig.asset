@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: {x: 0, y: 1.69, z: 0}
   distance: 0.55
-  sensitivity: {x: 4, y: 6}
-  zoomSensitivity: 5
+  sensitivity: {x: -0.08, y: -0.12}
+  zoomSensitivity: 2
+  defaultYaw: 0.5
   defaultPitch: 0.51
   pitchLimit: {x: 0.3274171, y: 0.5235871}
   yawLimit: {x: 0.39590445, y: 0.6040956}

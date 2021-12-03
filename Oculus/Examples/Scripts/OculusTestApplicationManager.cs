@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Didimo.Oculus.Example
 {
+    /// <summary>
+    /// Class that manages which mode is being used by the didimo on the OculusTestApplication scene.
+    /// It enables switching between the Distance Viewer, Face Animation and Lip Sync modes.
+    /// </summary>
     public class OculusTestApplicationManager : MonoBehaviour
     {
 #if USING_OCULUS_INTEGRATION_PACKAGE
@@ -66,12 +70,21 @@ namespace Didimo.Oculus.Example
             }
         }
 
+        /// <summary>
+        /// Updates the texts on scene to the proper information.
+        /// </summary>
         private void UpdateGuideAndSwitchSceneTexts()
         {
             if (currentSceneGuideText != null) currentSceneGuideText.text = CurrentGuideText;
             if (switchSceneGuideText != null) switchSceneGuideText.text = SwitchSceneText;
         }
 
+        /// <summary>
+        /// Get the controller for each mode of this scene.
+        /// </summary>
+        /// <param name="scene">Enabled mode.</param>
+        /// <returns>Controller for the enabled mode.</returns>
+        /// <exception cref="Exception">Current mode <c>scene</c> not handled.</exception>
         private MonoBehaviour GetSceneController(ApplicationScene scene)
         {
             switch (scene)

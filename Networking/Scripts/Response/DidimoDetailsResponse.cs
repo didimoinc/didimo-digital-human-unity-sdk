@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -54,11 +54,18 @@ namespace Didimo.Networking
             }
         }
 
-        public Downloadable GetDownloadableArtifact(DownloadArtifactType artifactType) { return Artifacts.FirstOrDefault(x => x.Name.ToLower() == artifactType.ToString().ToLower()); }
-
-        public Downloadable GetDownloadableForTransferFormat(DownloadTransferFormatType downloadTransferFormatType)
+        public Downloadable GetDownloadableArtifact(DownloadArtifactType artifactType)
         {
-            return TransferFormats.FirstOrDefault(x => x.Name.ToLower() == downloadTransferFormatType.ToString().ToLower());
+            return Artifacts.FirstOrDefault(
+                x => x.Name.ToLower() == artifactType.ToString().ToLower());
+        }
+
+        public Downloadable GetDownloadableForTransferFormat(
+            DownloadTransferFormatType downloadTransferFormatType)
+        {
+            return TransferFormats.FirstOrDefault(
+                x => x.Name.ToLower() ==
+                downloadTransferFormatType.ToString().ToLower());
         }
     }
 }

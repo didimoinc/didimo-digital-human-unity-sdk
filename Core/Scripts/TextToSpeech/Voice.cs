@@ -90,7 +90,8 @@ namespace Didimo
             elder_preset = new Vector2(-5, 2);
         }
 
-        public Voice(string name, string language, string lang_tag, string gender, Vector2 child_preset, Vector2 elder_preset)
+        public Voice(string name, string language, string lang_tag,
+            string gender, Vector2 child_preset, Vector2 elder_preset)
         {
             this.name = name;
             this.language = language;

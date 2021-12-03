@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo.Core.Utility
 {
     [Serializable]
     public struct Vector4Int
@@ -14,8 +14,10 @@ namespace DigitalSalmon
         public static readonly Vector4Int One    = new Vector4Int(1, 1, 1, 1);
         public static readonly Vector4Int NegOne = new Vector4Int(-1, -1, -1, -1);
 
-        public static readonly Vector4Int MinValue = new Vector4Int(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
-        public static readonly Vector4Int MaxValue = new Vector4Int(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
+        public static readonly Vector4Int MinValue = new Vector4Int(
+            int.MinValue, int.MinValue, int.MinValue, int.MinValue);
+        public static readonly Vector4Int MaxValue = new Vector4Int(
+            int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
 
         //-----------------------------------------------------------------------------------------
         // Public Fields:
@@ -71,28 +73,36 @@ namespace DigitalSalmon
         public static explicit operator Vector4(Vector4Int v) => new Vector4(v.x, v.y, v.z, v.w);
 
         // Addition
-        public static Vector4Int operator +(Vector4Int a, Vector4Int b) => new Vector4Int(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+        public static Vector4Int operator +(Vector4Int a, Vector4Int b)
+            => new Vector4Int(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
 
         // Subtraction
-        public static Vector4Int operator -(Vector4Int a, Vector4Int b) => new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+        public static Vector4Int operator -(Vector4Int a, Vector4Int b)
+            => new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
 
         // Multiplication
-        public static Vector4Int operator *(Vector4Int a, int b) => new Vector4Int(a.x * b, a.y * b, a.z * b, a.w * b);
+        public static Vector4Int operator *(Vector4Int a, int b)
+            => new Vector4Int(a.x * b, a.y * b, a.z * b, a.w * b);
 
         // Int Multiplication
-        public static Vector4Int operator *(int a, Vector4Int b) => new Vector4Int(a * b.x, a * b.y, a * b.z, a * b.w);
+        public static Vector4Int operator *(int a, Vector4Int b)
+            => new Vector4Int(a * b.x, a * b.y, a * b.z, a * b.w);
 
         // Division
-        public static Vector4Int operator /(Vector4Int a, int b) => new Vector4Int(a.x / b, a.y / b, a.z / b, a.w / b);
+        public static Vector4Int operator /(Vector4Int a, int b)
+            => new Vector4Int(a.x / b, a.y / b, a.z / b, a.w / b);
 
         // Inversion
-        public static Vector4Int operator -(Vector4Int a) => new Vector4Int(-a.x, -a.y, -a.z, -a.w);
+        public static Vector4Int operator -(Vector4Int a)
+            => new Vector4Int(-a.x, -a.y, -a.z, -a.w);
 
         // Equality
-        public static bool operator ==(Vector4Int a, Vector4Int b) => a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w;
+        public static bool operator ==(Vector4Int a, Vector4Int b)
+            => a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w;
 
         // InEquality
-        public static bool operator !=(Vector4Int a, Vector4Int b) => a.x != b.x && a.y != b.y && a.z != b.z && a.w != b.w;
+        public static bool operator !=(Vector4Int a, Vector4Int b)
+            => a.x != b.x && a.y != b.y && a.z != b.z && a.w != b.w;
 
         //-----------------------------------------------------------------------------------------
         // Public Methods:
@@ -100,7 +110,9 @@ namespace DigitalSalmon
 
         public Vector4 ToVector4() => new Vector4(x, y, z, w);
 
-        public bool IsWithin(Vector4Int min, Vector4Int max) => x >= min.x && x <= max.x && y >= min.y && y <= max.y && z >= min.z && z <= max.z && w >= min.w && w <= max.w;
+        public bool IsWithin(Vector4Int min, Vector4Int max)
+            => x >= min.x && x <= max.x && y >= min.y && y <= max.y
+            && z >= min.z && z <= max.z && w >= min.w && w <= max.w;
 
         public override string ToString() => $"{x},{y},{z},{w}";
 

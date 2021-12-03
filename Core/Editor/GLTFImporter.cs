@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using Didimo.Builder;
 using Didimo.Builder.GLTF;
+using Didimo.Core.Config;
 using Didimo.GLTFUtility;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Editor
 {
     [ScriptedImporter(1, "gltf", importQueueOffset: 100)]
     public class GLTFImporter : ScriptedImporter
@@ -30,19 +31,17 @@ namespace Didimo
                 return;
             }
 
-            if (DidimoResources.IsNull)
-            {
-                // This happens when we first import the project
-                // See DidimoImportUtils.cs for more info
-                DidimoImportUtils.ShouldReimport = true;
+            //TODO:Is reimport still an issue?
+            // This happens when we first import the project
+            // See DidimoImportUtils.cs for more info
+            //DidimoImportUtils.ShouldReimport = true;
 
-                return;
-            }
-
-            if (DidimoResources.ShaderResources == null)
+            var shaderResources = UnityEngine.Resources
+                .Load<ShaderResources>("ShaderResources");
+            if (shaderResources == null)
             {
-                Debug.LogError(
-                    "Shader resources was null. Please configure it on the 'Didimo Resources' asset first, and then  go to Didimo → Didimo Manager, and click the 'Reimport didimos' button");
+                Debug.LogError("Shader resources was null.");
+
                 return;
             }
 

@@ -1,6 +1,9 @@
-﻿public enum SupportedRenderPipelines
+﻿namespace Didimo.Core.Config
 {
-    Standard,
-    UniversalRenderPipeline,
-    HighDefinitionRenderPipeline
+    public enum SupportedRenderPipelines
+    {
+        Standard,
+        UniversalRenderPipeline,
+        HighDefinitionRenderPipeline
+    }
 }

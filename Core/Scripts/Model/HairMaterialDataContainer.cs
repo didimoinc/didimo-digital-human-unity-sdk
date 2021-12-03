@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Model
 {
     public class HairMaterialDataContainer : MaterialDataContainer
     {

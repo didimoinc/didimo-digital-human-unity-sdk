@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections;
-using DigitalSalmon;
 using UnityEngine;
+using Didimo.Core.Utility;
 
 namespace Didimo
 {
+
+    /// <summary>
+    /// Class that handles the time and frame number for the associated <c>DidimoAnimationState</c>.
+    /// This is used to handle play, resume and stop state of the animations.
+    /// </summary>
     public class DidimoAnimationPlayHandler
     {
         public enum PlayStatus
@@ -50,7 +55,8 @@ namespace Didimo
 
         public double NormalizedTime
         {
-            get => AnimState.SourceAnimation.TotalAnimationTime == 0 ? 0 : SeekTime / AnimState.SourceAnimation.TotalAnimationTime;
+            get => AnimState.SourceAnimation.TotalAnimationTime == 0 ? 0
+                : SeekTime / AnimState.SourceAnimation.TotalAnimationTime;
             private set => SeekTime = value * AnimState.SourceAnimation.TotalAnimationTime;
         }
 
@@ -61,7 +67,7 @@ namespace Didimo
 
         protected float DirectionMultiplier => direction == PlayDirection.Forward ? 1 : -1;
 
-        private Sequence Sequence { get; }
+        private Didimo.Core.Utility.Sequence Sequence { get; }
 
         public DidimoAnimationPlayHandler(DidimoAnimationState animState)
         {
@@ -69,6 +75,10 @@ namespace Didimo
             Sequence = new Sequence(animState.Player);
         }
 
+        /// <summary>
+        /// Start or continue playing the animation.
+        /// </summary>
+        /// <param name="resume">True to resume the animation from where it last stopped. False to restart.</param>
         public void Play(bool resume = false)
         {
             if (!resume)
@@ -82,6 +92,9 @@ namespace Didimo
             Status = PlayStatus.Playing;
         }
 
+        /// <summary>
+        /// Stop playing the animation. The animation time is not changed so it can be resumed later.
+        /// </summary>
         public void Stop()
         {
             // SeekTime = 0;
@@ -89,25 +102,38 @@ namespace Didimo
             Status = PlayStatus.Stopped;
         }
 
+        /// <summary>
+        /// Change the animation time to the specified <paramref name="seekTime"/> value.
+        /// </summary>
+        /// <param name="seekTime">Time of the animation, in seconds.</param>
         public void Seek(float seekTime)
         {
             SeekTime = seekTime;
             HandleWrapping();
         }
 
+        /// <summary>
+        /// Change the normalized animation time to the specified <paramref name="normalisedSeekTime"/> value.
+        /// </summary>
+        /// <param name="normalisedSeekTime">Normalized value of the animation.</param>
         public void SeekNormalized(float normalisedSeekTime)
         {
             NormalizedTime = normalisedSeekTime;
             HandleWrapping();
         }
 
+        /// <summary>
+        /// Handle the wrapping of the animation for each WrapMode that is available.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Unhandled WrapMode set.</exception>
         private void HandleWrapping()
         {
             switch (WrapMode)
             {
                 case WrapMode.Default:
                 case WrapMode.Once:
-                    if (SeekTime > TotalAnimationTime && direction == PlayDirection.Forward || SeekTime < 0 && direction == PlayDirection.Backward)
+                    if (SeekTime > TotalAnimationTime && direction == PlayDirection.Forward
+                        || SeekTime < 0 && direction == PlayDirection.Backward)
                     {
                         AnimState.Stop();
                     }
@@ -156,6 +182,10 @@ namespace Didimo
             }
         }
 
+        /// <summary>
+        /// Set the time source if an AudioClip is available and keep
+        /// updating the time of the animation until it has ended.
+        /// </summary>
         private IEnumerator PlayRoutine()
         {
             if (TimeSource == AnimationTimeSource.AudioTime)
@@ -171,13 +201,18 @@ namespace Didimo
             }
         }
 
+        /// <summary>
+        /// Update the time of the animation through the AudioClip or Unity's deltaTime.
+        /// </summary>
+        /// <exception cref="ArgumentException"><c>TimeSource</c> value not handled.</exception>
         private void UpdateTime()
         {
             switch (TimeSource)
             {
                 case AnimationTimeSource.AudioTime:
                     SeekTime = AnimState.Player.AudioSource.time;
-                    if (SeekTime >= AnimState.Player.AudioSource.clip.length || SeekTime >= AnimState.SourceAnimation.TotalAnimationTime) AnimState.Stop();
+                    if (SeekTime >= AnimState.Player.AudioSource.clip.length
+                      || SeekTime >= AnimState.SourceAnimation.TotalAnimationTime) AnimState.Stop();
                     return;
                 case AnimationTimeSource.InternalTime:
                     SeekTime += Time.deltaTime * DirectionMultiplier * Speed;
@@ -188,6 +223,11 @@ namespace Didimo
             }
         }
 
+        /// <summary>
+        /// Get the frame number that corresponds to the current SeekTime.
+        /// </summary>
+        /// <returns>Frame index of the animation.</returns>
+        /// <exception cref="ArgumentException"><c>FrameSource</c> value not handled.</exception>
         public int GetCurrentFrame()
         {
             switch (FrameSource)
@@ -201,15 +241,25 @@ namespace Didimo
             }
         }
 
+        /// <summary>
+        /// Get the interpolated frame numbers and interpolation weight that
+        /// correspond to the current SeekTime.
+        /// </summary>
+        /// <param name="initialFrameIndex">Initial frame that matches the given time</param>
+        /// <param name="finalFrameIndex">Final frame that matches the given time</param>
+        /// <param name="weight">Interpolation weight between the initial and final frames</param>
+        /// <exception cref="ArgumentException"><c>FrameSource</c> value not handled.</exception>
         public void GetInterpolatedFrames(out int initialFrameIndex, out int finalFrameIndex, out float weight)
         {
             switch (FrameSource)
             {
                 case FrameCalculationSource.FPS:
-                    AnimState.SourceAnimation.GetInterpolatedFrameNumbersFromFPS((float) SeekTime, out initialFrameIndex, out finalFrameIndex, out weight);
+                    AnimState.SourceAnimation.GetInterpolatedFrameNumbersFromFPS(
+                        (float) SeekTime, out initialFrameIndex, out finalFrameIndex, out weight);
                     return;
                 case FrameCalculationSource.Timestamps:
-                    AnimState.SourceAnimation.GetInterpolatedFrameNumbersFromTimestamps((float) SeekTime, out initialFrameIndex, out finalFrameIndex, out weight);
+                    AnimState.SourceAnimation.GetInterpolatedFrameNumbersFromTimestamps(
+                        (float) SeekTime, out initialFrameIndex, out finalFrameIndex, out weight);
                     return;
                 default:
                     throw new ArgumentException("Invalid enum value", nameof(FrameSource));

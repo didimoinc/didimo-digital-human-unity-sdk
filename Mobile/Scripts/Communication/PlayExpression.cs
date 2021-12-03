@@ -3,8 +3,9 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
+using Didimo.Core.Utility;
 
-namespace Didimo.Mobile.Scripts
+namespace Didimo.Mobile.Communication
 {
     public class PlayExpression : BiDirectionalNativeInterface
     {

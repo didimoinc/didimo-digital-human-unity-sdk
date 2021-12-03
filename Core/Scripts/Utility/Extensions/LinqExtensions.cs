@@ -10,7 +10,7 @@ using Random = System.Random;
 // Suppress warning about undocumented parameters. Extension methods shouldn't have to document this.
 #pragma warning disable 1573
 
-namespace DigitalSalmon.Extensions
+namespace Didimo.Extensions
 {
     public static class LinqExtensions
     {
@@ -18,7 +18,7 @@ namespace DigitalSalmon.Extensions
         // Public Methods:
         //-----------------------------------------------------------------------------------------
 
-        private static readonly Random shuffleRandom         = new Random();
+        private static readonly Random shuffleRandom = new Random();
         private static readonly Random weightedElementRandom = new Random();
 
         public static Quaternion QuatMul(this IEnumerable<Quaternion> self)
@@ -32,16 +32,20 @@ namespace DigitalSalmon.Extensions
             return result;
         }
 
-        public static Quaternion QuatMul<TSource>(this IEnumerable<TSource> source, Func<TSource, Quaternion> selector) => source.Select(selector).QuatMul();
+        public static Quaternion QuatMul<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, Quaternion> selector) => source.Select(selector).QuatMul();
 
-        public static Vector2 WeightedAverage<T>(this IEnumerable<T> records, Func<T, Vector2> value, Func<T, float> weight)
+        public static Vector2 WeightedAverage<T>(
+            this IEnumerable<T> records, Func<T, Vector2> value, Func<T, float> weight)
         {
-            Vector2 weightedValueSum = new Vector2(records.Sum(x => value(x).x * weight(x)), records.Sum(x => value(x).y * weight(x)));
+            Vector2 weightedValueSum = new Vector2(
+                records.Sum(x => value(x).x * weight(x)), records.Sum(x => value(x).y * weight(x)));
             float weightSum = records.Sum(weight);
             return weightedValueSum / weightSum;
         }
 
-        public static float WeightedAverage<T>(this IEnumerable<T> records, Func<T, float> value, Func<T, float> weight)
+        public static float WeightedAverage<T>(
+            this IEnumerable<T> records, Func<T, float> value, Func<T, float> weight)
         {
             float weightedValueSum = records.Sum(x => value(x) * weight(x));
             float weightSum = records.Sum(weight);
@@ -52,7 +56,8 @@ namespace DigitalSalmon.Extensions
         /// Adds values from 'other' to this collection if they meet a given predicate.
         /// Calls 'onAdd' on each element that is added, after adding.
         /// </summary>
-        public static void AddWhere<T>(this ICollection<T> self, ICollection<T> other, Func<T, bool> predicate, Action<T> onAdd = null)
+        public static void AddWhere<T>(
+            this ICollection<T> self, ICollection<T> other, Func<T, bool> predicate, Action<T> onAdd = null)
         {
             foreach (T value in other)
             {
@@ -68,7 +73,8 @@ namespace DigitalSalmon.Extensions
         /// Removes values from 'other' from this collection if they meet a given predicate.
         /// Calls 'onRemove' on each element that is removed, before removal.
         /// </summary>
-        public static void RemoveWhere<T>(this ICollection<T> self, Func<T, bool> predicate, Action<T> onRemove = null)
+        public static void RemoveWhere<T>(
+            this ICollection<T> self, Func<T, bool> predicate, Action<T> onRemove = null)
         {
             foreach (T value in self.Where(predicate).ToList())
             {
@@ -77,9 +83,12 @@ namespace DigitalSalmon.Extensions
             }
         }
 
-        public static (TSource element, TKey maxValue) MaxElement<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector) => source.MaxElement(selector, null);
+        public static (TSource element, TKey maxValue) MaxElement<TSource, TKey>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> selector)
+            => source.MaxElement(selector, null);
 
-        public static (TSource element, TKey maxValue) MaxElement<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
+        public static (TSource element, TKey maxValue) MaxElement<TSource, TKey>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -109,9 +118,11 @@ namespace DigitalSalmon.Extensions
             }
         }
 
-        public static (TSource element, TKey minValue) MinElement<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector) => source.MinElement(selector, null);
+        public static (TSource element, TKey minValue) MinElement<TSource, TKey>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> selector) => source.MinElement(selector, null);
 
-        public static (TSource element, TKey minValue) MinElement<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
+        public static (TSource element, TKey minValue) MinElement<TSource, TKey>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -141,17 +152,19 @@ namespace DigitalSalmon.Extensions
             }
         }
 
-        public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector) => RandomElementByWeight(sequence, weightSelector, weightedElementRandom);
+        public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector)
+            => RandomElementByWeight(sequence, weightSelector, weightedElementRandom);
 
-        public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector, Random random)
+        public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector,
+            Random random)
         {
             float totalWeight = sequence.Sum(weightSelector);
 
-            float itemWeightIndex = totalWeight * (float) random.NextDouble();
+            float itemWeightIndex = totalWeight * (float)random.NextDouble();
 
             float currentWeightIndex = 0;
 
-            foreach (var item in sequence.Select(e => new {Value = e, Weight = weightSelector(e)}))
+            foreach (var item in sequence.Select(e => new { Value = e, Weight = weightSelector(e) }))
             {
                 currentWeightIndex += item.Weight;
 
@@ -532,7 +545,8 @@ namespace DigitalSalmon.Extensions
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <param name="prepend">The collection to prepend.</param>
-        public static IEnumerable<T> PrependIf<T>(this IEnumerable<T> self, Func<bool> condition, IEnumerable<T> prepend)
+        public static IEnumerable<T> PrependIf<T>(
+            this IEnumerable<T> self, Func<bool> condition, IEnumerable<T> prepend)
         {
             if (condition())
             {
@@ -553,7 +567,8 @@ namespace DigitalSalmon.Extensions
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <param name="prepend">Func to create the item to prepend.</param>
-        public static IEnumerable<T> PrependIf<T>(this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, Func<T> prepend)
+        public static IEnumerable<T> PrependIf<T>(
+            this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, Func<T> prepend)
         {
             if (condition(self))
             {
@@ -571,7 +586,8 @@ namespace DigitalSalmon.Extensions
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <param name="prepend">The item to prepend.</param>
-        public static IEnumerable<T> PrependIf<T>(this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, T prepend)
+        public static IEnumerable<T> PrependIf<T>(
+            this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, T prepend)
         {
             if (condition(self))
             {
@@ -589,7 +605,8 @@ namespace DigitalSalmon.Extensions
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <param name="prepend">The collection to prepend.</param>
-        public static IEnumerable<T> PrependIf<T>(this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, IEnumerable<T> prepend)
+        public static IEnumerable<T> PrependIf<T>(
+            this IEnumerable<T> self, Func<IEnumerable<T>, bool> condition, IEnumerable<T> prepend)
         {
             if (condition(self))
             {
@@ -620,23 +637,23 @@ namespace DigitalSalmon.Extensions
             yield return append();
         }
 
-//		/// <summary>
-//		/// Add an item to the end of a collection.
-//		/// </summary>
-//		/// <param name="append">The item to append.</param>
-//		public static IEnumerable<T> Append<T>(this IEnumerable<T> self, T append) {
-//			foreach (T item in self) {
-//				yield return item;
-//			}
-//
-//			yield return append;
-//		}
+        //		/// <summary>
+        //		/// Add an item to the end of a collection.
+        //		/// </summary>
+        //		/// <param name="append">The item to append.</param>
+        //		public static IEnumerable<T> Append<T>(this IEnumerable<T> self, T append) {
+        //			foreach (T item in self) {
+        //				yield return item;
+        //			}
+        //
+        //			yield return append;
+        //		}
 
-/// <summary>
-/// Add a collection to the end of another collection.
-/// </summary>
-/// <param name="append">The collection to append.</param>
-public static IEnumerable<T> Append<T>(this IEnumerable<T> self, IEnumerable<T> append)
+        /// <summary>
+        /// Add a collection to the end of another collection.
+        /// </summary>
+        /// <param name="append">The collection to append.</param>
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> self, IEnumerable<T> append)
         {
             foreach (T item in self)
             {
@@ -649,12 +666,12 @@ public static IEnumerable<T> Append<T>(this IEnumerable<T> self, IEnumerable<T> 
             }
         }
 
-/// <summary>
-/// Add an item to the end of a collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">Func to create the item to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, Func<T> append)
+        /// <summary>
+        /// Add an item to the end of a collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">Func to create the item to append.</param>
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, Func<T> append)
         {
             foreach (T item in self)
             {
@@ -667,12 +684,12 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool conditio
             }
         }
 
-/// <summary>
-/// Add an item to the end of a collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">The item to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, T append)
+        /// <summary>
+        /// Add an item to the end of a collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">The item to append.</param>
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, T append)
         {
             foreach (T item in self)
             {
@@ -685,12 +702,12 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool conditio
             }
         }
 
-/// <summary>
-/// Add a collection to the end of another collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">The collection to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, IEnumerable<T> append)
+        /// <summary>
+        /// Add a collection to the end of another collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">The collection to append.</param>
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool condition, IEnumerable<T> append)
         {
             foreach (T item in self)
             {
@@ -706,12 +723,12 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, bool conditio
             }
         }
 
-/// <summary>
-/// Add an item to the end of a collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">Func to create the item to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> condition, Func<T> append)
+        /// <summary>
+        /// Add an item to the end of a collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">Func to create the item to append.</param>
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> condition, Func<T> append)
         {
             foreach (T item in self)
             {
@@ -724,12 +741,12 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> co
             }
         }
 
-/// <summary>
-/// Add an item to the end of a collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">The item to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> condition, T append)
+        /// <summary>
+        /// Add an item to the end of a collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">The item to append.</param>
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> condition, T append)
         {
             foreach (T item in self)
             {
@@ -742,12 +759,13 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> co
             }
         }
 
-/// <summary>
-/// Add a collection to the end of another collection if a condition is met.
-/// </summary>
-/// <param name="condition">The condition.</param>
-/// <param name="append">The collection to append.</param>
-public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> condition, IEnumerable<T> append)
+        /// <summary>
+        /// Add a collection to the end of another collection if a condition is met.
+        /// </summary>
+        /// <param name="condition">The condition.</param>
+        /// <param name="append">The collection to append.</param>
+        public static IEnumerable<T> AppendIf<T>(
+            this IEnumerable<T> self, Func<bool> condition, IEnumerable<T> append)
         {
             foreach (T item in self)
             {
@@ -763,10 +781,10 @@ public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> self, Func<bool> co
             }
         }
 
-/// <summary>
-/// Returns and casts only the items of type <typeparamref name="T" />.
-/// </summary>
-public static IEnumerable<T> FilterCast<T>(this IEnumerable self)
+        /// <summary>
+        /// Returns and casts only the items of type <typeparamref name="T" />.
+        /// </summary>
+        public static IEnumerable<T> FilterCast<T>(this IEnumerable self)
         {
             foreach (object obj in self)
             {
@@ -777,11 +795,11 @@ public static IEnumerable<T> FilterCast<T>(this IEnumerable self)
             }
         }
 
-/// <summary>
-/// Adds a collection to a hashset.
-/// </summary>
-/// <param name="range">The collection.</param>
-public static void AddRange<T>(this HashSet<T> self, IEnumerable<T> range)
+        /// <summary>
+        /// Adds a collection to a hashset.
+        /// </summary>
+        /// <param name="range">The collection.</param>
+        public static void AddRange<T>(this HashSet<T> self, IEnumerable<T> range)
         {
             foreach (T value in range)
             {
@@ -789,16 +807,16 @@ public static void AddRange<T>(this HashSet<T> self, IEnumerable<T> range)
             }
         }
 
-/// <summary>
-/// Returns <c>true</c> if the list is either null or empty. Otherwise <c>false</c>.
-/// </summary>
-public static bool IsNullOrEmpty<T>(this IList<T> self) => self == null || self.Count == 0;
+        /// <summary>
+        /// Returns <c>true</c> if the list is either null or empty. Otherwise <c>false</c>.
+        /// </summary>
+        public static bool IsNullOrEmpty<T>(this IList<T> self) => self == null || self.Count == 0;
 
-/// <summary>
-/// Sets all items in the list to the given value.
-/// </summary>
-/// <param name="item">The value.</param>
-public static void Populate<T>(this IList<T> self, T item)
+        /// <summary>
+        /// Sets all items in the list to the given value.
+        /// </summary>
+        /// <param name="item">The value.</param>
+        public static void Populate<T>(this IList<T> self, T item)
         {
             int count = self.Count;
             for (int i = 0; i < count; i++)
@@ -807,10 +825,11 @@ public static void Populate<T>(this IList<T> self, T item)
             }
         }
 
-/// <summary>
-/// Take all elements until predicate is true, including the first element where predicate is true.
-/// </summary>
-public static IEnumerable<T> TakeUntilIncluding<T>(this IEnumerable<T> list, Func<T, bool> predicate)
+        /// <summary>
+        /// Take all elements until predicate is true, including the first element where predicate is true.
+        /// </summary>
+        public static IEnumerable<T> TakeUntilIncluding<T>(
+            this IEnumerable<T> list, Func<T, bool> predicate)
         {
             foreach (T el in list)
             {
@@ -819,10 +838,10 @@ public static IEnumerable<T> TakeUntilIncluding<T>(this IEnumerable<T> list, Fun
             }
         }
 
-/// <summary>
-/// Take all elements until predicate is true
-/// </summary>
-public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> list, Func<T, bool> predicate)
+        /// <summary>
+        /// Take all elements until predicate is true
+        /// </summary>
+        public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> list, Func<T, bool> predicate)
         {
             foreach (T el in list)
             {

@@ -4,14 +4,10 @@ using UResources = UnityEngine.Resources;
 // ReSharper disable once MergeConditionalExpression
 #pragma warning disable IDE0029 // Use coalesce expression
 
-namespace DigitalSalmon
+namespace Didimo
 {
     public static class Resource
     {
-        //-----------------------------------------------------------------------------------------
-        // Public Methods:
-        //-----------------------------------------------------------------------------------------
-
         public static T Load<T>(string path) where T : Object => UResources.Load<T>(path);
 
         public static T[] LoadAll<T>(string path) where T : Object => UResources.LoadAll<T>(path);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DigitalSalmon.Extensions;
+using Didimo.Extensions;
 using UnityEngine;
 using UnityEngine.Serialization;
 

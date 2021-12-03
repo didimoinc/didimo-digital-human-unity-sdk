@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo
 {
     public class HarmonicVector3
     {
@@ -12,7 +12,8 @@ namespace DigitalSalmon
 
         private Vector3 velocity;
 
-        public HarmonicVector3(Func<Vector3> getValue, Action<Vector3> setValue, Func<float> getDampingRatio, Func<float> getAngularFrequency)
+        public HarmonicVector3(Func<Vector3> getValue, Action<Vector3> setValue,
+            Func<float> getDampingRatio, Func<float> getAngularFrequency)
         {
             this.getValue = getValue;
             this.setValue = setValue;
@@ -23,7 +24,8 @@ namespace DigitalSalmon
         public void Update(Vector3 target)
         {
             Vector3 state = getValue();
-            HarmonicMotion.DampenedSpringMotionParams springParams = HarmonicMotion.CalcDampedSpringMotionParams(getDampingRatio(), getAngularFrequency());
+            HarmonicMotion.DampenedSpringMotionParams springParams
+                = HarmonicMotion.CalcDampedSpringMotionParams(getDampingRatio(), getAngularFrequency());
             HarmonicMotion.Calculate(ref state, ref velocity, target, springParams);
             setValue(state);
         }
@@ -39,7 +41,8 @@ namespace DigitalSalmon
         private Vector2 state;
         private Vector2 velocity;
 
-        public HarmonicVector2(Func<Vector2> getValue, Action<Vector2> setValue, Func<float> getDampingRatio, Func<float> getAngularFrequency)
+        public HarmonicVector2(Func<Vector2> getValue, Action<Vector2> setValue,
+            Func<float> getDampingRatio, Func<float> getAngularFrequency)
         {
             this.getValue = getValue;
             this.setValue = setValue;
@@ -47,7 +50,8 @@ namespace DigitalSalmon
             this.getAngularFrequency = getAngularFrequency;
         }
 
-        public HarmonicVector2(Func<Vector2> getValue, Action<Vector2> setValue, float dampingRatio, float angularFrequency)
+        public HarmonicVector2(Func<Vector2> getValue, Action<Vector2> setValue,
+            float dampingRatio, float angularFrequency)
         {
             this.getValue = getValue;
             this.setValue = setValue;
@@ -58,7 +62,9 @@ namespace DigitalSalmon
         public void Update(Vector2 target, float dampingRatio = -1, float angularFrequency = -1)
         {
             state = getValue();
-            HarmonicMotion.DampenedSpringMotionParams springParams = HarmonicMotion.CalcDampedSpringMotionParams(dampingRatio == -1 ? getDampingRatio() : dampingRatio, angularFrequency == -1 ? getAngularFrequency() : angularFrequency);
+            HarmonicMotion.DampenedSpringMotionParams springParams
+                = HarmonicMotion.CalcDampedSpringMotionParams(dampingRatio == -1 ? getDampingRatio()
+                : dampingRatio, angularFrequency == -1 ? getAngularFrequency() : angularFrequency);
             HarmonicMotion.Calculate(ref state, ref velocity, target, springParams);
             setValue(state);
         }

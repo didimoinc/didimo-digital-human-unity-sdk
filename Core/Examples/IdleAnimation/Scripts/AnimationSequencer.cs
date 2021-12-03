@@ -1,8 +1,13 @@
+using Didimo.Core.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Didimo.Examples
+namespace Didimo.Core.Examples
 {
+    /// <summary>
+    /// Example component that can be used to loop and fade between multiple different animations on your didimo.
+    /// Should be attached/added to the same object where the DidimoComponents component is.
+    /// </summary>
     public class AnimationSequencer : DidimoBehaviour
     {
         private const float MIN_ANIM_DURATION = 0f;

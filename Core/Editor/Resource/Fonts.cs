@@ -1,26 +1,14 @@
 ﻿using UnityEngine;
 
-namespace DigitalSalmon.Resources
+namespace Didimo.Resources
 {
     public static class Fonts
     {
-        //-----------------------------------------------------------------------------------------
-        // Constants:
-        //-----------------------------------------------------------------------------------------
-
         private const string DIRECTORY = "Fonts/";
-
-        //-----------------------------------------------------------------------------------------
-        // Backing Fields:
-        //-----------------------------------------------------------------------------------------
 
         private static Font _robotoRegular;
         private static Font _robotoLight;
         private static Font _robotoBold;
-
-        //-----------------------------------------------------------------------------------------
-        // Public Properties:
-        //-----------------------------------------------------------------------------------------
 
         public static Font RobotoRegular
         {

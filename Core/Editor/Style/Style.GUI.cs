@@ -1,8 +1,9 @@
-﻿using UnityEditor;
+﻿using Didimo.Core.Utility;
+using UnityEditor;
 using UnityEngine;
 using ImGUI = UnityEngine.GUI;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {

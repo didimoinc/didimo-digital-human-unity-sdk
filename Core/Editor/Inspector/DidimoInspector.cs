@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Didimo.Inspector;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
-using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
-using UnityEngine;
+using Didimo.Core.Inspector;
+using Didimo.Core.Editor;
 
 namespace Didimo.Editor.Inspector
 {

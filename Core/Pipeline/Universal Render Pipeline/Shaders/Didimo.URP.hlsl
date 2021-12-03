@@ -171,13 +171,42 @@ void CentredScale_half(in float2 uv, in float2 centre, in float2 scale, out floa
 	result = ((uv - centre) * scale) + centre;
 }
 
-
-
 float smoothLerp(in float x, in float a, in float b)
 {
 	float v = x * x * (3.0 - 2.0 * x);
 	return a + (b - a) * v;
 }
+
+#define TRANSPOSE_MATRIX_CONVERT
+#ifdef TRANSPOSE_MATRIX_CONVERT
+void convertMat4ToMat3_float(in float4x4 mat, out float3x3 outmat)
+{
+	outmat = float3x3(mat[0][0], mat[0][1], mat[0][2],
+					  mat[1][0], mat[1][1], mat[1][2],
+					  mat[2][0], mat[2][1], mat[2][2]);
+}
+
+void convertMat4ToMat3_half(half3x3 mat, out half3x3 outmat)
+{
+	outmat = half3x3 (mat[0][0], mat[0][1], mat[0][2],
+					mat[1][0], mat[1][1], mat[1][2],
+					mat[2][0], mat[2][1], mat[2][2]);
+}
+#else
+void convertMat4ToMat3_float(in float4x4 mat, out float3x3 outmat)
+{
+	outmat = float3x3(mat[0][0], mat[1][0], mat[2][0],
+					  mat[0][1], mat[1][1], mat[2][1],
+					  mat[0][2], mat[1][2], mat[2][2]);
+}
+
+void convertMat4ToMat3_half(half3x3 mat, out half3x3 outmat)
+{
+	outmat = half3x3 (mat[0][0], mat[1][0], mat[2][0],
+		mat[0][1], mat[1][1], mat[2][1],
+		mat[0][2], mat[1][2], mat[2][2]);
+}
+#endif
 
 //takes input from 0..1 and reforms it in to an envelope between x = 0..t[0]..t[1]..1 with output values in range 0..p[0]..p[1]..1
 //TODO: replace this curve with a texture lookup perhaps
@@ -493,7 +522,6 @@ void Eye_float(in half3x3 tS,
 	half3 reflDir = normalize(-reflect(tV, tN));
 	reflDir = normalize(mul(reflDir, tS));
 	half3 indirectSpec = GlossyEnvironmentReflection(reflDir, 0, 1) *ao;
-
 	// outColor *= ao;
 
 	/// frensel
@@ -505,17 +533,17 @@ void Eye_float(in half3x3 tS,
 }
 
 //#define TEST_AS_PHONG_BLINN
-half evalKajiyaKay(half3 normal, half3 tangent, half3 halfVec, half roughness)
+half evalKajiyaKay(half3 normal, half3 tangent, half3 halfVec, half roughness, half shadow)
 {
-	half  dotNH = max(0, dot(normal, halfVec));
 	half  dotTH = dot(tangent, halfVec);
+	
 	half  dirAtten = smoothstep(-1.0, 0.0, dotTH);
 #ifdef TEST_AS_PHONG_BLINN
 	return max(0, pow(dotNH, roughness));
 #else
 	half  sinTH = sqrt(1 - dotTH * dotTH);
 
-	return min(max(0, dirAtten * pow(sinTH, roughness)), dotNH);
+	return max(0, dirAtten * pow(sinTH, roughness)) * shadow;
 #endif
 }
 
@@ -524,36 +552,67 @@ float3 decodeNormal(float3 v)
 	return 2.0 * (v - 0.5);
 }
 
-
-
-
-#define USE_FLOW_MAP
-
-void evalHairBrdf(in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in half3 tEtoV, in half roughness1, in half roughness2, in half specShift, in half specShift2, inout half3 diffuse, inout half3 spec1, inout half3 spec2, in float3 perturbedFlow)
+float3 decodeNormal2(float3 v)
 {
-	diffuse += max(0, dot(lTd, tN)) * lColor;
-
-	half3 halfVec = normalize(lTd + tEtoV); 
-
-#ifdef USE_FLOW_MAP	
-
-	//normal = normalize(mix(normal, peterbed_normal, material_normal_scale_factor));
-	//perturbedFlow = (perturbedFlow - float3(0.5, 0.5, 0.5)) * 2.0;
-
-	float3 t1 = normalize(tT - perturbedFlow * specShift);
-	float3 t2 = normalize(tT - perturbedFlow * specShift2);
-#else
-	float3 t1 = shiftTangent(tT, N, perturbedFlow * specShift);
-	float3 t2 = shiftTangent(tT, N, perturbedFlow * specShift2);
-#endif
-
-	half3 T1 = normalize(t1 + tN * specShift);
-	half3 T2 = normalize(t2 + tN * specShift2);
-	spec1 += max(0, evalKajiyaKay(tN, T1, halfVec, roughness1) * lColor);
-	spec2 += max(0, evalKajiyaKay(tN, T2, halfVec, roughness2) * lColor);
+	return normalize(2.0 * (v - 0.5));
 }
 
-#define USE_dFD
+
+/*
+
+void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, inout half3 diffuse, inout half3 psuedoSss, inout half3 transmission)
+{
+	half lambert = dot(tN, tD);
+	//diffuse += lightColor * max(0, lambert);
+	psuedoSss += lightColor * clamp(lambert + sssAdd, 0, 1);
+	half tLambert = dot(-tN, tD);   
+	transmission += lightColor * max(0, tLambert * tLambert * tLambert);
+}
+*/
+
+
+//#define DOUBLE_SIDED_LIGHTING
+float doLightDot(in float3 normal, in float3 lightdirection)
+{
+	float dp = dot(normal, lightdirection);
+
+#ifdef DOUBLE_SIDED_LIGHTING  
+	return  abs(dp);
+#else
+	return max(0.0, dp);
+#endif        
+}
+
+float3 calculateDiffuseColour(in float3 normal, in float scatter, float3 lightdirection, in float3 lightcol)
+{
+	float inv_scatter = max(0.0, 1.0 - scatter);
+	float dp = clamp((doLightDot(normal, lightdirection) + scatter) * inv_scatter, 0.0, 1.0);
+
+	float3 diffcol = lightcol;
+	return diffcol * dp;
+}
+
+#define USE_FLOW_MAP
+#define WORLD_SPACE_FLOW_MAP
+void evalHairBrdf( in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in half3 tEtoV, 
+				   in half roughness1, in half roughness2, in half specShift, in half specShift2, in half scatter,
+				   inout half3 diffuse, inout half3 spec1, inout half3 spec2)
+{	
+	float LdotN = dot(lTd, tN);
+	diffuse += calculateDiffuseColour(tN, scatter, lTd, lColor);
+	//max(0, LdotN)* lColor;
+	float shadow = max(0, LdotN );
+	
+	half3 halfVec = normalize(lTd + tEtoV); 
+	float specShiftAddition = 0.0;
+
+	half3 T1 = normalize(tT - (tN * (specShift + specShiftAddition )));
+	half3 T2 = normalize(tT - (tN * (specShift2+ specShiftAddition )));
+	spec1 += max(0, evalKajiyaKay(tN, T1, halfVec, roughness1, shadow ) * lColor);
+	spec2 += max(0, evalKajiyaKay(tN, T2, halfVec, roughness2, shadow ) * lColor);
+}
+
+//#define USE_dFD
 void calcSDFAlpha_half(in float2 uv, in float dist, in float cutoff, in float smoothing, in float antialiasfactor, in float gamma, out float res)
 {
 #ifdef USE_dFD
@@ -564,20 +623,74 @@ void calcSDFAlpha_half(in float2 uv, in float dist, in float cutoff, in float sm
 	float m = 0.4;
 
 #endif
-
-	smoothing = max(smoothing, pow(abs(m) * antialiasfactor, gamma));
+	antialiasfactor = 1.0;
+	float smoothval = max(smoothing, pow(abs(m) * antialiasfactor, gamma));
 
 	//float distanceChange = m_derivative * 0.5; //fwidth(dist)
-	float antialiasedCutoff = smoothstep(cutoff - smoothing, cutoff + smoothing, dist);
+	float antialiasedCutoff = smoothstep(cutoff - smoothval, cutoff + smoothval, dist);
+
 	res = antialiasedCutoff;
 }
 
-void Hair_float(in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3 tT, in float3 tV, in float2 uv, in half3 baseColor, in half specExp1, in half specExp2, in half envRough, in half envSpecMul, in half specShift, in half specShift2, in half flowMultiply, in half specMultiply, in half rootTipPos, in half3 perturbedFlowIn, in float AO, out half3 outColor, out half3 outNormal, out half3 outTangent)
+void calcSDFAlpha_float(in float2 uv, in float dist, in float cutoff, in float smoothing, in float antialiasfactor, in float gamma, out float res)
+{
+#ifdef USE_dFD
+	float2 dpdx = ddx(uv);
+	float2 dpdy = ddy(uv);
+	float m = length(float2(length(dpdx), length(dpdy)));
+#else
+	float m = 0.4;
+
+#endif
+
+	float smoothval = max(smoothing, pow(abs(m) * antialiasfactor, gamma));
+
+	//float distanceChange = m_derivative * 0.5; //fwidth(dist)
+	float antialiasedCutoff = smoothstep(cutoff - smoothval, cutoff + smoothval, dist);
+	res = antialiasedCutoff;	
+}
+
+void MatrixRotateXYZ_float(in float3 o, out float4x4 m)
+{
+	float crx = cos(o.x);
+	float srx = sin(o.x);
+	float cry = cos(o.y);
+	float sry = sin(o.y);
+	float crz = cos(o.z);
+	float srz = sin(o.z);
+	//this may have 'flipped' y rotation - need to establish 'cannon' here. 
+	//RotateY and SetRotateY are flipped respective to each other 	
+	m[0][0] = crz * cry;    m[0][1] = crz * -sry * -srx + srz * crx;        m[0][2] = crz * -sry * crx + srz * srx;          m[0][3] = 0;
+	m[1][0] = -srz * cry;   m[1][1] = -srz * -sry * -srx + crz * crx;       m[1][2] = -srz * -sry * crx + crz * srx;         m[1][3] = 0;
+	m[2][0] = sry;          m[2][1] = cry * -srx;                           m[2][2] = cry * crx;                             m[2][3] = 0;
+	m[3][0] = 0;            m[3][1] = 0;                                    m[3][2] = 0;                                     m[3][3] = 1;	
+}
+
+void MatrixRotateXYZ_half(in float3 o, out half4x4 m)
+{
+	float crx = cos(o.x);
+	float srx = sin(o.x);
+	float cry = cos(o.y);
+	float sry = sin(o.y);
+	float crz = cos(o.z);
+	float srz = sin(o.z);
+	//this may have 'flipped' y rotation - need to establish 'cannon' here. 
+	//RotateY and SetRotateY are flipped respective to each other 	
+	m[0][0] = crz * cry;    m[0][1] = crz * -sry * -srx + srz * crx;        m[0][2] = crz * -sry * crx + srz * srx;          m[0][3] = 0;
+	m[1][0] = -srz * cry;   m[1][1] = -srz * -sry * -srx + crz * crx;       m[1][2] = -srz * -sry * crx + crz * srx;         m[1][3] = 0;
+	m[2][0] = sry;          m[2][1] = cry * -srx;                           m[2][2] = cry * crx;                             m[2][3] = 0;
+	m[3][0] = 0;            m[3][1] = 0;                                    m[3][2] = 0;                                     m[3][3] = 1;
+}
+
+
+void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3 tT, in float3 tV, in float2 uv, 
+				 in half3 baseColor, in half specExp1, in half specExp2, in half envRough, in half envSpecMul, 
+				 in half specShift, in half specShift2, in half flowMultiply, in half specMultiply, in half rootTipPos, in float AO, in float SSSfactor, out half3 outColor)
 {
 	half3 wN = normalize(mul(tN, tS));
-	tT = -cross(tT, tN);
-	outTangent = normalize(mul(tT, tS));
-	outNormal = wN;
+	half3 wT = normalize(mul(tT, tS));
+	//tT = -cross(tN, tT);
+	
 #ifdef SHADERGRAPH_PREVIEW
 
 	outColor = baseColor;
@@ -593,20 +706,18 @@ void Hair_float(in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3
 	Light mainLight = GetMainLight();
 	half ShadowAtten = getMainShadow(wP);
 
-
 	half3 tD = normalize(mul(tS, mainLight.direction)); //light direction in tangent space
 	half rough1 = specExp1;
 	half rough2 = specExp2;
-	float3 perturbedFlow = decodeNormal(perturbedFlowIn) * flowMultiply;
-	//lTd, lColor, tN, tT, tV, roughness1, roughness2, specShift, specShift2, diffuse, spec1, spec2, perturbedFlow
-	evalHairBrdf(tD, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, diffuse, spec1, spec2, perturbedFlow);
+
+	evalHairBrdf(tD, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, tN, tT, tEtoV, rough1, rough2, specShift , specShift2, SSSfactor, diffuse, spec1, spec2);
 
 	int pixelLightCount = GetAdditionalLightsCount();
 	for (int i = 0; i < pixelLightCount; ++i)
 	{
 		Light light = GetAdditionalLight(i, wP);
 		tD = normalize(mul(tS, light.direction));
-		evalHairBrdf(tD, light.color * light.distanceAttenuation * light.shadowAttenuation, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, diffuse, spec1, spec2, perturbedFlow);
+		evalHairBrdf(tD, light.color * light.distanceAttenuation * light.shadowAttenuation, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, SSSfactor, diffuse, spec1, spec2);
 	}
 
 	half3 indDiff = SampleSH(wN);
@@ -617,61 +728,21 @@ void Hair_float(in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3
 #define HAIR_ENV_SPEC
 #ifdef HAIR_ENV_SPEC
 
-/*
-void evalHairBrdf(in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in half3 tEtoV, in half roughness1, in half roughness2, in half specShift, in half specShift2, inout half3 diffuse, inout half3 spec1, inout half3 spec2, in float3 perturbedFlow)
-{
-	diffuse += max(0, dot(lTd, tN)) * lColor;
-
-	half3 halfVec = normalize(lTd + tEtoV);
-
-#ifdef USE_FLOW_MAP
-
-	//normal = normalize(mix(normal, peterbed_normal, material_normal_scale_factor));
-	float3 t1 = normalize(tT - perturbedFlow * specShift);
-	float3 t2 = normalize(tT - perturbedFlow * specShift2);
-#else
-	float3 t1 = shiftTangent(tT, N, perturbedFlow * specShift);
-	float3 t2 = shiftTangent(tT, N, perturbedFlow * specShift2);
-#endif
-
-	half3 T1 = normalize(t1 + tN * specShift);
-	half3 T2 = normalize(t2 + tN * specShift2);
-	spec1 += max(0, evalKajiyaKay(tN, T1, halfVec, roughness1) * lColor);
-	spec2 += max(0, evalKajiyaKay(tN, T2, halfVec, roughness2) * lColor);
-}
-*/
-
-/*	//#define TEST_AS_PHONG_BLINN
-	half evalKajiyaKay(half3 normal, half3 tangent, half3 halfVec, half roughness)
-	{
-		half  dotNH = max(0, dot(normal, halfVec));
-		half  dotTH = dot(tangent, halfVec);
-		half  dirAtten = smoothstep(-1.0, 0.0, dotTH);
-
-		half  sinTH = sqrt(1 - dotTH * dotTH);
-
-		return min(max(0, dirAtten * pow(sinTH, roughness)), dotNH);
-#endif
-	}*/
 
 	const half3 ctN = half3(0, 0, 1);
-	float3 t1 = normalize(tT - perturbedFlow * specShift);
-	float3 t2 = normalize(tT - perturbedFlow * specShift2);
+	float3 t1 = normalize(wT * specShift);
 
 	half3 reflDir = normalize(-reflect(tV, normalize(ctN + t1 * 0.05f) ));//
 	//half3 reflDir = normalize(-reflect(tV, ctN));//
 	reflDir = normalize(mul(reflDir, tS));
 	half3 indirectSpec = GlossyEnvironmentReflection(reflDir,  envRough, 1.0) * envSpecMul;//wP.xyz,
 
-	//half3 indirectSpec = indDiff * 0.1;
+	spec1 += indirectSpec;
 
-	spec1 += indirectSpec;// *(1.0 / rough1);
-	//spec2 += indirectSpec;
 #endif
 
 	const half3 LuminanceVector = { 0.299f, 0.587f, 0.114f };
 	half lum = min(dot(baseColor , LuminanceVector), 1);
-	//+ half3(0.05,0.05,0.05)
 	half3 lumCol = half3(lum, lum, lum);
 
 	spec1 *= lumCol;
@@ -679,10 +750,6 @@ void evalHairBrdf(in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in ha
 
 	half rootDampen = min(lerp(0, 3, uv.y), 1);
 
-	// diffuse *= rootDampen; 
-	//spec1 *= rootDampen;
-	// spec2 *= rootDampen;
-//#define TEST_NORMALS
 #ifdef TEST_NORMALS
 	outColor = lerp(perturbedFlow, diffuse + (spec1 + spec2) * specMultiply, 0.1);
 #else

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Didimo.Core.Utility;
+using System;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Deformables
 {
     public class Deformable : DidimoBehaviour
     {
@@ -16,10 +16,14 @@ namespace Didimo
         public string[] IdealBoneNames => idealBoneNames;
 
         public Type DeformationUtilityType = typeof(ObjDeformationUtility);
-        public DeformationUtility GetDeformationUtility() { return (DeformationUtility) Activator.CreateInstance(DeformationUtilityType); }
+        public DeformationUtility GetDeformationUtility()
+        {
+            return (DeformationUtility) Activator.CreateInstance(DeformationUtilityType);
+        }
 
         /// <summary>
-        /// Get original, undeformed mesh data, from the shared mesh(s). Coordinates will be converted to the units used by the Didimo generation pipeline.
+        /// Get original, undeformed mesh data, from the shared mesh(s).
+        /// Coordinates will be converted to the units used by the Didimo generation pipeline.
         /// </summary>
         /// <returns>Byte array of the data ready to be sent to the server.</returns>
         public byte[] GetUndeformedMeshData()
@@ -31,7 +35,8 @@ namespace Didimo
         }
 
         /// <summary>
-        /// Get deformed mesh data, from the mesh instance(s). Coordinates will be converted to the units used by the Didimo generation pipeline.
+        /// Get deformed mesh data, from the mesh instance(s). Coordinates will
+        /// be converted to the units used by the Didimo generation pipeline.
         /// </summary>
         /// <returns>Byte array of the data ready to be sent to the server.</returns>
         public byte[] GetMeshData()
@@ -43,7 +48,8 @@ namespace Didimo
         }
 
         /// <summary>
-        /// Update the vertices of the mesh. Coordinates will be automatically converted from the ones used by the Didimo generation pipeline, into the the ones used by Unity.
+        /// Update the vertices of the mesh. Coordinates will be automatically
+        /// converted from the ones used by the Didimo generation pipeline, into the the ones used by Unity.
         /// </summary>
         /// <param name="data"></param>
         public void SetDeformedMeshData(byte[] data)

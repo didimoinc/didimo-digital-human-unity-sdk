@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public static class ExtensionMethods
     {
@@ -73,7 +73,8 @@ namespace Didimo
             return false;
         }
 
-        public static bool TryFindRecursive<TComponent>(this Transform transform, string name, out TComponent result) where TComponent : Component
+        public static bool TryFindRecursive<TComponent>(
+            this Transform transform, string name, out TComponent result) where TComponent : Component
         {
             if (transform.TryFindRecursive(name, out Transform target))
             {

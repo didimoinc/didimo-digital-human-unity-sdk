@@ -1,4 +1,4 @@
-﻿namespace DigitalSalmon.UI
+﻿namespace Didimo.UI
 {
     public partial class Style
     {

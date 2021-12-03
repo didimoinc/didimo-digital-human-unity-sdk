@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e7ed4e2c0f8da408516c9949c45fd7, type: 3}
   m_Name: DidimoNetworkingResources
   m_EditorClassIdentifier: 
-  networkConfig: {fileID: 11400000, guid: da442ea6fdf3ba940a563d72fd14dec8, type: 2}
+  networkConfig: {fileID: 11400000, guid: cf069d63606e55f4ab1c5157395d9ba5, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Deformables
 {
     public class ByteDeformationUtility : DeformationUtility
     {
@@ -50,7 +50,8 @@ namespace Didimo
             {
                 if (!ValidFilter(meshFilter)) continue;
 
-                totalLength += Constants.SIZE_VECTOR3 * (uint) (shared ? meshFilter.sharedMesh.vertexCount : meshFilter.mesh.vertexCount);
+                totalLength += Constants.SIZE_VECTOR3
+                    * (uint) (shared ? meshFilter.sharedMesh.vertexCount : meshFilter.mesh.vertexCount);
             }
 
             data = new byte[totalLength];
@@ -59,7 +60,8 @@ namespace Didimo
             {
                 if (!ValidFilter(meshFilter)) continue;
 
-                Vector3ArrayToBytes((shared ? meshFilter.sharedMesh.vertices : meshFilter.mesh.vertices), ref data, ref position);
+                Vector3ArrayToBytes((shared ? meshFilter.sharedMesh.vertices
+                    : meshFilter.mesh.vertices), ref data, ref position);
             }
         }
 
@@ -76,7 +78,11 @@ namespace Didimo
 
         public override void SetVertices(List<Vector3> vertices)
         {
-            if (vertices.Count != data.Length / Constants.SIZE_VECTOR3) throw new ArgumentException($"Provided list of vertices doesn't match already existing list size.");
+            if (vertices.Count != data.Length / Constants.SIZE_VECTOR3)
+            {
+                throw new ArgumentException($"Provided list of vertices doesn't match already existing list size.");
+            }
+
             int position = 0;
             Vector3ArrayToBytes(vertices.ToArray(), ref data, ref position);
         }

@@ -1,5 +1,6 @@
 using System;
 using Didimo.Builder;
+using Didimo.Core.Utility;
 using Didimo.GLTFUtility;
 using UnityEngine;
 
@@ -39,7 +40,7 @@ namespace Didimo
         [SerializeField]
         [Range(-0.01f, 0.01f)]
         protected float offset_Y = -0.0020f;
-         
+
         [SerializeField]
         [Range(0.5f, 1.5f)]
         protected float scale_X = 0.912f;
@@ -79,7 +80,7 @@ namespace Didimo
             RightEyeHoleBoneTransforms = didimoEyeShadowControllerConfig.RightEyelidJoints;
             HeadTransform = didimoEyeShadowControllerConfig.HeadJoint;
             LeftEye = didimoEyeShadowControllerConfig.LeftEyeMesh;
-            RightEye = didimoEyeShadowControllerConfig.RightEyeMesh;   
+            RightEye = didimoEyeShadowControllerConfig.RightEyeMesh;
         }
 
         public const string AOpowVarName            = "Vector1_ba14f804b81940f190085ab00e25f7e3";
@@ -178,31 +179,38 @@ namespace Didimo
             Vector3 centreLine, centreLineOffset;
             Rect bounds;
             Transform[] eyeTransforms = GetEyeTransforms(eye);
-            MathUtils.CalculateLeastSquares(out centreLine, out centreLineOffset, eyeTransforms, HeadTransform, 0);
+            MathUtils.CalculateLeastSquares(out centreLine, out centreLineOffset,
+                eyeTransforms, HeadTransform, 0);
             Matrix4x4 eyeMat = GetEyeHoleMatrix(eye);
             CalculateBasisMatrix(centreLine, centreLineOffset, out eyeMat);
             CalculateBounds(eyeMat, out bounds, eye);
             float eyeNegator = eye == Eye.Left ? 1.0f : -1.0f;
-            Matrix4x4 translate = Matrix4x4.Translate(new Vector3(this.offset_X * eyeNegator, this.offset_Y, 0.0f));
-            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(bounds.width * 0.5f * this.scale_X, bounds.height * 0.5f * this.scale_Y, 1.0f));
-            Matrix4x4 rotate = Matrix4x4.Rotate(Quaternion.AngleAxis(this.rotation * eyeNegator, new Vector3(0, 0, 1)));
+            Matrix4x4 translate = Matrix4x4.Translate(new Vector3(
+                this.offset_X * eyeNegator,
+                this.offset_Y,
+                0.0f));
+            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(bounds.width * 0.5f * this.scale_X,
+            bounds.height * 0.5f * this.scale_Y, 1.0f));
+            Matrix4x4 rotate = Matrix4x4.Rotate(
+                Quaternion.AngleAxis(this.rotation * eyeNegator, new Vector3(0, 0, 1)));
             eyeMat = HeadTransform.localToWorldMatrix * eyeMat * translate * rotate * scale ;
-            SetEyeHoleMatrix(eye, eyeMat);            
+            SetEyeHoleMatrix(eye, eyeMat);
         }
 
         void ProcessEyepropBlock(Eye eye, MaterialPropertyBlock propBlock, Renderer renderer)
-        {         
+        {
             if (propBlock == null || renderer == null)
                 return;
-            
-            renderer.GetPropertyBlock(propBlock, 0); //need to be per material to ensure that these aren't ignored : per material > per instance
+
+            //need to be per material to ensure that these aren't ignored : per material > per instance
+            renderer.GetPropertyBlock(propBlock, 0);
             ProcessEye(eye);
             propBlock.SetFloat(AOpowVarNameID, aoPOW);
             propBlock.SetFloat(AOstrengthVarNameID, aoStrength);
             propBlock.SetMatrix(EyeHoleInvMatrixVarNameID, GetEyeHoleMatrix(eye).inverse);
             renderer.SetPropertyBlock(propBlock, 0);
         }
-       
+
         void ApplyBlocks()
         {
             LeftpropBlock ??= new MaterialPropertyBlock();
@@ -231,5 +239,5 @@ namespace Didimo
         {
             ApplyBlocks();
         }
-    }   
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public class ThreadingUtility : ASingletonBehaviour<ThreadingUtility>
     {
@@ -20,7 +20,8 @@ namespace Didimo
         public static void WhenMainThread(Action action) { Instance.actionQueue.Enqueue(action); }
 
         [RuntimeInitializeOnLoadMethod]
-        // Automatically instantiate on main thread. If we lazy load this singleton behaviour outside the main thread, we would get an error.
+        // Automatically instantiate on main thread.
+        // If we lazy load this singleton behaviour outside the main thread, we would get an error.
         private static void CreateInstance() { WhenMainThread(() => { }); }
     }
 }

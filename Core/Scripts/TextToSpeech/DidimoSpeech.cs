@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using DigitalSalmon;
 using UnityEngine;
+using Didimo.Core.Utility;
 
 namespace Didimo.Speech
 {
+    /// <summary>
+    /// Class responsible for providing TTS capability to any didimo
+    /// through the Amazon's AWS Polly service.
+    /// </summary>
     public class DidimoSpeech : DidimoBehaviour
     {
         public const string AMAZON_TTS_SOURCE  = "amazonPolly";
@@ -18,7 +22,7 @@ namespace Didimo.Speech
         [SerializeField]
         protected float visemeMaxAmplitude = 1f;
 
-        private AudioSource _audioSource;
+        private AudioSource audioSource;
 
         private Sequence sequence;
 
@@ -30,15 +34,15 @@ namespace Didimo.Speech
         {
             get
             {
-                if (_audioSource == null)
+                if (audioSource == null)
                 {
-                    _audioSource = GetComponent<AudioSource>();
-                    if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
+                    audioSource = GetComponent<AudioSource>();
+                    if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
 
-                    _audioSource.loop = false;
+                    audioSource.loop = false;
                 }
 
-                return _audioSource;
+                return audioSource;
             }
         }
 
@@ -48,6 +52,11 @@ namespace Didimo.Speech
             currentInterpolatedVisemes = new List<(VisemeElement viseme, float weight)>();
         }
 
+        /// <summary>
+        /// Start speaking any generated TTS <c>Phrase</c>. This contains an animation and audio clip.
+        /// To generate Phrases, use the <c>PhraseBuilder</c>.
+        /// </summary>
+        /// <param name="phrase">TTS <c>Phrase</c> to be spoken</param>
         public void Speak(Phrase phrase)
         {
             if (!DidimoComponents.PoseController.SupportsAnimation)
@@ -67,14 +76,23 @@ namespace Didimo.Speech
             sequence.Coroutine(SpeechRoutine(phrase));
         }
 
+        /// <summary>
+        /// Stop playing the TTS animation and audio clip.
+        /// </summary>
         public void StopAnimation()
         {
             AudioSource.Stop();
             sequence.Cancel();
         }
-        
-        public bool IsSpeaking => AudioSource.isPlaying; 
 
+        public bool IsSpeaking => AudioSource.isPlaying;
+
+        /// <summary>
+        /// Start the speech routine that is responsible for playing the
+        /// audio and the animation in sync.
+        /// </summary>
+        /// <param name="phrase"></param>
+        /// <returns></returns>
         private IEnumerator SpeechRoutine(Phrase phrase)
         {
             AudioSource.clip = phrase.Audio;
@@ -97,6 +115,12 @@ namespace Didimo.Speech
             AudioSource.Stop();
         }
 
+
+        /// <summary>
+        /// Try to play the correct adequate vises for the corresponding audio time.
+        /// </summary>
+        /// <param name="time">Audio time to play the visemes.</param>
+        /// <returns>True if the time is valid and the visemes were played. False otherwise.</returns>
         private bool TryEvaluateTime(float time)
         {
             if (CurrentPhrase == null) return false;
@@ -116,7 +140,15 @@ namespace Didimo.Speech
             return true;
         }
 
-        private void CalculatedInterpolatedVisemes(Phrase phrase, float time, ref List<(VisemeElement viseme, float weight)> result)
+        /// <summary>
+        /// Calculate the viseme weights to be played from a <c>Phrase</c> at the given time.
+        /// This function clears the <paramref name="result"/> list and replaces it with the new information.
+        /// </summary>
+        /// <param name="phrase"><c>Phrase</c> object that is being played</param>
+        /// <param name="time">Audio time to retrieve the visemes.</param>
+        /// <param name="result">List of visemes and weight data to be filled with the new information.</param>
+        private void CalculatedInterpolatedVisemes(Phrase phrase, float time,
+            ref List<(VisemeElement viseme, float weight)> result)
         {
             result.Clear();
             IReadOnlyList<VisemeElement> visemes = phrase.Visemes;
@@ -126,7 +158,8 @@ namespace Didimo.Speech
                 VisemeElement viseme = visemes[i];
 
                 float previousVisemeTime = i > 0 ? visemes[i - 1].TimeSeconds : 0;
-                float nextVisemeTime = i < visemes.Count - 1 ? visemes[i + 1].TimeSeconds : visemes[visemes.Count - 1].TimeSeconds + visemeDuration;
+                float nextVisemeTime = i < visemes.Count - 1 ? visemes[i + 1].TimeSeconds
+                    : visemes[visemes.Count - 1].TimeSeconds + visemeDuration;
 
                 float fadeInDuration = visemeDuration / 2f;
                 if (viseme.TimeSeconds - previousVisemeTime < visemeDuration / 2f)
@@ -177,10 +210,16 @@ namespace Didimo.Speech
 
             if (result.Count > 2)
             {
-                Debug.LogWarning($"Found more than two visemes for time {time} ({result.Count}). This shouldn't happen.");
+                Debug.LogWarning(
+                    $"Found more than two visemes for time {time} ({result.Count}). This shouldn't happen.");
             }
         }
 
+        /// <summary>
+        /// Find and play the corresponding viseme animation from the TTS phoneme provided.
+        /// </summary>
+        /// <param name="phoneme">Phoneme name from the TTS phrase.</param>
+        /// <param name="weight">Weight of the viseme</param>
         private void PlayMatchingVisemeFromPhoneme(string phoneme, float weight)
         {
             if (TryFindVisemeName(phoneme, out string visemeName))
@@ -200,6 +239,12 @@ namespace Didimo.Speech
             }
         }
 
+        /// <summary>
+        /// Tries to map each TTS phoneme name to a viseme name.
+        /// </summary>
+        /// <param name="phoneme">Name of the phoneme</param>
+        /// <param name="visemeName">Mapped name of the corresponding viseme.</param>
+        /// <returns>True if the phoneme mapping was found. False otherwise.</returns>
         private static bool TryFindVisemeName(string phoneme, out string visemeName)
         {
             switch (phoneme)

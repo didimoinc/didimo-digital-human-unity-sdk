@@ -1,31 +1,35 @@
-﻿using DigitalSalmon;
+﻿using Didimo;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
+    /// <summary>
+    /// MonoBehaviour class that is used by our didimo components to inherit from
+    /// when requiring access to other didimo components.
+    /// </summary>
     public class DidimoBehaviour : MonoBehaviour
     {
         [SerializeField, HideInInspector]
-        private DidimoComponents _didimo;
+        private DidimoComponents didimo;
 
-        private Sequence _sequence;
+        private Sequence sequence;
 
         public DidimoComponents DidimoComponents
         {
             get
             {
-                if (_didimo == null) _didimo = GetComponent<DidimoComponents>();
-                return _didimo;
+                if (didimo == null) didimo = GetComponent<DidimoComponents>();
+                return didimo;
             }
-            set => _didimo = value;
+            set => didimo = value;
         }
 
         protected Sequence Sequence
         {
             get
             {
-                if (_sequence == null) _sequence = new Sequence(this);
-                return _sequence;
+                if (sequence == null) sequence = new Sequence(this);
+                return sequence;
             }
         }
     }

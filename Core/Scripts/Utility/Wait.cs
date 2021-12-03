@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DigitalSalmon
+namespace Didimo.Core.Utility
 {
     public static class Wait
     {
@@ -9,10 +9,11 @@ namespace DigitalSalmon
         // Private Fields:
         //-----------------------------------------------------------------------------------------
 
-        private static readonly Dictionary<float, WaitForSeconds>         waitCache         = new Dictionary<float, WaitForSeconds>();
-        private static readonly Dictionary<float, WaitForSecondsRealtime> waitRealtimeCache = new Dictionary<float, WaitForSecondsRealtime>();
+        private static readonly Dictionary<float, WaitForSeconds> waitCache = new Dictionary<float, WaitForSeconds>();
+        private static readonly Dictionary<float, WaitForSecondsRealtime> waitRealtimeCache
+            = new Dictionary<float, WaitForSecondsRealtime>();
 
-        private static WaitForEndOfFrame  endOfFrame;
+        private static WaitForEndOfFrame endOfFrame;
         private static WaitForFixedUpdate fixedUpdate;
 
         //-----------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ namespace DigitalSalmon
         //-----------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Gets a cached <c>WaitForSeconds</c> object corresponding to the given time in seconds, scaled by time scale.
+        /// Gets a cached <c>WaitForSeconds</c> object corresponding to the given time in seconds, scaled by time scale
         /// </summary>
         /// <returns>The <c>WaitForSeconds</c> object.</returns>
         public static WaitForSeconds Seconds(float seconds, bool caching = true)
@@ -44,7 +45,7 @@ namespace DigitalSalmon
         }
 
         /// <summary>
-        /// Gets a cached <c>WaitForSecondsRealtime</c> object corresponding to the given time in realtime seconds.
+        /// Gets a cached <c>WaitForSecondsRealtime</c> object corresponding to the given time in realtime seconds
         /// </summary>
         /// <returns>The <c>WaitForSecondsRealtime</c> object.</returns>
         public static WaitForSecondsRealtime SecondsRealtime(float seconds, bool caching = true)

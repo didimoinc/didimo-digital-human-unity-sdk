@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Didimo.Speech;
+using Didimo.Core.Deformables;
+using Didimo.Core.Utility;
 
 namespace Didimo.Builder
 {
@@ -15,7 +17,8 @@ namespace Didimo.Builder
         protected BuildData(string didimoKey, string didimoFilePath)
         {
             DidimoKey = didimoKey;
-            RootDirectory = string.IsNullOrEmpty(didimoFilePath) ? string.Empty : IOUtility.SanitisePath(Path.GetDirectoryName(didimoFilePath));
+            RootDirectory = string.IsNullOrEmpty(didimoFilePath) ? string.Empty
+                : IOUtility.SanitisePath(Path.GetDirectoryName(didimoFilePath));
         }
 
         public abstract Task<(bool success, DidimoComponents didimo)> Build(Configuration configuration);

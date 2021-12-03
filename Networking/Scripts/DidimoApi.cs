@@ -273,5 +273,23 @@ namespace Didimo.Networking
 
             return (true, didimoComponents);
         }
+
+        public async Task<(bool success, DidimoComponents didimo)> DidimoFromKey(string didimoKey, Configuration configuration = null, Action<float> creationProgress = null)
+        {
+            Task<(bool success, DidimoDetailsResponse status, string errorCode)> checkForStatusUntilCompletionTask =
+                CheckForStatusUntilCompletion(didimoKey, creationProgress);
+            await checkForStatusUntilCompletionTask;
+
+            Downloadable downloadable = checkForStatusUntilCompletionTask.Result.status.GetDownloadableForTransferFormat(DidimoDetailsResponse.DownloadTransferFormatType.Gltf);
+            if (downloadable == null)
+            {
+                Debug.LogError($"Failed to get downloadable of type {DidimoDetailsResponse.DownloadTransferFormatType.Gltf}");
+                return (false, null);
+            }
+
+            (bool success, string path) downloadResult = await downloadable.DownloadToDisk(true);
+            return await Import(didimoKey, downloadResult.path, configuration);
+
+        }
     }
 }

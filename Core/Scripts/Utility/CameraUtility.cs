@@ -3,15 +3,20 @@ using System.Collections;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public static class CameraUtility
     {
         private const int RENDER_TEXTURE_DEPTH = 24;
 
-        public static void GetNextCameraFrameImage(Action<Texture2D> callback, int width = 0, int height = 0, Texture2D overlay = null) { ThreadingUtility.Instance.StartCoroutine(RenderCameraCoroutine(callback, width, height, overlay)); }
+        public static void GetNextCameraFrameImage(
+            Action<Texture2D> callback, int width = 0, int height = 0, Texture2D overlay = null)
+        {
+            ThreadingUtility.Instance.StartCoroutine(RenderCameraCoroutine(callback, width, height, overlay));
+        }
 
-        private static IEnumerator RenderCameraCoroutine(Action<Texture2D> callback, int width, int height, Texture2D overlay)
+        private static IEnumerator RenderCameraCoroutine(
+            Action<Texture2D> callback, int width, int height, Texture2D overlay)
         {
             if (width == 0)
             {
@@ -25,7 +30,10 @@ namespace Didimo
 
             yield return new WaitForEndOfFrame();
 
-            GameObject cameraGo = Object.Instantiate(DidimoResources.ScreenshotCamera);
+            //GameObject cameraGo = Object.Instantiate(DidimoResources.ScreenshotCamera);
+            var camPrefab = Resources.Load<GameObject>("ScreenShotCamera");
+            GameObject cameraGo = Object.Instantiate(camPrefab);
+
             // To also disable the PPP on the main camera
             GameObject mainCameraGo = Camera.main!.gameObject;
             mainCameraGo.SetActive(false);

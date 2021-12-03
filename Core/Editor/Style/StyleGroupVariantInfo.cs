@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Didimo.Core.Utility;
+using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public enum FontWeights
     {

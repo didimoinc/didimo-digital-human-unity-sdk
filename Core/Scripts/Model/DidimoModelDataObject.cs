@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Model
 {
     public class DidimoModelDataObject
     {
@@ -21,7 +21,8 @@ namespace Didimo
             [JsonProperty("skin_weights")] public List<List<float>> skin_weights { get; private set; }
 
             public bool HasSkinning => skin_indices != null && skin_indices.Count > 0;
-            public bool HasValidWeights => HasSkinning && skin_weights != null && skin_indices.Count == skin_weights.Count;
+            public bool HasValidWeights => HasSkinning && skin_weights != null
+                && skin_indices.Count == skin_weights.Count;
         }
 
         public class Node
@@ -58,7 +59,8 @@ namespace Didimo
         [JsonProperty("meshes")]
         private List<Mesh> meshes;
 
-        // Names of the nodes that are skinned. The Mesh's skinning info (namely skin indices), will point into the indices of this array
+        // Names of the nodes that are skinned. The Mesh's skinning info (namely
+        // skin indices), will point into the indices of this array
         [JsonProperty("bones")]
         private List<string> bones;
 

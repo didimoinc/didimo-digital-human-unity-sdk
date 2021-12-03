@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+using Didimo.Core.Deformables;
 
-namespace Didimo
+namespace Didimo.Core.Config
 {
     [System.Serializable]
     public class HairLayerSettings
@@ -32,8 +32,8 @@ namespace Didimo
         public float specShift2 = 0.02f;
 
         [SerializeField]
-        [Range(-100.0f, 100.0f)]
-        public float flowMultiply = 1.5f;
+        [Range(-2.0f, 2.0f)]
+        public float flowMultiply = 1.0f;
 
         public HairLayerSettings(HairLayerSettings other)
         {
@@ -56,7 +56,7 @@ namespace Didimo
             specShift2 = other.specShift2;
             flowMultiply = other.flowMultiply;
         }
-        
+
         private static readonly char[] HairNameSplits = { '_', ' ' };
         public static string ExtractValidHairName(string testName)
         {
@@ -66,24 +66,24 @@ namespace Didimo
                 var subnames = testName.Split(HairNameSplits);
                 if (subnames.Length >= 2)
                 {
-                    return subnames[0] + "_" + subnames[1];                    
+                    return subnames[0] + "_" + subnames[1];
                 }
             }
             return null;
         }
-        
+
         public static string GetHairIDFromObject(Hair hair)
         {
             var meshes = hair.GetComponentsInChildren<MeshFilter>();
             var hairpiece_name = ExtractValidHairName(hair.gameObject.name);
-            
+
             foreach (var m in meshes)
             {
 
                 var name = ExtractValidHairName(m.sharedMesh.name.ToLower());
-                if (name != null)                
+                if (name != null)
                     return name;
-                
+
             }
             var meshRenderers = hair.GetComponentsInChildren<MeshRenderer>();
             foreach (var m in meshRenderers)
@@ -111,7 +111,7 @@ namespace Didimo
 
     [System.Serializable]
     public class HairLayerDatabaseEntry :  HairLayerSettings
-    {      
+    {
         [SerializeField]
         public string key;
         [SerializeField]
@@ -131,7 +131,7 @@ namespace Didimo
         [SerializeField]
         public string name;
         [SerializeField]
-        public List<HairLayerDatabaseEntry> list;        
+        public List<HairLayerDatabaseEntry> list;
 
         public HairLayerDatabaseEntry FindEntry(string key, HairLayer layer)
         {
@@ -150,7 +150,7 @@ namespace Didimo
             HairLayerDatabaseEntry hlde = FindEntry(key, layer);
             if (hlde != null)
             {
-                hlde.SetValues(settings);                
+                hlde.SetValues(settings);
             }
             else
             {
@@ -160,9 +160,9 @@ namespace Didimo
         }
 
         public void Apply(Hair hairObject)
-        {            
+        {
             if (list.Count > 0)
-            {                
+            {
                 var hairpieceName = HairLayerSettings.GetHairIDFromObject(hairObject);
                 HairLayerDatabaseEntry bestOuterMatch = null;
                 HairLayerDatabaseEntry bestInnerMatch = null;
@@ -174,12 +174,12 @@ namespace Didimo
                             bestOuterMatch = hldbe;
                         if ((bestInnerMatch == null) && (hldbe.hairLayer == HairLayer.Inner))
                             bestInnerMatch = hldbe;
-                    }                    
+                    }
                     else if (hldbe.key.StartsWith(hairpieceName))
                     {
                         if (hldbe.hairLayer == HairLayer.Outer)
                             bestOuterMatch = hldbe;
-                        if (hldbe.hairLayer == HairLayer.Inner)
+                        else if (hldbe.hairLayer == HairLayer.Inner)
                             bestInnerMatch = hldbe;
                     }
                 }
@@ -194,8 +194,6 @@ namespace Didimo
     [CreateAssetMenu(fileName = "HairPresetDatabase", menuName = "Didimo/Hair Preset Database")]
     public class HairPresetDatabase : ScriptableObject
     {
-        [SerializeField]
-        private HairLayerDatabaseGroupEntry[] _hairs; 
-        public static HairLayerDatabaseGroupEntry[] hairs => DidimoResources.HairPresetDatabase ? DidimoResources.HairPresetDatabase._hairs : null;
+        public HairLayerDatabaseGroupEntry[] Hairs;
     }
 }

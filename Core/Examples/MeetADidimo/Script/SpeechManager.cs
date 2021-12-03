@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeechManager : MonoBehaviour
-{   
-    [SerializeField]
-    private GameObject man;
-    [SerializeField]
-    private GameObject woman;
-
-    // Start is called before the first frame update
-    void Start()
+namespace Didimo.Core.Examples.MeetADidimo
+{
+    public class SpeechManager : MonoBehaviour
     {
-        Didimo.MeetADidimo script1 = woman.GetComponent<Didimo.MeetADidimo>();
-        Didimo.MeetADidimo script2 = man.GetComponent<Didimo.MeetADidimo>();
+        [SerializeField]
+        private GameObject man;
+        [SerializeField]
+        private GameObject woman;
 
-        script1.SpeakDidimoFirst();
-        script2.SpeakDidimoSecond();
+        void Start()
+        {
+            var o = woman.GetComponent<MeetADidimo>();
+            var i = man.GetComponent<MeetADidimo>();
+
+            o.SpeakDidimoFirst();
+            i.SpeakDidimoSecond();
+        }
     }
 }

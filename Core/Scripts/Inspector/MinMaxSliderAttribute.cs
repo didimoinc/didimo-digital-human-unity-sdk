@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Didimo.Inspector
+namespace Didimo.Core.Inspector
 {
     public class MinMaxSliderAttribute : PropertyAttribute
     {

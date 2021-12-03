@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Didimo.Core.Model;
+using Didimo.Core.Utility;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -10,7 +12,8 @@ namespace Didimo.Builder.JSON
         {
             foreach (DidimoModelDataObject.Constraint constraint in dataObject.Constraints)
             {
-                if (!context.MeshHierarchyRoot.TryFindRecursive(constraint.ConstrainedObj, out Transform constrainedObj))
+                if (!context.MeshHierarchyRoot.TryFindRecursive(constraint.ConstrainedObj,
+                    out Transform constrainedObj))
                 {
                     Debug.LogWarning($"Could not find hierarchy: {constraint.ConstrainedObj}");
                     continue;
@@ -18,7 +21,8 @@ namespace Didimo.Builder.JSON
 
                 ConstraintSource constraintSource = new ConstraintSource();
 
-                if (!context.MeshHierarchyRoot.TryFindRecursive(constraint.ConstraintSrc, out Transform constraintSrcObj))
+                if (!context.MeshHierarchyRoot.TryFindRecursive(constraint.ConstraintSrc,
+                    out Transform constraintSrcObj))
                 {
                     Debug.LogWarning($"Could not find hierarchy: {constraint.ConstraintSrc}");
                     continue;
@@ -36,8 +40,10 @@ namespace Didimo.Builder.JSON
 
                         unityConstraint.weight = 1;
 
-                        Vector3 positionOffset = constraintSource.sourceTransform.InverseTransformPoint(constrainedObj.position);
-                        Quaternion rotationOffset = Quaternion.Inverse(constraintSource.sourceTransform.rotation) * constrainedObj.rotation;
+                        Vector3 positionOffset = constraintSource.sourceTransform
+                            .InverseTransformPoint(constrainedObj.position);
+                        Quaternion rotationOffset = Quaternion
+                            .Inverse(constraintSource.sourceTransform.rotation) * constrainedObj.rotation;
 
                         List<ConstraintSource> sources = new List<ConstraintSource>();
                         sources.Add(constraintSource);
@@ -50,6 +56,7 @@ namespace Didimo.Builder.JSON
                         unityConstraint.locked = true;
                     }
                         break;
+
                     case "position":
                     {
                         PositionConstraint unityConstraint = null;
@@ -57,7 +64,8 @@ namespace Didimo.Builder.JSON
 
                         unityConstraint.weight = 1;
 
-                        Vector3 positionOffset = constraintSource.sourceTransform.InverseTransformPoint(constrainedObj.position);
+                        Vector3 positionOffset = constraintSource.sourceTransform
+                            .InverseTransformPoint(constrainedObj.position);
 
                         List<ConstraintSource> sources = new List<ConstraintSource>();
                         sources.Add(constraintSource);
@@ -69,6 +77,7 @@ namespace Didimo.Builder.JSON
                         unityConstraint.locked = true;
                     }
                         break;
+
                     default:
                         Debug.LogError("Constraint type not supported yet: " + constraint.Type);
                         break;

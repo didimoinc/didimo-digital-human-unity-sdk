@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using Didimo.Inspector;
+using Didimo.Core.Inspector;
+using Didimo.Core.Utility;
 using UnityEngine;
 
 namespace Didimo.Example
 {
+    /// <summary>
+    /// Example component to play a facial expression on your didimo.
+    /// Should be attached/added to the same object where the DidimoComponents component is.
+    /// </summary>
     public class DidimoAnimationExampleExpressions : DidimoBehaviour
     {
         private enum DidimoExpression
@@ -20,10 +23,16 @@ namespace Didimo.Example
         }
 
         [SerializeField]
+        [Tooltip("Facial expression to play")]
         private DidimoExpression expression = DidimoExpression.Happy;
 
         private string previousExpression;
-
+        
+        
+        /// <summary>
+        /// Play, with fade in, the facial expression the selected.
+        /// This method only works in PlayMode.
+        /// </summary>
         [Button]
         private void PlaySelectedExpression()
         {
@@ -37,6 +46,10 @@ namespace Didimo.Example
             DidimoComponents.Animator.PlayExpression(previousExpression);
         }
 
+        /// <summary>
+        /// Stop, using a fade out, the expression currently playing.
+        /// This method only works in PlayMode and if an expression was played.
+        /// </summary>
         [Button]
         private void StopExpression()
         {

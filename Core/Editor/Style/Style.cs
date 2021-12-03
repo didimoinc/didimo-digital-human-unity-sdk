@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using DigitalSalmon.Extensions;
+using Didimo.Extensions;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {

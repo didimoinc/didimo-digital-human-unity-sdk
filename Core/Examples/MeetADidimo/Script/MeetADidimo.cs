@@ -1,12 +1,8 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Didimo.Inspector;
-using DigitalSalmon.Extensions;
 using System.Collections;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Examples.MeetADidimo
 {
     public class MeetADidimo : MonoBehaviour
     {
@@ -53,12 +49,12 @@ namespace Didimo
                     throw new Exception($"Invalid Animation Mode {animationMode}");
             }
         }
+
         public void SpeakDidimoTts()
         {
             Speech.Phrase ttsPhrase = Speech.PhraseBuilder.Build(textAnimation.bytes, animationAudioClip);
             didimoComponents.Speech.Speak(ttsPhrase);
         }
-        
         
         private void SpeakDidimoARKit()
         {
@@ -85,7 +81,6 @@ namespace Didimo
             didimoComponents.Animator.FadeInAnimation(animationID, 0.5f);
             StartCoroutine(CoroutineFadeOutARKit());
         }
-
 
         public void PlayIdle()
         {

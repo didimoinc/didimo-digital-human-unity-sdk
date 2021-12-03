@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Utility
 {
     public static class IOUtility
     {

@@ -104,6 +104,9 @@
         },
         {
             "m_Id": "4242a78da0244b81be11cfd3d377e3df"
+        },
+        {
+            "m_Id": "38768728d9b244d9aa9174bfd109a304"
         }
     ],
     "m_Keywords": [],
@@ -452,6 +455,12 @@
         },
         {
             "m_Id": "39d0e7de820542e68eb322f200cfeb36"
+        },
+        {
+            "m_Id": "3205444664804a43836ae9bf980f8f07"
+        },
+        {
+            "m_Id": "6614fe2560784e79b915bb751c4b9aff"
         }
     ],
     "m_GroupDatas": [
@@ -795,6 +804,20 @@
                     "m_Id": "99ff516fa7a442729fcb30d66fd36c72"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "3205444664804a43836ae9bf980f8f07"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "f05fd5482c8140a2924efc63ef85a57f"
+                },
+                "m_SlotId": 1939484090
             }
         },
         {
@@ -1145,6 +1168,20 @@
                     "m_Id": "8d36b353d0864d839ffbb0020f76f635"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6614fe2560784e79b915bb751c4b9aff"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "f05fd5482c8140a2924efc63ef85a57f"
+                },
+                "m_SlotId": 1619922155
             }
         },
         {
@@ -2965,6 +3002,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "13a604a90d2846b1891f0e6abc84dea1",
+    "m_Id": 1619922155,
+    "m_DisplayName": "hairCapColourBlend",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector1_9aecf739c002427d9c034ac69522bb33",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PreviewNode",
     "m_ObjectId": "1423a3196d604398a460da598c4071b6",
     "m_Group": {
@@ -4604,6 +4656,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "3205444664804a43836ae9bf980f8f07",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 690.0000610351563,
+            "y": -2400.05029296875,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "a4403e9bc01c4788a5d4ba0c843bfba3"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "38768728d9b244d9aa9174bfd109a304"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PreviewNode",
     "m_ObjectId": "324a2050a0a544fe8dbcdafebc9d85b6",
     "m_Group": {
@@ -4935,6 +5022,24 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "38768728d9b244d9aa9174bfd109a304",
+    "m_Guid": {
+        "m_GuidSerialized": "bdf94ffc-721e-44a4-b162-ed87bbf0d426"
+    },
+    "m_Name": "RGBHaircap",
+    "m_DefaultReferenceName": "Boolean_38768728d9b244d9aa9174bfd109a304",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
 }
 
 {
@@ -6732,8 +6837,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 975.0,
-            "y": -2334.0,
+            "x": 508.0,
+            "y": -2292.0,
             "width": 131.0,
             "height": 34.0
         }
@@ -7283,12 +7388,47 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "6614fe2560784e79b915bb751c4b9aff",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1102.85009765625,
+            "y": -2178.10009765625,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "8813ee937cf34553a1c53dccab4b4891"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "15989e1079284c8cbb7d93f9540fb043"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "6664db67be23489cab02eef7ade3009c",
     "m_Title": "Hair Cap",
     "m_Position": {
-        "x": 967.0,
-        "y": -2529.0
+        "x": 483.0000305175781,
+        "y": -2586.0
     }
 }
 
@@ -7596,9 +7736,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 992.0,
-            "y": -2240.0,
-            "width": 156.0,
+            "x": 1094.0001220703125,
+            "y": -2107.0,
+            "width": 156.00001525878907,
             "height": 34.0
         }
     },
@@ -8883,6 +9023,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "8813ee937cf34553a1c53dccab4b4891",
+    "m_Id": 0,
+    "m_DisplayName": "HairCapModulate",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Matrix3MaterialSlot",
     "m_ObjectId": "892be6cf15ce407ba117d2e91bd2548a",
     "m_Id": 5,
@@ -9875,8 +10030,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 974.9999389648438,
-            "y": -2485.0,
+            "x": 547.0000610351563,
+            "y": -2527.0,
             "width": 130.0,
             "height": 34.0
         }
@@ -10216,10 +10371,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1041.9998779296875,
-            "y": -2121.999755859375,
+            "x": 703.0,
+            "y": -2335.000244140625,
             "width": 208.0,
-            "height": 301.9999694824219
+            "height": 302.0
         }
     },
     "m_Slots": [
@@ -10361,6 +10516,20 @@
     "m_ShaderOutputName": "Out",
     "m_StageCapability": 3,
     "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "a4403e9bc01c4788a5d4ba0c843bfba3",
+    "m_Id": 0,
+    "m_DisplayName": "RGBHaircap",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": false,
+    "m_DefaultValue": false
 }
 
 {
@@ -12525,8 +12694,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1015.0,
-            "y": -2280.0,
+            "x": 468.0000305175781,
+            "y": -2234.000244140625,
             "width": 167.00001525878907,
             "height": 34.0
         }
@@ -14123,6 +14292,12 @@
             "m_Id": "57785cfc201148de85069aaf59a96fb3"
         },
         {
+            "m_Id": "f5e2967931284534a6994f4927be2782"
+        },
+        {
+            "m_Id": "13a604a90d2846b1891f0e6abc84dea1"
+        },
+        {
             "m_Id": "dd7279c7585b49248977ed4709352ee5"
         },
         {
@@ -14150,7 +14325,9 @@
         "6b73f94d-151e-46a5-b88b-f5e2f1feb0b4",
         "42afc63f-cdf5-4dfe-8a7f-e47c26abe5b0",
         "2d92ab9b-976f-4d3e-8c41-b376dd47651d",
-        "7876be1c-070b-44e0-8b5f-4eeea14177c7"
+        "7876be1c-070b-44e0-8b5f-4eeea14177c7",
+        "75eb60cd-fa71-4dc8-973b-fc4f15950abf",
+        "3c1b432d-1195-4f43-90f2-4d598123be85"
     ],
     "m_PropertyIds": [
         708175926,
@@ -14159,7 +14336,9 @@
         -1955741860,
         1801096049,
         167634616,
-        830339643
+        830339643,
+        1939484090,
+        1619922155
     ]
 }
 
@@ -14370,6 +14549,20 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "f5e2967931284534a6994f4927be2782",
+    "m_Id": 1939484090,
+    "m_DisplayName": "RGBHaircap",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Boolean_6015531de22c40428f2471c11461c4f1",
+    "m_StageCapability": 2,
+    "m_Value": false,
+    "m_DefaultValue": false
 }
 
 {

@@ -2,7 +2,7 @@
 using UGUI = UnityEngine.GUI;
 using UGUILayout = UnityEngine.GUILayout;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public static partial class Style
     {

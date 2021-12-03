@@ -1,10 +1,12 @@
 using UnityEngine;
 using System;
-namespace Didimo
+
+namespace Didimo.Core.Utility
 {
     public static class TransformUtility
     {
-        public static bool TryFindSharedMaterialInHierarchy(Transform transform, string matName, out Material material)
+        public static bool TryFindSharedMaterialInHierarchy(Transform transform,
+            string matName, out Material material)
         {
             Renderer[] renderers = transform.GetComponentsInChildren<Renderer>();
 

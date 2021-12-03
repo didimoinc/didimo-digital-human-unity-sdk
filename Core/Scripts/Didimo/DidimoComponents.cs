@@ -1,50 +1,68 @@
-﻿using Didimo.Builder;
+using Didimo.Builder;
 using Didimo.Speech;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Didimo.Builder;
+using Didimo.Speech;
+using Didimo.Core.Deformables;
+using Didimo.Core.Utility;
 
 namespace Didimo
 {
+    /// <summary>
+    /// Class that caches references to the main didimo components.
+    /// If the component does not exist, it is created and then cached.
+    /// </summary>
     public class DidimoComponents : MonoBehaviour
     {
         [FormerlySerializedAs("didimoKey")]
         [FormerlySerializedAs("ID")]
         public string DidimoKey;
 
-        private DidimoAnimator            _didimoAnimator;
-        private DidimoIrisController      _irisController;
-        private DidimoDeformables         _didimoDeformables;
-        private DidimoSpeech              _didimoSpeech;
-        private DidimoPoseController      _didimoPoseController;
-        private DidimoMaterials           _didimoMaterials;
-        private DidimoEyeShadowController _didimoEyeShadowController;
-        private TextureCache              _textureCache;
-        public TextureCache TextureCache => _textureCache ??= new TextureCache();
+        private DidimoAnimator didimoAnimator;
+        private DidimoIrisController irisController;
+        private DidimoDeformables didimoDeformables;
+        private DidimoSpeech didimoSpeech;
+        private DidimoPoseController didimoPoseController;
+        private DidimoMaterials didimoMaterials;
+        private DidimoEyeShadowController didimoEyeShadowController;
+        private TextureCache textureCache;
+        public TextureCache TextureCache => textureCache ??= new TextureCache();
         public DidimoBuildContext BuildContext { get; set; }
 
         public DidimoAnimator Animator
         {
             get
             {
-                if (_didimoAnimator == null) ComponentUtility.GetOrAdd(this, ref _didimoAnimator);
-                return _didimoAnimator;
+                if (didimoAnimator == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref didimoAnimator);
+                }
+                return didimoAnimator;
             }
         }
-        
+
         public DidimoIrisController IrisController
         {
             get
             {
-                if (_irisController == null) ComponentUtility.GetOrAdd(this, ref _irisController);
-                return _irisController;
+                if (irisController == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref irisController);
+                }
+                return irisController;
             }
         }
         public DidimoPoseController PoseController
         {
             get
             {
-                if (_didimoPoseController == null) ComponentUtility.GetOrAdd<DidimoPoseController, FallbackPoseController>(this, ref _didimoPoseController);
-                return _didimoPoseController;
+                if (didimoPoseController == null)
+                {
+                    ComponentUtility
+                    .GetOrAdd<DidimoPoseController, FallbackPoseController>(this, ref didimoPoseController);
+                }
+                return didimoPoseController;
             }
         }
 
@@ -52,8 +70,11 @@ namespace Didimo
         {
             get
             {
-                if (_didimoDeformables == null) ComponentUtility.GetOrAdd(this, ref _didimoDeformables);
-                return _didimoDeformables;
+                if (didimoDeformables == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref didimoDeformables);
+                }
+                return didimoDeformables;
             }
         }
 
@@ -61,8 +82,11 @@ namespace Didimo
         {
             get
             {
-                if (_didimoSpeech == null) ComponentUtility.GetOrAdd(this, ref _didimoSpeech);
-                return _didimoSpeech;
+                if (didimoSpeech == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref didimoSpeech);
+                }
+                return didimoSpeech;
             }
         }
 
@@ -70,17 +94,23 @@ namespace Didimo
         {
             get
             {
-                if (_didimoMaterials == null) ComponentUtility.GetOrAdd(this, ref _didimoMaterials);
-                return _didimoMaterials;
+                if (didimoMaterials == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref didimoMaterials);
+                }
+                return didimoMaterials;
             }
         }
 
         public DidimoEyeShadowController EyeShadowController
         {
-            get 
+            get
             {
-             if (_didimoEyeShadowController == null) ComponentUtility.GetOrAdd(this, ref _didimoEyeShadowController);
-                return _didimoEyeShadowController;
+                if (didimoEyeShadowController == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref didimoEyeShadowController);
+                }
+                return didimoEyeShadowController;
             }
         }
 

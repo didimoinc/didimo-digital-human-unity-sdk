@@ -1,4 +1,4 @@
-using Didimo.Inspector;
+using Didimo.Core.Inspector;
 using UnityEditor;
 using UnityEngine;
 

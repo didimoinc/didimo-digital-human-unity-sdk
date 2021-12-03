@@ -1,8 +1,13 @@
+using Didimo.Core.Utility;
 using System;
 using UnityEngine;
 
 namespace Didimo.Oculus.Example
 {
+    /// <summary>
+    /// Class that enables Oculus' LipSync and provides some head movement to the didimo.
+    /// You can view this script in action on the OculusTestApplication scene.
+    /// </summary>
     public class OculusSceneLipSync : DidimoBehaviour
     {
 #if USING_OCULUS_INTEGRATION_PACKAGE
@@ -19,7 +24,7 @@ namespace Didimo.Oculus.Example
 
         private void OnEnable()
         {
-            // Enable all the required components for lipsync
+            // Enable all the required components for LipSync
             if (lipSyncContext != null) lipSyncContext.enabled = true;
             if (lipSyncMicInput != null) lipSyncMicInput.enabled = true;
             if (lipSyncAudioSource != null) lipSyncAudioSource.enabled = true;
@@ -45,7 +50,7 @@ namespace Didimo.Oculus.Example
         private void OnDisable()
         {
             DidimoComponents.PoseController.ResetAll();
-            // Disable all the required components for lipsync
+            // Disable all the required components for LipSync
             if (lipSyncContext != null) lipSyncContext.enabled = false;
             if (lipSyncMicInput != null) lipSyncMicInput.enabled = false;
             if (lipSyncAudioSource != null) lipSyncAudioSource.enabled = false;

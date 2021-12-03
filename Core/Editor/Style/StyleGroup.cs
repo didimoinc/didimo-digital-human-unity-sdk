@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Didimo.Core.Utility;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace DigitalSalmon.UI
+namespace Didimo.UI
 {
     public class StyleGroup
     {

@@ -14,7 +14,11 @@ namespace Didimo.Builder
 
         public static DidimoBuildContext CreateNew(DidimoComponents didimoComponents, string rootDirectory)
         {
-            DidimoBuildContext context = new DidimoBuildContext {DidimoComponents = didimoComponents, RootTransform = didimoComponents.transform, RootDirectory = rootDirectory};
+            DidimoBuildContext context = new DidimoBuildContext {
+                DidimoComponents = didimoComponents,
+                RootTransform = didimoComponents.transform,
+                RootDirectory = rootDirectory
+                };
 
             didimoComponents.BuildContext = context;
             return context;

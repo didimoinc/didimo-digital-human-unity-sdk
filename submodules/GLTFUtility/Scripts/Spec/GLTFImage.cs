@@ -64,13 +64,16 @@ namespace Didimo.GLTFUtility {
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS )
 					path = "File://" + path;
 #endif
-					using(UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(new Uri(path), true)) {
-						UnityWebRequestAsyncOperation operation = uwr.SendWebRequest();
+					// Don't use UnityWebRequestTexture. It has a bug where isDone is always false.
+					using(UnityWebRequest uwr = UnityWebRequest.Get(new Uri(path)))
+					{
+						uwr.downloadHandler = new DownloadHandlerBuffer();
+						uwr.SendWebRequest();
 						float progress = 0;
-						// This is a workaround to prevent getting an issue on the downloadhandler for textures
-						// where Unity gets stuck with isDone=false, even when it has all the data read
-						while (!uwr.isDone && uwr.downloadProgress < 1f) {
-							if (progress != uwr.downloadProgress) {
+						while (!uwr.isDone) {
+							if (progress != uwr.downloadProgress)
+							{
+								progress = uwr.downloadProgress;
 								if (onProgress != null) onProgress(uwr.downloadProgress);
 							}
 							yield return null;
@@ -81,8 +84,6 @@ namespace Didimo.GLTFUtility {
 						if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)  {
 							Debug.LogError($"GLTFImage.cs ToTexture2D() ERROR: {uwr.error}");
 						} else {
-							// Continuation of the workaround. GetContent would check for isDone
-							// So we do the same as that function without checking the isDone
 							Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, true, linear);
 							tex.LoadImage(uwr.downloadHandler.data, true);
 							tex.name = Path.GetFileNameWithoutExtension(path);

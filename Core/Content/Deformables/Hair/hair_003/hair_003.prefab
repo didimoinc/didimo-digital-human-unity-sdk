@@ -51,23 +51,23 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
-    glossiness1: 66
-    glossiness2: 96
-    shineMultiplier: 2
+    color: {r: 0.9528302, g: 0.840457, b: 0.57079923, a: 1}
+    glossiness1: 34
+    glossiness2: 161
+    shineMultiplier: 1.2
     specShift1: 0.1
     specShift2: 0.2
-    flowMultiply: 19.1
+    flowMultiply: 0.17
   innerHairLayer:
-    color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
-    glossiness1: 5
-    glossiness2: 15
-    shineMultiplier: 1
+    color: {r: 0.9245283, g: 0.70865965, b: 0.49279103, a: 1}
+    glossiness1: 0.1
+    glossiness2: 3
+    shineMultiplier: 0.3
     specShift1: 0.1
     specShift2: 0.2
-    flowMultiply: 54.5
+    flowMultiply: 0.8
   Preset:
-    value: 12
+    value: 6
 --- !u!1001 &3591392620381974621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,7 +130,11 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: f8154ab04b7298649a2a81f40d1cd453, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 6d97a6f518d124f4eb4c4caca4f64600, type: 2}
+      objectReference: {fileID: 2100000, guid: 3f7d0c733372cbb46b5cd7c54f37e3eb, type: 2}
+    - target: {fileID: -7635826562936255635, guid: f8154ab04b7298649a2a81f40d1cd453, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 60db071ba9c32ab4c973fb33548bba96, type: 2}
     - target: {fileID: 919132149155446097, guid: f8154ab04b7298649a2a81f40d1cd453, type: 3}
       propertyPath: m_Name
       value: hair_003

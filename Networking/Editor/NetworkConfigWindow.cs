@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using DigitalSalmon;
-using DigitalSalmon.Extensions;
-using DigitalSalmon.UI;
+using Didimo.Extensions;
+using Didimo.UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Windows;
@@ -138,6 +137,7 @@ namespace Didimo.Networking
             return !string.IsNullOrEmpty(apiKey) && !string.IsNullOrEmpty(secret);
         }
 
+        //TODO: DrawCreateConfigWizard still required?
         private void DrawCreateConfigWizard(ref Rect area)
         {
             Rect textArea = area.WithPadding(PADDING);

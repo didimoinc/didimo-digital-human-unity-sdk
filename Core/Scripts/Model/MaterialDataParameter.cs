@@ -4,7 +4,7 @@ using JsonSubTypes;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Didimo
+namespace Didimo.Core.Model
 {
     [JsonConverter(typeof(JsonSubtypes), "type")]
     [JsonSubtypes.KnownSubTypeAttribute(typeof(TextureMaterialDataParameter), "2dTexture")]
@@ -48,10 +48,11 @@ namespace Didimo
             material.SetTexture(Property, Texture);
         }
 
-        public static TextureMaterialDataParameter CreateNew(string name, Texture value) => CreateNew(name, value != null ? value.name : string.Empty);
+        public static TextureMaterialDataParameter CreateNew(string name, Texture value)
+            => CreateNew(name, value != null ? value.name : string.Empty);
 
         public static TextureMaterialDataParameter CreateNew(string name, string textureName) =>
-            new TextureMaterialDataParameter {Name = name, Property = name, Type = "2dTexture", Value = textureName};
+            new TextureMaterialDataParameter { Name = name, Property = name, Type = "2dTexture", Value = textureName };
     }
 
     public class FloatMaterialDataParameter : MaterialDataParameter<float>
@@ -63,7 +64,7 @@ namespace Didimo
         }
 
         public static FloatMaterialDataParameter CreateNew(string name, float value) =>
-            new FloatMaterialDataParameter {Name = name, Property = name, Type = "float", Value = value};
+            new FloatMaterialDataParameter { Name = name, Property = name, Type = "float", Value = value };
     }
 
     public class IntMaterialDataParameter : MaterialDataParameter<int>
@@ -74,7 +75,8 @@ namespace Didimo
             material.SetInt(Property, Value);
         }
 
-        public static IntMaterialDataParameter CreateNew(string name, int value) => new IntMaterialDataParameter {Name = name, Property = name, Type = "long", Value = value};
+        public static IntMaterialDataParameter CreateNew(string name, int value)
+            => new IntMaterialDataParameter { Name = name, Property = name, Type = "long", Value = value };
     }
 
     public class Vector2MaterialDataParameter : MaterialDataParameter<float[]>
@@ -89,7 +91,13 @@ namespace Didimo
 
         public static Vector2MaterialDataParameter CreateNew(string name, Vector2 vector)
         {
-            return new Vector2MaterialDataParameter {Name = name, Property = name, Type = "float2", Value = new float[] {vector.x, vector.y}};
+            return new Vector2MaterialDataParameter
+            {
+                Name = name,
+                Property = name,
+                Type = "float2",
+                Value = new float[] { vector.x, vector.y }
+            };
         }
 
         private static Vector4 ToVector4(Vector2 v) => new Vector4(v.x, v.y, 1, 1);
@@ -107,7 +115,13 @@ namespace Didimo
 
         public static Vector3MaterialDataParameter CreateNew(string name, Vector3 vector)
         {
-            return new Vector3MaterialDataParameter {Name = name, Property = name, Type = "float3", Value = new float[] {vector.x, vector.y, vector.z}};
+            return new Vector3MaterialDataParameter
+            {
+                Name = name,
+                Property = name,
+                Type = "float3",
+                Value = new float[] { vector.x, vector.y, vector.z }
+            };
         }
 
         private static Vector4 ToVector4(Vector3 v) => new Vector4(v.x, v.y, v.z, 1);
@@ -125,7 +139,11 @@ namespace Didimo
 
         public static Vector4MaterialDataParameter CreateNew(string name, Vector4 vector)
         {
-            return new Vector4MaterialDataParameter {Name = name, Property = name, Type = "float4", Value = new float[] {vector.x, vector.y, vector.z, vector.w}};
+            return new Vector4MaterialDataParameter {
+                Name = name,
+                Property = name,
+                Type = "float4",
+                Value = new float[] { vector.x, vector.y, vector.z, vector.w } };
         }
     }
 }
