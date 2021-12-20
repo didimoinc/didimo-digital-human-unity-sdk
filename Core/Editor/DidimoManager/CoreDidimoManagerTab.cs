@@ -42,6 +42,7 @@ namespace Didimo.Core.Editor
             var checks = new List<IProjectSettingIssue>();
 
             checks.Add(new CheckUrpInstalled());
+            checks.Add(new CheckDidimosImported());
             checks.Add(new CheckUrpSelected());
             checks.Add(new CheckColorSpace());
 

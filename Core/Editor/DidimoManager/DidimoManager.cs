@@ -42,11 +42,16 @@ namespace Didimo.Core.Editor
             tabs = tabs.OrderBy(x => x.GetIndex()).ToList();
         }
 
+        protected void OnEnable()
+        {
+            var icon = (Texture)EditorGUIUtility.Load("Assets/Didimo/Core/Editor/Editor Resources/didimoicon.png");
+            var title = new GUIContent("Didimo Manager", icon);
+            this.titleContent = title;
+        }
+
         protected void OnGUI()
         {
-            Rect headerRect = new Rect(0, 0, position.width, HEADER_HEIGHT);
-            GUILayout.Space(HEADER_HEIGHT + PADDING_SMALL);
-            DrawHeader(ref headerRect, "Didimo Manager");
+            GUILayout.Space(PADDING);
             SelectedTab = GUILayout.Toolbar(SelectedTab,
                 tabs.Select(x => x.GetTabName()).ToArray());
             GUILayout.Space(PADDING);

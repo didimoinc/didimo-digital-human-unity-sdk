@@ -46,16 +46,26 @@ instructions in Configuration section
 
 7. Go to Project Settings → Player → Other Settings → Rendering. Set the colour space to linear.
 
+8. Create an empty `csc.rsp` file in the `Assets` folder, with the following contents: to add the compression assemblies required
+   when unzipping a didimo package:
 
-8. Open the `MeetADidimo` scene.
+```
+-r:System.IO.Compression.dll
+-r:System.IO.Compression.FileSystem.dll
+```
 
-9. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
+9. Open the `MeetADidimo` scene.
+
+10. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
    Import TMP Essentials, which is required for the examples.
 
-10. You should now be able to press play and see the included talking didimos. If you do not, then please 
-   see [Known Import Issues](#Known-Import-Issues) and [Support](#Support).
+11. You should now be able to press play and see the included talking didimos.
+   **If you do not**, then please **regenerate didimos**
+   See [Known Import Issues](#Known-Import-Issues) and [Support](#Support) for further assistance.
 
-11. Its now possible to generate a new didimo via the didimo API directly from Unity. Simply [Create an account](https://developer.didimo.co/docs/creating-your-account) and then see [Generating a didimo](https://developer.didimo.co/docs/creating-a-didimo).
+12. Its now possible to generate a new didimo via the didimo API directly from Unity.
+   Simply [Create an account](https://developer.didimo.co/docs/creating-your-account)
+   Then see [Generating a didimo](https://developer.didimo.co/docs/creating-a-didimo).
 
 
 ---

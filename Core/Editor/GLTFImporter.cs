@@ -31,11 +31,6 @@ namespace Didimo.Core.Editor
                 return;
             }
 
-            //TODO:Is reimport still an issue?
-            // This happens when we first import the project
-            // See DidimoImportUtils.cs for more info
-            //DidimoImportUtils.ShouldReimport = true;
-
             var shaderResources = UnityEngine.Resources
                 .Load<ShaderResources>("ShaderResources");
             if (shaderResources == null)

@@ -2,8 +2,6 @@ using Didimo.Builder;
 using Didimo.Speech;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Didimo.Builder;
-using Didimo.Speech;
 using Didimo.Core.Deformables;
 using Didimo.Core.Utility;
 

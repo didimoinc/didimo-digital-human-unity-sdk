@@ -113,10 +113,11 @@ void VertexSphereUnion_float(in float3 pos, in float3 sc, in float sr, out float
 {
 	float3 spos = pos - sc;
 	float l = length(spos);
-	if (l > sr)
+	if (l < sr)
 	{
 		float3 n = spos / l;
-		opos = sc + spos + sr;
+		opos = sc + n * sr;
+		return;
 	}
 	opos = pos;
 }
