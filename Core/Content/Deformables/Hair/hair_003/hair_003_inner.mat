@@ -32,6 +32,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_c9da0a25de1c4fbda903cd75216ddb76:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_c9e5da440a5a49958631a54092e01e0f:
         m_Texture: {fileID: 2800000, guid: c81f48f618b2a2b49bbeb03e5134ab8a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -112,8 +116,15 @@ Material:
     - Boolean_0eae9ea6f89b4dc69ac6a90555a90130: 0
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
     - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
+    - Boolean_80caf14fb6944a44a800c87097a69517: 0
+    - Boolean_df56c85a514b4b8da833e5a09752b376: 0
     - Vector1_0586c13dde9241098b96e356887aff11: 0
+    - Vector1_21cc1571b3364c78bb73b856c0cd28a1: 0
+    - Vector1_3b9c4540c1de4e29915af2c71718ece1: 0
     - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0.26
+    - Vector1_8940f22e9ba7452fbf3388d6271b2302: 0.97
+    - Vector1_dcf32dc223984f09b96164cce6318f38: 0
+    - Vector1_fecc576ca2d948b59b8bdff9c87cd785: 0
     - _AlphaClip: 0
     - _AlphaLODbias: 1
     - _AnisoHighlightRotation: 90
@@ -156,6 +167,7 @@ Material:
     - _specMultiply: 0.7
     - _specShift: 0.1
     - _specShift2: 0.12
+    - c: 200
     m_Colors:
     - Vector3_347d0541ec414879bcd39a3c2c070edb: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

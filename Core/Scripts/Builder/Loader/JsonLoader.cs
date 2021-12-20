@@ -20,7 +20,7 @@ namespace Didimo
 
             if (request.result != UnityWebRequest.Result.Success || request.error != null)
             {
-                Debug.LogError($"Request url: {request.url}, request error: {request.error}");
+                Debug.LogWarning($"Request url: {request.url}, request error: {request.error}");
                 return (false, null);
             }
 

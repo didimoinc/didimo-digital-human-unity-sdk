@@ -13,7 +13,7 @@ namespace Didimo.Core.Editor
 #if USING_UNITY_URP
             return true;
 #else
-            EditorGUILayout.HelpBox(failedText, MessageType.Error);
+            EditorGUILayout.HelpBox(ResolveText(), MessageType.Error);
             return false;
 #endif
         }

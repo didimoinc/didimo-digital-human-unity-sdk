@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e7a91d5d9e96d48a8f61724746beee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _didimo: {fileID: 0}
+  didimo: {fileID: 0}
   idealBoneNames:
   - Head
   - JntMHeadEnd
@@ -122,15 +122,15 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 71599cc3f1515f948afa7a6ecc14c8c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 0d2ed75952f96984094f4f341e11f45f, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 0d2ed75952f96984094f4f341e11f45f, type: 2}
+      objectReference: {fileID: 2100000, guid: f4fb3a30f67cb684e8753abd4cece6e5, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: f4fb3a30f67cb684e8753abd4cece6e5, type: 2}
+      objectReference: {fileID: 2100000, guid: 4b6d8140ba516914d94a961893d6ef4c, type: 2}
     - target: {fileID: -7635826562936255635, guid: 526c48273909ff34397f9ea8ea5b6fb1, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
