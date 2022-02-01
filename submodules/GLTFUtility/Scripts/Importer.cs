@@ -8,30 +8,33 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Didimo.GLTFUtility {
+namespace Didimo.GLTFUtility
+{
 	/// <summary> API used for importing .gltf and .glb files </summary>
-	public static class Importer {
+	public static class Importer
+	{
 
 		public class ImportResult
 		{
-			public GameObject      rootObject;
+			public GameObject rootObject;
 			public AnimationClip[] animationClips;
 
 			// Didimo Specific
 
-			public bool                        isDidimo;
-			public string                      didimoVersion;
-			public Transform                   headJoint;
-			public AnimationClip               resetAnimationClip;
+			public bool isDidimo;
+			public string didimoVersion;
+			public Transform headJoint;
+			public AnimationClip resetAnimationClip;
 			public EyeShadowControllerSettings eyeShadowController;
-			public IrisControllerSettings	   irisController;
+			public IrisControllerSettings irisController;
+			public SkinnedMeshRenderer FaceMesh;
 		}
 
 		public class EyeShadowControllerSettings
 		{
-			public Transform[]         LeftEyelidJoints;
-			public Transform[]         RightEyelidJoints;
-			public Transform           HeadJoint;
+			public Transform[] LeftEyelidJoints;
+			public Transform[] RightEyelidJoints;
+			public Transform HeadJoint;
 			public SkinnedMeshRenderer LeftEyeMesh;
 			public SkinnedMeshRenderer RightEyeMesh;
 		}
@@ -68,16 +71,19 @@ namespace Didimo.GLTFUtility {
 		}
 
 		/// <param name="bytes">GLB file is supported</param>
-		public static ImportResult LoadFromBytes(byte[] bytes, ImportSettings importSettings = null) {
+		public static ImportResult LoadFromBytes(byte[] bytes, ImportSettings importSettings = null)
+		{
 			if (importSettings == null) importSettings = new ImportSettings();
 			return ImportGLB(bytes, importSettings);
 		}
 
-		public static void LoadFromFileAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null) {
+		public static void LoadFromFileAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null)
+		{
 			string extension = Path.GetExtension(filepath).ToLower();
 			if (extension == ".glb") ImportGLBAsync(filepath, importSettings, onFinished, onProgress);
 			else if (extension == ".gltf") ImportGLTFAsync(filepath, importSettings, onFinished, onProgress);
-			else {
+			else
+			{
 				Debug.Log("Extension '" + extension + "' not recognized in " + filepath);
 				onFinished(null);
 			}
@@ -85,7 +91,8 @@ namespace Didimo.GLTFUtility {
 
 		#region GLB
 
-		private static ImportResult ImportGLB(string filepath, ImportSettings importSettings) {
+		private static ImportResult ImportGLB(string filepath, ImportSettings importSettings)
+		{
 			FileStream stream = File.OpenRead(filepath);
 			long binChunkStart;
 			string json = GetGLBJson(stream, out binChunkStart);
@@ -93,7 +100,8 @@ namespace Didimo.GLTFUtility {
 			return gltfObject.LoadInternal(filepath, null, binChunkStart, importSettings);
 		}
 
-		private static ImportResult ImportGLB(byte[] bytes, ImportSettings importSettings) {
+		private static ImportResult ImportGLB(byte[] bytes, ImportSettings importSettings)
+		{
 			Stream stream = new MemoryStream(bytes);
 			long binChunkStart;
 			string json = GetGLBJson(stream, out binChunkStart);
@@ -101,21 +109,24 @@ namespace Didimo.GLTFUtility {
 			return gltfObject.LoadInternal(null, bytes, binChunkStart, importSettings);
 		}
 
-		public static void ImportGLBAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null) {
+		public static void ImportGLBAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null)
+		{
 			FileStream stream = File.OpenRead(filepath);
 			long binChunkStart;
 			string json = GetGLBJson(stream, out binChunkStart);
 			LoadAsync(json, filepath, null, binChunkStart, importSettings, onFinished, onProgress).RunCoroutine();
 		}
 
-		public static void ImportGLBAsync(byte[] bytes, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null) {
+		public static void ImportGLBAsync(byte[] bytes, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null)
+		{
 			Stream stream = new MemoryStream(bytes);
 			long binChunkStart;
 			string json = GetGLBJson(stream, out binChunkStart);
 			LoadAsync(json, null, bytes, binChunkStart, importSettings, onFinished, onProgress).RunCoroutine();
 		}
 
-		private static string GetGLBJson(Stream stream, out long binChunkStart) {
+		private static string GetGLBJson(Stream stream, out long binChunkStart)
+		{
 			byte[] buffer = new byte[12];
 			stream.Read(buffer, 0, 12);
 			// 12 byte header
@@ -123,14 +134,16 @@ namespace Didimo.GLTFUtility {
 			// 4-8  - version = 2
 			// 8-12 - length = total length of glb, including Header and all Chunks, in bytes.
 			string magic = Encoding.Default.GetString(buffer, 0, 4);
-			if (magic != "glTF") {
+			if (magic != "glTF")
+			{
 				Debug.LogWarning("Input does not look like a .glb file");
 				binChunkStart = 0;
 				return null;
 			}
 
 			uint version = System.BitConverter.ToUInt32(buffer, 4);
-			if (version != 2) {
+			if (version != 2)
+			{
 				Debug.LogWarning("Importer does not support gltf version " + version);
 				binChunkStart = 0;
 				return null;
@@ -146,7 +159,7 @@ namespace Didimo.GLTFUtility {
 			uint chunkLength = System.BitConverter.ToUInt32(buffer, 0);
 			TextReader reader = new StreamReader(stream);
 			char[] jsonChars = new char[chunkLength];
-			reader.Read(jsonChars, 0, (int) chunkLength);
+			reader.Read(jsonChars, 0, (int)chunkLength);
 			string json = new string(jsonChars);
 
 			// Chunk
@@ -159,7 +172,8 @@ namespace Didimo.GLTFUtility {
 
 		#endregion
 
-		private static ImportResult ImportGLTF(string filepath, ImportSettings importSettings) {
+		private static ImportResult ImportGLTF(string filepath, ImportSettings importSettings)
+		{
 			string json = File.ReadAllText(filepath);
 
 			// Parse json
@@ -167,21 +181,24 @@ namespace Didimo.GLTFUtility {
 			return gltfObject.LoadInternal(filepath, null, 0, importSettings);
 		}
 
-		public static void ImportGLTFAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null) {
+		public static void ImportGLTFAsync(string filepath, ImportSettings importSettings, Action<ImportResult> onFinished, Action<float> onProgress = null)
+		{
 			string json = File.ReadAllText(filepath);
 
 			// Parse json
 			LoadAsync(json, filepath, null, 0, importSettings, onFinished, onProgress).RunCoroutine();
 		}
 
-		public abstract class ImportTask<TReturn> : ImportTask {
+		public abstract class ImportTask<TReturn> : ImportTask
+		{
 			public TReturn Result;
 
 			/// <summary> Constructor. Sets waitFor which ensures ImportTasks are completed before running. </summary>
 			public ImportTask(params ImportTask[] waitFor) : base(waitFor) { }
 
 			/// <summary> Runs task followed by OnCompleted </summary>
-			public TReturn RunSynchronously() {
+			public TReturn RunSynchronously()
+			{
 				task.RunSynchronously();
 				IEnumerator en = OnCoroutine();
 				while (en.MoveNext()) { }
@@ -190,19 +207,22 @@ namespace Didimo.GLTFUtility {
 			}
 		}
 
-		public abstract class ImportTask {
-			public          Task         task;
+		public abstract class ImportTask
+		{
+			public Task task;
 			public readonly ImportTask[] waitFor;
 			public bool IsReady { get { return waitFor.All(x => x.IsCompleted); } }
 			public bool IsCompleted { get; protected set; }
 
 			/// <summary> Constructor. Sets waitFor which ensures ImportTasks are completed before running. </summary>
-			public ImportTask(params ImportTask[] waitFor) {
+			public ImportTask(params ImportTask[] waitFor)
+			{
 				IsCompleted = false;
 				this.waitFor = waitFor;
 			}
 
-			public virtual IEnumerator OnCoroutine(Action<float> onProgress = null) {
+			public virtual IEnumerator OnCoroutine(Action<float> onProgress = null)
+			{
 				IsCompleted = true;
 				yield break;
 			}
@@ -291,7 +311,8 @@ namespace Didimo.GLTFUtility {
 				gltfObject.extensions.Didimo.Build(nodeTask.Result, resetAnimationResult, ref importResult);
 			}
 
-			foreach (var item in bufferTask.Result) {
+			foreach (var item in bufferTask.Result)
+			{
 				item.Dispose();
 			}
 
@@ -352,7 +373,8 @@ namespace Didimo.GLTFUtility {
 			importTasks.Add(nodeTask);
 
 			// Ignite
-			for (int i = 0; i < importTasks.Count; i++) {
+			for (int i = 0; i < importTasks.Count; i++)
+			{
 				TaskSupervisor(importTasks[i], onProgress).RunCoroutine();
 			}
 

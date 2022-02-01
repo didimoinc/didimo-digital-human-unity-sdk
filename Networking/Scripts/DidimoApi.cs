@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Didimo.Builder;
@@ -134,10 +133,20 @@ namespace Didimo.Networking
         public async Task<(bool success, DidimoComponents didimo)> CreateDidimoAndImportGltf(string photoPath, Configuration configuration = null,
             Action<float> creationProgress = null)
         {
+            Task<(bool success, string path, string key)> createNewDidimoTask = CreateDidimoAndDownload(photoPath, null, null, creationProgress);
+            await createNewDidimoTask;
+
+            return await Import(createNewDidimoTask.Result.key, createNewDidimoTask.Result.path, configuration);
+        }
+
+        public async Task<(bool success, string filePath, string key)> CreateDidimoAndDownload(string photoPath, string downloadPath, Configuration configuration = null, Action<float> creationProgress = null)
+        {
+            DidimoNetworkingResources.NetworkConfig.DownloadRoot = downloadPath;
+
             Task<(bool success, string didimoKey)> createNewDidimoTask = CreateNewDidimo(photoPath);
             await createNewDidimoTask;
 
-            if (!createNewDidimoTask.Result.success) return (false, null);
+            if (!createNewDidimoTask.Result.success) return (false, null, null);
 
             Task<(bool success, DidimoDetailsResponse status, string errorCode)> checkForStatusUntilCompletionTask =
                 CheckForStatusUntilCompletion(createNewDidimoTask.Result.didimoKey, creationProgress);
@@ -147,11 +156,20 @@ namespace Didimo.Networking
             if (downloadable == null)
             {
                 Debug.LogError($"Failed to get downloadable of type {DidimoDetailsResponse.DownloadTransferFormatType.Gltf}");
-                return (false, null);
+                return (false, null, null);
             }
 
             (bool success, string path) downloadResult = await downloadable.DownloadToDisk(true);
-            return await Import(createNewDidimoTask.Result.didimoKey, downloadResult.path, configuration);
+
+            if (!downloadResult.success)
+            {
+                Debug.LogError($"Failed to download to disk");
+                return (false, null, null);
+            }
+            else
+            {
+                return (downloadResult.success, downloadResult.path, createNewDidimoTask.Result.didimoKey);
+            }
         }
 
         public async Task<(bool success, Speech.Phrase phrase)> TextToSpeech(string text, string voice)

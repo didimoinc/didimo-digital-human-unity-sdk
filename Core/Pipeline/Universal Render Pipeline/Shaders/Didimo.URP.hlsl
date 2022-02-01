@@ -415,6 +415,7 @@ float ScatterDiffuse(in float NdotL, float scatter)
 	return (1.0 - pow(NdotL, 0.5)) * scatter;
 }
 
+
 void Eye_float(in half3x3 tS,
 	in float3 wV,
 	in float3 wP,
@@ -437,26 +438,18 @@ void Eye_float(in half3x3 tS,
 	in float eyeLidao,
 	in float aoStrength,
 	in float scattering,
+	in float envContribScale,
 	out half3 outColor)
 {
 	const half3 ctN = half3(0, 0, 1);
 #ifdef SHADERGRAPH_PREVIEW
 
-	// outColor = colorMap.Sample(sampler_BaseMap, uv).rgb; /// https://docs.unity3d.com/Manual/SL-SamplerStates.html
 	outColor = baseColor;
 
 #else
-	//sphericalWorldNormal
+
 	half3 itN = SampleNormal(distortUV, tS, ss, irisNormalMap, irisNormalStrength);
 	half3 tN = SampleNormal(uv, tS, ss, corneaNormalMap, corneaNormalStrength);
-	//concaveNormal + irisNormMap * irisNormalStrength
-	//half3 irisNormMap = UnpackNormal(irisNormalMap.Sample(ss, distortUV));
-
-	/*half3 tN = normalize(sphericalWorldNormal + normMap * corneaNormalStrength);
-	half3 itN = normalize(concaveNormal + irisNormMap * irisNormalStrength);*/
-	//outColor = itN;
-	//return;
-	//outNormal = tN;
 
 	Light mainLight = GetMainLight();
 	half ShadowAtten = getMainShadow(wP);
@@ -465,17 +458,13 @@ void Eye_float(in half3x3 tS,
 	float3 tV = mul(tS, wV);
 	float3 tD = normalize(mul(tS, mainLight.direction));
 	float3 wD = mainLight.direction;
-
-	float highlightShadow = eyeLidao;// (aoStrength - 0.8) * 2.0;
-	//* aoStrength
-
+	float highlightShadow = eyeLidao;
 
 	float NdotL = dot(itN, tD);
-	//float scatterFactor = ScatterDiffuse(NdotL, scattering); // for colour blending
+
 	NdotL = (NdotL + scattering) / (1.0 + scattering);
 
 	float3 diffuse = max(0.01, NdotL) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
-
 
 	float3 irisSpec = evalBlinn(tD, itN, tV, highlightShadow, IrisShininess) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
 	float3 corneaSpec = evalBlinn(wD, tN, wV, highlightShadow, EyeShininess) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
@@ -497,10 +486,8 @@ void Eye_float(in half3x3 tS,
 	half3 wN = normalize(mul(itN, tS));
 
 	diffuse += SampleSH(wN);
-	//diffuse += float3(0.1, 0.1, 0.1);
 	baseColor *= 1 - _DidimoEyeDarken;
 	diffuse *= baseColor;
-	//irisSpec *= baseColor;
 
 	/// temper iris by the base color luminance
 	const half3 LuminanceVector = { 0.299f, 0.587f, 0.114f };
@@ -510,11 +497,6 @@ void Eye_float(in half3x3 tS,
 
 	outColor = diffuse + totalSpec;
 
-
-	//float cdist = 1.0 - pow(length(uv - float2(0.5, 0.5)) * 5.0,1.20);
-
-	//  * 
-
 	half ao = eyeLidao;// SampleAmbientOcclusion(ssUv.xy) *
 
 	outColor = lerp(outColor, outColor * ao, aoStrength);
@@ -522,14 +504,14 @@ void Eye_float(in half3x3 tS,
 	/// reflection
 	half3 reflDir = normalize(-reflect(tV, tN));
 	reflDir = normalize(mul(reflDir, tS));
-	half3 indirectSpec = GlossyEnvironmentReflection(reflDir, 0, 1) *ao;
-	// outColor *= ao;
-
-	/// frensel
+	half3 indirectSpec = GlossyEnvironmentReflection(reflDir, 0, 1) * ao * envContribScale;
 	half f = 1.0 - abs(dot(ctN, tV));
-	f *= f;
-	half fresnel = lerp(1, f, 0.9);	
+	f *= f * f;
+	half fresnel = lerp(1, f, 0.995);
 	outColor += indirectSpec * fresnel;
+#ifdef TEST_FRESNEL
+	outColor = float3(f, f, f);
+#endif
 #endif
 }
 
@@ -737,8 +719,11 @@ void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half
 	//half3 reflDir = normalize(-reflect(tV, ctN));//
 	reflDir = normalize(mul(reflDir, tS));
 	half3 indirectSpec = GlossyEnvironmentReflection(reflDir,  envRough, 1.0) * envSpecMul;//wP.xyz,
-
-	spec1 += indirectSpec;
+	half f = clamp(1.0 - abs(dot(ctN, tV)), 0.0, 1.0);
+	f *= f * f;
+	half fresnel = lerp(1, f, 0.995);
+ 
+	spec1 += indirectSpec * fresnel;
 
 #endif
 

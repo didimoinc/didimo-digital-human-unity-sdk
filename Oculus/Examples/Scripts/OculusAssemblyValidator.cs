@@ -15,21 +15,22 @@ namespace Didimo.Oculus.Example
     /// </summary>
     public static class OculusAssemblyValidator
     {
-        
+
         private const string OCULUS_DEFINE_NAME = "USING_OCULUS_INTEGRATION_PACKAGE";
+        // ASMDef does not keep their references/names properly if they don't exist
+        private static readonly string[] REQUIRED_OCULUS_ASSEMBLIES =
+        {
+            "Oculus.VR",
+            "Oculus.LipSync"
+        };
 
         [DidReloadScripts]
         public static void OnInitialize()
         {
             // We can only check if Oculus' Package exists dynamically.
-            Assembly currentAssembly = Assembly.GetExecutingAssembly();
-            string[] oculusRequiredAssemblies = currentAssembly.GetReferencedAssemblies().
-                                                                Where(e => e.Name.StartsWith("Oculus")).
-                                                                Select(e => e.Name).ToArray();
-
             string[] currentAssemblies = System.AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetName().Name).ToArray();
 
-            if (oculusRequiredAssemblies.All(e => currentAssemblies.Contains(e)))
+            if (REQUIRED_OCULUS_ASSEMBLIES.All(e => currentAssemblies.Contains(e)))
             {
                 // Add version defines named USING_OCULUS_INTEGRATION_PACKAGE
                 string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
@@ -40,11 +41,11 @@ namespace Didimo.Oculus.Example
             }
             else
             {
-                Debug.LogWarning("Could not find required Oculus assemblies in project. Disabling Didimo.Oculus module");
                 string definesString = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
                 string[] defines = definesString.Split(';');
                 if (defines.Contains(OCULUS_DEFINE_NAME))
                 {
+                    Debug.LogWarning("Could not find required Oculus assemblies in project. Disabling Didimo.Oculus module");
                     List<string> cleanDefines = new List<string>(defines);
                     cleanDefines.Remove(OCULUS_DEFINE_NAME);
                     PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, cleanDefines.ToArray());

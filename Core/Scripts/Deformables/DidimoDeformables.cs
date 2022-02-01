@@ -35,20 +35,9 @@ namespace Didimo.Core.Deformables
         }
 
         public bool TryCreate<TDeformable>(
-            string deformableId, out TDeformable instance)
+            TDeformable deformable, out TDeformable instance)
             where TDeformable : Deformable
         {
-            var deformableDatabase = Resources
-                .Load<DeformableDatabase>("DeformableDatabase");
-
-            if (TryFindDeformable(deformableDatabase.Deformables,
-                deformableId, out TDeformable deformable) == false)
-            {
-                Debug.LogWarning($"No database deformable found with ID: {deformableId}");
-                instance = null;
-                return false;
-            }
-
             if (deformable == null)
             {
                 Debug.LogWarning("Cannot instantiate deformable from a null template");
@@ -63,7 +52,7 @@ namespace Didimo.Core.Deformables
 
             deformable.DidimoComponents = DidimoComponents;
             instance = Instantiate(deformable);
-            deformables.Add(deformableId, instance);
+            deformables.Add(deformable.ID, instance);
 
             Transform idealBone = null;
             foreach (string idealBoneName in instance.IdealBoneNames)
@@ -77,14 +66,32 @@ namespace Didimo.Core.Deformables
             if (idealBone == null)
             {
                 Debug.LogWarning($"Cannot find ideal deformable bone with any of "
-                    + $"the names: '{string.Join(",", instance.IdealBoneNames)}'");
+                                 + $"the names: '{string.Join(",", instance.IdealBoneNames)}'");
             }
 
             Transform instanceTransform = instance.transform;
             instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform, true);
-            instance.name = deformableId;
+            instance.name = deformable.ID;
 
             return true;
+        }
+
+        public bool TryCreate<TDeformable>(
+            string deformableId, out TDeformable instance)
+            where TDeformable : Deformable
+        {
+            var deformableDatabase = Resources
+                .Load<DeformableDatabase>("DeformableDatabase");
+
+            if (TryFindDeformable(deformableDatabase.Deformables,
+                deformableId, out TDeformable deformable) == false)
+            {
+                Debug.LogWarning($"No database deformable found with ID: {deformableId}");
+                instance = null;
+                return false;
+            }
+
+            return TryCreate(deformable, out instance);
         }
 
         public void DestroyAll<TDeformable>() where TDeformable : Deformable

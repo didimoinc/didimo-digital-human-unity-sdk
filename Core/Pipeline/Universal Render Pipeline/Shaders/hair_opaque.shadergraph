@@ -906,7 +906,7 @@
     },
     "m_Name": "hairScaleNudge",
     "m_DefaultReferenceName": "Vector1_005fd9f73de24acb835361626bb54450",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_hairScaleNudge",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -970,7 +970,7 @@
     },
     "m_Name": "AlphaPower",
     "m_DefaultReferenceName": "Vector1_048b65aa49c5454eb1b5662af2e39376",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_AlphaPower",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1019,10 +1019,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1151.8975830078125,
-            "y": 965.4249877929688,
-            "width": 0.0,
-            "height": 0.0
+            "x": -1926.0,
+            "y": 1057.0,
+            "width": 149.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -1112,7 +1112,7 @@
     },
     "m_Name": "AOMapUnique",
     "m_DefaultReferenceName": "Texture2D_08e517e1931249b89595b9a5ddb6ba30",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_AOMapUnique",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1150,7 +1150,7 @@
     },
     "m_Name": "TestNormals",
     "m_DefaultReferenceName": "Boolean_0eae9ea6f89b4dc69ac6a90555a90130",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_TestNormals",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1168,7 +1168,7 @@
     },
     "m_Name": "EnvSpecularScale",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_EnvRough_1",
+    "m_OverrideReferenceName": "_EnvSpecularScale",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1248,9 +1248,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1783.0,
-            "y": 28.75,
-            "width": 129.0,
+            "x": -1784.0,
+            "y": 31.99999237060547,
+            "width": 129.00001525878907,
             "height": 34.0
         }
     },
@@ -1316,9 +1316,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -960.0000610351563,
-            "y": 482.0000305175781,
-            "width": 146.0,
+            "x": -1791.0001220703125,
+            "y": 603.0,
+            "width": 146.00001525878907,
             "height": 34.0
         }
     },
@@ -1733,7 +1733,7 @@
     },
     "m_Name": "TestTangents",
     "m_DefaultReferenceName": "Boolean_26e7456fe99347b6a6b8cf8f194aabd1",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_TestTangents",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -1833,7 +1833,7 @@
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "288006e5b70243c29ffea2a0972c9cce",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "806edaf0394043248ea8d6abcb7ed305"
     },
     "m_Name": "Property",
     "m_DrawState": {
@@ -1841,7 +1841,7 @@
         "m_Position": {
             "serializedVersion": "2",
             "x": -1783.0,
-            "y": 328.75,
+            "y": 333.0,
             "width": 131.0,
             "height": 34.0
         }
@@ -2139,7 +2139,7 @@
     },
     "m_Name": "MeshTangentRotation",
     "m_DefaultReferenceName": "Vector1_44e16ef7281640c597af8b22958d5f63",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_MeshTangentRotation",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -2188,8 +2188,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1068.9998779296875,
-            "y": 1191.0,
+            "x": -1843.0,
+            "y": 1283.0,
             "width": 142.0,
             "height": 34.0
         }
@@ -2351,10 +2351,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1132.06005859375,
-            "y": 896.655029296875,
-            "width": 0.0,
-            "height": 0.0
+            "x": -1906.0,
+            "y": 989.0,
+            "width": 158.99998474121095,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -2417,8 +2417,8 @@
         "m_Position": {
             "serializedVersion": "2",
             "x": -1783.0,
-            "y": 268.75,
-            "width": 122.0,
+            "y": 265.0,
+            "width": 122.00000762939453,
             "height": 34.0
         }
     },
@@ -2451,8 +2451,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -984.9998168945313,
-            "y": 598.0,
+            "x": -1791.0,
+            "y": 671.0,
             "width": 172.0,
             "height": 34.0
         }
@@ -2780,7 +2780,7 @@
     },
     "m_Name": "AOFactor",
     "m_DefaultReferenceName": "Vector1_68710ef1732d4141a522a8ce9b9bb571",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_AOFactor",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -2806,8 +2806,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1082.9998779296875,
-            "y": 1048.0,
+            "x": -1857.0,
+            "y": 1140.0001220703125,
             "width": 141.0,
             "height": 34.0
         }
@@ -2991,7 +2991,7 @@
     },
     "m_Name": "UseFlowMap",
     "m_DefaultReferenceName": "Boolean_6f31d87fd8e2472ea25c5b5d20312b91",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_UseFlowMap",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -3062,8 +3062,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1180.0001220703125,
-            "y": 612.0,
+            "x": -1795.0,
+            "y": 705.0,
             "width": 159.0,
             "height": 34.0
         }
@@ -3193,7 +3193,7 @@
     },
     "m_Name": "ScaterFactor",
     "m_DefaultReferenceName": "Vector1_79ff9457e6754baa980a69403803cd1d",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_ScaterFactor",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -3416,8 +3416,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1783.0,
-            "y": 448.75,
+            "x": -1782.0,
+            "y": 448.0,
             "width": 124.0,
             "height": 34.0
         }
@@ -3574,8 +3574,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1025.9998779296875,
-            "y": 776.0,
+            "x": -1800.0001220703125,
+            "y": 868.0,
             "width": 209.99998474121095,
             "height": 34.0
         }
@@ -3861,8 +3861,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1062.9998779296875,
-            "y": 839.0,
+            "x": -1837.0001220703125,
+            "y": 931.0000610351563,
             "width": 191.0,
             "height": 34.0
         }
@@ -3967,7 +3967,7 @@
     },
     "m_Name": "SDF_smoothing",
     "m_DefaultReferenceName": "Vector1_af2c3c995037491d96b066af05905ad3",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_SDF_smoothing",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4243,10 +4243,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1505.35009765625,
-            "y": 834.9000854492188,
-            "width": 0.0,
-            "height": 0.0
+            "x": -1795.0,
+            "y": 759.0,
+            "width": 168.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -4399,7 +4399,7 @@
     },
     "m_Name": "AOMap",
     "m_DefaultReferenceName": "Texture2D_c9e5da440a5a49958631a54092e01e0f",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_AOMap",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4563,7 +4563,7 @@
     },
     "m_Name": "SDF_AAFactor",
     "m_DefaultReferenceName": "Vector1_d17f35918bdc468c98673aa9ae028824",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_SDF_AAFactor",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4684,7 +4684,7 @@
     },
     "m_Name": "SDF_toggle",
     "m_DefaultReferenceName": "Boolean_d900492949a941e5898b92f3244b33f3",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_SDF_toggle",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4807,9 +4807,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1075.999755859375,
-            "y": 1131.9998779296875,
-            "width": 137.99998474121095,
+            "x": -1850.0,
+            "y": 1224.0,
+            "width": 138.0,
             "height": 34.0
         }
     },
@@ -4884,8 +4884,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1023.0000610351563,
-            "y": 545.0,
+            "x": -1797.0,
+            "y": 637.0,
             "width": 139.0,
             "height": 34.0
         }
@@ -4916,7 +4916,7 @@
     },
     "m_Name": "SDF_gamma",
     "m_DefaultReferenceName": "Vector1_e86bb578851a4e11aac979b5daa668d0",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_SDF_gamma",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -5018,7 +5018,7 @@
     },
     "m_Name": "UseUniqueAOMap",
     "m_DefaultReferenceName": "Boolean_f1793b23b11a4e2c81060cda85482ffe",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_UseUniqueAOMap",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

@@ -27,6 +27,8 @@ namespace Didimo.Networking
         
         Task<(bool success, DidimoComponents didimo)> CreateDidimoAndImportGltf(string photoPath, Configuration configuration = null, Action<float> creationProgress = null);
 
+        Task<(bool success, string filePath, string key)> CreateDidimoAndDownload(string photoPath, string downloadPath, Configuration configuration = null, Action<float> creationProgress = null);
+
         Task<(bool success, Speech.Phrase phrase)> TextToSpeech(string text, string voice);
 
         Task<bool> DeleteMetadata(string didimoKey, string key);
