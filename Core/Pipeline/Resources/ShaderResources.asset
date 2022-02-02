@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Eye: {fileID: -6465566751694194690, guid: 44c91b7e09ca249409e715cf8abb0b9d, type: 3}
   Skin: {fileID: -6465566751694194690, guid: f6ab9f5b6ddd73949867c73e60a52f46, type: 3}
+  SkinMergedTextures: {fileID: -6465566751694194690, guid: 7ca0c0656df797c4bbe7ed2426ae11bc, type: 3}
+  SkinMergedAtlasedTextures: {fileID: 0}
   Mouth: {fileID: -6465566751694194690, guid: 1cc6ea3e5f4532d4596ab38c0c8e9bdc, type: 3}
   Eyelash: {fileID: -6465566751694194690, guid: 25d354067541af64a92489bde14c0d45, type: 3}
   UnlitTexture: {fileID: -6465566751694194690, guid: 074d1c2863dea434c8d8ae950110afa0, type: 3}
   Hair: {fileID: -6465566751694194690, guid: 841a49fc1f1d826469af152a84bd7796, type: 3}
+  HairOpaque: {fileID: -6465566751694194690, guid: 0616f8e6a2b798d4dbe76afbff13b7a5, type: 3}

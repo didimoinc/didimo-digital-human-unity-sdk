@@ -32,6 +32,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_08e517e1931249b89595b9a5ddb6ba30:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_25c2b82a42934edcb02694b24dd9b16b:
         m_Texture: {fileID: 2800000, guid: c97ffe365d36b69449d2bff80235053a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -132,17 +136,24 @@ Material:
     - Boolean_0eae9ea6f89b4dc69ac6a90555a90130: 0
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
     - Boolean_6f31d87fd8e2472ea25c5b5d20312b91: 1
+    - Boolean_d900492949a941e5898b92f3244b33f3: 0
+    - Boolean_f1793b23b11a4e2c81060cda85482ffe: 0
     - Vector1_005fd9f73de24acb835361626bb54450: 0
     - Vector1_020df71d02674f1fafad427a0a87e029: 3.58
+    - Vector1_048b65aa49c5454eb1b5662af2e39376: 1
     - Vector1_04a92e2cdf2b4369a4043697151bc5e7: 0
     - Vector1_1ba96e4bde054710be3e0e15ac7e7c5f: 0.03
     - Vector1_44e16ef7281640c597af8b22958d5f63: 180
-    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 1
+    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0
+    - Vector1_79ff9457e6754baa980a69403803cd1d: 0
+    - Vector1_af2c3c995037491d96b066af05905ad3: 0
     - Vector1_c3b13bc0bc314753b4dbbd881d578cc5: 17.94
     - Vector1_d094b76bbae74915ab74ff23c382037e: 683
     - Vector1_d094b76bbae74915ab74ff23c382037e_1: 106
     - Vector1_d094b76bbae74915ab74ff23c382037e_2: 0.1
     - Vector1_d094b76bbae74915ab74ff23c382037e_3: 0.12
+    - Vector1_d17f35918bdc468c98673aa9ae028824: 0
+    - Vector1_e86bb578851a4e11aac979b5daa668d0: 0
     - Vector1_edbee027f473426b8ceb7e31b86d7534: 0.991
     - _AlphaClip: 0
     - _AlphaLODbias: 0
@@ -156,8 +167,8 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EnvRough: 0.77
-    - _EnvRough_1: 0.33
+    - _EnvRough: 0.32
+    - _EnvRough_1: 0.72
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -179,14 +190,14 @@ Material:
     - _flowMultiplier: 1.025
     - _hairAlbedoMultiply: 0.54
     - _specExp1: 110.3
-    - _specExp2: 72
+    - _specExp2: 62
     - _specMultiply: 10
-    - _specShift: 3.6
-    - _specShift2: 1.4
+    - _specShift: -2.33
+    - _specShift2: -1.14
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HairColor: {r: 0.30188674, g: 0.1966694, b: 0.11249552, a: 0}
+    - _HairColor: {r: 0.30188668, g: 0.19666934, b: 0.112495445, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

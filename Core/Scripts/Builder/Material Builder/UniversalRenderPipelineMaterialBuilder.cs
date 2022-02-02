@@ -1,5 +1,9 @@
 using Didimo.Core.Config;
 using System;
+using System.IO;
+using System.Linq;
+using Didimo.Core.Utility;
+using UnityEditor;
 using UnityEngine;
 
 namespace Didimo.Builder
@@ -11,8 +15,7 @@ namespace Didimo.Builder
         {
             shader = null;
 
-            var shaderResources = Resources
-                .Load<ShaderResources>("ShaderResources");
+            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
 
             switch (shaderName.ToLowerInvariant())
             {

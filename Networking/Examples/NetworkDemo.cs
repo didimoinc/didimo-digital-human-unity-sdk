@@ -47,7 +47,6 @@ namespace Didimo.Networking
             {
                 EditorUtility.DisplayDialog("Error", "Please wait for the current request to complete.", "OK");
                 return;
-
             }
             
             string photoFilePath = EditorUtility.OpenFilePanel("Choose a photo", "", "png,jpg");

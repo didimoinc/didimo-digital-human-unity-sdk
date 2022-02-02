@@ -27,6 +27,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 994be0f86192fd44bae8445516736f77, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AOMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AOMapUnique:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Albedo:
         m_Texture: {fileID: 2800000, guid: 7a7929d905ed3de4c98a9084d9cec95b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -106,7 +114,7 @@ Material:
     - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
     - Boolean_d900492949a941e5898b92f3244b33f3: 0
     - Boolean_f1793b23b11a4e2c81060cda85482ffe: 0
-    - Vector1_005fd9f73de24acb835361626bb54450: 0
+    - Vector1_005fd9f73de24acb835361626bb54450: 0.001
     - Vector1_048b65aa49c5454eb1b5662af2e39376: 1
     - Vector1_0586c13dde9241098b96e356887aff11: 0
     - Vector1_44e16ef7281640c597af8b22958d5f63: 90
@@ -115,8 +123,10 @@ Material:
     - Vector1_af2c3c995037491d96b066af05905ad3: 0
     - Vector1_d17f35918bdc468c98673aa9ae028824: 0
     - Vector1_e86bb578851a4e11aac979b5daa668d0: 0
+    - _AOFactor: 0.1
     - _AlphaClip: 0
     - _AlphaLODbias: 1
+    - _AlphaPower: 1
     - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BumpScale: 1
@@ -129,6 +139,7 @@ Material:
     - _DstBlend: 0
     - _EnvRough: 1
     - _EnvRough_1: 0.1
+    - _EnvSpecularScale: 0.1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -139,19 +150,28 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SDF_AAFactor: 0
+    - _SDF_gamma: 0
+    - _SDF_smoothing: 0
+    - _SDF_toggle: 0
+    - _ScaterFactor: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _TangentFlowMapRotation: 270
+    - _TestNormals: 0
+    - _TestTangents: 0
     - _UseFlowMap: 1
+    - _UseUniqueAOMap: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _alphaClipThreshold: 0
     - _envSpecMul: 0
     - _flowMultiplier: 1.1
     - _hairAlbedoMultiply: 0.194
+    - _hairScaleNudge: 0
     - _specExp1: 172
     - _specExp2: 28
     - _specMultiply: 6.6

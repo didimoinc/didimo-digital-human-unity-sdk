@@ -18,6 +18,11 @@ namespace Didimo.Core.Editor
             EditorGUI.DrawRect(new Rect(x1, bounds.y, w, border), Color.white);
             EditorGUI.DrawRect(new Rect(x1, bounds.yMax - border, w, border), Color.white);
         }
+
+        static public void DrawCornerMarker(Rect bounds, float size, Color color)
+        {
+            EditorGUI.DrawRect(new Rect(new Vector2(bounds.xMax - size, bounds.yMin), new Vector2(size, size)), color);
+        }
     }
 
     [CustomPropertyDrawer(typeof(HairPreset))]
@@ -64,7 +69,7 @@ namespace Didimo.Core.Editor
                 }
             }
         }
-
+        
         const int ICON_SIZE = 32;
         public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
         {
@@ -81,6 +86,10 @@ namespace Didimo.Core.Editor
             Rect crect = new Rect(cr.position, rectSize);
             EditorGUI.BeginChangeCheck();
 
+            Hair hair = (Hair)prop.serializedObject.targetObject;
+            
+            var hairpieceName = hair ? HairLayerSettings.GetHairIDFromObject(hair) : "";
+            
             var hairPresetDatabase = UnityEngine.Resources
                 .Load<HairPresetDatabase>("HairPresetDatabase");
 
@@ -117,10 +126,14 @@ namespace Didimo.Core.Editor
                             changeOccured = true;
                             myenum.intValue = i;
                         }
+                    }                
+                    if (hdb.HasMeshSpecificEntry(hairpieceName))
+                    {                        
+                        DrawHelpers.DrawCornerMarker(crect, 4, Color.white);
                     }
+                    crect = new Rect(new Vector2(crect.x + rectSize.x + margin, crect.y), rectSize);
                     GUI.backgroundColor = oldColor;
                     GUI.contentColor = oldContentColor;
-                    crect = new Rect(new Vector2(crect.x + rectSize.x + margin, crect.y), rectSize);
                 }
             }
             DrawHelpers.DrawOutlineRect(selRect, Color.white, 2);
@@ -129,8 +142,7 @@ namespace Didimo.Core.Editor
             if (EditorGUI.EndChangeCheck())
             {
                 if (changeOccured)
-                {
-                    Hair hair = (Hair)prop.serializedObject.targetObject;
+                {                
                     if (hair)
                     {
                         //myenum.serializedObject.Update();

@@ -52,6 +52,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: f613d7279a8f0b74287d5bc1c924926f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AOMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AOMapUnique:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Albedo:
         m_Texture: {fileID: 2800000, guid: 7a7929d905ed3de4c98a9084d9cec95b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -140,7 +148,7 @@ Material:
     - Boolean_df56c85a514b4b8da833e5a09752b376: 0
     - Vector1_020df71d02674f1fafad427a0a87e029: 3.58
     - Vector1_04a92e2cdf2b4369a4043697151bc5e7: 0
-    - Vector1_0586c13dde9241098b96e356887aff11: 0
+    - Vector1_0586c13dde9241098b96e356887aff11: 0.002
     - Vector1_1ba96e4bde054710be3e0e15ac7e7c5f: 0.03
     - Vector1_21cc1571b3364c78bb73b856c0cd28a1: 0
     - Vector1_3b9c4540c1de4e29915af2c71718ece1: 0
@@ -156,8 +164,10 @@ Material:
     - Vector1_dd562d33afc34b87845d49fb36e47f2e: 44.4
     - Vector1_edbee027f473426b8ceb7e31b86d7534: 0.991
     - Vector1_fecc576ca2d948b59b8bdff9c87cd785: 0
+    - _AOFactor: 1
     - _AlphaClip: 0
     - _AlphaLODbias: 1.3
+    - _AlphaPower: 1
     - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BlendModeToggle: 0
@@ -171,6 +181,7 @@ Material:
     - _DstBlend: 0
     - _EnvRough: 0.79
     - _EnvRough_1: 1.6
+    - _EnvSpecularScale: 0.1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -182,15 +193,23 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SDF_AAFactor: 0
     - _SDF_Gamma: 0
     - _SDF_antialiasing: 3.6
+    - _SDF_gamma: 0
+    - _SDF_smoothing: 0
+    - _SDF_toggle: 0
+    - _ScatterFactor: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _TangentFlowMapRotation: 270
+    - _TestNormals: 0
+    - _TestTangents: 0
     - _UseFlowMap: 1
+    - _UseUniqueAO: 0
     - _UsingSDF: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
@@ -198,6 +217,7 @@ Material:
     - _envSpecMul: 0
     - _flowMultiplier: 0.11
     - _hairAlbedoMultiply: 0.242
+    - _hairScaleNudge: 0.001
     - _specExp1: 193
     - _specExp2: 165
     - _specMultiply: 1.7

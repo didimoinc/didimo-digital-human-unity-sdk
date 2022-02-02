@@ -9,9 +9,12 @@ namespace Didimo.Core.Config
         [Header("Shader Resources")]
         public Shader Eye;
         public Shader Skin;
+        public Shader SkinMergedTextures;
+        public Shader SkinMergedAtlasedTextures;
         public Shader Mouth;
         public Shader Eyelash;
         public Shader UnlitTexture;
         public Shader Hair;
+        public Shader HairOpaque;
     }
 }

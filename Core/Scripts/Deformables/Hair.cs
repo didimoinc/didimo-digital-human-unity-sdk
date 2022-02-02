@@ -37,6 +37,38 @@ namespace Didimo.Core.Deformables
         [SerializeField]
         HairPreset Preset;
 
+        //[Tooltip("Every non colour setting will be applied to every per mesh preset override")]
+        [Button("Apply all non-colour settings to all per-mesh colour presets")]        
+        private void ApplyAllNonColourSettingsToAllMeshPresets()
+        {
+            Hair hair = this;
+            if (hair)
+            {
+                var hairPresetDatabase = UnityEngine.Resources
+                    .Load<HairPresetDatabase>("HairPresetDatabase");
+                var hairpieceName = HairLayerSettings.GetHairIDFromObject(hair);
+                for (var i = 0; i < hairPresetDatabase.Hairs.Length; ++i)
+                {
+                    var hdb = hairPresetDatabase.Hairs[i];
+                    hdb.FindOrAddentry(hairpieceName, HairLayer.Outer, this.outerHairLayer.Clone());
+                    hdb.FindOrAddentry(hairpieceName, HairLayer.Inner, this.innerHairLayer.Clone());
+                }
+                hairPresetDatabase.UpdateDatabase();
+            }
+        }
+        
+        [Button("Clear all mesh presets")]
+        private void ClearAllMeshPresets()
+        {
+            Hair hair = this;
+            if (hair)
+            {
+                var hairPresetDatabase = UnityEngine.Resources
+                    .Load<HairPresetDatabase>("HairPresetDatabase");
+                var hairpieceName = HairLayerSettings.GetHairIDFromObject(hair);
+                hairPresetDatabase.RemoveEntriesReferringTo(hairpieceName);                
+            }
+        }
         public Color Color
         {
             get

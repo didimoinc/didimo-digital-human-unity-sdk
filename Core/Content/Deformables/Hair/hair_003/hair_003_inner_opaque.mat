@@ -32,6 +32,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_08e517e1931249b89595b9a5ddb6ba30:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_c9e5da440a5a49958631a54092e01e0f:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -113,10 +117,17 @@ Material:
     - Boolean_26e7456fe99347b6a6b8cf8f194aabd1: 0
     - Boolean_6f31d87fd8e2472ea25c5b5d20312b91: 1
     - Boolean_80a0e9a5f5ff4d74a4f12303d42c8a48: 0
+    - Boolean_d900492949a941e5898b92f3244b33f3: 0
+    - Boolean_f1793b23b11a4e2c81060cda85482ffe: 0
     - Vector1_005fd9f73de24acb835361626bb54450: 0
+    - Vector1_048b65aa49c5454eb1b5662af2e39376: 1.05
     - Vector1_0586c13dde9241098b96e356887aff11: 0
     - Vector1_44e16ef7281640c597af8b22958d5f63: 0
-    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0.26
+    - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0.74
+    - Vector1_79ff9457e6754baa980a69403803cd1d: 0
+    - Vector1_af2c3c995037491d96b066af05905ad3: 0
+    - Vector1_d17f35918bdc468c98673aa9ae028824: 0
+    - Vector1_e86bb578851a4e11aac979b5daa668d0: 0
     - _AlphaClip: 0
     - _AlphaLODbias: 1
     - _AnisoHighlightRotation: 90

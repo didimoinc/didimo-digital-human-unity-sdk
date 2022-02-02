@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Didimo.Core.Deformables;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Didimo.Core.Config
 {
@@ -46,6 +49,18 @@ namespace Didimo.Core.Config
             flowMultiply = other.flowMultiply;
         }
 
+        public HairLayerSettings Clone()
+        {
+            return new HairLayerSettings(this);
+        }
+
+        public HairLayerSettings Clone(Color color)
+        {
+            var retval = new HairLayerSettings(this);
+            retval.color = color;
+            return retval;
+        }
+
         public void SetValues(HairLayerSettings other)
         {
             color = new Color(other.color.r, other.color.g, other.color.b);
@@ -56,6 +71,17 @@ namespace Didimo.Core.Config
             specShift2 = other.specShift2;
             flowMultiply = other.flowMultiply;
         }
+
+        public void SetNonColourValues(HairLayerSettings other)
+        {           
+            glossiness1 = other.glossiness1;
+            glossiness2 = other.glossiness2;
+            shineMultiplier = other.shineMultiplier;
+            specShift1 = other.specShift1;
+            specShift2 = other.specShift2;
+            flowMultiply = other.flowMultiply;
+        }
+        
 
         private static readonly char[] HairNameSplits = { '_', ' ' };
         public static string ExtractValidHairName(string testName)
@@ -133,6 +159,42 @@ namespace Didimo.Core.Config
         [SerializeField]
         public List<HairLayerDatabaseEntry> list;
 
+        public bool HasMeshSpecificEntry(string key)
+        {
+            for (var i = 0; i < list.Count; ++i)
+            {
+                if (list[i].key == key)
+                    return true;
+            }
+            return false;
+            
+        }
+
+        public void RemoveEntry(string key, HairLayer layer)
+        {
+            var entry = FindEntry(key, layer);
+            if (entry != null)
+            {
+                list.Remove(entry);
+            }
+        }
+
+        public HairLayerDatabaseEntry FindOrAddentry(string key, HairLayer layer, HairLayerSettings template)
+        {
+            var hldbe = FindEntry(key, layer);
+            if (hldbe != null)
+            {
+                hldbe.SetNonColourValues(template);
+                return hldbe;
+            }
+            else
+            {
+                hldbe = new HairLayerDatabaseEntry(template, key, layer);
+                list.Add(hldbe);
+            }
+            return hldbe;
+        }
+            
         public HairLayerDatabaseEntry FindEntry(string key, HairLayer layer)
         {
             foreach (HairLayerDatabaseEntry hldbe in list)
@@ -195,5 +257,30 @@ namespace Didimo.Core.Config
     public class HairPresetDatabase : ScriptableObject
     {
         public HairLayerDatabaseGroupEntry[] Hairs;
+        public void RemoveEntriesReferringTo(string Key)
+        {
+
+            for (var i = 0; i < Hairs.Length; ++i)
+            {
+                var hdb = Hairs[i];
+
+                hdb.RemoveEntry(Key, HairLayer.Outer);
+                hdb.RemoveEntry(Key, HairLayer.Inner);
+
+            }
+            UpdateDatabase();
+        }
+
+        public void UpdateDatabase()
+        {
+#if UNITY_EDITOR
+            var so = new SerializedObject(this);
+            so.Update();
+            so.ApplyModifiedProperties();
+            so.UpdateIfRequiredOrScript();
+#endif
+
+        }
+
     }
 }

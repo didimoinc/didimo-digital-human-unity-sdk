@@ -4,6 +4,7 @@ using System.IO;
 using Didimo.Builder;
 using Didimo.Builder.GLTF;
 using Didimo.Core.Config;
+using Didimo.Core.Utility;
 using Didimo.GLTFUtility;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -31,12 +32,11 @@ namespace Didimo.Core.Editor
                 return;
             }
 
-            var shaderResources = UnityEngine.Resources
-                .Load<ShaderResources>("ShaderResources");
+            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+
             if (shaderResources == null)
             {
                 Debug.LogError("Shader resources was null.");
-
                 return;
             }
 
@@ -51,7 +51,8 @@ namespace Didimo.Core.Editor
                 return shader;
             };
 
-            Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings, Format.GLTF);
+            Importer.ImportResult importResult =
+                Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings, Format.GLTF);
             if (importResult.isDidimo)
             {
                 GLTFBuildData.BuildFromScriptedImporter(importResult);
@@ -59,7 +60,8 @@ namespace Didimo.Core.Editor
                 // Save asset with reset pose Animation Clip
                 List<AnimationClip> gltfAnimationClips = new List<AnimationClip>(importResult.animationClips);
                 if (importResult.resetAnimationClip != null) gltfAnimationClips.Add(importResult.resetAnimationClip);
-                GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx, importSettings);
+                GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx,
+                    importSettings);
             }
             else
             {
@@ -68,6 +70,9 @@ namespace Didimo.Core.Editor
             }
         }
 
-        public override bool SupportsRemappedAssetType(Type type) { return type == typeof(Material); }
+        public override bool SupportsRemappedAssetType(Type type)
+        {
+            return type == typeof(Material);
+        }
     }
 }

@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ee067c398c46c39090ed1b3e949e4f, type: 3}
   m_Name: DeformableDatabase
   m_EditorClassIdentifier: Assembly-CSharp:Didimo.Core.Animation.Data:HairDatabase
-  deformables:
-  - {fileID: 1454384284889028701, guid: ef456916c27dfc0499cd3cc30fd0d2e3, type: 3}
-  - {fileID: -8226903175446513334, guid: 3be1e169d540f514aac98ddcd127cd5c, type: 3}
-  - {fileID: 3446940278380092241, guid: ca8eb1e50ed5508498f791ce8db43ec2, type: 3}
   Deformables:
   - {fileID: 1454384284889028701, guid: ef456916c27dfc0499cd3cc30fd0d2e3, type: 3}
   - {fileID: -8226903175446513334, guid: 3be1e169d540f514aac98ddcd127cd5c, type: 3}
   - {fileID: 3446940278380092241, guid: ca8eb1e50ed5508498f791ce8db43ec2, type: 3}
+  - {fileID: 5840598423108440419, guid: 06ac27113fbce784aac0ef346b24bcaa, type: 3}
+  - {fileID: 7764268260446276995, guid: 4f91eba44a6769e4191419802033fece, type: 3}
+  - {fileID: 8405544016960989387, guid: 11aec7ac655a34043b27cb6e4d1ea16d, type: 3}
