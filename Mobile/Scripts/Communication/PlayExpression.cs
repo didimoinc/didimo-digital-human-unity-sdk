@@ -16,9 +16,8 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, string animationID, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
+                CbMessage(animationID,
                     didimoKey,
-                    animationID,
                     obj =>
                     {
                         CallOnSuccess(response);
@@ -26,7 +25,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -35,14 +35,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerPlayExpression(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, string animationID, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string animationID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerPlayExpression(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, string animationID, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string animationID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -57,11 +57,11 @@ namespace Didimo.Mobile.Communication
                         throw new Exception($"Failed to locate didimo with ID {didimoKey}");
                     }
 
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

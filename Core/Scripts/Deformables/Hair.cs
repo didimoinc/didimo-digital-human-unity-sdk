@@ -21,6 +21,7 @@ namespace Didimo.Core.Deformables
         private static readonly int PROPERTY_SPECEXP2 = Shader.PropertyToID("_specExp2");
         private static readonly int PROPERTY_SPECEXP1 = Shader.PropertyToID("_specExp1");
         private static readonly int PROPERTY_FLOWMULTIPLY = Shader.PropertyToID("_flowMultiplier");
+        private static readonly int HAIR_SCALE_NUDGE = Shader.PropertyToID("_hairScaleNudge");
 
         [Header("Hair")]
         [SerializeField]
@@ -50,8 +51,8 @@ namespace Didimo.Core.Deformables
                 for (var i = 0; i < hairPresetDatabase.Hairs.Length; ++i)
                 {
                     var hdb = hairPresetDatabase.Hairs[i];
-                    hdb.FindOrAddentry(hairpieceName, HairLayer.Outer, this.outerHairLayer.Clone());
-                    hdb.FindOrAddentry(hairpieceName, HairLayer.Inner, this.innerHairLayer.Clone());
+                    hdb.FindOrAddentryUseColourDefault(hairpieceName, HairLayer.Outer, this.outerHairLayer.Clone());
+                    hdb.FindOrAddentryUseColourDefault(hairpieceName, HairLayer.Inner, this.innerHairLayer.Clone());
                 }
                 hairPresetDatabase.UpdateDatabase();
             }
@@ -168,6 +169,8 @@ namespace Didimo.Core.Deformables
                 propertyBlock.SetFloat(PROPERTY_SPECSHIFT2,   hairLayer.specShift2);
                 propertyBlock.SetFloat(PROPERTY_FLOWMULTIPLY, hairLayer.flowMultiply);
                 propertyBlock.SetColor(PROPERTY_HAIRCOLOR,    hairLayer.color);
+                propertyBlock.SetFloat(HAIR_SCALE_NUDGE, hairLayer.hairScaleNudge);
+
             }
             MaterialBuilder.ProcessPropertyBlocksInHierarchy(DidimoComponents != null
                 ? DidimoComponents.transform : transform, this, OnPropertyBlock);

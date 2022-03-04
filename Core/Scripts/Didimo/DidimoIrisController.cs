@@ -13,7 +13,7 @@ namespace Didimo
             new IrisPresetValues(new Color(1.0f, 1.0f, 1.0f), null), //BLACK = 0,
         };
 
-        public Color   Color = new Color(1.0f, 1.0f, 1.0f);
+        public Color Color = new Color(1.0f, 1.0f, 1.0f);
         public Texture IrisTexture;
 
         public IrisPresetValues(Color col, Texture tex)
@@ -35,8 +35,8 @@ namespace Didimo
         public enum Eye
         {
             Undefined = -1,
-            Left      = 0,
-            Right     = 1
+            Left = 0,
+            Right = 1
         }
 
         [SerializeField]
@@ -61,19 +61,19 @@ namespace Didimo
             RightEye = DidimoIrisControllerConfig.RightEyeMesh;
         }
 
-        public const string AOpowVarName            = "Vector1_ba14f804b81940f190085ab00e25f7e3";
-        public const string AOstrengthVarName       = "Vector1_2d4a1ae612994689bb4f2d00e80976a8";
+        public const string AOpowVarName = "Vector1_ba14f804b81940f190085ab00e25f7e3";
+        public const string AOstrengthVarName = "Vector1_2d4a1ae612994689bb4f2d00e80976a8";
         public const string EyeHoleInvMatrixVarName = "Matrix4_4d20512c9f054b3e9b03b7fa5fbe725f";
-        public const string DiffuseTextureName      = "_BaseMap";
-        public const string IrisScaleName           = "_EyeUVScaleP1";
+        public const string DiffuseTextureName = "_BaseMap";
+        public const string IrisScaleName = "_EyeUVScaleP1";
 
-        int                   DiffuseTextureID          = -1;
-        int                   AOpowVarNameID            = -1;
-        int                   AOstrengthVarNameID       = -1;
-        int                   EyeHoleInvMatrixVarNameID = -1;
-        int                   IrisScaleNameID           = -1;
-        MaterialPropertyBlock LeftpropBlock             = null;
-        MaterialPropertyBlock RightpropBlock            = null;
+        int DiffuseTextureID = -1;
+        int AOpowVarNameID = -1;
+        int AOstrengthVarNameID = -1;
+        int EyeHoleInvMatrixVarNameID = -1;
+        int IrisScaleNameID = -1;
+        MaterialPropertyBlock LeftpropBlock = null;
+        MaterialPropertyBlock RightpropBlock = null;
 
         void ProcessEyepropBlock(Eye eye, MaterialPropertyBlock propBlock, Renderer renderer)
         {

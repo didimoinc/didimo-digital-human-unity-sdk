@@ -981,6 +981,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "f2366b08a6d244e481e1efcaccbf0c09"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "c1d50eed979d42d59a6e766544d23333"
+                },
+                "m_SlotId": 767561123
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "f473c7bba83b453e8c824ab0c2c82a39"
                 },
                 "m_SlotId": 0
@@ -1575,7 +1589,7 @@
     },
     "m_Name": "Rough_Spec_Cavity_AO",
     "m_DefaultReferenceName": "Texture2D_1bac527357c140fc95558b8d571bc147",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Rough_Spec_Cavity_AO",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -2873,7 +2887,7 @@
     },
     "m_Name": "Trans_Bias_SSSAO",
     "m_DefaultReferenceName": "Texture2D_59bb5ed4881c479284a116401e7ae04d",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Trans_Bias_SSSAO",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -5043,6 +5057,9 @@
             "m_Id": "be4346e4abde4a05aa42dfda1491d51c"
         },
         {
+            "m_Id": "efbe350d89904c52b073be6a148c583d"
+        },
+        {
             "m_Id": "1de13899995c489fb632eb655d820065"
         },
         {
@@ -5984,6 +6001,27 @@
     "m_Property": {
         "m_Id": "eaa957bf48ba4501b95355287a3fca23"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
+    "m_ObjectId": "efbe350d89904c52b073be6a148c583d",
+    "m_Id": 767561123,
+    "m_DisplayName": "AtlasUV",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector2_17bf8affcfb943da9a49790353beb870",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": []
 }
 
 {

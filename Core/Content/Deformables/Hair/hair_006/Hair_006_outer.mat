@@ -118,16 +118,18 @@ Material:
     - Vector1_21cc1571b3364c78bb73b856c0cd28a1: 0
     - Vector1_29d4e3c6f80041fa9ce2f9667003d0ce: 0
     - Vector1_2e2d8077b0814b96b763e04567755d9f: 0
+    - Vector1_309649fe252240dfb2f0a894c1d79e7a: 20
     - Vector1_3b9c4540c1de4e29915af2c71718ece1: 0
     - Vector1_51402fcc57ad4ce1aa8aa1a6cd2190c1: 0
     - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0.15
     - Vector1_8940f22e9ba7452fbf3388d6271b2302: 0.79
+    - Vector1_d736b3961f494ab4bf4caef93b0473b3: 0.7
     - Vector1_dcf32dc223984f09b96164cce6318f38: 0
     - Vector1_fecc576ca2d948b59b8bdff9c87cd785: 0
     - _AOFactor: 1
     - _AlphaClip: 0
     - _AlphaLODbias: 1
-    - _AlphaPower: 0.38
+    - _AlphaPower: 0.6
     - _AnisoHighlightRotation: 128
     - _Blend: 0
     - _BumpScale: 1
@@ -164,6 +166,7 @@ Material:
     - _TangentFlowMapRotation: 0
     - _TestNormals: 0
     - _TestTangents: 0
+    - _TransmissionHaloSharpness: 4.8
     - _UseFlowMap: 1
     - _UseUniqueAO: 0
     - _WorkflowMode: 1

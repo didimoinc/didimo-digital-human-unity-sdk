@@ -14,9 +14,9 @@ namespace Didimo.Mobile.Communication
         private static readonly string     OVERLAY_LOCATION = "screenshot_overlay";
 
 #if UNITY_ANDROID
-        public delegate void GetCameraFrameImageSuccessDelegate(IntPtr obj, byte[] pngImageData);
+        public delegate void GetCameraFrameImageSuccessCallback(IntPtr obj, byte[] pngImageData);
 #elif UNITY_IOS
-        public delegate void GetCameraFrameImageSuccessDelegate(IntPtr obj, IntPtr pngImageData, int dataSize);
+        public delegate void GetCameraFrameImageSuccessCallback(IntPtr pngImageData, int dataSize, IntPtr objectPointer);
 #endif
 
 #if UNITY_ANDROID
@@ -26,15 +26,15 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(bool withDidimoWatermark, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    (obj, pngImage) =>
+                CbMessage((obj, pngImage) =>
                     {
                         response.Call("onSuccess", pngImage);
                     },
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -43,14 +43,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerGetCameraFrameImage(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, GetCameraFrameImageSuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(GetCameraFrameImageSuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerGetCameraFrameImage(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, GetCameraFrameImageSuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(GetCameraFrameImageSuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -60,11 +60,11 @@ namespace Didimo.Mobile.Communication
                         {
                             byte[] data = image.EncodeToPNG();
 #if UNITY_ANDROID
-                            successDelegate(obj, data);
+                            successCallback(objectPointer, data);
 #elif UNITY_IOS
                             GCHandle pinnedArray = GCHandle.Alloc(data, GCHandleType.Pinned);
                             IntPtr pointer = pinnedArray.AddrOfPinnedObject();
-                            successDelegate(obj, pointer, data.Length);
+                            successCallback(pointer, data.Length, objectPointer);
                             pinnedArray.Free();
 #endif
                         },
@@ -75,7 +75,7 @@ namespace Didimo.Mobile.Communication
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

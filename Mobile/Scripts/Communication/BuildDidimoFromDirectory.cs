@@ -17,12 +17,11 @@ namespace Didimo.Mobile.Communication
         {
             public MessageInterface() : base("com.unity3d.communication.DidimoUnityInterface$BuildDidimoFromDirectoryInterface") { }
 
-            public void sendToUnity(string didimoPath, string didimoKey, AndroidJavaObject response)
+            public void sendToUnity(string didimoDirectory, string didimoKey, AndroidJavaObject response)
             {
                 ThreadingUtility.WhenMainThread(() =>
                 {
-                    _ = CallAsync(IntPtr.Zero,
-                        didimoPath,
+                    _ = CallAsync(didimoDirectory,
                         didimoKey,
                         obj =>
                         {
@@ -31,7 +30,8 @@ namespace Didimo.Mobile.Communication
                         (obj, message) =>
                         {
                             CallOnError(response, message);
-                        });
+                        },
+                        IntPtr.Zero);
                 });
             }
         }
@@ -39,34 +39,32 @@ namespace Didimo.Mobile.Communication
         protected override void RegisterNativeCall(AndroidJavaObject didimoUnityInterface) { didimoUnityInterface.Call("RegisterForCommunication", new MessageInterface()); }
 
 #elif UNITY_IOS
-        protected override void RegisterNativeCall() { registerBuildDidimo(CbMessage); }
+        protected override void RegisterNativeCall() { registerBuildDidimoFromDirectory(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoPath, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string didimoDirectory, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
-        private static void CbMessage(IntPtr obj, string path, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoDirectory, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
-#pragma warning disable 4014
-            CallAsync(obj, path, didimoKey, successDelegate, errorDelegate);
-#pragma warning restore 4014
+            _ = CallAsync(didimoDirectory, didimoKey, successCallback, errorCallback, objectPointer);
         }
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void registerBuildDidimo(InputDelegate cb);
+        private static extern void registerBuildDidimoFromDirectory(InputDelegate cb);
 
 #endif
-        private static async Task CallAsync(IntPtr obj, string path, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static async Task CallAsync(string didimoDirectory, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             try
             {
-                Task<DidimoComponents> task = DidimoLoader.LoadDidimoInFolder(didimoKey, path);
+                Task<DidimoComponents> task = DidimoLoader.LoadDidimoInFolder(didimoKey, didimoDirectory);
                 await task;
                 DidimoCache.Add(task.Result);
-                successDelegate(obj);
+                successCallback(objectPointer);
             }
             catch (Exception e)
             {
-                errorDelegate(obj, e.ToString());
+                errorCallback(objectPointer, e.ToString());
             }
         }
     }

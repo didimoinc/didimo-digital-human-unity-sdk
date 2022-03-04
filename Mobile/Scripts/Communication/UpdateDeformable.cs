@@ -17,8 +17,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, string deformableId, byte[] deformedData, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    didimoKey,
+                CbMessage(didimoKey,
                     deformableId,
                     deformedData,
                     obj =>
@@ -28,7 +27,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -40,7 +40,8 @@ namespace Didimo.Mobile.Communication
 #if UNITY_ANDROID
         public delegate void InputDelegate(IntPtr obj, string didimoKey, string deformableId, byte[] deformedData, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
 #elif UNITY_IOS
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, string deformableId, IntPtr deformedData, int dataSize, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string didimoKey, string deformableId, IntPtr deformedData, int dataSize, SuccessCallback successCallback, ErrorCallback errorCallback,
+            IntPtr objectPointer);
 #endif
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
@@ -49,10 +50,11 @@ namespace Didimo.Mobile.Communication
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
 #if UNITY_ANDROID
-        private static void CbMessage(IntPtr obj, string didimoKey, string deformableId, byte[] deformedData, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoKey, string deformableId, byte[] deformedData, SuccessCallback successCallback, ErrorCallback errorCallback,
+            IntPtr objectPointer)
         {
 #elif UNITY_IOS
-        private static void CbMessage(IntPtr obj, string didimoKey, string deformableId, IntPtr data, int dataSize, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoKey, string deformableId, IntPtr data, int dataSize, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             // Copy the data ASAP, synchronously. If we wait to do it in the main thread, the data might have gone out of scope
             byte[] deformedData = new byte[dataSize];
@@ -74,12 +76,12 @@ namespace Didimo.Mobile.Communication
 
                     deformable.SetDeformedMeshData(deformedData);
                     deformable.gameObject.SetActive(true);
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e);
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

@@ -15,11 +15,10 @@ namespace Didimo.Mobile.Communication
         {
             public MessageInterface() : base("com.unity3d.communication.DidimoUnityInterface$SetHairColorInterface") { }
 
-            public void sendToUnity(string didimoKey, int colorIdx, AndroidJavaObject response)
+            public void sendToUnity(string didimoKey, int colorPresetID, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
+                CbMessage(colorPresetID,
                     didimoKey,
-                    colorIdx,
                     obj =>
                     {
                         CallOnSuccess(response);
@@ -27,7 +26,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -36,14 +36,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerSetHairColor(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, int colorIdx, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(int colorPresetId, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerSetHairColor(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, int hairPresetIdx, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(int colorPresetID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -53,7 +53,7 @@ namespace Didimo.Mobile.Communication
                     {
                         if (didimo.Deformables.TryFind(out Hair hair))
                         {
-                            hair.SetPreset(hairPresetIdx);
+                            hair.SetPreset(colorPresetID);
                         }
                         else
                         {
@@ -65,11 +65,11 @@ namespace Didimo.Mobile.Communication
                         throw new Exception($"Unable to find didimo with id {didimoKey}");
                     }
 
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

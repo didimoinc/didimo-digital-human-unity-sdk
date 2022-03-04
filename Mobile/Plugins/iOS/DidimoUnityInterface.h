@@ -1,9 +1,5 @@
-//
-//  DidimoUnityInterface.m
-//  UnityFramework
-//
-//  Created by Hugo Pereira on 05/04/2021.
-//
+/************** GENERATED AUTOMATICALLY **************/
+
 
 #import <Foundation/Foundation.h>
 
@@ -12,41 +8,78 @@ NS_ASSUME_NONNULL_BEGIN
 __attribute__ ((visibility("default")))
 @interface DidimoUnityInterface : NSObject{}
 
-typedef void (*ErrorCb)(const void* someInstance, const char* errorMsg);
-typedef void (*SuccessCb)(const void* obj);
-typedef void (*GetCameraFrameImageSuccessCb)(const void* obj, const void* pngImageData, int dataSize);
-typedef void (*GetDeformableDataSuccessCb)(const void* someInstance, const void* bytes, int dataSize);
+typedef void (*SuccessCallback)(const void* objectPointer);
+typedef void (*ErrorCallback)(const void* objectPointer, const char* msg);
+typedef void (*GetCameraFrameImageSuccessCallback)(const void* pngImageData, int dataSize, const void* objectPointer);
+typedef void (*GetDeformableDataSuccessCallback)(const void* obj, const void* data, int dataSize);
+typedef void (*ProgressCallback)(const void* objectPointer, float progress);
 
-// call these any time after UnityFrameworkLoad
-+ (void) BuildDidimoFromDirectory:(NSString*)didimoDirectory didimoKey:(NSString*)didimoKey successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) SetHairColor:(int)colorIdx forDidimo:(NSString*)didimoKey successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) BuildDidimoFromDirectory:(NSString*)didimoDirectory didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) SetHairstyleId:(NSString*)styleId forDidimo:(NSString*)didimoKey successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) SetEyeColor:(int)colorIdx forDidimo:(NSString*)didimoKey successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) CacheAnimation:(NSString*)animationID filePath:(NSString*)filePath successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) PlayExpressionWithdidimoKey:(NSString*)didimoKey animationId:(NSString*)animationId successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) DestroyDidimoWithId:(NSString*)didimoKey successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) ClearAnimationCache:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) CacheAnimationWithId:(NSString*)animationId filePath:(NSString*)filePath successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) ClearAnimationCacheWithSuccessCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) DestroyDidimo:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) SetOrbitControlsEnabled:(bool)enabled successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) TextToSpeechForDidimo:(NSString*)didimoKey dataPath:(NSString*)dataPath clipPath:(NSString*)clipPath successCallback:(SuccessCb) success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) GetCameraFrameImage:(GetCameraFrameImageSuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) GetDeformableDataForDidimo:(NSString*)didimoKey deformableId:(NSString*)deformableId successCallback:(GetDeformableDataSuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) UpdateDeformableForDidimo:(NSString*)didimoKey deformableId:(NSString*)deformableId deformedData:(void*)deformedData dataSize:(int)dataSize successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) GetDeformableData:(NSString*)didimoKey deformableId:(NSString*)deformableId successCallback:(GetDeformableDataSuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) SetCameraPosition:(float[_Nonnull 3])position rotation:(float[_Nonnull 4])rotation successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
 
-+ (void) ResetCameraInstant:(bool)instant successCallback:(SuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
++ (void) PlayCinematic:(NSString*)cinematicID didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
 
-+ (void) GetCameraFrameImageWithSuccessCallback:(GetCameraFrameImageSuccessCb)success errorCallback:(ErrorCb)error objectPointer:(const void*)ptr;
+
++ (void) PlayExpression:(NSString*)animationID didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) ResetCamera:(Boolean)instant successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) ScrollToDidimo:(int)didimoIndex progressCallback:(ProgressCallback)progressCallback successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetEyeColor:(int)eyeColorID didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetHairColor:(int)colorPresetId didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetHairstyle:(NSString*)styleID didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetOrbitControlsEnabled:(Boolean)enabled successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetRenderingActive:(Boolean)active successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetViewRect:(int)x y:(int)y width:(int)width height:(int)height successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) SetupARKit:(NSString*)blendshapeNames didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) StopARKit:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) StopDidimoScrolling:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) StreamARKit:(const void*)blendshapeWeights blendshapeCount:(int)blendshapeCount didimoKey:(NSString*)didimoKey successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) TextToSpeech:(NSString*)didimoKey dataPath:(NSString*)dataPath clipPath:(NSString*)clipPath successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
+
++ (void) UpdateDeformable:(NSString*)didimoKey deformableId:(NSString*)deformableId deformedData:(const void*)deformedData dataSize:(int)dataSize successCallback:(SuccessCallback)successCallback errorCallback:(ErrorCallback)errorCallback objectPointer:(const void*)objectPointer;
+
 
 @end
 

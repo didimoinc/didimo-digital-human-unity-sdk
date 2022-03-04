@@ -1,6 +1,8 @@
 #if UNITY_ANDROID || UNITY_IOS
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Didimo.Core.Utility;
 
@@ -10,10 +12,13 @@ namespace Didimo.Mobile.Communication
     {
         // Default SuccessDelegate
 
-        public delegate void SuccessDelegate(IntPtr obj);
+        public delegate void SuccessCallback(IntPtr objectPointer);
 
         // Default ErrorDelegate
-        public delegate void ErrorDelegate(IntPtr obj, string msg);
+        public delegate void ErrorCallback(IntPtr objectPointer, string msg);
+
+        // Default ProgressDelegate
+        public delegate void ProgressCallback(IntPtr objectPointer, float progress);
 
 #if UNITY_IOS
         protected abstract void RegisterNativeCall();
@@ -33,6 +38,7 @@ namespace Didimo.Mobile.Communication
         protected static void CallOnSuccess(AndroidJavaObject javaObject) { javaObject.Call("onSuccess"); }
 
         protected static void CallOnError(AndroidJavaObject javaObject, string message) { javaObject.Call("onError", message); }
+        protected static void CallOnProgress(AndroidJavaObject javaObject, float progress) { javaObject.Call("onProgress"); }
 
         private static AndroidJavaObject GetDidimoUnityInterface(AndroidJavaObject activity) => activity.Call<AndroidJavaObject>("getDidimoUnityInterface");
 #endif
@@ -45,25 +51,11 @@ namespace Didimo.Mobile.Communication
 #endif
         }
 
-        private static readonly HashSet<Type> nativeInterfaces = new HashSet<Type>
+        public static IEnumerable<Type> GetAllNativeInterfaces()
         {
-            typeof(BuildDidimoFromDirectory),
-            typeof(CacheAnimation),
-            typeof(ClearAnimationCache),
-            typeof(DestroyDidimo),
-            typeof(PlayExpression),
-            typeof(ResetCamera),
-            typeof(ResetCamera),
-            typeof(SetCamera),
-            typeof(SetEyeColor),
-            typeof(SetHairColor),
-            typeof(SetHairstyle),
-            typeof(SetOrbitControls),
-            typeof(TextToSpeech),
-            typeof(UpdateDeformable),
-            typeof(GetDeformableData),
-            typeof(GetCameraFrameImage)
-        };
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(BiDirectionalNativeInterface)));
+        }
 
         private static void InitializeComms()
         {
@@ -71,6 +63,10 @@ namespace Didimo.Mobile.Communication
             AndroidJavaObject activity = GetMainActivity();
             AndroidJavaObject didimoUnityInterface = GetDidimoUnityInterface(activity);
 #endif
+
+            // Get all communication interfaces
+            IEnumerable<Type> nativeInterfaces = GetAllNativeInterfaces();
+
             foreach (Type nativeInterfaceType in nativeInterfaces)
             {
                 BiDirectionalNativeInterface instance = (BiDirectionalNativeInterface) Activator.CreateInstance(nativeInterfaceType);

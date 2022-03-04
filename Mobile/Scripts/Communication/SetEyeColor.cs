@@ -14,11 +14,10 @@ namespace Didimo.Mobile.Communication
         {
             public MessageInterface() : base("com.unity3d.communication.DidimoUnityInterface$SetEyeColorInterface") { }
 
-            public void sendToUnity(string didimoKey, int colorIdx, AndroidJavaObject response)
+            public void sendToUnity(string didimoKey, int eyeColorID, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
+                CbMessage(eyeColorID,
                     didimoKey,
-                    colorIdx,
                     obj =>
                     {
                         CallOnSuccess(response);
@@ -26,7 +25,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -35,14 +35,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerSetEyeColor(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, int colorIdx, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(int eyeColorID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerSetEyeColor(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, int eyeColorIdx, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(int eyeColorID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -50,18 +50,18 @@ namespace Didimo.Mobile.Communication
                 {
                     if (DidimoCache.TryFindDidimo(didimoKey, out DidimoComponents didimo))
                     {
-                        didimo.IrisController.SetPreset(eyeColorIdx);
+                        didimo.IrisController.SetPreset(eyeColorID);
                     }
                     else
                     {
                         throw new Exception($"Unable to find didimo with id {didimoKey}");
                     }
 
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message + e.StackTrace);
+                    errorCallback(objectPointer, e.Message + e.StackTrace);
                 }
             });
         }

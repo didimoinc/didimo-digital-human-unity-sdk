@@ -51,23 +51,25 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 0.990566, g: 0.952849, b: 0.864409, a: 1}
-    glossiness1: 34
-    glossiness2: 161
-    shineMultiplier: 1.2
-    specShift1: 0.1
-    specShift2: 0.2
-    flowMultiply: 0.17
-  innerHairLayer:
-    color: {r: 0.9056604, g: 0.80099684, b: 0.6963332, a: 1}
-    glossiness1: 0.1
-    glossiness2: 3
-    shineMultiplier: 0.3
-    specShift1: 0.1
-    specShift2: 0.2
+    color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+    glossiness1: 125
+    glossiness2: 72
+    shineMultiplier: 0.5
+    specShift1: -0.026
+    specShift2: 0.011
     flowMultiply: 0.8
+    hairScaleNudge: 0
+  innerHairLayer:
+    color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+    glossiness1: 131
+    glossiness2: 8
+    shineMultiplier: 0.1
+    specShift1: -0.232
+    specShift2: -0.405
+    flowMultiply: 0.26
+    hairScaleNudge: 0
   Preset:
-    value: 6
+    value: 4
 --- !u!1 &4655475987901707733
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,9 +129,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d97a6f518d124f4eb4c4caca4f64600, type: 2}
   - {fileID: 2100000, guid: 60db071ba9c32ab4c973fb33548bba96, type: 2}
   - {fileID: 2100000, guid: 3f7d0c733372cbb46b5cd7c54f37e3eb, type: 2}
+  - {fileID: 2100000, guid: 6d97a6f518d124f4eb4c4caca4f64600, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

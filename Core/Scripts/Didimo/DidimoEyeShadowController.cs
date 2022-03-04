@@ -12,8 +12,8 @@ namespace Didimo
         public enum Eye
         {
             Undefined = -1,
-            Left      = 0,
-            Right     = 1
+            Left = 0,
+            Right = 1
         }
 
         [SerializeField]
@@ -83,8 +83,8 @@ namespace Didimo
             RightEye = didimoEyeShadowControllerConfig.RightEyeMesh;
         }
 
-        public const string AOpowVarName            = "Vector1_ba14f804b81940f190085ab00e25f7e3";
-        public const string AOstrengthVarName       = "Vector1_2d4a1ae612994689bb4f2d00e80976a8";
+        public const string AOpowVarName = "Vector1_ba14f804b81940f190085ab00e25f7e3";
+        public const string AOstrengthVarName = "Vector1_2d4a1ae612994689bb4f2d00e80976a8";
         public const string EyeHoleInvMatrixVarName = "Matrix4_4d20512c9f054b3e9b03b7fa5fbe725f";
 
         int AOpowVarNameID = -1;
@@ -193,7 +193,7 @@ namespace Didimo
             bounds.height * 0.5f * this.scale_Y, 1.0f));
             Matrix4x4 rotate = Matrix4x4.Rotate(
                 Quaternion.AngleAxis(this.rotation * eyeNegator, new Vector3(0, 0, 1)));
-            eyeMat = HeadTransform.localToWorldMatrix * eyeMat * translate * rotate * scale ;
+            eyeMat = HeadTransform.localToWorldMatrix * eyeMat * translate * rotate * scale;
             SetEyeHoleMatrix(eye, eyeMat);
         }
 

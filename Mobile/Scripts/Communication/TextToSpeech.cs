@@ -17,8 +17,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, string dataPath, string clipPath, AndroidJavaObject response)
             {
-                _ = CallAsync(IntPtr.Zero,
-                    didimoKey,
+                _ = CallAsync(didimoKey,
                     dataPath,
                     clipPath,
                     (obj) =>
@@ -28,7 +27,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -37,26 +37,26 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerTextToSpeech(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, string dataPath, string clipPath, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string didimoKey, string dataPath, string clipPath, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerTextToSpeech(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
-        private static void CbMessage(IntPtr obj, string didimoKey, string dataPath, string clipPath, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoKey, string dataPath, string clipPath, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
-            _ = CallAsync(obj, didimoKey, dataPath, clipPath, successDelegate, errorDelegate);
+            _ = CallAsync(didimoKey, dataPath, clipPath, successCallback, errorCallback, objectPointer);
         }
 #endif
 
-        private static async Task CallAsync(IntPtr obj, string didimoKey, string dataPath, string clipPath, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static async Task CallAsync(string didimoKey, string dataPath, string clipPath, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             try
             {
                 if (DidimoCache.TryFindDidimo(didimoKey, out DidimoComponents didimo))
                 {
                     await Speech.PhraseBuilder.Build(dataPath, clipPath, (phrase) => ThreadingUtility.WhenMainThread(() => didimo.Speech.Speak(phrase)));
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Didimo.Mobile.Communication
             }
             catch (Exception e)
             {
-                errorDelegate(obj, e.Message);
+                errorCallback(objectPointer, e.Message);
             }
         }
     }

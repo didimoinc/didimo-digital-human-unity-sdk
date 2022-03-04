@@ -59,9 +59,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aae1825cd0706b242ba0a662b764f26f, type: 2}
   - {fileID: 2100000, guid: 175d0837e392dbe40b19ee7bee3ab8a3, type: 2}
   - {fileID: 2100000, guid: 99c959ec72a6c2043bdc449f5453e7fb, type: 2}
+  - {fileID: 2100000, guid: aae1825cd0706b242ba0a662b764f26f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6568651214874304577}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -134,20 +134,22 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 1, g: 0.9506419, b: 0.8349056, a: 1}
-    glossiness1: 500
-    glossiness2: 300
-    shineMultiplier: 1
+    color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+    glossiness1: 570
+    glossiness2: 901
+    shineMultiplier: 0.8
     specShift1: 0.1
     specShift2: 0.2
-    flowMultiply: 0.86
+    flowMultiply: 0.8
+    hairScaleNudge: 0
   innerHairLayer:
-    color: {r: 1, g: 0.91773266, b: 0.7688679, a: 1}
-    glossiness1: 5
+    color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+    glossiness1: 96
     glossiness2: 15
-    shineMultiplier: 1
-    specShift1: 0.1
-    specShift2: 0.2
-    flowMultiply: 0.41
+    shineMultiplier: 0.4
+    specShift1: -0.232
+    specShift2: -0.405
+    flowMultiply: 0.26
+    hairScaleNudge: 0
   Preset:
-    value: 6
+    value: 4
