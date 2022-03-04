@@ -17,8 +17,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, string styleID, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    didimoKey,
+                CbMessage(didimoKey,
                     styleID,
                     obj =>
                     {
@@ -27,7 +26,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -36,14 +36,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerSetHairstyle(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, string styleID, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string styleID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerSetHairstyle(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, string styleID, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string styleID, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -53,7 +53,7 @@ namespace Didimo.Mobile.Communication
                     {
                         throw new Exception($"Could not find didimo with ID {didimoKey}");
                     }
-                    
+
                     if (string.IsNullOrEmpty(styleID))
                     {
                         didimo.Deformables.DestroyAll<Hair>();
@@ -66,12 +66,12 @@ namespace Didimo.Mobile.Communication
                     {
                         throw new Exception($"Could not create hairstyle with ID {styleID}");
                     }
-                    
-                    successDelegate(obj);
+
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

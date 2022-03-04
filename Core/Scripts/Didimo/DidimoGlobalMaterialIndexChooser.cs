@@ -7,26 +7,28 @@ using UnityEngine.SceneManagement;
 namespace Didimo
 {
     public class DidimoGlobalMaterialIndexChooser : MonoBehaviour
-    {      
+    {
         int CurrentMaterialSetIndex = 0;
-        public IntRange GlobalMaterialSetSelectionIndex = new IntRange(0,0);        
+        public IntRange GlobalMaterialSetSelectionIndex = new IntRange(0, 0);
+
         public void SetCurrentMaterialSetIndex(int index)
-        {            
+        {
             GlobalMaterialSetSelectionIndex.Value = index;
             OnValidate();
         }
 
         public void IncrementCurrentMaterialSetIndex()
         {
-            GlobalMaterialSetSelectionIndex.Value = (GlobalMaterialSetSelectionIndex.Value + 1) % GlobalMaterialSetSelectionIndex.MaxValue;        
+            GlobalMaterialSetSelectionIndex.Value = (GlobalMaterialSetSelectionIndex.Value + 1) % GlobalMaterialSetSelectionIndex.MaxValue;
             OnValidate();
         }
-        void OnValidate()
+
+        private void OnValidate()
         {
             Scene scene = SceneManager.GetActiveScene();
-            
+
             DidimoMaterialSwitcher[] list = Object.FindObjectsOfType<DidimoMaterialSwitcher>();
-    
+
             int maxMaterialGroups = 0;
             for (int i = 0; i < list.Length; i++)
             {
@@ -37,7 +39,7 @@ namespace Didimo
             if (CurrentMaterialSetIndex != GlobalMaterialSetSelectionIndex.Value)
             {
                 CurrentMaterialSetIndex = GlobalMaterialSetSelectionIndex.Value;
-               
+
                 for (int i = 0; i < list.Length; i++)
                 {
                     list[i].SetMaterialSetIndex(CurrentMaterialSetIndex);
@@ -45,4 +47,4 @@ namespace Didimo
             }
         }
     }
-}   
+}

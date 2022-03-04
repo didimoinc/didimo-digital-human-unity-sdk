@@ -167,7 +167,7 @@ Material:
     - _AOFactor: 1
     - _AlphaClip: 0
     - _AlphaLODbias: 1.3
-    - _AlphaPower: 1
+    - _AlphaPower: 0.8
     - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BlendModeToggle: 0
@@ -217,7 +217,7 @@ Material:
     - _envSpecMul: 0
     - _flowMultiplier: 0.11
     - _hairAlbedoMultiply: 0.242
-    - _hairScaleNudge: 0.001
+    - _hairScaleNudge: 0
     - _specExp1: 193
     - _specExp2: 165
     - _specMultiply: 1.7

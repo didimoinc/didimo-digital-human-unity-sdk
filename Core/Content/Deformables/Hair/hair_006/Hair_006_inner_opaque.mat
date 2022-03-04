@@ -165,6 +165,8 @@ Material:
     - _TangentFlowMapRotation: 2
     - _TestNormals: 0
     - _TestTangents: 0
+    - _TransmissionHaloSharpness: 7.3
+    - _TransmissionStrength: 0.16
     - _UseFlowMap: 1
     - _UseUniqueAOMap: 0
     - _WorkflowMode: 1

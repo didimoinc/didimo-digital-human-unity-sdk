@@ -17,10 +17,16 @@ namespace Didimo.Speech
         protected float visemeOffset;
 
         [SerializeField]
-        protected float visemeDuration = 0.3f;
+        protected float visemeDuration = 0.25f;
+        
+        [SerializeField]
+        protected float visemeMinAmplitude = 0.8f;
 
         [SerializeField]
         protected float visemeMaxAmplitude = 1f;
+        
+        [SerializeField, Tooltip("Percentage of viseme duration that can overlap with other visemes")]
+        protected float visemeMaxOverlapRate = 0.5f;
 
         private AudioSource audioSource;
 
@@ -91,7 +97,7 @@ namespace Didimo.Speech
         /// Start the speech routine that is responsible for playing the
         /// audio and the animation in sync.
         /// </summary>
-        /// <param name="phrase"></param>
+        /// <param name="phrase">TTS <c>Phrase</c> to be spoken</param>
         /// <returns></returns>
         private IEnumerator SpeechRoutine(Phrase phrase)
         {
@@ -160,18 +166,18 @@ namespace Didimo.Speech
                 float previousVisemeTime = i > 0 ? visemes[i - 1].TimeSeconds : 0;
                 float nextVisemeTime = i < visemes.Count - 1 ? visemes[i + 1].TimeSeconds
                     : visemes[visemes.Count - 1].TimeSeconds + visemeDuration;
+                
+                
+                float possibleFadeInDuration = (viseme.TimeSeconds - previousVisemeTime) * (1 + visemeMaxOverlapRate);
+                float possibleFadeOutDuration = (nextVisemeTime - viseme.TimeSeconds) *  (1 + visemeMaxOverlapRate);
+                
+                float fadeInDuration = i > 0 ?
+                    Mathf.Min(visemeDuration / 2f, possibleFadeInDuration)
+                    : visemes[0].TimeSeconds;
 
-                float fadeInDuration = visemeDuration / 2f;
-                if (viseme.TimeSeconds - previousVisemeTime < visemeDuration / 2f)
-                {
-                    fadeInDuration = viseme.TimeSeconds - previousVisemeTime;
-                }
-
-                float fadeOutDuration = visemeDuration / 2f;
-                if (nextVisemeTime - viseme.TimeSeconds < visemeDuration / 2f)
-                {
-                    fadeOutDuration = nextVisemeTime - viseme.TimeSeconds;
-                }
+                float fadeOutDuration = i < visemes.Count - 1 ?
+                    Mathf.Min(visemeDuration / 2f, possibleFadeOutDuration)
+                    : visemeDuration / 2f;
 
                 float minStartTime = viseme.TimeSeconds - fadeInDuration;
                 float maxEndTime = viseme.TimeSeconds + fadeOutDuration;
@@ -190,14 +196,16 @@ namespace Didimo.Speech
                         weight = (maxEndTime - time) / fadeOutDuration;
                     }
 
-                    // Interpolation function ( smooth step)
+                    // Interpolation function (smooth step)
                     weight = weight * weight * (3f - 2f * weight);
-
-                    weight *= visemeMaxAmplitude;
-
+                    
+                    
                     // If we don't have the desired time to interpolate the viseme, we have to lower its weight
                     // This will cause the interpolation to be smooth, and the viseme will never reach the full weight
-                    weight *= Mathf.Min(fadeInDuration, fadeOutDuration) / (visemeDuration / 2f);
+                    float lerpPercentage = Mathf.Min(fadeInDuration, fadeOutDuration) / (visemeDuration / 2f);
+                    float lerpMultiplier = visemeMinAmplitude + (visemeMaxAmplitude - visemeMinAmplitude) * lerpPercentage;
+                    weight *= lerpMultiplier;
+                    
 
                     if (weight <= 0.0001f)
                     {
@@ -206,12 +214,6 @@ namespace Didimo.Speech
 
                     result.Add((viseme, weight));
                 }
-            }
-
-            if (result.Count > 2)
-            {
-                Debug.LogWarning(
-                    $"Found more than two visemes for time {time} ({result.Count}). This shouldn't happen.");
             }
         }
 

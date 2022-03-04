@@ -16,8 +16,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(bool instant, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    instant,
+                CbMessage(instant,
                     obj =>
                     {
                         CallOnSuccess(response);
@@ -25,7 +24,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -34,14 +34,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerResetCamera(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, bool instant, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(bool instant, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerResetCamera(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, bool instant, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(bool instant, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -60,11 +60,11 @@ namespace Didimo.Mobile.Communication
                     }
 
                     dragOrbit.ResetView(instant);
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

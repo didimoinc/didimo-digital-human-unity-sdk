@@ -11,9 +11,9 @@ namespace Didimo.Mobile.Communication
     public class GetDeformableData : BiDirectionalNativeInterface
     {
 #if UNITY_ANDROID
-        public delegate void GetDeformableDataSuccessDelegate(IntPtr obj, byte[] data);
+        public delegate void GetDeformableDataSuccessCallback(IntPtr obj, byte[] data);
 #elif UNITY_IOS
-        public delegate void GetDeformableDataSuccessDelegate(IntPtr obj, IntPtr data, int dataSize);
+        public delegate void GetDeformableDataSuccessCallback(IntPtr obj, IntPtr data, int dataSize);
 #endif
 #if UNITY_ANDROID
         private class MessageInterface : AndroidJavaProxy
@@ -22,8 +22,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, string deformableId, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    didimoKey,
+                CbMessage(didimoKey,
                     deformableId,
                     (obj, bytes) =>
                     {
@@ -32,7 +31,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -41,14 +41,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerGetDeformableData(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, string deformableId, GetDeformableDataSuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string didimoKey, string deformableId, GetDeformableDataSuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerGetDeformableData(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, string deformableId, GetDeformableDataSuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoKey, string deformableId, GetDeformableDataSuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -66,18 +66,18 @@ namespace Didimo.Mobile.Communication
 
                     byte[] data = deformable.GetUndeformedMeshData();
 #if UNITY_ANDROID
-                    successDelegate(obj, data);
+                    successCallback(objectPointer, data);
 #elif UNITY_IOS
                     GCHandle pinnedArray = GCHandle.Alloc(data, GCHandleType.Pinned);
                     IntPtr pointer = pinnedArray.AddrOfPinnedObject();
-                    successDelegate(obj, pointer, data.Length);
+                    successCallback(objectPointer, pointer, data.Length);
                     pinnedArray.Free();
 #endif
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e);
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

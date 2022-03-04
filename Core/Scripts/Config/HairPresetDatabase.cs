@@ -38,6 +38,11 @@ namespace Didimo.Core.Config
         [Range(-2.0f, 2.0f)]
         public float flowMultiply = 1.0f;
 
+        [SerializeField]
+        [Range(-0.1f, 0.1f)]
+        public float hairScaleNudge = 0.0f;
+
+
         public HairLayerSettings(HairLayerSettings other)
         {
             color = new Color(other.color.r, other.color.g, other.color.b);
@@ -47,6 +52,7 @@ namespace Didimo.Core.Config
             specShift1 = other.specShift1;
             specShift2 = other.specShift2;
             flowMultiply = other.flowMultiply;
+            hairScaleNudge = other.hairScaleNudge;
         }
 
         public HairLayerSettings Clone()
@@ -70,6 +76,7 @@ namespace Didimo.Core.Config
             specShift1 = other.specShift1;
             specShift2 = other.specShift2;
             flowMultiply = other.flowMultiply;
+            hairScaleNudge = other.hairScaleNudge;
         }
 
         public void SetNonColourValues(HairLayerSettings other)
@@ -80,6 +87,7 @@ namespace Didimo.Core.Config
             specShift1 = other.specShift1;
             specShift2 = other.specShift2;
             flowMultiply = other.flowMultiply;
+            hairScaleNudge = other.hairScaleNudge;
         }
         
 
@@ -194,7 +202,26 @@ namespace Didimo.Core.Config
             }
             return hldbe;
         }
-            
+
+
+        public HairLayerDatabaseEntry FindOrAddentryUseColourDefault(string key, HairLayer layer, HairLayerSettings template)
+        {
+            var hldbe = FindEntry(key, layer);
+            var defaultEntry = FindEntry("", layer);
+            if (hldbe != null)
+            {
+                hldbe.SetNonColourValues(template);
+                return hldbe;
+            }
+            else
+            {
+                hldbe = new HairLayerDatabaseEntry(template, key, layer);
+                hldbe.color = defaultEntry.color;
+                list.Add(hldbe);
+            }
+            return hldbe;
+        }
+
         public HairLayerDatabaseEntry FindEntry(string key, HairLayer layer)
         {
             foreach (HairLayerDatabaseEntry hldbe in list)

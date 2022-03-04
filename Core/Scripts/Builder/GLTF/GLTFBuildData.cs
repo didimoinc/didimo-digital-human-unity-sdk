@@ -99,7 +99,15 @@ namespace Didimo.Builder.GLTF
         public static void AddRequiredComponents(Importer.ImportResult gltfImportResult, GameObject root)
         {
             root.AddComponent<DidimoAnimator>();
-
+#if INSTANCING_SUPPORT
+            if (gltfImportResult.FaceMesh != null)
+            {
+                DidimoInstancingHelper dih = root.GetComponent<DidimoInstancingHelper>();
+                if (!dih)
+                    dih = root.AddComponent<DidimoInstancingHelper>();
+                dih.Build(gltfImportResult.FaceMesh);
+            }
+#endif
             if (gltfImportResult.eyeShadowController != null)
             {
                 DidimoEyeShadowController eyeShadowController = root.AddComponent<DidimoEyeShadowController>();

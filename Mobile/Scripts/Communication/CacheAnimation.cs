@@ -14,10 +14,9 @@ namespace Didimo.Mobile.Communication
         {
             public MessageInterface() : base("com.unity3d.communication.DidimoUnityInterface$CacheAnimationInterface") { }
 
-            public void sendToUnity(string id, string filePath, AndroidJavaObject response)
+            public void sendToUnity(string animationID, string filePath, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    id,
+                CbMessage(animationID,
                     filePath,
                     obj =>
                     {
@@ -26,7 +25,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -35,26 +35,26 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerCacheAnimation(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string id, string filePath, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string animationID, string filePath, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerCacheAnimation(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string id, string filePath, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string animationID, string filePath, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
                 try
                 {
-                    DidimoAnimation mocapAnimation = DidimoAnimation.FromJSON(id, filePath);
-                    AnimationCache.Add(id, mocapAnimation);
-                    successDelegate(obj);
+                    DidimoAnimation mocapAnimation = DidimoAnimation.FromJSON(animationID, filePath);
+                    AnimationCache.Add(animationID, mocapAnimation);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

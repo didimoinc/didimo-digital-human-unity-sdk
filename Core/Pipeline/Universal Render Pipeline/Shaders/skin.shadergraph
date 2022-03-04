@@ -1043,6 +1043,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "cd8d27b5f8aa41c3b2d280e6fcacd198"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "c1d50eed979d42d59a6e766544d23333"
+                },
+                "m_SlotId": 767561123
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "ce361d0fb2c94e8992ce2b9695d3b676"
                 },
                 "m_SlotId": 0
@@ -6729,6 +6743,27 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
+    "m_ObjectId": "bb23d1b66422496d87ebb05126634f30",
+    "m_Id": 767561123,
+    "m_DisplayName": "AtlasUV",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector2_17bf8affcfb943da9a49790353beb870",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "bd4f17a875f843229ff4dd73095d5ed8",
@@ -6931,6 +6966,9 @@
         },
         {
             "m_Id": "d3ee329c5fe549eb99937fffbdf79ca4"
+        },
+        {
+            "m_Id": "bb23d1b66422496d87ebb05126634f30"
         },
         {
             "m_Id": "1de13899995c489fb632eb655d820065"

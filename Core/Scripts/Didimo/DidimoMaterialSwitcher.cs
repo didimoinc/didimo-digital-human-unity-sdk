@@ -14,9 +14,9 @@ namespace Didimo
     {
         public List<Material> materials;
     }
-        
+
     public class DidimoMaterialSwitcher : MonoBehaviour
-    {      
+    {
         public IntRange MaterialSetIndex = new IntRange(0, 0);
         int CurrentMaterialSetIndex = 0;
 
@@ -25,18 +25,21 @@ namespace Didimo
             MaterialSetIndex.Value = index;
             OnValidate();
         }
+
         [SerializeField]
         public List<SMatRef> MaterialSets = new List<SMatRef>();
+
+        public List<Material> GetMaterialList(int index) { return MaterialSets[index].materials; }
         void GetMeshMaterialList(List<Material> ml)
         {
             SkinnedMeshRenderer smr = GetComponent<SkinnedMeshRenderer>();
-            if (smr != null)            
+            if (smr != null)
                 smr.GetSharedMaterials(ml);
             else
             {
                 MeshRenderer mr = GetComponent<MeshRenderer>();
                 mr.GetSharedMaterials(ml);
-            }            
+            }
         }
 
         public void SetEntryToOwnMaterials(int idx)
@@ -47,8 +50,8 @@ namespace Didimo
         }
 
         public void SetEntryMaterials(int idx, List<Material> ml)
-        {            
-            EnsureEntryCount(idx + 1, false);                        
+        {
+            EnsureEntryCount(idx + 1, false);
             var mref = new SMatRef();
             mref.materials = ml;
             MaterialSets[idx] = mref;

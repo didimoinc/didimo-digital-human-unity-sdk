@@ -16,5 +16,6 @@ namespace Didimo.Core.Config
         public Shader UnlitTexture;
         public Shader Hair;
         public Shader HairOpaque;
+        public Shader Cloth;
     }
 }

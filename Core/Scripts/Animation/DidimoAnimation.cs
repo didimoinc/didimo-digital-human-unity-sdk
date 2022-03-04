@@ -326,7 +326,7 @@ namespace Didimo
         /// Get the information for the poses and their weights as well as skeleton transforms for a specific frame.
         /// Weight is used as a multiplier for the weights of all pose weights and skeleton transformations.
         /// The information is added to the <paramref name="poses"/> list and the
-        //  <paramref name="skeletonData"/> object.
+        /// <paramref name="skeletonData"/> object.
         /// </summary>
         /// <param name="frame">Index of the animation frame.</param>
         /// <param name="weight">Weight multiplier for the pose weights and skeleton transforms.</param>

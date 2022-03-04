@@ -28,8 +28,13 @@ void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, ino
 	half lambert = dot(tN, tD);
 	//diffuse += lightColor * max(0, lambert);
 	psuedoSss += lightColor * clamp(lambert + sssAdd, 0, 1);
-	half tLambert = dot(-tN, tD);
-	transmission += lightColor * max(0, tLambert * tLambert * tLambert);
+	half tLambert = dot(-tN, tD) ;
+
+    //float LdotN = dot(lTd, tN);
+	//float rimDot = pow(max(0.0, 1.0 - dot(tEtoV, tN)), transmissionHaloSharpness);
+	
+
+	transmission += lightColor * max(0, pow(tLambert,3.0));
 }
 
 void PsuedoSSS_float(in half3x3 tS, in float3 wP, in float3 tN, in half4 ssUv, in half3 baseColor, in half3 sssColor, in half sssAdd, in half3 transColor, in half transMap, out half3 outColor)
@@ -554,22 +559,22 @@ void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, ino
 */
 
 
-//#define DOUBLE_SIDED_LIGHTING
-float doLightDot(in float3 normal, in float3 lightdirection)
+#define DOUBLE_SIDED_LIGHTING
+float doLightDot(in float3 normal, in float3 lightdirection, in float rimDot, in float transmissionFactor)
 {
 	float dp = dot(normal, lightdirection);
 
-#ifdef DOUBLE_SIDED_LIGHTING  
-	return  abs(dp);
+#ifdef DOUBLE_SIDED_LIGHTING  	
+	return  max(0, dp) + abs(min(0,dp)) * rimDot * transmissionFactor;
 #else
 	return max(0.0, dp);
 #endif        
 }
 
-float3 calculateDiffuseColour(in float3 normal, in float scatter, float3 lightdirection, in float3 lightcol)
+float3 calculateDiffuseColour(in float3 normal, in float scatter, in float transmissionFactor, float3 lightdirection, in float3 lightcol, in float rimDot)
 {
 	float inv_scatter = max(0.0, 1.0 - scatter);
-	float dp = clamp((doLightDot(normal, lightdirection) + scatter) * inv_scatter, 0.0, 1.0);
+	float dp = clamp((doLightDot(normal, lightdirection, rimDot, transmissionFactor) + scatter) * inv_scatter, 0.0, 1.0);
 
 	float3 diffcol = lightcol;
 	return diffcol * dp;
@@ -578,11 +583,12 @@ float3 calculateDiffuseColour(in float3 normal, in float scatter, float3 lightdi
 #define USE_FLOW_MAP
 #define WORLD_SPACE_FLOW_MAP
 void evalHairBrdf( in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in half3 tEtoV, 
-				   in half roughness1, in half roughness2, in half specShift, in half specShift2, in half scatter,
+				   in half roughness1, in half roughness2, in half specShift, in half specShift2, in half scatter, in half transmissionFactor, in half transmissionHaloSharpness,
 				   inout half3 diffuse, inout half3 spec1, inout half3 spec2)
 {	
 	float LdotN = dot(lTd, tN);
-	diffuse += calculateDiffuseColour(tN, scatter, lTd, lColor);
+	float rimDot = pow(max(0.0, 1.0 - dot(tEtoV, tN)), transmissionHaloSharpness);
+	diffuse += calculateDiffuseColour(tN, scatter, transmissionFactor, lTd, lColor, rimDot);
 	//max(0, LdotN)* lColor;
 	float shadow = max(0, LdotN );
 	
@@ -668,7 +674,8 @@ void MatrixRotateXYZ_half(in float3 o, out half4x4 m)
 
 void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3 tT, in float3 tV, in float2 uv, 
 				 in half3 baseColor, in half specExp1, in half specExp2, in half envRough, in half envSpecMul, 
-				 in half specShift, in half specShift2, in half flowMultiply, in half specMultiply, in half rootTipPos, in float AO, in float SSSfactor, out half3 outColor)
+				 in half specShift, in half specShift2, in half flowMultiply, in half specMultiply, in half rootTipPos, in float AO, in float SSSfactor, in float transmissionFactor, in float transmissionHaloSharpness,
+				 out half3 outColor)
 {
 	half3 wN = normalize(mul(tN, tS));
 	half3 wT = normalize(mul(tT, tS));
@@ -693,14 +700,16 @@ void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half
 	half rough1 = specExp1;
 	half rough2 = specExp2;
 
-	evalHairBrdf(tD, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, tN, tT, tEtoV, rough1, rough2, specShift , specShift2, SSSfactor, diffuse, spec1, spec2);
+	evalHairBrdf(tD, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, tN, tT, tEtoV, rough1, rough2, specShift , specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
+				 diffuse, spec1, spec2);
 
 	int pixelLightCount = GetAdditionalLightsCount();
 	for (int i = 0; i < pixelLightCount; ++i)
 	{
 		Light light = GetAdditionalLight(i, wP);
 		tD = normalize(mul(tS, light.direction));
-		evalHairBrdf(tD, light.color * light.distanceAttenuation * light.shadowAttenuation, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, SSSfactor, diffuse, spec1, spec2);
+		evalHairBrdf(tD, light.color * light.distanceAttenuation * light.shadowAttenuation, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
+							diffuse, spec1, spec2);
 	}
 
 	half3 indDiff = SampleSH(wN);

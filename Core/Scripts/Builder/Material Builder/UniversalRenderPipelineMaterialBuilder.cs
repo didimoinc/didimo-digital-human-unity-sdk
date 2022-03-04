@@ -37,6 +37,9 @@ namespace Didimo.Builder
                 case "hair":
                     shader = shaderResources.Hair;
                     break;
+                case "cloth":
+                    shader = shaderResources.Cloth;
+                    break;
             }
 
             if (shader == null)

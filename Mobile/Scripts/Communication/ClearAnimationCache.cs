@@ -16,15 +16,15 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    obj =>
+                CbMessage(obj =>
                     {
                         CallOnSuccess(response);
                     },
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -33,25 +33,25 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerClearAnimationCache(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerClearAnimationCache(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
                 try
                 {
                     AnimationCache.Clear();
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }

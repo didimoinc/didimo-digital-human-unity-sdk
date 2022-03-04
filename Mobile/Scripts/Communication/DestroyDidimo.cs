@@ -17,8 +17,7 @@ namespace Didimo.Mobile.Communication
 
             public void sendToUnity(string didimoKey, AndroidJavaObject response)
             {
-                CbMessage(IntPtr.Zero,
-                    didimoKey,
+                CbMessage(didimoKey,
                     obj =>
                     {
                         CallOnSuccess(response);
@@ -26,7 +25,8 @@ namespace Didimo.Mobile.Communication
                     (obj, message) =>
                     {
                         CallOnError(response, message);
-                    });
+                    },
+                    IntPtr.Zero);
             }
         }
 
@@ -35,14 +35,14 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerDestroyDidimo(CbMessage); }
 
-        public delegate void InputDelegate(IntPtr obj, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate);
+        public delegate void InputDelegate(string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerDestroyDidimo(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(IntPtr obj, string didimoKey, SuccessDelegate successDelegate, ErrorDelegate errorDelegate)
+        private static void CbMessage(string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
@@ -50,11 +50,11 @@ namespace Didimo.Mobile.Communication
                 {
                     DidimoCache.TryDestroy(didimoKey);
 
-                    successDelegate(obj);
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
-                    errorDelegate(obj, e.Message);
+                    errorCallback(objectPointer, e.Message);
                 }
             });
         }
