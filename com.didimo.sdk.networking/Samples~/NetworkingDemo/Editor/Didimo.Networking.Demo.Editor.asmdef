@@ -1,0 +1,22 @@
+{
+    "name": "Didimo.Networking.Demo.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Networking",
+        "Didimo.Networking.Editor",
+        "Didimo.Core",
+        "Didimo.Core.Editor",
+        "Didimo.Networking.Examples"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

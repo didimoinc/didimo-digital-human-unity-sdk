@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8275473624380547587
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 4
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AtlasedCombinedSkinMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 597455a467064374ea177ddd7a2fe282, type: 3}
+  m_ShaderKeywords: _NORMALMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_1bac527357c140fc95558b8d571bc147:
+        m_Texture: {fileID: 2800000, guid: d87366850ce77ac478f72407cec99ef7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_59bb5ed4881c479284a116401e7ae04d:
+        m_Texture: {fileID: 2800000, guid: cbcba5840949b3243881b0ff2a1636d3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 4d28dbdfc5418964f80df131502a6e4e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairCap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 5c4355ee674cf3c4f9a8b1146c9f6e2d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMicro:
+        m_Texture: {fileID: 2800000, guid: 7a4535413886a364f9c1efe25b21aa8a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Rough_Spec_Cavity_AO:
+        m_Texture: {fileID: 2800000, guid: 554768f2d24685144ba2c608c2cebcf2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughnessMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SssAoMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Trans_Bias_SSSAO:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ZBiasMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_0d767d33f40a4a9caee50708587427de: 0
+    - Boolean_1b30d75da01f4c2b85ffe29fbc2ed2d8: 1
+    - Boolean_38768728d9b244d9aa9174bfd109a304: 0
+    - Boolean_acc4b2d5ac4e48cdb8db119d2c847275: 0
+    - Vector1_15989e1079284c8cbb7d93f9540fb043: 0.8
+    - Vector1_257b073579014133bd2832f2c7de3d0c: 0.63
+    - Vector1_64497f05465b4b1aa8a676fcbc9f6c8a: 0.0001
+    - Vector1_834d776300044ed0bd51463bdf65fffc: 0.7
+    - Vector1_9027205499d64add9d0801b96c0dfafe: 0
+    - Vector1_a0734e08321d499aac36c70d660f3ef9: 0
+    - Vector1_c273109cf9264167a980b5eca43a3d7d: 0.325
+    - Vector1_c273109cf9264167a980b5eca43a3d7d_1: 0.27
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DidimoMicroNormalStrength: 0.035
+    - _DidimoMicroNormalTiling: 100
+    - _DidimoNormalStrength: 0.4
+    - _DidimoRoughnessBias: 0.33
+    - _DidimoSSSAdd: 0.1
+    - _DstBlend: 0
+    - _EnableSRGBGammaCorrection: 0
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
+    - _InstanceIndex: 0
+    - _Metallic: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.005
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _RoughnessBase: 0.5
+    - _RoughnessTextureFactor: 1
+    - _Smoothness: 0.5
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _SssAoFactor: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZBias: 0
+    - _ZWrite: 1
+    m_Colors:
+    - Vector2_784fa80020ee4e299447b23ec67ef663: {r: 0.25, g: 0, b: 0, a: 0}
+    - Vector3_f06aaa0824b7498591a29ced71c89d12: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_f06aaa0824b7498591a29ced71c89d12_1: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_f06aaa0824b7498591a29ced71c89d12_2: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorModulate: {r: 1, g: 1, b: 1, a: 0}
+    - _DidimoSSSColor: {r: 0.6698113, g: 0.29428357, b: 0.29428357, a: 0}
+    - _DidimoSpecColor: {r: 0.9110512, g: 1, b: 0.9973065, a: 0}
+    - _DidimoTransColor: {r: 0.5, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HairColor: {r: 0.24499989, g: 0.17811489, b: 0.14944991, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []

@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: body
+  m_Shader: {fileID: -6465566751694194690, guid: 2f59610cd2a58c44cb4130379506e404, type: 3}
+  m_ShaderKeywords: _NORMALMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AmbientOcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 42f3b4adcf4c34ae1be63904cf636080, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 17cf70585459e4ff69666283704b7ec1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CavityMap:
+        m_Texture: {fileID: 2800000, guid: 5cf08cd38cc28425da0cb9fa2823eddf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairCap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 72cab5728701a406c8d05596c12af217, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMicro:
+        m_Texture: {fileID: 2800000, guid: c7115602fc7844bbe95398613890a225, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughnessMap:
+        m_Texture: {fileID: 2800000, guid: 1273f83f6d9f741a7a20b86593a19554, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_bc48204b843545b49eff785041b33eaa_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 098717420a524450e8d43e4aec543cd2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 2800000, guid: b1c5638a023834b3081fa7bc0cdd80ca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SssAoMask:
+        m_Texture: {fileID: 2800000, guid: 2dcc90102ba1e4b56bfe6e7067561c6f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TransMap:
+        m_Texture: {fileID: 2800000, guid: 6fba68ddac6454926ae3e88e4c146ef7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ZBiasMap:
+        m_Texture: {fileID: 2800000, guid: 9b597523214f14791a3b7adad3d744a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Boolean_0d767d33f40a4a9caee50708587427de: 0
+    - Boolean_1b30d75da01f4c2b85ffe29fbc2ed2d8: 1
+    - Boolean_38768728d9b244d9aa9174bfd109a304: 0
+    - Boolean_acc4b2d5ac4e48cdb8db119d2c847275: 0
+    - Vector1_15989e1079284c8cbb7d93f9540fb043: 0.8
+    - Vector1_257b073579014133bd2832f2c7de3d0c: 0.63
+    - Vector1_64497f05465b4b1aa8a676fcbc9f6c8a: 0.0001
+    - Vector1_834d776300044ed0bd51463bdf65fffc: 0.7
+    - Vector1_a0734e08321d499aac36c70d660f3ef9: 0
+    - Vector1_c273109cf9264167a980b5eca43a3d7d: 0.325
+    - Vector1_c273109cf9264167a980b5eca43a3d7d_1: 0.27
+    - _DidimoMicroNormalStrength: 0.035
+    - _DidimoMicroNormalTiling: 100
+    - _DidimoNormalStrength: 0.4
+    - _DidimoRoughnessBias: 0.33
+    - _DidimoSSSAdd: 0.1
+    - _EnableSRGBGammaCorrection: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _SssAoFactor: 1
+    - _ZBias: 0
+    m_Colors:
+    - Vector3_f06aaa0824b7498591a29ced71c89d12: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_f06aaa0824b7498591a29ced71c89d12_1: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_f06aaa0824b7498591a29ced71c89d12_2: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorModulate: {r: 1, g: 1, b: 1, a: 0}
+    - _DidimoSSSColor: {r: 0.6698113, g: 0.29428363, b: 0.29428363, a: 0}
+    - _DidimoSpecColor: {r: 0.9110512, g: 1, b: 0.9973065, a: 0}
+    - _DidimoTransColor: {r: 0.5, g: 0, b: 0, a: 0}
+    - _HairColor: {r: 0.24499995, g: 0.17811495, b: 0.14944997, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &6516199819286567737
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
