@@ -1,0 +1,29 @@
+{
+	"name": "com.didimo.sdk.core",
+	"version": "3.5.0",
+	"displayName": "Didimo SDK",
+	"description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\n\nUtilising this code library and tools, you can easily integrate digital humans into your existing software and enable your users to easily generate and load digital doubles of themselves directly into your experience, all at runtime.",
+	"unity": "2020.3",
+	"documentationUrl": "https://developer.didimo.co/docs/unity-sdk",
+	"changelogUrl": "https://developer.didimo.co/changelog",
+	"licensesUrl": "https://privacy.didimo.co/didimo-source-code-license/",
+	"dependencies": {
+		"com.unity.nuget.newtonsoft-json": "2.0.2",
+		"com.unity.render-pipelines.universal": "10.5.0",
+		"com.unity.textmeshpro": "3.0.6",
+		"com.unity.editorcoroutines": "1.0.0"
+
+	},
+	"samples": [{
+		"displayName": "Core Samples",
+		"path": "Samples~"
+	}],
+	"keywords": [
+		"avatar", "sdk", "face", "didimo", "human", "character"
+	],
+	"author": {
+		"name": "Didimo",
+		"email": "support@didimo.co",
+		"url": "https://www.didimo.co/"
+	}
+}

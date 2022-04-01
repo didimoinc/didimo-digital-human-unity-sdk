@@ -1,0 +1,23 @@
+{
+    "name": "Didimo.Oculus.Showcase",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core",
+        "Unity.TextMeshPro",
+        "Oculus.VR",
+        "Oculus.LipSync",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components",
+        "Unity.Netcode.Adapter.UTP",
+        "Unity.Networking.Transport"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
