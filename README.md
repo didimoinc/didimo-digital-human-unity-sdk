@@ -21,49 +21,32 @@ This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 on
 
 ## Setup Process
 
-1. This project MUST be placed at `Assets/Didimo`, in your Unity project. The didimos will not 
-render if you don't do this.
+1. Install via the package manager
+   1. Open Unity's Package Manager
+   2. Under the `+` button, select `Add package from git URL...`
+   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.0.0` and press `Add`
+   4. Optionally, add any of the following modules, by repeating the previous 2 steps, with the URLs:
+
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.0.0` For didimo API integration
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.0.0` For a communication layer between android/iOS and Unity
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.0.0` For integration with Oculus
 
 
-2. The Newtonsoft Json package is required. We recommend adding it this way:
-     
-   2.1 Open the Package Manager
-   
-   2.2 Click the `+` button, select `Add package from git URL...` 
-   
-   2.3 Enter `com.unity.nuget.newtonsoft-json` and press add.
+2. Setup your project. You can do this by going to Didimo → Didimo Manager, and following the instructions, or by following these steps 
+   1. Go to Project Settings → Graphics, and select `UniversalRP-HighQuality` as the render pipeline asset. 
+   2. Go to Project Settings → Quality, and select `UniversalRP-HighQuality` as the render pipeline asset, for your desired
+      quality level.
+   3. Go to Project Settings → Player → Other Settings → Rendering. Set the colour space to linear.
 
 
-3. Install the package [Universal RP](https://link.didimo.co/3lw3NF5) through Unity's Package Manager and follow
-instructions in Configuration section
-
-4. Restart Unity
-
-5. Go to Project Settings → Graphics, and select `UniversalRP-HighQuality` as the render pipeline asset.
-
-6. Go to Project Settings → Quality, and select `UniversalRP-HighQuality` as the render pipeline asset, for your desired
-   quality level.
-
-7. Go to Project Settings → Player → Other Settings → Rendering. Set the colour space to linear.
-
-8. Create an empty `csc.rsp` file in the `Assets` folder, with the following contents: to add the compression assemblies required
-   when unzipping a didimo package:
-
-```
--r:System.IO.Compression.dll
--r:System.IO.Compression.FileSystem.dll
-```
-
-9. Open the `MeetADidimo` scene.
-
-10. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
-   Import TMP Essentials, which is required for the examples.
-
-11. You should now be able to press play and see the included talking didimos.
-   **If you do not**, then please **regenerate didimos**
-   See [Known Import Issues](#Known-Import-Issues) and [Support](#Support) for further assistance.
-
-12. Its now possible to generate a new didimo via the didimo API directly from Unity.
+3. Explore
+   1. Open the `MeetADidimo` scene, by going to Didimo → Didimo Manager, and clicking the "open the Meet a didimo scene" link.
+   2. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
+   Import TMP Essentials, which is required for the examples
+   3. You should now be able to press play and see the included talking didimos.
+      **If you do not**, then please **regenerate didimos**
+      See [Known Import Issues](#Known-Import-Issues) and [Support](#Support) for further assistance. 
+   4. Its now possible to generate a new didimo via the didimo API directly from Unity.
    Simply [Create an account](https://developer.didimo.co/docs/creating-your-account)
    Then see [Generating a didimo](https://developer.didimo.co/docs/creating-a-didimo).
 
@@ -72,17 +55,16 @@ instructions in Configuration section
 
 # SDK Contents
 
-This project contains a single folder, the `Didimo` folder. Within it, there are the following modules:
+This project is broken down into the following modules:
 
 * **Core** - Everything core to the SDK, including loading didimos where it handles animations, materials, speech, etc.
 * **Mobile** - Add the ability of bi-directional communication between Unity and native Android or iOS applications.
 * **Networking** - Allows for immediate interaction with the Didimo API.
-* **Oculus** - Example integration with Oculus quest.
-* **submodules** - Contains the GLTFUtility repository, that allows for loading gltf files.
+* **Oculus** - Example integration with Oculus quest, and sample meeting room (multiplayer).
 
-Every module may contain an `Examples` folder, where example assets and scenes of said module can be found. To reduce
-clutter, any `Examples` folder can be removed. Any module other than `Core` and `submodules` can also be deleted.
-
+Every module may contain a `Samples` folder, where example assets and scenes of said module can be found. You can import 
+samples into your project through the Package Manager interface, after adding the module to your project. Go to Window →
+Package Manager, select the Didimo SDK module you want to see samples from, and click one of the "Import" buttons.
 
 
 ---
@@ -153,7 +135,6 @@ This package is marked as preview and therefore the installation process may be 
   its dependencies, then the didimo will fail to import.
 * If you open the `MeetADidimo` scene and don't see any didimos, go to Didimo → Didimo Manager, and click the `Reimport didimos`
   button.
-* The SDK folders `Core`, `Networking`, etc., must be in `/Assets/Didimo/`, otherwise the didimos will fail to render.
 
 ---
 

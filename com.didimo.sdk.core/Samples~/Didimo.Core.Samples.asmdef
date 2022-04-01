@@ -1,0 +1,23 @@
+{
+    "name": "Didimo.Core.Samples",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.live-capture",
+            "expression": "1.0.0",
+            "define": "USING_LIVE_CAPTURE"
+        }
+    ],
+    "noEngineReferences": false
+}

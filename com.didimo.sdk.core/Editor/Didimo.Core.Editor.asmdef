@@ -1,0 +1,34 @@
+{
+    "name": "Didimo.Core.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core",
+        "gltf",
+        "gltf.Editor",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.LiveCapture.ARKitFaceCapture",
+        "Unity.EditorCoroutines.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "USING_UNITY_URP"
+        },
+        {
+            "name": "com.unity.live-capture",
+            "expression": "1.0.0",
+            "define": "USING_LIVE_CAPTURE"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,25 @@
+{
+    "name": "Didimo.Core.ARKitLiveCapture",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core",
+        "Unity.LiveCapture",
+        "Unity.LiveCapture.ARKitFaceCapture",
+        "Unity.LiveCapture.CompanionApp"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.live-capture",
+            "expression": "1.0.0",
+            "define": "USING_LIVE_CAPTURE"
+        }
+    ],
+    "noEngineReferences": false
+}
