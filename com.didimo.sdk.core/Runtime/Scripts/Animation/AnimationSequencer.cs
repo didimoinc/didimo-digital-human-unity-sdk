@@ -33,7 +33,7 @@ namespace Didimo.Core.Animation
         private float animationDuration = 0;
         private int   currentAnimation  = -1;
 
-        void Start()
+        private void Start()
         {
             if (DidimoComponents == null)
             {
@@ -55,7 +55,7 @@ namespace Didimo.Core.Animation
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (currentTime >= animationDuration)
             {

@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine;
 using Didimo.Networking;
 using Didimo.Core.Utility;
+using NUnit.Framework;
+using UnityEditor.PackageManager.UI;
 
 namespace Didimo.Core.Editor
 {
@@ -72,7 +74,17 @@ namespace Didimo.Core.Editor
             GUILayout.EndScrollView();
         }
 
-        private static async void OpenNetworkDemoScene() { await PackageUtility.ImportSampleAndLoadScene("com.didimo.sdk.networking", "","Scenes/NetworkDemo.unity"); }
+        private static async void OpenNetworkDemoScene()
+        {
+            Sample? sample = await PackageUtility.GetSample("com.didimo.sdk.networking", "");
+            if (sample != null)
+            {
+                if (PackageUtility.ImportSample(sample!.Value))
+                {
+                    PackageUtility.LoadSceneFromSample(sample!.Value, "Scenes/NetworkDemo.unity");
+                }
+            }
+        }
 
         private async void GetAccountNewDidiimoParameters()
         {

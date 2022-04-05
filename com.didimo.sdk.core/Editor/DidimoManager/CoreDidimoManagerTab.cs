@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Didimo.Core.Editor
 {
@@ -67,16 +69,26 @@ namespace Didimo.Core.Editor
 
         public static async void OpenMeetADidimo()
         {
-            await PackageUtility.ImportSampleAndLoadScene("com.didimo.sdk.core",
-                "Core Samples",
-                "MeetADidimo/MeetADidimo.unity",
-                success =>
+            Sample? sample = await PackageUtility.GetSample("com.didimo.sdk.core", "Core Samples");
+            bool isImported = sample != null && sample!.Value.isImported;
+            if (!isImported && sample != null)
+            {
+                if (!PackageUtility.ImportSample(sample!.Value))
                 {
-                    if (success)
-                    {
-                        EditorApplication.isPlaying = true;
-                    }
-                });
+                    return;
+                }
+            }
+
+            if (sample != null && PackageUtility.LoadSceneFromSample(sample!.Value, "MeetADidimo/MeetADidimo.unity"))
+            {
+#if UNITY_EDITOR_OSX
+EditorUtility.DisplayDialog("Re-open Scene",
+                    "There is a Unity bug where the first time we open this scene, it doesn't de-serialize properly. If you see errors in the console, please exit play mode, re-open the (MeetADidimo) scene manually , and hit play to see didimos in action.",
+                    "OK");
+#endif
+
+                EditorApplication.EnterPlaymode();
+            }
         }
 
         public override string GetTabName() => "Getting Started";
