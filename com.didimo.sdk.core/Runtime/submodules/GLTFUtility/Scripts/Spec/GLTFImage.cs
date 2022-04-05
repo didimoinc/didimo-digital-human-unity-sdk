@@ -30,6 +30,10 @@ namespace Didimo.GLTFUtility
 		public int?   bufferView;
 		public string name;
 
+		protected static string ASSET_ROOT_PATH         = "Assets/";
+		protected static string PACKAGES_ROOT_PATH      = "Packages/";
+		protected static string PACKAGE_CACHE_ROOT_PATH = "Library/PackageCache/";
+
 		public class ImportResult
 		{
 			public byte[] bytes;
@@ -49,14 +53,25 @@ namespace Didimo.GLTFUtility
 					// Must be relative path with forward slashes
 					string pathFormatted = path.Replace("\\", "/");
 
-					List<string> rootPaths = new List<string> {"Assets/", "Packages/", "Library/PackageCache/"};
+					List<string> rootPaths = new List<string> {ASSET_ROOT_PATH, PACKAGES_ROOT_PATH, PACKAGE_CACHE_ROOT_PATH};
 
-					foreach (var rootPath in rootPaths)
+					foreach (string rootPath in rootPaths)
 					{
 						string rootPathAbsl = Path.GetFullPath(rootPath).Replace("\\", "/");
 						if (pathFormatted.StartsWith(rootPathAbsl))
 						{
-							pathFormatted = rootPath + path.Substring(rootPathAbsl.Length);
+							pathFormatted = pathFormatted.Substring(rootPathAbsl.Length);
+							// Package Caches have name@hash, so we need to strip that out
+							if (rootPath == PACKAGE_CACHE_ROOT_PATH)
+							{
+								string cachedPackageFolderName = pathFormatted.Split('/')[0];
+								string packageFolderName = cachedPackageFolderName.Substring(0, cachedPackageFolderName.LastIndexOf('@'));
+								pathFormatted = $"{PACKAGES_ROOT_PATH}/{packageFolderName}/" + pathFormatted.Substring(cachedPackageFolderName.Length);
+							}
+							else
+							{
+								pathFormatted = rootPath + pathFormatted;
+							}
 
 							// Load textures from asset database if we can
 							Texture2D assetTexture = AssetDatabase.LoadAssetAtPath(pathFormatted, typeof(Texture2D)) as Texture2D;

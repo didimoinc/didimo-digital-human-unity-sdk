@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Didimo.Core.Editor
 {
-    [ScriptedImporter(5, "gltf", importQueueOffset: 100)]
+    [ScriptedImporter(6, "gltf", importQueueOffset: 100)]
     public class GLTFImporter : ScriptedImporter
     {
         public ImportSettings importSettings;
