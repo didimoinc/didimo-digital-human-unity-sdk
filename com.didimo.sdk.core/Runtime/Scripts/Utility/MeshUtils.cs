@@ -61,7 +61,7 @@ namespace  Didimo.Core.Utility
             result.uv5 = B.uv5;
             result.uv6 = B.uv6;
             result.uv7 = B.uv7;
-            result.uv8 = B.uv8;           
+            result.uv8 = B.uv8;
             result.tangents = B.tangents;
             result.triangles = A.triangles;
             return result;

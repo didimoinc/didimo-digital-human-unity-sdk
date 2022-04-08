@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FPSSelector : MonoBehaviour
 {
-#if USING_OCULUS_INTEGRATION_PACKAGE
     [Header("Tile Rendering")]
     [SerializeField] private OVRManager.FixedFoveatedRenderingLevel fixedFoveatedRenderingLevel = OVRManager.FixedFoveatedRenderingLevel.Off;
     [SerializeField] private bool useDynamicFixedFoveatedRendering = false;
@@ -65,6 +64,4 @@ public class FPSSelector : MonoBehaviour
 
         StartCoroutine(CheckDisplayFrequency());
     }
-
-#endif
 }

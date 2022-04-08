@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class OculusLipSyncVR : DidimoBehaviour
 {
-#if USING_OCULUS_INTEGRATION_PACKAGE
     [SerializeField]
     private OVRLipSyncContextBase lipSyncContext;
 
@@ -52,5 +51,4 @@ public class OculusLipSyncVR : DidimoBehaviour
         if (lipSyncMicInput != null) lipSyncMicInput.enabled = false;
         if (lipSyncAudioSource != null) lipSyncAudioSource.enabled = false;
     }
-#endif
 }

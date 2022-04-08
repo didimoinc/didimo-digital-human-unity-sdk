@@ -9,7 +9,6 @@ namespace Didimo.OculusApplication
 {
     public class OculusApplicationManager : MonoBehaviour
     {
-#if USING_OCULUS_INTEGRATION_PACKAGE
         private const int FPS_FRAMES_AVERAGE = 10;
         private const float TARGET_DISPLAY_FREQUENCY = 90.0f;
         private const float FPS_UPDATE_TIME_FREQUENCY = 0.5f; // we'll update the text every X seconds
@@ -70,6 +69,5 @@ namespace Didimo.OculusApplication
             float averageFPS = fpsValues.Average();
             text.text = $"FPS Performance\nAve:\t{averageFPS:F1}\nMax:\t{maxFPS:F0}\nMin:\t{minFPS:F0}";
         }
-#endif
     }
 }
