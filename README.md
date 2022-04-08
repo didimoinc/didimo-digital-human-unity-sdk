@@ -24,12 +24,12 @@ This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 on
 1. Install via the package manager
    1. Open Unity's Package Manager
    2. Under the `+` button, select `Add package from git URL...`
-   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.0.1` and press `Add`
+   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.1.0` and press `Add`
    4. Optionally, add any of the following modules, by repeating the previous 2 steps, with the URLs:
 
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.0.1` For didimo API integration
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.0.1` For a communication layer between android/iOS and Unity
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.0.1` For integration with Oculus
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.1.0` For didimo API integration
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.1.0` For a communication layer between android/iOS and Unity
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.1.0` For integration with Oculus
 
 
 2. Setup your project. You can do this by going to Didimo → Didimo Manager, and following the instructions, or by following these steps 
