@@ -2205,9 +2205,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 0}
-  lipSyncContext: {fileID: 1251080130}
-  lipSyncMicInput: {fileID: 1251080128}
-  lipSyncAudioSource: {fileID: 1251080129}
 --- !u!114 &442726840
 MonoBehaviour:
   m_ObjectHideFlags: 0
