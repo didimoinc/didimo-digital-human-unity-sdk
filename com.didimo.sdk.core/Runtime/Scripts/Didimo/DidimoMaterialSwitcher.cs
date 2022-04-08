@@ -12,7 +12,7 @@ namespace Didimo
     [System.Serializable]
     public struct SMatRef
     {
-        public List<Material> materials;
+        public Material[] materials;
     }
 
     public class DidimoMaterialSwitcher : MonoBehaviour
@@ -20,6 +20,9 @@ namespace Didimo
         public IntRange MaterialSetIndex = new IntRange(0, 0);
         int CurrentMaterialSetIndex = 0;
 
+        public const int BASE_MATERIAL_SET = 0;
+        public const int COMBINED_MATERIAL_SET = 1;
+        public const int COMBINED_ATLASED_MATERIAL_SET = 2;
         public void SetMaterialSetIndex(int index)
         {
             MaterialSetIndex.Value = index;
@@ -29,27 +32,29 @@ namespace Didimo
         [SerializeField]
         public List<SMatRef> MaterialSets = new List<SMatRef>();
 
-        public List<Material> GetMaterialList(int index) { return MaterialSets[index].materials; }
-        void GetMeshMaterialList(List<Material> ml)
+        public Material[] GetMaterialList(int index) { return MaterialSets[index].materials; }
+        Material[] GetMeshMaterialList()
         {
+            List<Material> ml = new List<Material>();
             SkinnedMeshRenderer smr = GetComponent<SkinnedMeshRenderer>();
             if (smr != null)
                 smr.GetSharedMaterials(ml);
             else
             {
                 MeshRenderer mr = GetComponent<MeshRenderer>();
-                mr.GetSharedMaterials(ml);
+                if (mr != null)
+                    mr.GetSharedMaterials(ml);
             }
+            return ml.ToArray();
         }
 
         public void SetEntryToOwnMaterials(int idx)
         {
-            List<Material> ml = new List<Material>();
-            GetMeshMaterialList(ml);
+            var ml = GetMeshMaterialList();
             SetEntryMaterials(idx, ml);
         }
 
-        public void SetEntryMaterials(int idx, List<Material> ml)
+        public void SetEntryMaterials(int idx, Material[] ml)
         {
             EnsureEntryCount(idx + 1, false);
             var mref = new SMatRef();
@@ -57,10 +62,22 @@ namespace Didimo
             MaterialSets[idx] = mref;
         }
 
+        public bool HasValidEntry(int MaterialSwitcherIdx)
+        {
+            if (MaterialSwitcherIdx < MaterialSets.Count)
+            {
+                var matset = MaterialSets[MaterialSwitcherIdx];
+                for (var i = 0; i < matset.materials.Length; ++i)
+                {
+                    if (matset.materials[i] != null)
+                        return true;
+                }
+            }
+            return false;
+        }
         public void EnsureEntryCount(int count, bool setToOwnMaterials)
         {
-            List<Material> ml = new List<Material>();
-            GetMeshMaterialList(ml);
+            var ml = GetMeshMaterialList();
             while (MaterialSets.Count < count)
             {
                 SMatRef matRef = new SMatRef();
@@ -69,11 +86,7 @@ namespace Didimo
                 else
                 {
                     if (matRef.materials == null)
-                        matRef.materials = new List<Material>();
-                    for (var i = 0; i < ml.Count; ++i)
-                    {
-                        matRef.materials.Add(null);
-                    }
+                        matRef.materials = new Material[ml.Length];
                 }
                 MaterialSets.Add(matRef);
             }
@@ -92,20 +105,24 @@ namespace Didimo
             {
                 CurrentMaterialSetIndex = MaterialSetIndex.Value;
                 var skinnedMeshes = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-                var materialSet = MaterialSets[CurrentMaterialSetIndex].materials;
-                if (materialSet.Count > 0)
+                var meshes = gameObject.GetComponentsInChildren<MeshRenderer>();
+                if (CurrentMaterialSetIndex < MaterialSets.Count)
                 {
-                    foreach (var m in skinnedMeshes)
+                    var materialSet = MaterialSets[CurrentMaterialSetIndex].materials;
+                    if (materialSet.Length > 0)
                     {
-                        m.sharedMaterials = materialSet.ToArray();
-                    }
-                    var meshes = gameObject.GetComponentsInChildren<MeshRenderer>();
-                    foreach (var m in meshes)
-                    {
-                        m.sharedMaterials = materialSet.ToArray();
+                        foreach (var m in skinnedMeshes)
+                        {
+                            m.sharedMaterials = materialSet.ToArray();
+                        }
+                        foreach (var m in meshes)
+                        {
+                            m.sharedMaterials = materialSet.ToArray();
+                        }
                     }
                 }
+                else
+                    Debug.Log("Current material set index out of range");
             }
         }
     }

@@ -1174,8 +1174,6 @@ GameObject:
   - component: {fileID: 3599113868834714522}
   - component: {fileID: 7928392923945554572}
   - component: {fileID: 7168306085992993123}
-  - component: {fileID: 6755635265359452624}
-  - component: {fileID: 1159472472057115484}
   m_Layer: 0
   m_Name: avatar_007
   m_TagString: Untagged
@@ -1604,37 +1602,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 5533232573617417074}
---- !u!114 &6755635265359452624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914828378953895755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53eab4f42d12402f85096dfb9f808ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  didimo: {fileID: 0}
---- !u!114 &1159472472057115484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914828378953895755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5bd627747fdcc7458eca10cb960e15d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  didimo: {fileID: 0}
-  preset:
-    value: 2
-  colourPreset:
-    value: 0
-  deformMode: 1
 --- !u!1 &919075945782454826
 GameObject:
   m_ObjectHideFlags: 0

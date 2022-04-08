@@ -110,6 +110,9 @@
         },
         {
             "m_Id": "38768728d9b244d9aa9174bfd109a304"
+        },
+        {
+            "m_Id": "686bcb36dd944c0db95acab6e691934e"
         }
     ],
     "m_Keywords": [],
@@ -329,6 +332,9 @@
         },
         {
             "m_Id": "923b1bbebfd64d8c82963521c27209bc"
+        },
+        {
+            "m_Id": "305f57b096a74bafbc778d9bbca7479d"
         }
     ],
     "m_GroupDatas": [
@@ -553,6 +559,20 @@
                     "m_Id": "c1d50eed979d42d59a6e766544d23333"
                 },
                 "m_SlotId": -1418674963
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "305f57b096a74bafbc778d9bbca7479d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "bf580564c39b4219b628f4186697fdbd"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -1350,6 +1370,21 @@
         "x": -1281.0001220703125,
         "y": -1279.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "009bed88e9904d41a84e6615c5214dda",
+    "m_Id": 0,
+    "m_DisplayName": "AlphaClipThreshold",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -2804,7 +2839,7 @@
     },
     "m_Name": "AO Pow",
     "m_DefaultReferenceName": "",
-    "m_OverrideReferenceName": "_AO_Pow",
+    "m_OverrideReferenceName": "_AOpow",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -2815,6 +2850,41 @@
     "m_RangeValues": {
         "x": 0.0,
         "y": 10.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "305f57b096a74bafbc778d9bbca7479d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1001.0,
+            "y": 587.0,
+            "width": 181.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "009bed88e9904d41a84e6615c5214dda"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "686bcb36dd944c0db95acab6e691934e"
     }
 }
 
@@ -2850,7 +2920,7 @@
     "m_Guid": {
         "m_GuidSerialized": "b97893a9-e9c3-4676-9869-3f94a0f61c59"
     },
-    "m_Name": "Global Micro Normal Strength",
+    "m_Name": "Micro Normal Strength",
     "m_DefaultReferenceName": "Vector1_310ea1b75c164d6a9aee8c47a1ea65d3",
     "m_OverrideReferenceName": "_DidimoMicroNormalStrength",
     "m_GeneratePropertyBlock": true,
@@ -4293,9 +4363,9 @@
     "m_Guid": {
         "m_GuidSerialized": "6ff1d0be-4a7e-43cd-98f9-48e50c4aa977"
     },
-    "m_Name": "Global Roughness Bias",
+    "m_Name": "Roughness Bias",
     "m_DefaultReferenceName": "Vector1_FE26B03F",
-    "m_OverrideReferenceName": "_DidimoRoughnessBias",
+    "m_OverrideReferenceName": "_RoughnessBias",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4354,7 +4424,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "60e2c7f6414d4d44836600fc65a0a3c3",
     "m_Id": 0,
-    "m_DisplayName": "specularCavityContribution",
+    "m_DisplayName": "SpecularCavityContribution",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -4510,6 +4580,29 @@
     "m_Labels": [
         "X"
     ]
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "686bcb36dd944c0db95acab6e691934e",
+    "m_Guid": {
+        "m_GuidSerialized": "ec924910-99b4-4a21-bff7-dc6c7ef6f9f9"
+    },
+    "m_Name": "AlphaClipThreshold",
+    "m_DefaultReferenceName": "Vector1_686bcb36dd944c0db95acab6e691934e",
+    "m_OverrideReferenceName": "_AlphaClipThreshold",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.5,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
@@ -5094,9 +5187,9 @@
     "m_Guid": {
         "m_GuidSerialized": "c261b225-94a8-48b5-bad0-e7bb38bda265"
     },
-    "m_Name": "specularCavityContribution",
+    "m_Name": "SpecularCavityContribution",
     "m_DefaultReferenceName": "Vector1_834d776300044ed0bd51463bdf65fffc",
-    "m_OverrideReferenceName": "_specularCavityContribution",
+    "m_OverrideReferenceName": "_SpecularCavityContribution",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -5115,7 +5208,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "8496eea7fdf142a58978e34cbfc7bea1",
     "m_Id": 0,
-    "m_DisplayName": "Global Normal Strength",
+    "m_DisplayName": "Normal Strength",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -5209,7 +5302,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "8b619af751e64ec7b9db38cf506bf528",
     "m_Id": 0,
-    "m_DisplayName": "Global SSS Add",
+    "m_DisplayName": "SSS Add",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -5610,9 +5703,9 @@
     "m_Guid": {
         "m_GuidSerialized": "88a277d6-a0aa-485f-bc5c-ceb43c2dd214"
     },
-    "m_Name": "Global Normal Strength",
+    "m_Name": "Normal Strength",
     "m_DefaultReferenceName": "Vector1_9808372b19bd4952be12a795a1f78a8c",
-    "m_OverrideReferenceName": "_DidimoNormalStrength",
+    "m_OverrideReferenceName": "_NormalStrength",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -5801,7 +5894,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "9d9b2e0ce5cc40c8a6517833f1614250",
     "m_Id": 0,
-    "m_DisplayName": "Global Micro Normal Strength",
+    "m_DisplayName": "Micro Normal Strength",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -6023,7 +6116,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "a44f7fd988b0af8b8398f789fa1e17e0",
     "m_Id": 0,
-    "m_DisplayName": "Global Roughness Bias",
+    "m_DisplayName": "Roughness Bias",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -6799,8 +6892,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 838.0000610351563,
-            "y": -268.9999694824219,
+            "x": 868.0000610351563,
+            "y": -286.0,
             "width": 184.0,
             "height": 253.0
         }
@@ -7208,7 +7301,7 @@
     },
     "m_Name": "AO Add",
     "m_DefaultReferenceName": "Vector1_c273109cf9264167a980b5eca43a3d7d",
-    "m_OverrideReferenceName": "_AO_Add",
+    "m_OverrideReferenceName": "_AOadd",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -8875,9 +8968,9 @@
     "m_Guid": {
         "m_GuidSerialized": "5e811a87-be04-4b5a-bd9f-c4b36132814c"
     },
-    "m_Name": "Global SSS Add",
+    "m_Name": "SSS Add",
     "m_DefaultReferenceName": "Vector1_fe2bedb67659401b8ff65cf3c453b1e5",
-    "m_OverrideReferenceName": "_DidimoSSSAdd",
+    "m_OverrideReferenceName": "_SSSAdd",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

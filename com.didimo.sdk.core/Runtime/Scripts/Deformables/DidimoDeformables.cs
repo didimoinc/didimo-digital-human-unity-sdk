@@ -65,7 +65,6 @@ namespace Didimo.Core.Deformables
                 return fullPath.Substring(idx);
             return fullPath;
         }
-
         public bool TryFind<TDeformable>(out TDeformable instance) where TDeformable : Deformable
         {
             if (!deformables.Any(d => d.Value is TDeformable))
@@ -103,6 +102,7 @@ namespace Didimo.Core.Deformables
             deformable.DidimoComponents = DidimoComponents;
             instance = Instantiate(deformable);
             deformables.Add(deformable.ID, instance);
+        
 
             Transform idealBone = null;
             foreach (string idealBoneName in instance.IdealBoneNames)
@@ -141,6 +141,7 @@ namespace Didimo.Core.Deformables
 
                     DirectoryInfo bodyMeshDirectory = new DirectoryInfo(Path.GetDirectoryName(bodyMeshLocation));
                     string deformableMeshName = Path.GetFileNameWithoutExtension(deformableMeshLocation);
+
                     string bodySpecificHairDirectory =
                         Path.Combine(FeedDirectoryToUnity(bodyMeshDirectory.Parent.FullName), "Hairs", bodyMeshDirectory.Name.Replace("gltf", "hairs"));
                     string[] deformableAssets =
@@ -172,6 +173,7 @@ namespace Didimo.Core.Deformables
 
             instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform, true);
             instance.name = deformable.ID;
+            
 
             return true;
         }
@@ -195,15 +197,29 @@ namespace Didimo.Core.Deformables
         {
             static void OnRemove(KeyValuePair<string, Deformable> kvp)
             {
-                if (Application.isPlaying)
+                if (kvp.Value != null)
                 {
-                    if (kvp.Value != null)
-                        Destroy(kvp.Value.gameObject);
-                }
-                else
-                {
-                    if (kvp.Value != null)
-                        DestroyImmediate(kvp.Value.gameObject);
+                    #if UNITY_EDITOR
+                    if (PrefabUtility.GetPrefabInstanceHandle(kvp.Value.gameObject) == null)
+                    #endif
+                    {
+
+                        if (Application.isPlaying)
+                        {
+                            Destroy(kvp.Value.gameObject);
+                        }
+                        else
+                        {
+                            DestroyImmediate(kvp.Value.gameObject);
+                        }
+                    }
+                    #if UNITY_EDITOR
+                    else
+                    {
+                        kvp.Value.gameObject.SetActive(false);
+                        Debug.LogWarning($"Attempting to destroy deformable on prefab ('{kvp.Value.gameObject}'), this is not allowed so it's only been temporarily hidden.");
+                    }
+                    #endif
                 }
             }
 
@@ -217,6 +233,12 @@ namespace Didimo.Core.Deformables
             return deformables.Where(d => d.Value is TDeformable).Select(d => d.Value).Cast<TDeformable>();
         }
 
+        struct DeformableMeshPair
+        {
+            Deformable  deformable;
+            Mesh        mesh;           
+        }
+      
         public static bool TryFindDeformable<TDeformable>(Deformable[] deformableArray, string id, out TDeformable deformable) where TDeformable : Deformable
         {
             deformable = deformableArray.Where(d => d is TDeformable).Cast<TDeformable>().FirstOrDefault(h => h.ID == id);

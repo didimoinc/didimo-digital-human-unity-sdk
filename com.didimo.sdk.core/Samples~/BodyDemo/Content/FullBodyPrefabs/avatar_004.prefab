@@ -1600,7 +1600,7 @@ GameObject:
   - component: {fileID: 7853000143072391909}
   - component: {fileID: 7027525517816836362}
   - component: {fileID: 6862622876215753145}
-  - component: {fileID: 1362717407207107241}
+  - component: {fileID: 8270327735043294510}
   m_Layer: 0
   m_Name: avatar_004
   m_TagString: Untagged
@@ -2042,7 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 0}
---- !u!114 &1362717407207107241
+--- !u!114 &8270327735043294510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2051,12 +2051,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1030804031966768930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5bd627747fdcc7458eca10cb960e15d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ba24dc5de4f38349be651fe709eebb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 0}
   preset:
-    value: 2
+    value: 0
   colourPreset:
     value: 0
   deformMode: 1

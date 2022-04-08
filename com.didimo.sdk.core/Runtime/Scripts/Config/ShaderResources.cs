@@ -104,9 +104,24 @@ namespace Didimo.Core.Config
             return EBodyPartID.UNKNOWN;
         }
 
-        public static string[] bodyPartMaterialNames = { "eye", "skin", "bodySkin", "mouth", "hair", "eyelash", "clothing", "clothing" };
+        public static string[] BodyPartMaterialNames = { "eye", "skin", "bodySkin", "mouth", "hair", "eyelash", "clothing", "clothing" };
 
-       
+        public static Dictionary<string, string[]> MaterialPropertyAliasMap =
+          new Dictionary<string, string[]>()
+          {
+               {"_MainAlbedo" ,new []{"*albedo"}},
+               {"BaseColorMap",new []{"*albedo"}},
+               {"MaskMap",new []{""}},
+               { "NormalMap" ,new []{"", "*normal"}},
+               { "_MainNormal" ,new []{"", "*normal"}},
+               { "_MetalRough",new []{"", ""}},
+               {"_Metal_SS_AO",new []{"", "*SSAO" } },
+               { "NormalMapOS",new []{""}},
+               {"_NormalScale",new []{""}},
+               {"_BentNormalMap",new []{""}},
+               {"_BentNormalMapOS",new []{""}},
+               { "_AO",new []{"AOMap" } }
+          };
         public Shader GetShader(EBodyPartID bpid, EShaderType shaderType)
         {
             switch (bpid)
