@@ -1,3 +1,4 @@
+using System.IO;
 using Didimo.Core.Inspector;
 using UnityEditor;
 using UnityEngine;
@@ -35,6 +36,10 @@ namespace Didimo.Networking
                 if (_instance == null)
                 {
                     _instance = DidimoNetworkingResources.CreateInstance<DidimoNetworkingResources>();
+                    if (!Directory.Exists("Didimo/Networking/"))
+                    {
+                        Directory.CreateDirectory("Didimo/Networking/");
+                    }
                     AssetDatabase.CreateAsset(_instance, "Didimo/Networking/DidimoNetworkingResources.asset");
                 }
 #endif
