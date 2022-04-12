@@ -35,7 +35,7 @@ namespace Didimo.Networking
                 if (_instance == null)
                 {
                     _instance = DidimoNetworkingResources.CreateInstance<DidimoNetworkingResources>();
-                    AssetDatabase.CreateAsset(_instance, "Didimo.Networking/DidimoNetworkingResources.asset");
+                    AssetDatabase.CreateAsset(_instance, "Didimo/Networking/DidimoNetworkingResources.asset");
                 }
 #endif
 
