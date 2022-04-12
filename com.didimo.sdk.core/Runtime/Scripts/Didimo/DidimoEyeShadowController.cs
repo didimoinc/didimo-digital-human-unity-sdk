@@ -108,13 +108,13 @@ namespace Didimo
 
         public void BuildFromComponents()
         {
-            HeadTransform = ComponentUtility.SafeGetComponent<Transform>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.headJoint, true));
-            LeftEye = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.leftEyeMesh, true));
-            RightEye = ComponentUtility.SafeGetComponent < SkinnedMeshRenderer > (ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.rightEyeMesh, true));
+            HeadTransform = ComponentUtility.SafeGetComponent<Transform>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.HeadJoint, true));
+            LeftEye = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.LeftEyeMesh, true));
+            RightEye = ComponentUtility.SafeGetComponent < SkinnedMeshRenderer > (ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.RightEyeMesh, true));
             if (HeadTransform == null)
                 HeadTransform = gameObject.transform;
-            LeftEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.leftEyelidJoints);
-            RightEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.rightEyelidJoints);
+            LeftEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.LeftEyelidJoints);
+            RightEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.RightEyelidJoints);
             AOpowVarNameID = -1;
             initialised = true;
         }

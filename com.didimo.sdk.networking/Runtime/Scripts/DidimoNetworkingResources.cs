@@ -1,3 +1,4 @@
+using System.IO;
 using Didimo.Core.Inspector;
 using UnityEditor;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Didimo.Networking
 {
     public class DidimoNetworkingResources : ScriptableObject
     {
+        private const string ASSET_PATH = "Assets/Didimo/Networking/Resources";
+        private const string ASSET_NAME = "DidimoNetworkingResources";
         [SerializeField]
         protected NetworkConfig networkConfig;
 
@@ -30,12 +33,16 @@ namespace Didimo.Networking
         {
             get
             {
-                if (_instance == null) _instance = Resources.Load<DidimoNetworkingResources>("DidimoNetworkingResources");
+                if (_instance == null) _instance = Resources.Load<DidimoNetworkingResources>(ASSET_NAME);
 #if UNITY_EDITOR
                 if (_instance == null)
                 {
                     _instance = DidimoNetworkingResources.CreateInstance<DidimoNetworkingResources>();
-                    AssetDatabase.CreateAsset(_instance, "Didimo.Networking/DidimoNetworkingResources.asset");
+                    if (!Directory.Exists(ASSET_PATH))
+                    {
+                        Directory.CreateDirectory(ASSET_PATH);
+                    }
+                    AssetDatabase.CreateAsset(_instance, $"{ASSET_PATH}/{ASSET_NAME}.asset");
                 }
 #endif
 

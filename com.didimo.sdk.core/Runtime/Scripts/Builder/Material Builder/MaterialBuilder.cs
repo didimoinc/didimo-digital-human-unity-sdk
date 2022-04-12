@@ -5,6 +5,7 @@ using UnityEngine;
 using Didimo.Core.Config;
 using Didimo.Core.Model;
 using Didimo.Core.Utility;
+using UnityEngine.Rendering;
 
 namespace Didimo.Builder
 {
@@ -151,6 +152,111 @@ namespace Didimo.Builder
         {
             modificationAction = null;
             return false;
+        }
+
+        public static bool CopyMaterialProperty(Material source, int sourceIdx, Material target, int targetIdx)
+        {
+            try
+            {
+
+                var sourcePropType = source.shader.GetPropertyType(sourceIdx);
+                var targetPropType = target.shader.GetPropertyType(targetIdx);
+                var sourcePropName = source.shader.GetPropertyName(sourceIdx);
+                var targetPropName = target.shader.GetPropertyName(targetIdx);
+                if (sourcePropType == targetPropType)
+                {
+                    if (source.HasProperty(sourcePropName))
+                    {
+                        switch (sourcePropType)
+                        {
+                            case ShaderPropertyType.Color:
+                                {
+                                    Color v = source.GetColor(sourcePropName);
+                                    target.SetColor(targetPropName, v);
+                                    return true;
+                                }
+                            case ShaderPropertyType.Range:
+                            case ShaderPropertyType.Float:
+                                {
+                                    float v = source.GetFloat(sourcePropName);
+                                    target.SetFloat(targetPropName, v);
+                                    return true;
+                                }
+                            case ShaderPropertyType.Texture:
+                                {
+                                    var v = source.GetTexture(sourcePropName);
+                                    if (v == null)
+                                        Debug.Log("Warning: setting empty texture to '" + sourcePropName + "' on '" + target.name + "'");
+
+                                    target.SetTexture(targetPropName, v);
+                                    return true;
+                                }
+                            case ShaderPropertyType.Vector:
+                                {
+                                    var v = source.GetVector(sourcePropName);
+                                    target.SetVector(targetPropName, v);
+                                    return true;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Tried to find material propety '" + sourcePropName + "' on '" + target.name + " 'but failed.");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Error copying material property: " + e.Message);
+            }
+            return false;
+        }
+        public static int findShaderPropertyContaining(Shader shader, string nameFragment, ShaderPropertyType propType)
+        {
+            for (var i = 0; i < shader.GetPropertyCount(); ++i)
+            {
+                var checkPropType = shader.GetPropertyType(i);
+                if (checkPropType == propType)
+                {
+                    var propName = shader.GetPropertyName(i);
+                    if (propName.ToLower().Contains(nameFragment))
+                        return i;
+                    propName = shader.GetPropertyDescription(i);
+                    if (propName.ToLower().Contains(nameFragment))
+                        return i;
+                }
+            }
+            return -1;
+        }
+        public static void CopyMaterialProperties(Material Source, Material Target, Dictionary<string, string[]> variableMap = null)
+        {
+            var propCount = Target.shader.GetPropertyCount();
+            for (var i = 0; i < propCount; ++i)
+            {
+                var propName = Target.shader.GetPropertyName(i);
+                var propType = Target.shader.GetPropertyType(i);
+                var sourcePropIdx = Source.shader.FindPropertyIndex(propName);
+                if (sourcePropIdx == -1)
+                {
+                    if (variableMap != null && variableMap.ContainsKey(propName))
+                    {
+                        string[] potentialAliases = variableMap[propName];
+                        foreach (var potentialAlias in potentialAliases)
+                        {
+                            if (potentialAlias.StartsWith("*"))
+                                sourcePropIdx = findShaderPropertyContaining(Source.shader, potentialAlias.Substring(1).ToLower(), propType);
+                            else
+                                sourcePropIdx = Source.shader.FindPropertyIndex(propName);
+                            if (sourcePropIdx != -1)
+                                break;
+                        }
+                    }
+                }
+                if (sourcePropIdx != -1)
+                {
+                    CopyMaterialProperty(Source, sourcePropIdx, Target, i);
+                }
+            }
         }
     }
 }
