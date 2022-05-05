@@ -10,7 +10,7 @@ namespace Didimo
         public static async Task<(bool success, string json)> TryLoadFromPathAsync(string filePath)
         {
             // Use web request so it also works on more restrictive devices like android
-            UnityWebRequest request = UnityWebRequest.Get(new Uri(filePath));
+            using UnityWebRequest request = UnityWebRequest.Get(new Uri(filePath));
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 
             while (!operation.isDone && request.error == null)

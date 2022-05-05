@@ -53,6 +53,7 @@ namespace Didimo.GLTFUtility
 		public ModelImporterNormalsTangents normals;
 		public ModelImporterNormalsTangents tangents;
 		public Func<string, Shader>         shaderForName    = null;
+		public Func<Material, bool>			postMaterialCreate = null;
 		public AnimationType                animationType    = AnimationType.Generic;
 		public AvatarDefinition             avatarDefinition = AvatarDefinition.CreateFromThisModel;
 		public Avatar                       avatar;

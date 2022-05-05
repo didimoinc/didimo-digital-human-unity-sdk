@@ -11,27 +11,17 @@ using UnityEngine;
 
 namespace Didimo.Core.Editor
 {
-    [ScriptedImporter(6, "gltf", importQueueOffset: 100)]
+#if USE_DIDIMO_CUSTOM_FILE_EXTENSION
+    [ScriptedImporter(7, new string[]{"gltfd", "glbd"}, importQueueOffset: 100)]
+#else
+    [ScriptedImporter(7,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
+#endif
     public class GLTFImporter : ScriptedImporter
     {
         public ImportSettings importSettings;
 
-//         public static bool CanImportDidimos()
-//         {
-// #if !USING_UNITY_URP
-//             return false;
-// #else
-//             return true;
-// #endif
-//         }
-
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            // if (!CanImportDidimos())
-            // {
-            //     return;
-            // }
-
             ShaderResources shaderResources = ResourcesLoader.ShaderResources();
 
             if (shaderResources == null)
