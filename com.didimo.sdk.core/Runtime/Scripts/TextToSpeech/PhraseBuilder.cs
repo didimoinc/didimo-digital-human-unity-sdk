@@ -118,7 +118,7 @@ namespace Didimo.Speech
         public static async Task<AudioClip> LoadAudioClipFromPath(string filePath)
         {
             Uri fileUri = new Uri(filePath);
-            UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip(fileUri, AudioType.MPEG);
+            using UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip(fileUri, AudioType.MPEG);
             // Probably not needed.
             DownloadHandlerAudioClip audioDownloadHandler = new DownloadHandlerAudioClip(fileUri, AudioType.MPEG);
             webRequest.downloadHandler = audioDownloadHandler;

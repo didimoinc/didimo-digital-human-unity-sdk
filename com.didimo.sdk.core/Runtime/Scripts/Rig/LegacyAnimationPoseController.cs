@@ -74,7 +74,7 @@ namespace Didimo
         private          bool                                poseDataWasUpdated = false;
         private readonly HashSet<string>                     shapesToDisable     = new HashSet<string>();
 
-        private Dictionary<string, DidimoFaceShape> NameToPoseMapping
+        public Dictionary<string, DidimoFaceShape> NameToPoseMapping
         {
             get
             {
@@ -86,6 +86,20 @@ namespace Didimo
                 return nameToPoseMapping;
             }
         }
+
+        /// <summary>
+        /// List of all poses included in the didimo for animation
+        /// </summary>
+        /// <returns>List of all the poses</returns>
+        public override IReadOnlyList<string> GetAllIncludedPoses() => NameToPoseMapping.Keys.ToList();
+        
+        /// <summary>
+        /// Query if the pose with the given name is included in the didimo for animation.
+        /// </summary>
+        /// <param name="poseName">Name of the pose</param>
+        /// <returns>True if the pose is included. False otherwise.</returns>
+        public override bool IsPoseIncluded(string poseName) => namePoseAliases.ContainsKey(poseName) || NameToPoseMapping.ContainsKey(poseName);
+
 
         /// <summary>
         /// Build the PoseController with the required animation clips and, if necessary/present, a configuration JSON.
@@ -253,6 +267,23 @@ namespace Didimo
 
             SetPoseNormalizedWeight(ref faceShape, poseWeight);
             return true;
+        }
+
+        /// <summary>
+        /// Get the normalized weight of a single pose
+        /// Returns -1 if the pose was not found
+        /// </summary>
+        /// <param name="poseName">Name of the pose to query</param>
+        /// <returns>Weight of the pose found. -1 if not found</returns>
+        public override float GetPoseWeight(string poseName)
+        {
+            string faceShapeName = GetMappedFaceShapeName(poseName);
+            if (!NameToPoseMapping.TryGetValue(faceShapeName, out DidimoFaceShape faceShape))
+            {
+                return -1f;
+            }
+
+            return faceShape.AnimationState.normalizedTime;
         }
 
         /// <summary>

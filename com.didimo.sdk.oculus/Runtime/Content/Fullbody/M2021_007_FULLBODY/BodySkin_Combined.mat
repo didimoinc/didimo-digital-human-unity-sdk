@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BodySkin_Combined
   m_Shader: {fileID: -6465566751694194690, guid: 7ca0c0656df797c4bbe7ed2426ae11bc, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -59,9 +60,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - Vector1_797569035c9841eb9068459138ee7872: 0
     - _AOAdd: 0.325
     - _AOPow: 0.27
+    - _AlphaClipThreshold: 0.5
     - _DidimoRoughnessBias: 0.33
     - _EnableSRGBGammaCorrection: 0
     - _HairCapModulate: 0.8
@@ -70,6 +74,8 @@ Material:
     - _MicroNormalStrength: 0.035
     - _MicroNormalTiling: 100
     - _NormalStrength: 0.4
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RGBHaircap: 0
     - _SSSAdd: 0.1
     - _SSSblendtoggle: 1
@@ -86,3 +92,16 @@ Material:
     - _SSSColor: {r: 0.6698113, g: 0.29428363, b: 0.29428363, a: 0}
     - _TransColor: {r: 0.5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1523865960706544504
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

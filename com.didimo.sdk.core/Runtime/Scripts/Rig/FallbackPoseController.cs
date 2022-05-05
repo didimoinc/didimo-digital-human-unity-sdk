@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Didimo
 {
@@ -12,5 +12,8 @@ namespace Didimo
 
         public override void ResetAll() { }
         public override void ForceUpdateAnimation() { }
+        
+        public override IReadOnlyList<string> GetAllIncludedPoses() => new List<string>();
+        public override bool IsPoseIncluded(string poseName) => false;
     }
 }

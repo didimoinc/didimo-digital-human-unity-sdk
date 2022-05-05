@@ -16,7 +16,7 @@ loaded into the scene at runtime. No matter which approach you need, we've got y
 
 ## Pre-requisites
 
-This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 onwards).
+This SDK has been built to work with Unity 2021.3.x LTS (from Unity 2021.3.1 onwards).
 
 
 ## Setup Process
@@ -24,12 +24,12 @@ This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 on
 1. Install via the package manager
    1. Open Unity's Package Manager
    2. Under the `+` button, select `Add package from git URL...`
-   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.1.0` and press `Add`
+   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.2.0` and press `Add`
    4. Optionally, add any of the following modules, by repeating the previous 2 steps, with the URLs:
 
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.1.0` For didimo API integration
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.1.0` For a communication layer between android/iOS and Unity
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.1.0` For integration with Oculus
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.2.0` For didimo API integration
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.2.0` For a communication layer between android/iOS and Unity
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.2.0` For integration with Oculus
 
 
 2. Setup your project. You can do this by going to Didimo → Didimo Manager, and following the instructions, or by following these steps 
@@ -52,6 +52,17 @@ This SDK has been built to work with Unity 2020.3.x LTS (from Unity 2020.3.12 on
 
 
 ---
+
+# Already have a glTF importer?
+
+For runtime loading of didimos, you can keep both importers without any issues. But for the **Unity Editor**, to import didimos directly into the project, Unity only allows one scripted importer per file extension. 
+If you already have a glTF importer on your project, we will have a clash. To fix this, either:
+* Delete your glTF library and use ours instead. Our glTF importer is based on [GLTFUtility](https://github.com/Siccity/GLTFUtility)
+* If you need to keep your importer, you can add the script define symbol `USE_DIDIMO_CUSTOM_FILE_EXTENSION` to your project. This will make our importer register to the extension `.gltfd` instead. You will then be responsible to rename your didimo `.gltf` files into `.gltfd`. 
+This will break our sample scenes, so if you need to evaluate the SDK first, we suggest you do it on a clean project.  
+
+---
+
 
 # SDK Contents
 

@@ -46,7 +46,6 @@ namespace Didimo.GLTFUtility
 				ctx.AddAsset(mesh.name, mesh);
 				visitedMeshes.Add(mesh);
 			}
-
 			for (int i = 0; i < skinnedRenderers.Length; i++)
 			{
 				Mesh mesh = skinnedRenderers[i].sharedMesh;

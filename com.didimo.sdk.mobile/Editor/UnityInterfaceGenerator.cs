@@ -195,6 +195,7 @@ NS_ASSUME_NONNULL_END
             objCImpl = objCImpl.Replace("{OBJC_ARGUMENTS}", String.Join(" ", methodArguments));
             objCImpl = objCImpl.Replace("{C_TO_OBJC_ARGUMENTS}", String.Join(", ", cToObjcArguments));
             objCImpl = objCImpl.Replace("{METHOD_NAME}", type.Name);
+            objCImpl = objCImpl.Replace("{REGISTER_METHOD_NAME}", registerMethod.Name);
 
             string methodVarName = type.Name;
             if (methodVarName[0].ToString().ToLower() != methodVarName[0].ToString())
@@ -209,6 +210,7 @@ NS_ASSUME_NONNULL_END
             objCImpl = objCImpl.Replace("{METHOD_VAR_NAME}", methodVarName);
 
             externCImpl = externCImpl.Replace("{METHOD_NAME}", type.Name);
+            externCImpl = externCImpl.Replace("{REGISTER_METHOD_NAME}", registerMethod.Name);
 
             objCInterf = objCInterf.Replace("{METHOD_NAME}", type.Name);
             objCInterf = objCInterf.Replace("{OBJC_ARGUMENTS}", String.Join(" ", methodArguments));
@@ -228,7 +230,7 @@ NS_ASSUME_NONNULL_END
         const string objCImplementation = @"
 typedef void (*{METHOD_NAME}Cb)({CALLBACK_ARGUMENTS});
 static {METHOD_NAME}Cb {METHOD_VAR_NAME}Cb;
-+ (void) register{METHOD_NAME}:({METHOD_NAME}Cb)cb{
++ (void) {REGISTER_METHOD_NAME}:({METHOD_NAME}Cb)cb{
     
     {METHOD_VAR_NAME}Cb = cb;
 }
@@ -239,9 +241,9 @@ static {METHOD_NAME}Cb {METHOD_VAR_NAME}Cb;
 ";
 
         const string externCImplementation = @"    
-    void register{METHOD_NAME}({METHOD_NAME}Cb cb) {
+    void {REGISTER_METHOD_NAME}({METHOD_NAME}Cb cb) {
  
-        [DidimoUnityInterface register{METHOD_NAME}: cb];
+        [DidimoUnityInterface {REGISTER_METHOD_NAME}: cb];
     }";
 
         const string objCInterface = @"

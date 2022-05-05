@@ -61,7 +61,7 @@ namespace Didimo.Networking
         {
             Uri uri = new Uri(URL);
 
-            UnityWebRequest request = CreateRequest(uri);
+            using UnityWebRequest request = CreateRequest(uri);
 
             BuildAuthHeaders(uri, request);
             BuildAdditionalHeaders(uri, request);

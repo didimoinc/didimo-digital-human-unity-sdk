@@ -328,6 +328,7 @@ namespace Didimo.GLTFUtility {
 		public static bool IsAnimationCurveUseful(AnimationCurve animationCurve, float differenceEpsilon=0.01f)
 		{
 			if (animationCurve.length == 0) return false;
+			if (animationCurve.length == 1) return true;
 
 			float referenceValue = animationCurve[0].value;
 			// Only useful if any significant change in relation to rest pose
@@ -337,6 +338,7 @@ namespace Didimo.GLTFUtility {
 		public static bool IsTransformAnimationCurveUseful(AnimationCurve curveX, AnimationCurve curveY, AnimationCurve curveZ, float differenceEpsilon = 0.01f)
 		{
 			if (curveX.length < 1 || curveY.length < 1 || curveZ.length < 1) return false;
+			if (curveX.length == 1 || curveY.length == 1 || curveZ.length == 1) return true;
 
 			Vector3 restPosePosition = new Vector3(curveX[0].value, curveY[0].value, curveZ[0].value);
 			for (int keyIx = 1; keyIx < curveX.length; keyIx++)
@@ -359,7 +361,9 @@ namespace Didimo.GLTFUtility {
 				throw new ArgumentException("Quaternion animation curves don't have the same length");
 			}
 
+			// all curves have same length, so we just evaluate the same one
 			if (curveX.length < 1) return false;
+			if (curveX.length == 1) return true;
 
 			Quaternion restPoseRotation = new Quaternion(curveX[0].value, curveY[0].value, curveZ[0].value, curveW[0].value);
 			for (int keyIx = 1; keyIx < curveX.length; keyIx++)

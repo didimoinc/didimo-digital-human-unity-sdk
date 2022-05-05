@@ -557,7 +557,7 @@ namespace Didimo.GLTFUtility
 				{
 					Result[i] = new ImportResult();
 
-					IEnumerator en = materials[i].CreateMaterial(textureTask.Result, importSettings.shaderOverrides, x => Result[i].material = x, importSettings.shaderForName);
+					IEnumerator en = materials[i].CreateMaterial(textureTask.Result, importSettings.shaderOverrides, x => { Result[i].material = x; if (importSettings.postMaterialCreate != null) importSettings.postMaterialCreate(x); }, importSettings.shaderForName);
 					while (en.MoveNext()) { yield return null; }
 
 					if (string.IsNullOrEmpty(Result[i].material.name)) Result[i].material.name = "material" + i;

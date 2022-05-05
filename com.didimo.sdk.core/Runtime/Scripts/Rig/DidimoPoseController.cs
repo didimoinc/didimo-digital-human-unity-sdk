@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Didimo.Core.Utility;
 
 namespace Didimo
@@ -25,6 +26,12 @@ namespace Didimo
         public abstract ESupportedMovements SupportedMovements { get; }
 
         public bool SupportsAnimation => !SupportedMovements.Equals(ESupportedMovements.None);
+        
+        // Query methods for pose information
+        public abstract IReadOnlyList<string> GetAllIncludedPoses();
+        public abstract bool IsPoseIncluded(string poseName);
+        public virtual float GetPoseWeight(string poseName) => -1f;
+        
         
 
         // Control for face poses
