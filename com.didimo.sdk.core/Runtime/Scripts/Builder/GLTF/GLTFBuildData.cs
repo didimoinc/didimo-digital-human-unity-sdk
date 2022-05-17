@@ -60,6 +60,8 @@ namespace Didimo.Builder.GLTF
                 return shader;
             };
 
+            ImportSettings.postMaterialCreate = material => { return materialBuilder.PostMaterialCreate(material); };
+
             Importer.ImportResult importResult = Importer.LoadFromFile(GLTFDidimoFilePath, ImportSettings, Format.GLTF);
             ImportSettings.animationType = configuration.AnimationType;
             ImportSettings.avatar = configuration.Avatar;

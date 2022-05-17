@@ -1,9 +1,11 @@
-﻿namespace Didimo.Core.Config
+namespace Didimo.Core.Config
 {
-    public enum SupportedRenderPipelines
+    public enum EPipelineType
     {
-        Standard,
-        UniversalRenderPipeline,
-        HighDefinitionRenderPipeline
+        EPT_URP = 0,
+        EPT_HDRP = 1,
+        EPT_SRP = 2,
+        EPT_UNKNOWN = 3
     }
 }
+ 

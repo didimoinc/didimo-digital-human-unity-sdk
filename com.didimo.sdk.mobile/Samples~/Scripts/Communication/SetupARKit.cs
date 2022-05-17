@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AOT;
+using Didimo.Mobile.Controller;
 using UnityEngine;
 
 namespace Didimo.Mobile.Communication
@@ -45,6 +46,8 @@ namespace Didimo.Mobile.Communication
         {
             try
             {
+                CinematicManager.Instance.StopCinematic();
+                DidimoLookAtController.Instance.EnableLookAt(false);
                 string[] blendshapeNamesArray = blendshapeNames.Split(',');
                 // Debug.Log($"Blendshape names: {string.Join(", ", blendshapeNamesArray)}");
                 ARKitCaptureStreamController controller = ARKitCaptureStreamController.AddToDidimo(didimoKey);

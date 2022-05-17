@@ -1,4 +1,4 @@
-﻿using Didimo.Core.Utility;
+using Didimo.Core.Utility;
 using System;
 using UnityEngine;
 

@@ -50,9 +50,7 @@ namespace Didimo.Core.Config
             RAMP = 6,
         }
 
-        public static string[] hair_name_fragments = { "albedo", "alpha", "ao", "uniqueao", "flow", "id", "ramp" };
-        public static string[] hair_material_texture_names = { "_Albedo", "_Opacity", "_AOMap", "_AOMapUnique", "_flowMap", "_ID", "_rootToTip" };
-
+     
         public static EHairLayer ClassifyHairLayerFromName(string name)
         {
             if (name.Contains("opaque"))
@@ -78,6 +76,9 @@ namespace Didimo.Core.Config
         public Shader HairOpaque;
         public Shader Cloth;
 
+        public static string[] hair_name_fragments = { "albedo", "alpha", "ao", "uniqueao", "flow", "id", "ramp" };
+        public static string[] hair_material_texture_names = { "_Albedo", "_Opacity", "_AOMap", "_AOMapUnique", "_flowMap", "_ID", "_rootToTip" };
+        //this can be used to determine body part IDs for materials and meshes and files - N.B. sensitive to name changes! If asset names are renamed, this needs testing
         public static EBodyPartID GetBodyPartID(string name)
         {
             name = name.ToLower();
@@ -89,8 +90,10 @@ namespace Didimo.Core.Config
                 return EBodyPartID.HEAD;
             if (name.Contains("face"))
                 return EBodyPartID.HEAD;
-            if (name.Contains("body"))
+            if (name.Contains("body")) //bodyskin is body on materials, skin is face
                 return EBodyPartID.BODY;
+            if (name.Contains("skin"))
+                return EBodyPartID.HEAD;            
             if (name.Contains("hair"))
                 return EBodyPartID.HAIR;
             if (name.Contains("mouth"))
@@ -99,7 +102,6 @@ namespace Didimo.Core.Config
                 return EBodyPartID.CLOTHING;
             if (name.Contains("hat") || name.Contains("cap"))
                 return EBodyPartID.HAT;
-
 
             return EBodyPartID.UNKNOWN;
         }
@@ -165,7 +167,16 @@ namespace Didimo.Core.Config
             Type t = this.GetType();
             var fields = t.GetFields();
             var field = fields[index];
-            return (Shader)field.GetValue(this);
+            try
+            {
+                return (Shader)field.GetValue(this);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+                return null;
+            }
+            
         }
     }
 }

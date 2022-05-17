@@ -8,11 +8,11 @@ namespace Didimo.Core.Editor
     public abstract class DidimoManagerTab
     {
         protected const int PADDING = 10;
-        protected const int PADDING_SMALL = 5;
-
+        protected const int PADDING_SMALL = 5;       
         public abstract void Draw(DidimoManager manager);
         public abstract string GetTabName();
         public abstract int GetIndex();
+        public virtual void OnActivated() { }
 
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void DidReloadScripts()

@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using static Didimo.Core.Config.ShaderResources;
 
@@ -88,6 +93,88 @@ namespace  Didimo.Core.Utility
             if (mr) 
                 return mr.sharedMesh;
             return null;
+        }
+
+        static void AddOrIncrement<A>(Dictionary<A,int> uniques, A value)
+        {
+            if (uniques.ContainsKey(value))
+                uniques[value] += 1;
+            else
+                uniques.Add(value, 1);
+        }
+        public static void GetUniqueMeshes(GameObject ob, Dictionary<Mesh, int> uniqueMeshes)
+        {            
+            var mflist = ob.GetComponentsInChildren<MeshFilter>();
+            foreach (var mf in mflist)
+            {
+                if (mf && mf.sharedMesh)
+                    AddOrIncrement(uniqueMeshes, mf.sharedMesh);
+            }
+            var mrlist = ob.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var mr in mrlist)
+            {
+                if (mr && mr.sharedMesh)
+                    AddOrIncrement(uniqueMeshes, mr.sharedMesh);
+            }
+        }
+        public static Mesh GetMeshFromRenderer(Renderer render)
+        {
+            SkinnedMeshRenderer smr = render.GetComponent<SkinnedMeshRenderer>();
+            if (smr)
+                return smr.sharedMesh;
+            MeshFilter mf = render.GetComponent<MeshFilter>();
+            if (mf)
+                return mf.sharedMesh;
+            return null;
+        }
+        public static Mesh[] GetUniqueMeshes(GameObject ob)
+        {
+            Dictionary<Mesh, int> uniqueMeshes = new Dictionary<Mesh, int>();
+            GetUniqueMeshes(ob, uniqueMeshes);           
+            return uniqueMeshes.Select(e => e.Key).ToArray();
+        }
+        public static Mesh [] GetUniqueMeshes(GameObject [] obs)
+        {
+            Dictionary<Mesh, int> uniqueMeshes = new Dictionary<Mesh, int>();
+            foreach (var ob in obs)
+            {
+                GetUniqueMeshes(ob,uniqueMeshes);
+            }
+            return uniqueMeshes.Select(e => e.Key).ToArray();
+        }
+
+        public static void GetUniqueMeshAssetPaths(GameObject ob, Dictionary<string, int> uniqueMeshPaths)
+        {
+            var mflist = ob.GetComponentsInChildren<MeshFilter>();
+#if UNITY_EDITOR
+            foreach (var mf in mflist)
+            {
+                if (mf && mf.sharedMesh)
+                    AddOrIncrement(uniqueMeshPaths, AssetDatabase.GetAssetPath(mf.sharedMesh));
+            }
+            var mrlist = ob.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var mr in mrlist)
+            {
+                if (mr && mr.sharedMesh)
+                    AddOrIncrement(uniqueMeshPaths, AssetDatabase.GetAssetPath(mr.sharedMesh));
+            }
+#endif
+        }
+
+        public static string[] GetUniqueMeshAssetPaths(GameObject ob)
+        {
+            Dictionary<string, int> uniqueMeshPaths = new Dictionary<string, int>();
+            GetUniqueMeshAssetPaths(ob, uniqueMeshPaths);
+            return uniqueMeshPaths.Select(e => e.Key).ToArray();
+        }
+        public static string[] GetUniqueMeshAssetPaths(GameObject[] obs)
+        {
+            Dictionary<string, int> uniqueMeshPaths = new Dictionary<string, int>();
+            foreach (var ob in obs)
+            {
+                GetUniqueMeshAssetPaths(ob, uniqueMeshPaths);
+            }
+            return uniqueMeshPaths.Select(e => e.Key).ToArray();
         }
     }
 }

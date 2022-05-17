@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Didimo.Core.Utility
@@ -52,9 +53,10 @@ namespace Didimo.Core.Utility
 
         public static void GetOrAdd<TComponent>(
             GameObject gameObject,
-            ref TComponent backingField) where TComponent : Component {
-                 GetOrAdd<TComponent, TComponent>(gameObject, ref backingField);
-                 }
+            ref TComponent backingField) where TComponent : Component 
+        {
+            GetOrAdd<TComponent, TComponent>(gameObject, ref backingField);
+        }
 
         public static void GetOrAdd<TComponent, TDefault>(
             GameObject gameObject, ref TComponent backingField)
@@ -73,6 +75,44 @@ namespace Didimo.Core.Utility
             if (go.transform.parent != null)
                 return FindParentThatImplements<T>(go.transform.parent.gameObject);
             return default(T);
-        }     
+        }
+        public static List<GameObject> CreateFlatList(GameObject[] objectList)
+        {
+            List<GameObject> oblist = new List<GameObject>();
+            foreach (var ob in objectList)
+            {
+                CreateFlatListInner(ob, oblist);
+            }
+            return oblist;
+        }
+
+        public static void CreateFlatListInner(GameObject ob, List<GameObject> objectList)
+        {
+            objectList.Add(ob);
+            var t = ob.transform;
+            for (var i = 0; i < t.childCount; ++i)
+            {
+                CreateFlatListInner(t.GetChild(i).gameObject, objectList);
+            }
+        }
+
+        public delegate bool GameObjectFunc(GameObject go);
+        public static HashSet<GameObject> GetUniqueTopLevelList(GameObject[] selection, GameObjectFunc filter)
+        {
+            HashSet<GameObject> hs = new HashSet<GameObject>();            
+            foreach (GameObject goitr in selection)
+            {
+                GameObject go = goitr.transform.root.gameObject;
+                var smrlist = go.GetComponentsInChildren<SkinnedMeshRenderer>();
+                var mrlist = go.GetComponentsInChildren<MeshRenderer>();
+                List<Material> ml = new List<Material>();
+                foreach (var smr in smrlist)
+                {
+                    if (filter(smr.gameObject))
+                        hs.Add(smr.gameObject);
+                }
+            }
+            return hs;
+        }
     }
 }

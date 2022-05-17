@@ -6,6 +6,7 @@ using AOT;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Didimo.Core.Utility;
+using Didimo.Mobile.Controller;
 
 namespace Didimo.Mobile.Communication
 {
@@ -56,16 +57,23 @@ namespace Didimo.Mobile.Communication
             {
                 try
                 {
+                    ARKitCaptureStreamController.RemoveForDidimo(didimoKey);
                     if (string.IsNullOrEmpty(cinematicID))
                     {
                         CinematicManager.Instance.StopCinematic();
+                        DidimoLookAtController.Instance.EnableLookAt(true);
                     }
                     else
                     {
+                        DidimoLookAtController.Instance.EnableLookAt(false);
                         CinematicManager.Instance.PlayCinematic(cinematicID,
                             animationTime =>
                             {
                                 progressCallback(objectPointer, animationTime);
+                                if (animationTime >= 1)
+                                {
+                                    DidimoLookAtController.Instance.EnableLookAt(true);
+                                }
                             });
 
                         CinematicManager.Instance.RemapTimeline(didimoKey);
@@ -74,6 +82,7 @@ namespace Didimo.Mobile.Communication
                 }
                 catch (Exception e)
                 {
+                    DidimoLookAtController.Instance.EnableLookAt(true);
                     errorCallback(objectPointer, e.Message);
                 }
             });

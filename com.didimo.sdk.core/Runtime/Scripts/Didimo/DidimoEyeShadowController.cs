@@ -96,8 +96,6 @@ namespace Didimo
             initialised = true;
         }
 
-        
-
         private static Transform[] SetTransforms(GameObject go, string[] transformNames)
         {
             Transform[] transforms = new Transform[transformNames.Length];
@@ -119,11 +117,13 @@ namespace Didimo
             initialised = true;
         }
 
+#if DEBUG_
         [Button]
         private void InvalidateReferences()
         {
             initialised = false;
         }
+#endif
 
         public const string AOpowVarName = "_AOpow";
         public const string AOstrengthVarName = "_AOStrength";
@@ -248,13 +248,20 @@ namespace Didimo
                 return;
 
             //need to be per material to ensure that these aren't ignored : per material > per instance
-            renderer.GetPropertyBlock(propBlock, 0);
-            ProcessEye(eye);
-            propBlock.SetFloat(AOpowVarNameID, aoPOW);
-            propBlock.SetFloat(AOstrengthVarNameID, aoStrength);
-            propBlock.SetFloat(CornerTightnessVarNameID, cornerTightness);
-            propBlock.SetMatrix(EyeHoleInvMatrixVarNameID, GetEyeHoleMatrix(eye).inverse);
-            renderer.SetPropertyBlock(propBlock, 0);
+            try
+            {            
+                renderer.GetPropertyBlock(propBlock, 0);
+                ProcessEye(eye);
+                propBlock.SetFloat(AOpowVarNameID, aoPOW);
+                propBlock.SetFloat(AOstrengthVarNameID, aoStrength);
+                propBlock.SetFloat(CornerTightnessVarNameID, cornerTightness);
+                propBlock.SetMatrix(EyeHoleInvMatrixVarNameID, GetEyeHoleMatrix(eye).inverse);
+                renderer.SetPropertyBlock(propBlock, 0);
+            }
+            catch (Exception)
+            {
+                Debug.Log("Problem setting eye material property block");
+            }
         }
 
         void ApplyBlocks()

@@ -27,4 +27,8 @@ ScriptedImporter:
     generateLightmapUVs: 0
     normals: 0
     tangents: 0
+    animationType: 1
+    avatarDefinition: 1
+    avatar: {instanceID: 0}
+    isDidimo: 0
     interpolationMode: -1

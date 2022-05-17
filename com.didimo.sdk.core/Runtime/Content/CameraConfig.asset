@@ -18,7 +18,7 @@ MonoBehaviour:
   zoomSensitivity: 2
   defaultYaw: 0.5
   defaultPitch: 0.51
-  pitchLimit: {x: 0.3274171, y: 0.5235871}
+  pitchLimit: {x: 0.3274171, y: 0.8364302}
   yawLimit: {x: 0.39590445, y: 0.6040956}
   zoomLimit: {x: -0.13183725, y: 0.22598743}
   depthOfFieldDistanceBias: -0.1

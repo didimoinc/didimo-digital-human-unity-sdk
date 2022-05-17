@@ -51,6 +51,15 @@ namespace Didimo.Mobile
 
         public static ARKitCaptureStreamController GetForDidimo(string didimoKey) { return controllers[didimoKey]; }
 
-        public static bool RemoveForDidimo(string didimoKey) { return controllers.Remove(didimoKey); }
+        public static bool RemoveForDidimo(string didimoKey)
+        {
+            if (DidimoCache.TryFindDidimo(didimoKey, out DidimoComponents didimo))
+            {
+                didimo.PoseController.ResetAll();
+                return controllers.Remove(didimoKey);
+            }
+
+            throw new Exception($"Unable to find didimo with id {didimoKey}");
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AOT;
 using UnityEngine;
 using Didimo.Core.Utility;
+using Didimo.Mobile.Controller;
 
 namespace Didimo.Mobile.Communication
 {
@@ -46,6 +47,7 @@ namespace Didimo.Mobile.Communication
         {
             try
             {
+                DidimoLookAtController.Instance.EnableLookAt(true);
                 ARKitCaptureStreamController.RemoveForDidimo(didimoKey);
                 successCallback(objectPointer);
             }

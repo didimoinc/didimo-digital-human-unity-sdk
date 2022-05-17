@@ -58,6 +58,11 @@ namespace Didimo
             return didimoComponents != null;
         }
 
+        public static DidimoComponents[] GetAllDidimos()
+        {
+            return didimos.Values.ToArray();
+        }
+
         public static void Add(DidimoComponents didimoComponents)
         {
             if (didimoComponents == null) return;

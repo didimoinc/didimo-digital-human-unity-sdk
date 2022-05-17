@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hair_010_outer
   m_Shader: {fileID: -6465566751694194690, guid: 22e104057102a8544aa24f81b1bddad4, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -123,6 +124,7 @@ Material:
     - Vector1_51402fcc57ad4ce1aa8aa1a6cd2190c1: 0
     - Vector1_68710ef1732d4141a522a8ce9b9bb571: 0
     - Vector1_8940f22e9ba7452fbf3388d6271b2302: 0.29
+    - Vector1_d736b3961f494ab4bf4caef93b0473b3: 0.16
     - Vector1_dcf32dc223984f09b96164cce6318f38: 0
     - Vector1_fecc576ca2d948b59b8bdff9c87cd785: 0
     - _AOFactor: 1
@@ -150,6 +152,7 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SDF_AAFactor: 0
@@ -165,6 +168,7 @@ Material:
     - _TangentFlowMapRotation: 270
     - _TestNormals: 0
     - _TestTangents: 0
+    - _TransmissionHaloSharpness: 7.3
     - _UseFlowMap: 1
     - _UseUniqueAO: 0
     - _WorkflowMode: 1
