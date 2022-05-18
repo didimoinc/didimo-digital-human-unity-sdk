@@ -11,6 +11,22 @@ namespace Didimo.Core.Deformables
 {
     public class DidimoDeformables : DidimoBehaviour
     {
+        // We will only need this temporarily, as hair pieces will be skinned in the future
+        [SerializeField, HideInInspector]
+        private Matrix4x4 hairOffset;
+
+        public void CacheHairOffsets()
+        {
+            if (transform.TryFindRecursive("Head", out Transform head))
+            {
+                hairOffset = head.worldToLocalMatrix;
+            }
+            else
+            {
+                hairOffset = Matrix4x4.identity;
+            }
+        }
+        
         private Dictionary<string, Deformable> _deformables = null;
 
         public enum DeformMode
@@ -65,6 +81,7 @@ namespace Didimo.Core.Deformables
                 return fullPath.Substring(idx);
             return fullPath;
         }
+
         public bool TryFind<TDeformable>(out TDeformable instance) where TDeformable : Deformable
         {
             if (!deformables.Any(d => d.Value is TDeformable))
@@ -102,7 +119,6 @@ namespace Didimo.Core.Deformables
             deformable.DidimoComponents = DidimoComponents;
             instance = Instantiate(deformable);
             deformables.Add(deformable.ID, instance);
-        
 
             Transform idealBone = null;
             foreach (string idealBoneName in instance.IdealBoneNames)
@@ -118,20 +134,13 @@ namespace Didimo.Core.Deformables
                 Debug.LogWarning($"Cannot find ideal deformable bone with any of " + $"the names: '{string.Join(",", instance.IdealBoneNames)}'");
             }
 
-            DidimoComponents comp = idealBone.GetComponentInParent<DidimoComponents>();
-
             Transform instanceTransform = instance.transform;
-            if (comp)
-            {
-                instanceTransform.position = comp.gameObject.transform.position;
-                instanceTransform.rotation = comp.gameObject.transform.rotation;
-            }
 
             if (deformMode != DeformMode.Nothing)
             {
 #if UNITY_EDITOR
                 Mesh deformableMesh = MeshUtils.GetMesh(deformable.gameObject);
-                Renderer bodyMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(comp.gameObject, EBodyPartID.BODY);
+                Renderer bodyMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(DidimoComponents.gameObject, EBodyPartID.BODY);
                 if (bodyMeshRenderer != null)
                 {
                     Mesh bodyMesh = MeshUtils.GetMesh(bodyMeshRenderer.gameObject);
@@ -170,10 +179,11 @@ namespace Didimo.Core.Deformables
                 }
 #endif
             }
-
-            instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform, true);
-            instance.name = deformable.ID;
             
+            instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform);
+            instanceTransform.localPosition = hairOffset.MultiplyPoint(Vector3.zero);
+            instanceTransform.localRotation = hairOffset.rotation;
+            instance.name = deformable.ID;
 
             return true;
         }
@@ -199,11 +209,10 @@ namespace Didimo.Core.Deformables
             {
                 if (kvp.Value != null)
                 {
-                    #if UNITY_EDITOR
+#if UNITY_EDITOR
                     if (PrefabUtility.GetPrefabInstanceHandle(kvp.Value.gameObject) == null)
-                    #endif
+#endif
                     {
-
                         if (Application.isPlaying)
                         {
                             Destroy(kvp.Value.gameObject);
@@ -213,13 +222,13 @@ namespace Didimo.Core.Deformables
                             DestroyImmediate(kvp.Value.gameObject);
                         }
                     }
-                    #if UNITY_EDITOR
+#if UNITY_EDITOR
                     else
                     {
                         kvp.Value.gameObject.SetActive(false);
                         Debug.LogWarning($"Attempting to destroy deformable on prefab ('{kvp.Value.gameObject}'), this is not allowed so it's only been temporarily hidden.");
                     }
-                    #endif
+#endif
                 }
             }
 
@@ -235,10 +244,10 @@ namespace Didimo.Core.Deformables
 
         struct DeformableMeshPair
         {
-            Deformable  deformable;
-            Mesh        mesh;           
+            Deformable deformable;
+            Mesh       mesh;
         }
-      
+
         public static bool TryFindDeformable<TDeformable>(Deformable[] deformableArray, string id, out TDeformable deformable) where TDeformable : Deformable
         {
             deformable = deformableArray.Where(d => d is TDeformable).Cast<TDeformable>().FirstOrDefault(h => h.ID == id);

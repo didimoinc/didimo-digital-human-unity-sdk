@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
 using Didimo.Core.Utility;
+using Didimo.Mobile.Controller;
 
 namespace Didimo.Mobile.Communication
 {
@@ -47,19 +48,7 @@ namespace Didimo.Mobile.Communication
             {
                 try
                 {
-                    Camera cam = Camera.main;
-                    if (!cam)
-                    {
-                        throw new Exception("Unable to get main camera");
-                    }
-
-                    DragOrbit dragOrbit = cam.GetComponent<DragOrbit>();
-                    if (dragOrbit == null)
-                    {
-                        throw new Exception("Unable to get DragOrbit component on main camera");
-                    }
-
-                    dragOrbit.ResetView(instant);
+                    DidimoLookAtController.Instance.Reset();
                     successCallback(objectPointer);
                 }
                 catch (Exception e)

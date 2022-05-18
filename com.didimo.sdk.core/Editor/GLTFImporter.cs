@@ -14,7 +14,7 @@ namespace Didimo.Core.Editor
 #if USE_DIDIMO_CUSTOM_FILE_EXTENSION
     [ScriptedImporter(7, new string[]{"gltfd", "glbd"}, importQueueOffset: 100)]
 #else
-    [ScriptedImporter(7,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
+    [ScriptedImporter(8,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
 #endif
     public class GLTFImporter : ScriptedImporter
     {
@@ -30,8 +30,8 @@ namespace Didimo.Core.Editor
                 return;
             }
 
-            //MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
-            MaterialBuilder materialBuilder = new UniversalRenderingPipelineMaterialBuilder();
+            MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
+            //MaterialBuilder materialBuilder = new UniversalRenderingPipelineMaterialBuilder();
 
             if (importSettings == null) importSettings = new ImportSettings();
             importSettings.animationSettings.useLegacyClips = true;
@@ -41,13 +41,14 @@ namespace Didimo.Core.Editor
                 return shader;
             };
 
+            importSettings.postMaterialCreate = material => { return materialBuilder.PostMaterialCreate(material); };
+
             Importer.ImportResult importResult =
                 Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings, Format.GLTF);
             if (importResult.isDidimo)
             {
                 importSettings.isDidimo = true;
-                GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings);
-
+                GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings);                
                 // Save asset with reset pose Animation Clip
                 List<AnimationClip> gltfAnimationClips = new List<AnimationClip>(importResult.animationClips);
                 if (importResult.resetAnimationClip != null) gltfAnimationClips.Add(importResult.resetAnimationClip);

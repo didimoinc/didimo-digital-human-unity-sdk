@@ -24,15 +24,15 @@ This SDK has been built to work with Unity 2021.3.x LTS (from Unity 2021.3.1 onw
 1. Install via the package manager
    1. Open Unity's Package Manager
    2. Under the `+` button, select `Add package from git URL...`
-   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.2.0` and press `Add`
+   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.2.1` and press `Add`
    4. Optionally, add any of the following modules, by repeating the previous 2 steps, with the URLs:
 
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.2.0` For didimo API integration
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.2.0` For a communication layer between android/iOS and Unity
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.2.0` For integration with Oculus
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.2.1` For didimo API integration
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.2.1` For a communication layer between android/iOS and Unity
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.2.1` For integration with Oculus
 
 
-2. Setup your project. You can do this by going to Didimo → Didimo Manager, and following the instructions, or by following these steps 
+2. Setup your project. You can do this by going to Window → Didimo Manager, and following the instructions, or by following these steps 
    1. Go to Project Settings → Graphics, and select `UniversalRP-HighQuality` as the render pipeline asset. 
    2. Go to Project Settings → Quality, and select `UniversalRP-HighQuality` as the render pipeline asset, for your desired
       quality level.
@@ -40,7 +40,7 @@ This SDK has been built to work with Unity 2021.3.x LTS (from Unity 2021.3.1 onw
 
 
 3. Explore
-   1. Open the `MeetADidimo` scene, by going to Didimo → Didimo Manager, and clicking the "open the Meet a didimo scene" link.
+   1. Open the `MeetADidimo` scene, by going to Window → Didimo Manager, and clicking the "open the Meet a didimo scene" link.
    2. TextMeshPro will be automatically installed by Unity at this point if it wasn't already, by prompting you to
    Import TMP Essentials, which is required for the examples
    3. You should now be able to press play and see the included talking didimos.
@@ -144,7 +144,7 @@ This package is marked as preview and therefore the installation process may be 
 
 * We cannot control the order with which Unity imports assets. If the .glTF files of your didimos get imported before any of
   its dependencies, then the didimo will fail to import.
-* If you open the `MeetADidimo` scene and don't see any didimos, go to Didimo → Didimo Manager, and click the `Reimport didimos`
+* If you open the `MeetADidimo` scene and don't see any didimos, go to Window → Didimo Manager, and click the `Reimport didimos`
   button.
 
 ---

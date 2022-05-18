@@ -17,7 +17,7 @@ namespace Didimo.Mobile
 
         private List<GameObject> didimoInstances;
 
-        private int  currentDidimo = -1;
+        private int currentDidimo = -1;
         private bool running;
 
         public bool InitializeIfNeeded(int initialDidimoIndex = 0)
@@ -50,8 +50,9 @@ namespace Didimo.Mobile
         [Button]
         public void Stop()
         {
-            if (running || !Application.isPlaying) return;
+            if (didimoInstances == null || !Application.isPlaying) return;
 
+            StopAllCoroutines();
             foreach (GameObject didimoInstance in didimoInstances)
             {
                 Destroy(didimoInstance);

@@ -10,45 +10,7 @@ namespace Didimo.Builder
 {
     public class UniversalRenderingPipelineMaterialBuilder : MaterialBuilder
     {
-        public override bool FindIdealShader(
-            string shaderName, out Shader shader)
-        {
-            shader = null;
-
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources(EPipelineType.EPT_UNKNOWN);
-
-            switch (shaderName.ToLowerInvariant())
-            {
-                case "eye":
-                    shader = shaderResources.Eye;
-                    break;
-                case "skin":
-                    shader = shaderResources.Skin;
-                    break;
-                case "mouth":
-                    shader = shaderResources.Mouth;
-                    break;
-                case "transcolor":
-                    shader = shaderResources.Eyelash;
-                    break;
-                case "texturelighting":
-                    shader = shaderResources.UnlitTexture;
-                    break;
-                case "hair":
-                    shader = shaderResources.Hair;
-                    break;
-                case "cloth":
-                    shader = shaderResources.Cloth;
-                    break;
-            }
-
-            if (shader == null)
-            {
-                shader = Shader.Find(shaderName);
-            }
-
-            return shader != null;
-        }
+       
 
         public override bool NameToProperty(
             string name, out string propertyName)
@@ -116,6 +78,13 @@ namespace Didimo.Builder
             }
 
             modificationAction = ModifyMaterial;
+            return true;
+        }
+
+        public override bool PostMaterialCreate(Material mat)
+        {
+            var bodyPart = ShaderResources.GetBodyPartID(mat.name);
+            MaterialUtility.FixupDefaultShaderParams(mat, bodyPart);            
             return true;
         }
     }

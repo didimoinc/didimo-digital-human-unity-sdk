@@ -68,7 +68,7 @@ namespace Didimo
         int IrisScaleNameID = -1;
         MaterialPropertyBlock LeftpropBlock = null;
         MaterialPropertyBlock RightpropBlock = null;
-
+        
         void ProcessEyepropBlock(Eye eye, MaterialPropertyBlock propBlock, Renderer renderer)
         {
             renderer.GetPropertyBlock(propBlock, 0);

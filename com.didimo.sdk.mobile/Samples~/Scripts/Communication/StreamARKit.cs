@@ -49,6 +49,7 @@ namespace Didimo.Mobile.Communication
         
             try
             {
+
                 // Debug.Log($"Blendshape weights: {string.Join(", ", blendshapeWeights)}");
                 if (DidimoCache.TryFindDidimo(didimoKey, out DidimoComponents didimo))
                 {

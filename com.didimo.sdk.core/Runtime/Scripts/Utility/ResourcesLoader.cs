@@ -5,18 +5,15 @@ using UnityEngine.Rendering;
 
 namespace Didimo.Core.Utility
 {
-    public enum EPipelineType
-    {
-        EPT_URP     = 0,
-        EPT_HDRP    = 1,
-        EPT_SRP     = 2,
-        EPT_UNKNOWN = 3,
-    }
+  
 
     public class ResourcesLoader
     {
         public static string[] ResourceIDs = {"ShaderResources", "ShaderResourcesHDRP", "ShaderResourcesSRP", "Unknown"};
+        public static string[] PipelineName = { "URP", "HDRP", "SRP", "Unknown" };
+        public static string[] PipelineDescription = { "Universal Render Pipeline", "High Definition Render Pipeline", "Standard Render Pipeline", "Unknown" };
 
+        
         public static EPipelineType GetAppropriateID()
         {
             if (GraphicsSettings.renderPipelineAsset)
@@ -26,6 +23,32 @@ namespace Didimo.Core.Utility
             }
 
             return EPipelineType.EPT_URP;
+        }
+
+        public static void SetPipeline(EPipelineType pipeline)
+        {
+            var pipelineDB = UnityEngine.Resources
+                .Load<PipelineResources>("PipelineResources");
+            if (pipelineDB)
+            {
+                RenderPipelineAsset pipelineAsset = null;
+                switch (pipeline)
+                {
+                    case EPipelineType.EPT_HDRP:
+                        pipelineAsset = pipelineDB.HDRPPipelineAsset;
+
+                        break;
+                    case EPipelineType.EPT_URP:
+                        pipelineAsset = pipelineDB.URPPipelineAsset;
+                        break;
+                }
+                if (pipelineAsset != null)
+                {                    
+                    GraphicsSettings.defaultRenderPipeline = pipelineAsset;
+                    QualitySettings.renderPipeline = pipelineAsset;
+                }
+            }
+
         }
 
         public static string GetAppropriateIDString() { return ResourceIDs[(int) GetAppropriateID()]; }

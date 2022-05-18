@@ -41,9 +41,9 @@ namespace Didimo.Builder
         protected void OnAfterBuild(Configuration configuration, DidimoBuildContext context)
         {
             context.DidimoComponents.gameObject.AddComponent<DidimoSpeech>();
-            context.DidimoComponents.gameObject.AddComponent<DidimoDeformables>();
+            DidimoDeformables deformables = context.DidimoComponents.gameObject.AddComponent<DidimoDeformables>();
+            deformables.CacheHairOffsets();
             context.DidimoComponents.gameObject.AddComponent<DidimoMaterials>();
-
             context.DidimoComponents.gameObject.SetActive(true);
         }
     }

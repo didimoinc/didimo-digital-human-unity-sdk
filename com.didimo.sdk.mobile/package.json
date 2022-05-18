@@ -1,6 +1,6 @@
 {
   "name": "com.didimo.sdk.mobile",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "displayName": "Didimo SDK - Mobile",
   "description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\nThis module provides a communication layer to make it simpler to communicate between the native apps and our SDK, with support for asynchronous calls and callbacks.",
   "unity": "2020.3",
@@ -8,7 +8,7 @@
   "changelogUrl": "https://developer.didimo.co/changelog",
   "licensesUrl": "https://privacy.didimo.co/didimo-source-code-license/",
   "dependencies": {
-    "com.didimo.sdk.core": "4.2.0"
+    "com.didimo.sdk.core": "4.2.1"
  },
  "keywords": [
   "avatar", "sdk", "face", "didimo", "human", "character"

@@ -87,6 +87,8 @@ Material:
     - _MicroNormalStrength: 0.035
     - _MicroNormalTiling: 100
     - _NormalStrength: 0.4
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RGBHaircap: 0
     - _SSSAdd: 0.1
     - _SSSblendtoggle: 1

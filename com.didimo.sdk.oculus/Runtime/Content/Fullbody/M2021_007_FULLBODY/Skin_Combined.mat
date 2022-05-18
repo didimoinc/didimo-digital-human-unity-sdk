@@ -79,7 +79,7 @@ Material:
     - _AOAdd: 0.325
     - _AOPow: 0.27
     - _AlphaClipThreshold: 0.5
-    - _DidimoRoughnessBias: 0.33
+    - _DidimoRoughnessBias: 0.438
     - _EnableSRGBGammaCorrection: 0
     - _HairCapModulate: 0.8
     - _HaircapOpacity: 0
@@ -93,8 +93,8 @@ Material:
     - _SSSAdd: 0.1
     - _SSSblendtoggle: 1
     - _SSSonlytoggle: 0
-    - _SpecularCavityContribution: 0.7
-    - _SpecularStrength: 0.63
+    - _SpecularCavityContribution: 0.671
+    - _SpecularStrength: 0.68
     - _SssAoFactor: 1
     - _ZBias: 0
     m_Colors:

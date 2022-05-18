@@ -13,6 +13,47 @@ namespace Didimo.Builder
     {
         public Transform TargetTransformOverride { get; set; }
 
+
+        public virtual bool FindIdealShader(
+           string shaderName, out Shader shader)
+        {
+            shader = null;
+
+            ShaderResources shaderResources = ResourcesLoader.ShaderResources(EPipelineType.EPT_UNKNOWN);
+
+            switch (shaderName.ToLowerInvariant())
+            {
+                case "eye":
+                    shader = shaderResources.Eye;
+                    break;
+                case "skin":
+                    shader = shaderResources.Skin;
+                    break;
+                case "mouth":
+                    shader = shaderResources.Mouth;
+                    break;
+                case "transcolor":
+                    shader = shaderResources.Eyelash;
+                    break;
+                case "texturelighting":
+                    shader = shaderResources.UnlitTexture;
+                    break;
+                case "hair":
+                    shader = shaderResources.Hair;
+                    break;
+                case "cloth":
+                    shader = shaderResources.Cloth;
+                    break;
+            }
+
+            if (shader == null)
+            {
+                shader = Shader.Find(shaderName);
+            }
+
+            return shader != null;
+        }
+
         public async Task<bool> TryBuild(DidimoBuildContext context, MaterialDataContainer materialDataContainer)
         {
             await materialDataContainer.Prepare(context, this);
@@ -95,9 +136,7 @@ namespace Didimo.Builder
             return true;
         }
 
-        public abstract bool NameToProperty(string name, out string propertyName);
-
-        public abstract bool FindIdealShader(string shaderName, out Shader shader);
+        public abstract bool NameToProperty(string name, out string propertyName);        
 
         public static void ProcessPropertyBlocksInHierarchy(
             Transform transform,
@@ -125,24 +164,25 @@ namespace Didimo.Builder
         {
             builder = null;
 
-            var buildConfig = Resources.Load<DidimoBuildConfig>("DidimoBuildConfig");
+            EPipelineType plt = ResourcesLoader.GetAppropriateID();
 
-            switch (buildConfig.Pipeline)
+            switch (plt)
             {
-                case SupportedRenderPipelines.Standard:
+                case EPipelineType.EPT_SRP:
                     builder = new StandardPipelineMaterialBuilder();
                     return true;
 
-                case SupportedRenderPipelines.UniversalRenderPipeline:
+                case EPipelineType.EPT_URP:
                     builder = new UniversalRenderingPipelineMaterialBuilder();
                     return true;
 
-                case SupportedRenderPipelines.HighDefinitionRenderPipeline:
-                    break;
+                case EPipelineType.EPT_HDRP:
+                    builder = new HighDefinitionRenderingPipelineMaterialBuilder();
+                    return true;                    
             }
 
             Debug.LogWarning($"No valid material builder available " +
-                $"for pipeline: {buildConfig.Pipeline}");
+                $"for pipeline: {plt}");
 
             return false;
         }
@@ -153,6 +193,14 @@ namespace Didimo.Builder
             modificationAction = null;
             return false;
         }
+
+        public virtual bool PostMaterialCreate(Material mat)
+        {
+            return false;
+        }
+
+
+
 
         public static bool CopyMaterialProperty(Material source, int sourceIdx, Material target, int targetIdx)
         {
@@ -211,7 +259,7 @@ namespace Didimo.Builder
             }
             return false;
         }
-        public static int findShaderPropertyContaining(Shader shader, string nameFragment, ShaderPropertyType propType)
+        public static int FindShaderPropertyContaining(Shader shader, string nameFragment, ShaderPropertyType propType)
         {
             for (var i = 0; i < shader.GetPropertyCount(); ++i)
             {
@@ -244,7 +292,7 @@ namespace Didimo.Builder
                         foreach (var potentialAlias in potentialAliases)
                         {
                             if (potentialAlias.StartsWith("*"))
-                                sourcePropIdx = findShaderPropertyContaining(Source.shader, potentialAlias.Substring(1).ToLower(), propType);
+                                sourcePropIdx = FindShaderPropertyContaining(Source.shader, potentialAlias.Substring(1).ToLower(), propType);
                             else
                                 sourcePropIdx = Source.shader.FindPropertyIndex(propName);
                             if (sourcePropIdx != -1)

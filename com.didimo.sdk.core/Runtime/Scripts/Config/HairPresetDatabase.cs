@@ -109,9 +109,16 @@ namespace Didimo.Core.Config
             var hairpiece_name = ExtractValidHairName(hair.gameObject.name);
             foreach (var m in meshes)
             {
-                var name = ExtractValidHairName(m.sharedMesh.name.ToLower());
-                if (name != null)
-                    return name;
+                if (m.sharedMesh != null && m.sharedMesh.name != null)
+                {
+                    var name = ExtractValidHairName(m.sharedMesh.name.ToLower());
+                    if (name != null)
+                        return name;
+                }
+                else
+                {
+                    Debug.Log("Problem encountered extracting hair ID");
+                }
             }
 
             var meshRenderers = hair.GetComponentsInChildren<MeshRenderer>();

@@ -121,7 +121,15 @@ namespace Didimo.Core.Model
         {
             if (builder.NameToProperty(parameter.Name, out string propertyName))
             {
-                parameter.Property = propertyName;
+                try
+                {
+                    parameter.Property = propertyName;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+                
             }
 
             // Load textures from cache.

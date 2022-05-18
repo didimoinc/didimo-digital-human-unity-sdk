@@ -52,10 +52,13 @@ namespace Didimo.Core.Editor
         protected void OnGUI()
         {
             GUILayout.Space(PADDING);
+            var oldSelectedTab = SelectedTab;
             SelectedTab = GUILayout.Toolbar(SelectedTab,
                 tabs.Select(x => x.GetTabName()).ToArray());
             GUILayout.Space(PADDING);
-            tabs[SelectedTab].Draw(this);
+            if (oldSelectedTab != SelectedTab)
+                tabs[SelectedTab].OnActivated();                
+            tabs[SelectedTab].Draw(this);            
         }
 
         protected void DrawHeader(ref Rect area, string headerLabel)
@@ -74,7 +77,7 @@ namespace Didimo.Core.Editor
             area = area.WithTrimY(HEADER_HEIGHT + PADDING, RectAnchor.Bottom);
         }
 
-        [MenuItem("Didimo/Didimo Manager")]
+        [MenuItem("Window/Didimo Manager")]
         public static void ShowWindow()
         {
             DidimoManager window = GetWindow<DidimoManager>();

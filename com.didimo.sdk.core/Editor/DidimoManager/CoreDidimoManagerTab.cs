@@ -81,11 +81,9 @@ namespace Didimo.Core.Editor
 
             if (sample != null && PackageUtility.LoadSceneFromSample(sample!.Value, "MeetADidimo/MeetADidimo.unity"))
             {
-#if UNITY_EDITOR_OSX
 EditorUtility.DisplayDialog("Re-open Scene",
                     "There is a Unity bug where the first time we open this scene, it doesn't de-serialize properly. If you see errors in the console, please exit play mode, re-open the (MeetADidimo) scene manually , and hit play to see didimos in action.",
                     "OK");
-#endif
 
                 EditorApplication.EnterPlaymode();
             }
