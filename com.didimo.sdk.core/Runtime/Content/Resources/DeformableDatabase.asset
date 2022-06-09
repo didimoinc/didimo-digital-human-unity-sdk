@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: DeformableDatabase
   m_EditorClassIdentifier: Assembly-CSharp:Didimo.Core.Animation.Data:HairDatabase
   Deformables:
-  - {fileID: 1454384284889028701, guid: ef456916c27dfc0499cd3cc30fd0d2e3, type: 3}
-  - {fileID: -8226903175446513334, guid: 3be1e169d540f514aac98ddcd127cd5c, type: 3}
-  - {fileID: 3446940278380092241, guid: ca8eb1e50ed5508498f791ce8db43ec2, type: 3}
-  - {fileID: 5840598423108440419, guid: 06ac27113fbce784aac0ef346b24bcaa, type: 3}
-  - {fileID: 8240623400644290001, guid: 6020a0fd21c054a42b8cd082ebd32128, type: 3}
-  - {fileID: 7764268260446276995, guid: 4f91eba44a6769e4191419802033fece, type: 3}
-  - {fileID: 5304849936747633692, guid: 4f702516cae7e6d49a96728af4f1d123, type: 3}
-  - {fileID: 8405544016960989387, guid: 11aec7ac655a34043b27cb6e4d1ea16d, type: 3}
-  - {fileID: 1652932109147358227, guid: 3187394ef6ea71247a7bf0fcd1697a7c, type: 3}
-  - {fileID: 4659184696071372294, guid: 55801dc89cfe33649a48b40ba8174e97, type: 3}
-  - {fileID: 7067365891063259740, guid: cf7364ca04559604fa443baa92d4f763, type: 3}
-  - {fileID: 1150692753716284096, guid: 2f5d7d515e26b1c47a356a26d0841b06, type: 3}
+  - {fileID: 8344252012426998080, guid: e75fd01eb6b235e4d98256b176337c24, type: 3}
+  - {fileID: 7646022273108489327, guid: 54c67ad86f311a942aba4d01de8a3095, type: 3}
+  - {fileID: 506672629937002875, guid: 702d0661f626919469b53c7a459ae347, type: 3}
+  - {fileID: 3404502580348456009, guid: 3c4c73b8e1d20f14c8188aad479219f2, type: 3}
+  - {fileID: 489699465268293515, guid: ae7ab07f9e447e14cbe864f6155290f0, type: 3}
+  - {fileID: 6602181503665475054, guid: fb39b7796673f0b4784645ce76e0886a, type: 3}
+  - {fileID: 1904753041507987054, guid: 9ed559946f5921d4999b1ffbbf29ff15, type: 3}
+  - {fileID: 3390105795808938325, guid: e45967bbc41a477439dc9ab77ab9cd1a, type: 3}
+  - {fileID: 7447871868365383992, guid: c15a4de8dc4e794429068a135650fc50, type: 3}
+  - {fileID: 8599402606241237210, guid: b963c53a69f649443b0008d38686d464, type: 3}
+  - {fileID: 2761399520639963696, guid: b83e30591efa80e4cba46198c6e62bc4, type: 3}
+  - {fileID: 659127710235552809, guid: ef2324b68f953ea48b4b4f3eb722fe58, type: 3}
+  - {fileID: 2778691489751061538, guid: 5503d4f12a1b0614bb68b837cc8e1b2e, type: 3}
+  - {fileID: 6180900347676221309, guid: 9cf608199c981fb499cef821bb3f7cc1, type: 3}

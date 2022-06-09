@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3090206999772231935
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: hair_006.obj_inner_URP
+  m_Shader: {fileID: 4800000, guid: e525686ef61cd8d499a00e14e36fb3ab, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AOMap:
+        m_Texture: {fileID: 2800000, guid: 2481647e7bf17ab468bd31e6aac1c596, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AOMapUnique:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 4d5be238ad4d45043b7d3278249191b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Opacity:
+        m_Texture: {fileID: 2800000, guid: 0d445b2016ca01d4fa148be6c20e331a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _flowMap:
+        m_Texture: {fileID: 2800000, guid: 6d18b3a8662ca4c439fbd89c4dfc3aba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _rootToTip:
+        m_Texture: {fileID: 2800000, guid: 93a0b9daca7b74c44afa8efa03922b5c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_d736b3961f494ab4bf4caef93b0473b3: 0.16
+    - _AOFactor: 0.1
+    - _AOStrength: 1
+    - _AlphaLODbias: 1
+    - _AlphaPower: 0.23
+    - _AnisoHighlightRotation: -321
+    - _EnvRough: 1
+    - _EnvSpecularScale: 0.1
+    - _MeshTangentRotation: 90
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _SDF_AAFactor: 0
+    - _SDF_gamma: 0
+    - _SDF_smoothing: 0
+    - _SDF_toggle: 0
+    - _ScaterFactor: 0
+    - _ScatterFactor: 0
+    - _TangentFlowMapRotation: 270
+    - _TestNormals: 0
+    - _TestTangents: 0
+    - _TransmissionHaloSharpness: 7.3
+    - _TransmissionStrength: 0.16
+    - _UseFlowMap: 1
+    - _UseUniqueAO: 0
+    - _UseUniqueAOMap: 0
+    - _alphaClipThreshold: 0.05
+    - _flowMultiplier: 1
+    - _hairAlbedoMultiply: 0.5
+    - _hairScaleNudge: 0
+    - _specExp1: 200
+    - _specExp2: 300
+    - _specMultiply: 2
+    - _specShift: 0.1
+    - _specShift2: 0.12
+    m_Colors:
+    - _HairColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []

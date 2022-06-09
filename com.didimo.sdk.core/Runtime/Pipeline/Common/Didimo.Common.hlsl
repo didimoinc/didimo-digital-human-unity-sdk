@@ -17,6 +17,29 @@ void VertexSphereUnion_float(in float3 pos, in float3 sc, in float sr, out float
 }
 
 
+float2 hash2( float2 p )
+{        
+    return frac(sin(float2(dot(p,float2(127.1,311.7)),dot(p,float2(269.5,183.3))))*43758.5453);
+}
+
+float GenerateRandom(float3 input)
+{
+    float3 prime1 = float3(419.0,853.0,1009.0);
+    float3 prime2 = float3(2243.0,503.0,2053.0);
+    return frac(sin(dot(input, prime1) * dot(input, prime2) )*43758.5453);
+}
+
+
+void LODFade_float(out float LOD)
+{
+    LOD = 0;
+}
+
+void GenerateRandomFloat_float(float3 input, out float ret)
+{
+    ret = GenerateRandom(input);
+}
+
 float2 RotateZ(const in float2 vPos, const in float fAngle)
 {
 	const float DEG_TO_RAD = 0.01745329251;
@@ -272,7 +295,7 @@ void EyeBaseUVAdjust_float(in float2 uv, in float3 t, float3 p, out float2 res2)
 }
 
 
-void PrepareEyeUv_float(in float3 tV, in float2 uv, in float eyeRefraction, out float2 refrUv, out float refrHeight, out float3 concaveNormal) {
+void PrepareEyeUv_float(in float3 tV, in float2 uv, in float eyeRefracion, out float2 refrUv, out float refrHeight, out float3 concaveNormal) {
 	const half3 ctN = half3(0, 0, 1);
 
 #ifdef SHADERGRAPH_PREVIEW
@@ -315,7 +338,7 @@ void PrepareEyeUv_float(in float3 tV, in float2 uv, in float eyeRefraction, out 
 
 	// refrHeight *= refrHeight;
 
-	half2 offset = tV.xy * tV.z * refrHeight * eyeRefraction * 0.4;
+	half2 offset = tV.xy * tV.z * refrHeight * eyeRefracion * 0.4;
 
 	refrUv = uv - offset;
 #endif
@@ -395,7 +418,7 @@ void MatrixRotateXYZ_half(in float3 o, out half4x4 m)
 
 
 
-void RefractionDirection_float(in float internalIoR, in float3 normalW, in float3 cameraW, out float3 output)
+void RefracionDirection_float(in float internalIoR, in float3 normalW, in float3 cameraW, out float3 output)
 {
     float airIoR = 1.00029;
     float n = airIoR / internalIoR;
@@ -420,7 +443,7 @@ void IrisUVMask_float(in float IrisUVRadius, in float2 UV, in float3 LimbusUVWid
 }
 
 
-float2 DeriveTangents(in float3 EyeDirectionWorld, in float3 TangentBasisX, in float3 ScaledRefractionDirection)
+float2 DeriveTangents(in float3 EyeDirectionWorld, in float3 TangentBasisX, in float3 ScaledRefracionDirection)
 {
     float dp = dot(TangentBasisX, EyeDirectionWorld);
     float3 scaleEDW = EyeDirectionWorld * dp;
@@ -428,7 +451,7 @@ float2 DeriveTangents(in float3 EyeDirectionWorld, in float3 TangentBasisX, in f
 
     float3 cp = cross(TD2, EyeDirectionWorld);
 
-    return float2(dot(ScaledRefractionDirection, TD2), dot(cp, ScaledRefractionDirection));
+    return float2(dot(ScaledRefracionDirection, TD2), dot(cp, ScaledRefracionDirection));
 }
 
 void ScalePupils_float(in float2 UV, float PupilScale, float2 PupilShift, out float2 UVscaled)
@@ -454,21 +477,21 @@ void SphereMask_float(in float2 input, in float2 centre, in float radius, in flo
     result = ((d - radius) - 1.0) / (hardness - 1);
 }
 
-void EyeRefraction_float(in float2 UV, in float DepthPlaneOffset, in float3 MidPlaneDisplacement, 
+void EyeRefracion_float(in float2 UV, in float DepthPlaneOffset, in float3 MidPlaneDisplacement, 
                          in float InputDepthScale, in float3 camVec, in float3 PixelNormalWS, 
                          in float3 EyeDirectionWorld, in float InternalIoR, in float3 LimbusUVWidth, 
                          in float3 TangentBasisX, float IrisUVRadius, 
-                         out float2 OutputRefractedUV, out float OutputTransparency, out float3 OutputIrisUVMask)
+                         out float2 OutputRefracedUV, out float OutputTransparency, out float3 OutputIrisUVMask)
 {
     float3 offset = max(MidPlaneDisplacement, float3(0.0, 0.0, 0.0)) * InputDepthScale;
 
     float camDot = dot(camVec, EyeDirectionWorld);
-    float3 ScaledRefractedOffsetDirection = offset / lerp(0.325, 1.0, camDot * camDot);
+    float3 ScaledRefracedOffsetDirection = offset / lerp(0.325, 1.0, camDot * camDot);
     float2 c1 = IrisUVRadius * float2(-1.0, 1.0);
-    float2 UVIrisScaled = c1 * DeriveTangents(EyeDirectionWorld, TangentBasisX, ScaledRefractedOffsetDirection);
+    float2 UVIrisScaled = c1 * DeriveTangents(EyeDirectionWorld, TangentBasisX, ScaledRefracedOffsetDirection);
     OutputTransparency = length(UVIrisScaled) - IrisUVRadius;
     IrisUVMask_float(IrisUVRadius, UV, LimbusUVWidth, OutputIrisUVMask);
-    OutputRefractedUV = lerp(UVIrisScaled + UV, UV, OutputIrisUVMask.x);
+    OutputRefracedUV = lerp(UVIrisScaled + UV, UV, OutputIrisUVMask.x);
 }
 
 #endif

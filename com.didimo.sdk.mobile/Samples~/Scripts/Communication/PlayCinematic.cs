@@ -62,6 +62,7 @@ namespace Didimo.Mobile.Communication
                     {
                         CinematicManager.Instance.StopCinematic();
                         DidimoLookAtController.Instance.EnableLookAt(true);
+                        DidimoLookAtController.Instance.Reset(false);
                     }
                     else
                     {
@@ -77,8 +78,8 @@ namespace Didimo.Mobile.Communication
                             });
 
                         CinematicManager.Instance.RemapTimeline(didimoKey);
-                        successCallback(objectPointer);
                     }
+                    successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {

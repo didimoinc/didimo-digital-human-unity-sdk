@@ -12,6 +12,29 @@ namespace Didimo.GLTFUtility {
 	// https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#node
 	[Preserve] public class GLTFNode {
 #region Serialization
+		[Preserve]
+		public class DidimoMeshExtra
+		{
+			public enum EObjectType
+			{
+				None,
+				Hair
+			}
+			public string objectType;
+
+			public EObjectType GetObjectType()
+			{
+				bool parsed = Enum.TryParse(objectType, true, out EObjectType objectTypeResult);
+				return parsed ? objectTypeResult : EObjectType.None;
+			}
+		}
+
+		[Preserve]
+		public class Extras
+		{
+			public DidimoMeshExtra Didimo;
+		}
+
 		public string name;
 		/// <summary> Indices of child nodes </summary>
 		public int[] children;
@@ -27,6 +50,7 @@ namespace Didimo.GLTFUtility {
 		public int? skin;
 		public int? camera;
 		public int? weights;
+		public Extras extras;
 
 		public bool ShouldSerializetranslation() { return translation != Vector3.zero; }
 		public bool ShouldSerializerotation() { return rotation != Quaternion.identity; }
@@ -35,9 +59,10 @@ namespace Didimo.GLTFUtility {
 
 #region Import
 		public class ImportResult {
-			public int? parent;
-			public int[] children;
+			public int?      parent;
+			public int[]     children;
 			public Transform transform;
+			public bool      IsDidimoHair = false;
 
 			public bool IsRoot { get { return !parent.HasValue; } }
 		}
@@ -78,6 +103,10 @@ namespace Didimo.GLTFUtility {
 					Result[i] = new GLTFNode.ImportResult();
 					Result[i].transform = new GameObject().transform;
 					Result[i].transform.name = nodes[i].name;
+					if (nodes[i].extras?.Didimo?.GetObjectType() == DidimoMeshExtra.EObjectType.Hair)
+					{
+						Result[i].IsDidimoHair = true;
+					}
 				}
 				// Set up hierarchy
 				for (int i = 0; i < Result.Length; i++) {

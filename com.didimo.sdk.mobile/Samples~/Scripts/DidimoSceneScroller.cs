@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Didimo.Core.Inspector;
 using Didimo.Core.Utility;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace Didimo.Mobile
 
         private List<GameObject> didimoInstances;
 
-        private int currentDidimo = -1;
+        private int  currentDidimo = -1;
         private bool running;
 
         public bool InitializeIfNeeded(int initialDidimoIndex = 0)
@@ -55,7 +54,7 @@ namespace Didimo.Mobile
             StopAllCoroutines();
             foreach (GameObject didimoInstance in didimoInstances)
             {
-                Destroy(didimoInstance);
+                DidimoCache.TryDestroy(didimoInstance.GetComponent<DidimoComponents>().DidimoKey);
             }
 
             currentDidimo = -1;
@@ -65,7 +64,7 @@ namespace Didimo.Mobile
         [Button]
         public void ScrollToDidimo(int didimoIndex = -1, Action<float> progress = null)
         {
-            if (running || !Application.isPlaying) return;
+            if (running || !Application.isPlaying || didimoIndex == currentDidimo) return;
 
             if (didimoIndex == -1) didimoIndex = scrollToDidimo;
             if (didimoIndex < 0 || didimoIndex >= didimos.Length)
@@ -123,6 +122,21 @@ namespace Didimo.Mobile
             return bounds;
         }
 
+        private float? IntersectCameraFrustumWithRay(Camera cam, Ray ray)
+        {
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+            foreach (Plane plane in planes)
+            {
+                if (plane.Raycast(ray, out float distance))
+                {
+                    return distance;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Get the position we need to place the object at, for it to be off screen (outside camera frustum)
         /// </summary>
@@ -132,30 +146,26 @@ namespace Didimo.Mobile
         Vector3 GetOffScreenPosition(GameObject obj, bool right)
         {
             Bounds bounds = GetBounds(obj);
+
             Camera mainCamera = Camera.main;
-            Vector3 position = obj.transform.position;
+            var cameraRightDir = mainCamera!.transform.right;
 
-            float distanceFromObjToCamera = Vector3.Distance(mainCamera!.transform.position, bounds.center);
-            Vector3 screenCenter = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth / 2f, mainCamera.pixelHeight / 2f, distanceFromObjToCamera));
-            Vector3 centerLeftObjOffscreenPos = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight / 2f, distanceFromObjToCamera));
+            Vector3 offsecreenDirection = right ?cameraRightDir: -cameraRightDir;
 
-            Vector3 centerRightObjOffscreenPos = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight / 2f, distanceFromObjToCamera));
+            Vector3 centerRightOffscreenPos = bounds.center + (cameraRightDir * IntersectCameraFrustumWithRay(mainCamera, new Ray(bounds.center, cameraRightDir))!.Value);
+            Vector3 centerLeftOffscreenPos = bounds.center + (-cameraRightDir * IntersectCameraFrustumWithRay(mainCamera, new Ray(bounds.center, -cameraRightDir))!.Value);
 
-            Vector3 offset;
-            if (right)
-            {
-                offset = centerRightObjOffscreenPos - screenCenter;
-                Vector3 boundsOffset = bounds.ClosestPoint(centerLeftObjOffscreenPos) - centerRightObjOffscreenPos;
-                offset += mainCamera.transform.rotation * boundsOffset;
-            }
-            else
-            {
-                offset = centerLeftObjOffscreenPos - screenCenter;
-                Vector3 boundsOffset = bounds.ClosestPoint(centerRightObjOffscreenPos) - centerLeftObjOffscreenPos;
-                offset += mainCamera.transform.rotation * boundsOffset;
-            }
+            Vector3 result = obj.transform.position;
 
-            return position + offset;
+            // Why is the distance sometimes negative?
+            float maxDimBounds = Mathf.Max(Mathf.Max(bounds.extents.x, bounds.extents.y), bounds.extents.z);
+
+            Vector3 offscreen = (right ? centerRightOffscreenPos : centerLeftOffscreenPos);
+            float distanceToOffscreen = Vector3.Distance(bounds.center, offscreen) + maxDimBounds;
+
+            result += offsecreenDirection * distanceToOffscreen;
+
+            return result;
         }
 
         IEnumerator ScrollCoroutine(GameObject didimoOut, GameObject didimoIn, bool scrollRight, Action<float> progress)
@@ -163,6 +173,8 @@ namespace Didimo.Mobile
             running = true;
             didimoIn.SetActive(true);
 
+            // Place it in the center, so we can calculate the off screen position correctly
+            didimoIn.transform.position = didimoOut.transform.position;
             Vector3 initialPositionOldDidimo = didimoOut.transform.position;
             Vector3 finalPositionOldDidimo = GetOffScreenPosition(didimoOut, !scrollRight);
             Vector3 initialPositionNewDidimo = GetOffScreenPosition(didimoIn, scrollRight);

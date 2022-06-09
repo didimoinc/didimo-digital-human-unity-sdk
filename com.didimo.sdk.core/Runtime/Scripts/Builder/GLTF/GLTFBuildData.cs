@@ -6,6 +6,7 @@ using Didimo.Core.Utility;
 using Didimo.GLTFUtility;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Didimo.Builder.GLTF
 {
@@ -92,6 +93,9 @@ namespace Didimo.Builder.GLTF
             DidimoComponents didimoComponents = gltfImportResult.rootObject.AddComponent<DidimoComponents>();
             DidimoBuildContext context = DidimoBuildContext.CreateNew(didimoComponents, string.Empty);
             AddRequiredComponents(gltfImportResult, gltfImportResult.rootObject, importSettings);
+            
+            GLTFDidimoHair.ApplyHairMaterials(gltfImportResult);
+            
             buildData.OnAfterBuild(configuration, context);
 
             return context.DidimoComponents;
@@ -125,6 +129,13 @@ namespace Didimo.Builder.GLTF
             {
                 DidimoIrisController didimoIrisController = root.AddComponent<DidimoIrisController>();
                 didimoIrisController.Build(gltfImportResult.irisController);
+                gltfImportResult.irisController.LeftEyeMesh.updateWhenOffscreen = true;
+                gltfImportResult.irisController.RightEyeMesh.updateWhenOffscreen = true;
+            }
+
+            if (gltfImportResult.EyelashMesh != null)
+            {
+                gltfImportResult.EyelashMesh.shadowCastingMode = ShadowCastingMode.Off;
             }
 
             LegacyAnimationPoseController poseController = root.AddComponent<LegacyAnimationPoseController>();

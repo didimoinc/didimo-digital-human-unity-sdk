@@ -62,10 +62,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: bbd9572535324424fa8570caa2a35775, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTexture:
+        m_Texture: {fileID: 2800000, guid: 212fdaf024c4448418925939be9a7ff4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedo:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -74,6 +86,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -89,8 +105,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metal_Rough_AO_SS_Map:
+        m_Texture: {fileID: 2800000, guid: 2626902b9b6bddb448666ac7479ab9b0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: db3ed11c32600da409fead2739a42c81, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -141,14 +165,24 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DecalRotation: 25
+    - _DecalAlphaClip: 0
+    - _DecalAsSDF: 0
+    - _DecalEmbossHeight: -0.21
+    - _DecalEmbossProfile: 1.49
+    - _DecalMetalicity: 1
+    - _DecalRotation: 53
+    - _DecalSDFSmoothing: 1
+    - _DecalSmoothness: 0.271
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EmbossDecal: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _MainMetalicity: 0.01
+    - _MainSmoothness: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -160,8 +194,12 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TestNormals: 0
+    - _UseDecals: 1
+    - _UseUnityHeightToNormal: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _slopedelta: 0.004
     m_Colors:
     - Color_552e1aa5a06d4f4e95272f43cbaf2e3e: {r: 0.5015561, g: 0.9528302, b: 0.26517445, a: 0}
     - Color_77e6ede2948c44a7b0389fb5c65ee515: {r: 0.2286862, g: 0.11672302, b: 0.4056604, a: 0}
@@ -169,9 +207,14 @@ Material:
     - Vector2_3f5fc5765bca4a70a39bc1e94e238594: {r: -15, g: 14.22, b: 0, a: 0}
     - Vector3_aea3245da8024c4a96ec6ca25e7eedd8: {r: 0, g: 1.8, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColour: {r: 0.16049391, g: 0.04298681, b: 0.43396226, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DecalAxis: {r: 1, g: 0, b: 0, a: 0}
+    - _DecalColour: {r: 0.16509432, g: 0.6603774, b: 0.29069993, a: 0}
+    - _DecalOffset: {r: 0.47, g: -20.09, b: 0, a: 0}
+    - _DecalScale: {r: -20, g: 20, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HatOriginOffset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _StichingColour: {r: 0.5566038, g: 0.49621752, b: 0.49621752, a: 0}
   m_BuildTextureStacks: []

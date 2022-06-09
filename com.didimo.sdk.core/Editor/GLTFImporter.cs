@@ -12,9 +12,9 @@ using UnityEngine;
 namespace Didimo.Core.Editor
 {
 #if USE_DIDIMO_CUSTOM_FILE_EXTENSION
-    [ScriptedImporter(7, new string[]{"gltfd", "glbd"}, importQueueOffset: 100)]
+    [ScriptedImporter(10, new string[]{"gltfd", "glbd"}, importQueueOffset: 100)]
 #else
-    [ScriptedImporter(8,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
+    [ScriptedImporter(10,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
 #endif
     public class GLTFImporter : ScriptedImporter
     {

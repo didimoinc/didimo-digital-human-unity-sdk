@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -18,6 +19,20 @@ namespace Didimo.Core.Utility
 
             return Path.GetFullPath(path); // This should clean up things like /../
         }
+        
+        public static string FullPathToProjectPath(string path)
+        {
+            int subidx = path.IndexOf("assets",StringComparison.CurrentCultureIgnoreCase);
+            if (subidx == -1)
+                subidx = path.IndexOf("packages",StringComparison.CurrentCultureIgnoreCase);
+            #if FUTURE_TEST_FOR_PACKAGE_CACHE_LOCATION
+            if (subidx == -1)
+                subidx = path.IndexOf("packagecache",StringComparison.CurrentCultureIgnoreCase);
+            #endif
+            if (subidx != -1)
+                return path.Substring(subidx);
+            return path;
+        }
 
         public static string NormalizePath(string path)
         {            
@@ -31,6 +46,8 @@ namespace Didimo.Core.Utility
             {
                 var ac = 0;
                 var letter = ip[ii];
+                if (ii >= qs.Length)
+                    return v;
                 if (letter == qs[ii])
                     v += al;
                 else

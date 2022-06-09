@@ -255,6 +255,186 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 0.077, g: 0.077, b: 0.077, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 5.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.409, g: 0.409, b: 0.409, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 0.7
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 96
+      glossiness2: 15
+      shineMultiplier: 2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+      glossiness1: 642
+      glossiness2: 711
+      shineMultiplier: 5
+      specShift1: 0.005
+      specShift2: -0.174
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 96
+      glossiness2: 15
+      shineMultiplier: 0.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+      glossiness1: 570
+      glossiness2: 901
+      shineMultiplier: 2.6
+      specShift1: 0.005
+      specShift2: -0.174
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 96
+      glossiness2: 15
+      shineMultiplier: 2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.198, g: 0.198, b: 0.198, a: 1}
+      glossiness1: 50
+      glossiness2: 70
+      shineMultiplier: 1.3
+      specShift1: 0.005
+      specShift2: -0.174
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.17, g: 0.17, b: 0.17, a: 1}
+      glossiness1: 862
+      glossiness2: 772
+      shineMultiplier: 1.2
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
+      glossiness1: 96
+      glossiness2: 15
+      shineMultiplier: 2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+      glossiness1: 526
+      glossiness2: 476
+      shineMultiplier: 1.9
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
   - name: Dark Brown
     list:
     - color: {r: 0.16037738, g: 0.09830943, b: 0.061528422, a: 1}
@@ -427,10 +607,10 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_011.obj
       hairLayer: 0
-    - color: {r: 0.432, g: 0.258, b: 0.15599997, a: 1}
+    - color: {r: 0.368, g: 0.22080003, b: 0.13381821, a: 1}
       glossiness1: 500
       glossiness2: 300
-      shineMultiplier: 1
+      shineMultiplier: 1.7
       specShift1: 0.1
       specShift2: 0.2
       flowMultiply: 0.6
@@ -497,15 +677,215 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
-  - name: Light Brown
-    list:
-    - color: {r: 0.44, g: 0.30461538, b: 0.20615385, a: 1}
+    - color: {r: 0.324, g: 0.20041238, b: 0.12024743, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.234, g: 0.14315294, b: 0.09084707, a: 1}
       glossiness1: 131
       glossiness2: 8
       shineMultiplier: 0.7
       specShift1: -0.232
       specShift2: -0.405
       flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.438, g: 0.31285715, b: 0.2641905, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.304, g: 0.21147826, b: 0.1453913, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 0.44599998, g: 0.38537863, b: 0.27929127, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 0.608, g: 0.50666666, b: 0.32864863, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 0.524, g: 0.32166335, b: 0.19714852, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.18, g: 0.1097561, b: 0.0702439, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 5.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.16037738, g: 0.09830943, b: 0.061528422, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 5.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.467, g: 0.2857761, b: 0.17425373, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.283, g: 0.17256096, b: 0.11043902, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 0.9
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.524, g: 0.32166335, b: 0.19714852, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.16078432, g: 0.07187702, b: 0.021866664, a: 1}
+      glossiness1: 14
+      glossiness2: 2
+      shineMultiplier: 5.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.426, g: 0.26068655, b: 0.15895522, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.16037738, g: 0.09830943, b: 0.061528422, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 5.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 0.432, g: 0.2643582, b: 0.16119403, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.318, g: 0.194597, b: 0.11865671, a: 1}
+      glossiness1: 862
+      glossiness2: 772
+      shineMultiplier: 1.2
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.276, g: 0.16829267, b: 0.10770731, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.322, g: 0.19905457, b: 0.1288, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 1.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.43400002, g: 0.26558208, b: 0.16194029, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1.9
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
+  - name: Light Brown
+    list:
+    - color: {r: 0.7735849, g: 0.54563326, b: 0.46342114, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 0.7
+      specShift1: -0.067
+      specShift2: -0.071
+      flowMultiply: -0.2
       hairScaleNudge: 0
       key: 
       hairLayer: 0
@@ -515,7 +895,7 @@ MonoBehaviour:
       shineMultiplier: 0.5
       specShift1: -0.026
       specShift2: 0.011
-      flowMultiply: 0.8
+      flowMultiply: 0.24
       hairScaleNudge: 0
       key: 
       hairLayer: 1
@@ -739,6 +1119,206 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 0.56, g: 0.39573333, b: 0.336, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.44, g: 0.3076423, b: 0.20747969, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.517, g: 0.3655223, b: 0.3095414, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.466, g: 0.32447404, b: 0.2209185, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 0.898, g: 0.6364945, b: 0.54274726, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 0.77800006, g: 0.548518, b: 0.46456116, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 0.349, g: 0.19716235, b: 0.14503898, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.877, g: 0.6212083, b: 0.52528644, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.59400004, g: 0.4191168, b: 0.355797, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 0.7
+      specShift1: -0.067
+      specShift2: -0.071
+      flowMultiply: -0.2
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.72, g: 0.50884616, b: 0.43269232, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.53099996, g: 0.33061808, b: 0.25806597, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 0.2
+      specShift1: -0.067
+      specShift2: -0.071
+      flowMultiply: -0.2
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.564, g: 0.43698332, b: 0.388596, a: 1}
+      glossiness1: 33
+      glossiness2: 14
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.538, g: 0.335712, b: 0.259854, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 0.7
+      specShift1: -0.067
+      specShift2: -0.071
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.619, g: 0.44112644, b: 0.3735345, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.3
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.488, g: 0.38986957, b: 0.22013043, a: 1}
+      glossiness1: 9
+      glossiness2: 19
+      shineMultiplier: 0.1
+      specShift1: 0
+      specShift2: 0
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 0.5176471, g: 0.42485088, b: 0.2650353, a: 1}
+      glossiness1: 91
+      glossiness2: 73
+      shineMultiplier: 1.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.46, g: 0.32509616, b: 0.27644232, a: 1}
+      glossiness1: 862
+      glossiness2: 772
+      shineMultiplier: 1.2
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.396, g: 0.27941117, b: 0.23719797, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.665, g: 0.46921325, b: 0.39832488, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 0
+      specShift1: -0.067
+      specShift2: -0.071
+      flowMultiply: -0.2
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.681, g: 0.48128366, b: 0.4092548, a: 1}
+      glossiness1: 35
+      glossiness2: 14
+      shineMultiplier: 0.9
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
   - name: Dark Blonde
     list:
     - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
@@ -981,6 +1561,206 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 0.744, g: 0.6418198, b: 0.46619746, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.744, g: 0.6418198, b: 0.46619746, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 0.97199994, g: 0.83898944, b: 0.6087789, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 0.89199996, g: 0.74514633, b: 0.48407313, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.9227324, b: 0.789, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.48700002, g: 0.4068232, b: 0.26131707, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 3.4
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
+      glossiness1: 150
+      glossiness2: 2
+      shineMultiplier: 1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.66, g: 0.5696842, b: 0.41336843, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1.6
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.6431373, g: 0.566038, b: 0.42897257, a: 1}
+      glossiness1: 150
+      glossiness2: 2
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.807, g: 0.6965684, b: 0.50543684, a: 1}
+      glossiness1: 375
+      glossiness2: 168
+      shineMultiplier: 0.9
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
+      glossiness1: 110
+      glossiness2: 7
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.78, g: 0.67326313, b: 0.48852628, a: 1}
+      glossiness1: 71
+      glossiness2: 9
+      shineMultiplier: 0.2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.72199994, g: 0.57669175, b: 0.32694337, a: 1}
+      glossiness1: 12
+      glossiness2: 2
+      shineMultiplier: 0.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 0.83699995, g: 0.72246313, b: 0.52422625, a: 1}
+      glossiness1: 91
+      glossiness2: 73
+      shineMultiplier: 1.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.877, g: 0.75827944, b: 0.551476, a: 1}
+      glossiness1: 42
+      glossiness2: 57
+      shineMultiplier: 1
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.96900004, g: 0.8094696, b: 0.5258598, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.786, g: 0.72227025, b: 0.5133784, a: 1}
+      glossiness1: 150
+      glossiness2: 2
+      shineMultiplier: 1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.78039217, g: 0.60450095, b: 0.29810983, a: 1}
+      glossiness1: 9
+      glossiness2: 9
+      shineMultiplier: 2.3
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
   - name: Bright Blonde
     list:
     - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
@@ -1223,6 +2003,206 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.87449276, b: 0.56700003, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 1, g: 0.862, b: 0.53999996, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.99130434, b: 0.97, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 2.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 1.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.991, g: 0.93410045, b: 0.8013349, a: 1}
+      glossiness1: 188
+      glossiness2: 34
+      shineMultiplier: 0.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+      glossiness1: 166
+      glossiness2: 379
+      shineMultiplier: 0.8
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
+      glossiness1: 188
+      glossiness2: 34
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.9221311, b: 0.7295082, a: 1}
+      glossiness1: 39
+      glossiness2: 22
+      shineMultiplier: 0.5
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.88, g: 0.8, b: 0.6105263, a: 1}
+      glossiness1: 188
+      glossiness2: 34
+      shineMultiplier: 0.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.86, g: 0.7887047, b: 0.6282902, a: 1}
+      glossiness1: 17
+      glossiness2: 8
+      shineMultiplier: 0.5
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.95699996, g: 0.85519147, b: 0.6312128, a: 1}
+      glossiness1: 188
+      glossiness2: 34
+      shineMultiplier: 0.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.89344263, b: 0.6352459, a: 1}
+      glossiness1: 115
+      glossiness2: 107
+      shineMultiplier: 1.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.985, g: 0.90022546, b: 0.69030744, a: 1}
+      glossiness1: 24
+      glossiness2: 2
+      shineMultiplier: 1.2
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 1, g: 0.90833336, b: 0.6958333, a: 1}
+      glossiness1: 16
+      glossiness2: 13
+      shineMultiplier: 1.3
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.998, g: 0.93929416, b: 0.8062275, a: 1}
+      glossiness1: 188
+      glossiness2: 34
+      shineMultiplier: 0.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.922, g: 0.8244808, b: 0.5806827, a: 1}
+      glossiness1: 5
+      glossiness2: 5
+      shineMultiplier: 2.1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
   - name: Red
     list:
     - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
@@ -1395,7 +2375,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_011.obj
       hairLayer: 0
-    - color: {r: 0.827451, g: 0.44334823, b: 0.3036745, a: 1}
+    - color: {r: 0.827451, g: 0.5157984, b: 0.40131375, a: 1}
       glossiness1: 483
       glossiness2: 480
       shineMultiplier: 0.6
@@ -1465,6 +2445,206 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 0.84199995, g: 0.45092893, b: 0.30727017, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.669, g: 0.36820927, b: 0.2593023, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.827451, g: 0.44334823, b: 0.3036745, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 1, g: 0.60684615, b: 0.462, a: 1}
+      glossiness1: 16
+      glossiness2: 198
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 1, g: 0.59444445, b: 0.45, a: 1}
+      glossiness1: 56
+      glossiness2: 34
+      shineMultiplier: 0.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 0.827451, g: 0.44334823, b: 0.3036745, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 131
+      glossiness2: 2
+      shineMultiplier: 1.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 173
+      glossiness2: 15
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.84900004, g: 0.4546778, b: 0.3098247, a: 1}
+      glossiness1: 483
+      glossiness2: 480
+      shineMultiplier: 1.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 173
+      glossiness2: 15
+      shineMultiplier: 0.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.714, g: 0.38237917, b: 0.26055926, a: 1}
+      glossiness1: 3
+      glossiness2: 2
+      shineMultiplier: 0.6
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 14
+      glossiness2: 15
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.785, g: 0.42040288, b: 0.28646925, a: 1}
+      glossiness1: 14
+      glossiness2: 16
+      shineMultiplier: 0.3
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
+      glossiness1: 173
+      glossiness2: 15
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 0.827451, g: 0.44334823, b: 0.3036745, a: 1}
+      glossiness1: 22
+      glossiness2: 32
+      shineMultiplier: 0.9
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.827451, g: 0.4498851, b: 0.31112155, a: 1}
+      glossiness1: 57
+      glossiness2: 30
+      shineMultiplier: 0.9
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.736, g: 0.40685713, b: 0.288, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.835, g: 0.46158382, b: 0.3267391, a: 1}
+      glossiness1: 173
+      glossiness2: 15
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 0.83699995, g: 0.44968238, b: 0.30525884, a: 1}
+      glossiness1: 26
+      glossiness2: 12
+      shineMultiplier: 1.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1
   - name: Grey
     list:
     - color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
@@ -1707,12 +2887,192 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 0.84900004, g: 0.84900004, b: 0.84900004, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.579, g: 0.579, b: 0.579, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 0.821, g: 0.821, b: 0.821, a: 1}
+      glossiness1: 12
+      glossiness2: 24
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.72800004, g: 0.72800004, b: 0.72800004, a: 1}
+      glossiness1: 0.1
+      glossiness2: 0.1
+      shineMultiplier: 0.1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+      glossiness1: 5
+      glossiness2: 12
+      shineMultiplier: 0.7
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+      glossiness1: 0
+      glossiness2: 5
+      shineMultiplier: 2.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.616, g: 0.616, b: 0.616, a: 1}
+      glossiness1: 28
+      glossiness2: 2
+      shineMultiplier: 2.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.714, g: 0.714, b: 0.714, a: 1}
+      glossiness1: 189
+      glossiness2: 15
+      shineMultiplier: 1.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 0.927, g: 0.927, b: 0.927, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.785, g: 0.785, b: 0.785, a: 1}
+      glossiness1: 3
+      glossiness2: 1
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+      glossiness1: 0.5
+      glossiness2: 0.8
+      shineMultiplier: 0.8
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.608, g: 0.608, b: 0.608, a: 1}
+      glossiness1: 1
+      glossiness2: 15
+      shineMultiplier: 1.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+      glossiness1: 12
+      glossiness2: 12
+      shineMultiplier: 0.4
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 0.764, g: 0.764, b: 0.764, a: 1}
+      glossiness1: 189
+      glossiness2: 10
+      shineMultiplier: 0.6
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 0.644, g: 0.644, b: 0.644, a: 1}
+      glossiness1: 14
+      glossiness2: 9
+      shineMultiplier: 2.3
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 0.941, g: 0.941, b: 0.941, a: 1}
+      glossiness1: 75
+      glossiness2: 605
+      shineMultiplier: 0.7
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 0.899, g: 0.899, b: 0.899, a: 1}
+      glossiness1: 45
+      glossiness2: 29
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
   - name: White
     list:
-    - color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-      glossiness1: 60
+    - color: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+      glossiness1: 2
       glossiness2: 1
-      shineMultiplier: 0.9
+      shineMultiplier: 1.2
       specShift1: -0.232
       specShift2: -0.405
       flowMultiply: 0.26
@@ -1722,10 +3082,10 @@ MonoBehaviour:
     - color: {r: 1, g: 1, b: 1, a: 1}
       glossiness1: 500
       glossiness2: 300
-      shineMultiplier: 1.3
-      specShift1: 0.032
-      specShift2: -0.303
-      flowMultiply: -0.28
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
       hairScaleNudge: 0
       key: 
       hairLayer: 1
@@ -1949,3 +3309,203 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_cap
       hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.24
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+      glossiness1: 131
+      glossiness2: 8
+      shineMultiplier: 0.7
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_005.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 125
+      glossiness2: 72
+      shineMultiplier: 0.5
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: -0.06
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+      glossiness1: 0.1
+      glossiness2: 0.1
+      shineMultiplier: 0.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_006.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 5
+      glossiness2: 5
+      shineMultiplier: 2
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: -0.97
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 1
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 6
+      glossiness2: 8
+      shineMultiplier: 1.5
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_007.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 1
+    - color: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+      glossiness1: 2
+      glossiness2: 1
+      shineMultiplier: 1.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_001.obj
+      hairLayer: 0
+    - color: {r: 0.955, g: 0.955, b: 0.955, a: 1}
+      glossiness1: 5
+      glossiness2: 1
+      shineMultiplier: 1.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 41
+      glossiness2: 19
+      shineMultiplier: 1.3
+      specShift1: 0.032
+      specShift2: -0.303
+      flowMultiply: -0.28
+      hairScaleNudge: 0
+      key: hair_002.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+      glossiness1: 0.1
+      glossiness2: 0.1
+      shineMultiplier: 1
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 1
+      glossiness2: 2
+      shineMultiplier: 1
+      specShift1: 0.032
+      specShift2: -0.303
+      flowMultiply: -0.28
+      hairScaleNudge: 0
+      key: hair_003.obj
+      hairLayer: 1
+    - color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+      glossiness1: 7
+      glossiness2: 1
+      shineMultiplier: 0.9
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.85
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 500
+      glossiness2: 300
+      shineMultiplier: 1.3
+      specShift1: 0.032
+      specShift2: -0.303
+      flowMultiply: -0.28
+      hairScaleNudge: 0
+      key: hair_004.obj
+      hairLayer: 1
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 11
+      glossiness2: 6
+      shineMultiplier: 0.3
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 18
+      glossiness2: 22
+      shineMultiplier: 1.5
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_008.obj
+      hairLayer: 1
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 2
+      glossiness2: 3
+      shineMultiplier: 0.9
+      specShift1: -0.026
+      specShift2: 0.011
+      flowMultiply: 0.32
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 1
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 5
+      glossiness2: 3
+      shineMultiplier: 1
+      specShift1: -0.076
+      specShift2: -0.039
+      flowMultiply: 0.55
+      hairScaleNudge: 0
+      key: hair_009.obj
+      hairLayer: 0
+    - color: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+      glossiness1: 2
+      glossiness2: 1
+      shineMultiplier: 1.2
+      specShift1: -0.232
+      specShift2: -0.405
+      flowMultiply: 0.26
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 0
+    - color: {r: 1, g: 1, b: 1, a: 1}
+      glossiness1: 1
+      glossiness2: 1
+      shineMultiplier: 1
+      specShift1: 0.1
+      specShift2: 0.2
+      flowMultiply: 0.8
+      hairScaleNudge: 0
+      key: hair_010.obj
+      hairLayer: 1

@@ -1,0 +1,38 @@
+# Blender MTL File: 'Hair_009.blend'
+# Material Count: 3
+
+newmtl 009_Inner_Fringe
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Hair_009_albedo.png
+map_d Hair_009_alpha.png
+
+newmtl 009_Inner_Opaque
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Hair_009_albedo.png
+map_d Hair_009_alpha.png
+
+newmtl 009_Outer
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Hair_009_albedo.png
+map_d Hair_009_alpha.png

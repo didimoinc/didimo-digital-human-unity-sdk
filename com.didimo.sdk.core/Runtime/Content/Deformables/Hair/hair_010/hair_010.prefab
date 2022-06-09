@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &426398916107365701
+--- !u!1 &5389149559313016298
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8889244680033599102}
-  - component: {fileID: 6020151257439455028}
-  - component: {fileID: 7110732518993683360}
+  - component: {fileID: 5901545766953999325}
+  - component: {fileID: 7135693986155662112}
+  - component: {fileID: 5995600852907544765}
+  - component: {fileID: 8599402606241237210}
   m_Layer: 0
-  m_Name: default
+  m_Name: hair_010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8889244680033599102
+--- !u!4 &5901545766953999325
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426398916107365701}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_GameObject: {fileID: 5389149559313016298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8299224554134556454}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6020151257439455028
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426398916107365701}
-  m_Mesh: {fileID: -2432090755550338912, guid: 475d8459b77b73a42b3c84f3a62f6d3b, type: 3}
---- !u!23 &7110732518993683360
+--- !u!23 &7135693986155662112
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426398916107365701}
+  m_GameObject: {fileID: 5389149559313016298}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -59,9 +54,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 48578c9827a777d409a355a947fa3801, type: 2}
-  - {fileID: 2100000, guid: 2ddb1f1655461ed44a9fb56f2f7043ae, type: 2}
-  - {fileID: 2100000, guid: ac681f447bf83f748baf1bbb621127d7, type: 2}
+  - {fileID: 2100000, guid: ba7a3033ac2d4c24d9b954a354158e8d, type: 2}
+  - {fileID: 2100000, guid: 0349086205db03145a27852c7ebcec8e, type: 2}
+  - {fileID: 2100000, guid: d66b34255eaba52409998ddbe0cde56b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,45 +78,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8675925671422432668
-GameObject:
+--- !u!33 &5995600852907544765
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8299224554134556454}
-  - component: {fileID: 8405544016960989387}
-  m_Layer: 0
-  m_Name: hair_010
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8299224554134556454
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8675925671422432668}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 8889244680033599102}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8405544016960989387
+  m_GameObject: {fileID: 5389149559313016298}
+  m_Mesh: {fileID: -2432090755550338912, guid: 475d8459b77b73a42b3c84f3a62f6d3b, type: 3}
+--- !u!114 &8599402606241237210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8675925671422432668}
+  m_GameObject: {fileID: 5389149559313016298}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08e7a91d5d9e96d48a8f61724746beee, type: 3}
@@ -134,22 +105,22 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 1, g: 0.9199117, b: 0.7311321, a: 1}
-    glossiness1: 98
-    glossiness2: 280
-    shineMultiplier: 1
-    specShift1: -0.336
-    specShift2: -0.201
-    flowMultiply: 0.13
+    color: {r: 0, g: 0, b: 0, a: 0}
+    glossiness1: 0
+    glossiness2: 0
+    shineMultiplier: 0
+    specShift1: 0
+    specShift2: 0
+    flowMultiply: 0
     hairScaleNudge: 0
   innerHairLayer:
-    color: {r: 0.8301887, g: 0.7813808, b: 0.66180134, a: 1}
-    glossiness1: 57
-    glossiness2: 34
-    shineMultiplier: 0.6
-    specShift1: -0.07
-    specShift2: -0.074
-    flowMultiply: 0.8
+    color: {r: 0, g: 0, b: 0, a: 0}
+    glossiness1: 0
+    glossiness2: 0
+    shineMultiplier: 0
+    specShift1: 0
+    specShift2: 0
+    flowMultiply: 0
     hairScaleNudge: 0
   Preset:
     value: 4

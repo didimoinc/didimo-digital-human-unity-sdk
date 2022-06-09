@@ -29,20 +29,25 @@ namespace Didimo.Core.Editor
         {
             GUILayout.Label(text, Style);
             Rect rect = GUILayoutUtility.GetLastRect();
-
-            if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
-            {
+                      
+            if (Event.current.type == EventType.TouchMove || Event.current.type == EventType.MouseMove || Event.current.type == EventType.MouseDown)
+            {                                                    
                 int stringIndex = Style.GetCursorStringIndex(rect, new GUIContent(text), Event.current.mousePosition);
                 string url = GetUrlOnHrefAtPosition(text, stringIndex);
+
                 if (url != null)
                 {
-                    if (customOnClickHref != null)
+                    EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
+                    if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
                     {
-                        customOnClickHref(url);
-                    }
-                    else
-                    {
-                        Application.OpenURL(url);
+                        if (customOnClickHref != null)
+                        {
+                            customOnClickHref(url);
+                        }
+                        else
+                        {
+                            Application.OpenURL(url);
+                        }
                     }
                 }
             }

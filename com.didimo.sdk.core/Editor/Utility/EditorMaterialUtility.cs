@@ -51,6 +51,20 @@ namespace Didimo.Core.Editor
             }
         }
 
+        public static void ForceReloadOfShaderOnMaterial(Material mat)
+        {
+            var path = AssetDatabase.GetAssetPath(mat.shader);            
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ImportRecursive);            
+        }
+
+        public static void ForceReloadOfShadersOnObjects(GameObject[] gameObjects)
+        {
+            Material [] materials = MaterialUtility.GetUniqueMaterialList(gameObjects);
+            foreach (var m in materials)
+                ForceReloadOfShaderOnMaterial(m);
+            AssetDatabase.Refresh();
+        }
+
         /// <summary>
         /// This creates a single merged, atlased material from several input materials. It requires materials to previously have been merged (if it detects they aren't, that function is called)
         /// 
@@ -342,6 +356,21 @@ namespace Didimo.Core.Editor
                     EBodyPartID bpid = GetBodyPartID(render.name);
                     if (bpid == EBodyPartID.UNKNOWN)
                     {
+                        bpid = GetBodyPartID(render.transform.parent.name);                    
+                    }
+                    if (bpid == EBodyPartID.UNKNOWN)
+                    {       
+                        Debug.Log("Found Unknown");
+                    }
+                    if (bpid == EBodyPartID.HAIR)
+                    {
+                        Debug.Log("Found Hair");
+                    }
+
+                    
+
+                    if (bpid == EBodyPartID.UNKNOWN)
+                    {
                         if (render.sharedMaterial != null)
                             bpid = GetBodyPartID(render.sharedMaterial.name);
                         if (bpid == EBodyPartID.UNKNOWN)
@@ -361,6 +390,9 @@ namespace Didimo.Core.Editor
                         {
                             m.SetFloat("_DoubleSidedEnable", 1.0f);
                         }
+
+                      
+
                         var shaderIdx = otherResources.GetIndexOfShader(m.shader);
                         Mesh mesh = MeshUtils.GetMeshFromRenderer(render);
 

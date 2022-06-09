@@ -1,0 +1,38 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl 007_Fringe
+Ns 18.000005
+Ka 0.500000 0.500000 0.500000
+Kd 0.000000 1.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd hair_007_alpha.png
+map_d hair_007_alpha.png
+
+newmtl 007_Inner_Opaque
+Ns 18.000005
+Ka 0.500000 0.500000 0.500000
+Kd 0.000000 0.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd hair_007_alpha.png
+map_d hair_007_alpha.png
+
+newmtl 007_Outer
+Ns 18.000005
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd hair_007_alpha.png
+map_d hair_007_alpha.png

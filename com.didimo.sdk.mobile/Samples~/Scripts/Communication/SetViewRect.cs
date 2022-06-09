@@ -15,7 +15,7 @@ namespace Didimo.Mobile.Communication
         {
             public MessageInterface() : base("com.unity3d.communication.DidimoUnityInterface$DestroyDidimoInterface") { }
 
-            public void sendToUnity(int x, int y, int width, int height, AndroidJavaObject response)
+            public void sendToUnity(float x, float y, float width, float height, AndroidJavaObject response)
             {
                 CbMessage(x,
                     y,
@@ -38,23 +38,20 @@ namespace Didimo.Mobile.Communication
 #elif UNITY_IOS
         protected override void RegisterNativeCall() { registerSetViewRect(CbMessage); }
 
-        public delegate void InputDelegate(int x, int y, int width, int height, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
+        public delegate void InputDelegate(float x, float y, float width, float height, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         private static extern void registerSetViewRect(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
 #endif
-        private static void CbMessage(int x, int y, int width, int height, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
+        private static void CbMessage(float x, float y, float width, float height, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
             ThreadingUtility.WhenMainThread(() =>
             {
                 try
                 {
-                    float screenWidth = Screen.width;
-                    float screenHeight = Screen.height;
-
-                    Camera.main!.rect = new Rect(x / screenWidth, y / screenHeight, width / screenWidth, height / screenHeight);
+                    Camera.main!.rect = new Rect(x, y, width, height);
                     successCallback(objectPointer);
                 }
                 catch (Exception e)

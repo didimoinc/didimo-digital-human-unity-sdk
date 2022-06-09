@@ -62,6 +62,38 @@ const char ** cCharArrayFromNSArray ( NSArray* array ){{
     return cargs;
 }}
 
+static SuccessCallback onInterfaceReadyCallback;
+static bool isInterfaceReady = false;
+static const void* objPointer;
+
++ (void) onInterfaceReady {{
+    
+    isInterfaceReady = true;
+    
+    if (onInterfaceReadyCallback != nil) {{
+        
+        onInterfaceReadyCallback(objPointer);
+        onInterfaceReadyCallback = nil;
+        objPointer = nil;
+    }}
+}}
+
++ (void) OnInterfaceReady:(SuccessCallback)callback objectPointer:(const void*)objectPointer{{
+    
+    if (isInterfaceReady) {{
+    
+        callback(objectPointer);
+        onInterfaceReadyCallback = nil;
+        objPointer = nil;
+        
+    }} else {{
+        
+        onInterfaceReadyCallback = callback;
+        objPointer = objectPointer;
+    }}
+}}
+                      
+                      
 {string.Join("\n", objCImplementations)}
 
 
@@ -70,13 +102,18 @@ const char ** cCharArrayFromNSArray ( NSArray* array ){{
 {hash}if __cplusplus
 extern ""C"" {{
 {hash}endif
+
+    void onInterfaceReady() {{
+        
+        [DidimoUnityInterface onInterfaceReady];
+    }}
       
 {string.Join("\n", externCImplelemtations)}
 {hash}if __cplusplus
 
 }}
 {hash}endif
-
+    
 ";
             string iosInterface = $@"/************** GENERATED AUTOMATICALLY **************/
 
@@ -89,6 +126,8 @@ __attribute__ ((visibility(""default"")))
 @interface DidimoUnityInterface : NSObject{{}}
 
 {string.Join("\n", objcDelegates)}
+
++ (void) OnInterfaceReady:(SuccessCallback)callback objectPointer:(const void*)objectPointer;
 
 {string.Join("\n", objCInterfaces)}
 

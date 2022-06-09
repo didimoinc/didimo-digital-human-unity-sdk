@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-259793111533219227
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BaseballHat.obj_hat_URP
+  m_Shader: {fileID: -6465566751694194690, guid: 502a6a468ce231643a59915f24e3844e, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AmbientOcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: bbd9572535324424fa8570caa2a35775, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTexture:
+        m_Texture: {fileID: 2800000, guid: 212fdaf024c4448418925939be9a7ff4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metal_Rough_AO_SS_Map:
+        m_Texture: {fileID: 2800000, guid: 2626902b9b6bddb448666ac7479ab9b0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: db3ed11c32600da409fead2739a42c81, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaCutoff: 0
+    - _DecalAlphaClip: 0
+    - _DecalAsSDF: 0
+    - _DecalEmbossHeight: -0.21
+    - _DecalEmbossProfile: 1.49
+    - _DecalMetalicity: 1
+    - _DecalRotation: 53
+    - _DecalSDFSmoothing: 1
+    - _DecalSmoothness: 0.271
+    - _EmbossDecal: 0
+    - _MainMetalicity: 0.01
+    - _MainSmoothness: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _TestNormals: 0
+    - _UseDecals: 1
+    - _UseUnityHeightToNormal: 0
+    - _slopedelta: 0.004
+    m_Colors:
+    - _BaseColour: {r: 0.16049391, g: 0.04298681, b: 0.43396226, a: 0}
+    - _DecalAxis: {r: 1, g: 0, b: 0, a: 0}
+    - _DecalColour: {r: 0.16509432, g: 0.6603774, b: 0.29069993, a: 0}
+    - _DecalOffset: {r: 0.47, g: -20.09, b: 0, a: 0}
+    - _DecalScale: {r: -20, g: 20, b: 0, a: 0}
+    - _HatOriginOffset: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

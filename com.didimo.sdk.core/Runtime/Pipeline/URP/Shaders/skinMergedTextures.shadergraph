@@ -2508,7 +2508,7 @@
     "isMainTexture": false,
     "useTilingAndOffset": false,
     "m_Modifiable": true,
-    "m_DefaultType": 2
+    "m_DefaultType": 1
 }
 
 {
@@ -3013,7 +3013,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "5679e0cb05f2403ba9253302f3bf5ebd",
     "m_Id": -563994223,
-    "m_DisplayName": "HaircapOpacity",
+    "m_DisplayName": "HairCapOpacity",
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "Vector1_fad672bb168c400fb1cf948cf5828728",
@@ -5721,7 +5721,7 @@
     "isMainTexture": false,
     "useTilingAndOffset": false,
     "m_Modifiable": true,
-    "m_DefaultType": 2
+    "m_DefaultType": 3
 }
 
 {
@@ -6404,7 +6404,7 @@
     "isMainTexture": false,
     "useTilingAndOffset": false,
     "m_Modifiable": true,
-    "m_DefaultType": 2
+    "m_DefaultType": 3
 }
 
 {

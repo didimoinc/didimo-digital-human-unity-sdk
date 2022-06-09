@@ -45,16 +45,21 @@ namespace Didimo.Mobile.Communication
 #endif
         private static void CbMessage(string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
-            try
+            ThreadingUtility.WhenMainThread(() =>
             {
-                DidimoLookAtController.Instance.EnableLookAt(true);
-                ARKitCaptureStreamController.RemoveForDidimo(didimoKey);
-                successCallback(objectPointer);
-            }
-            catch (Exception e)
-            {
-                errorCallback(objectPointer, e.Message);
-            }
+                try
+                {
+                    DidimoLookAtController.Instance.EnableLookAt(true);
+                    ARKitCaptureStreamController.RemoveForDidimo(didimoKey);
+                    DidimoLookAtController.Instance.Reset(false);
+
+                    successCallback(objectPointer);
+                }
+                catch (Exception e)
+                {
+                    errorCallback(objectPointer, e.Message);
+                }
+            });
         }
     }
 }
