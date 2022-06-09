@@ -28,6 +28,17 @@ namespace Didimo
             }
         }
 
+        private void Awake()
+        {
+            CacheInitialHeadJointTransform();
+        }
+
+        private void CacheInitialHeadJointTransform()
+        {
+            initialHeadJointTransform = headJoint == null ? null
+                : new TransformValues(headJoint.localPosition, headJoint.localRotation, headJoint.localScale);
+        }
+
         /// <summary>
         /// Class that contains the transform values of any game object.
         /// Used to keep reference to original transform values of bones so they can be reset
@@ -35,15 +46,15 @@ namespace Didimo
         /// </summary>
         public class TransformValues
         {
-            public readonly Vector3    Position;
+            // public readonly Vector3    Position;
             public readonly Quaternion Rotation;
-            public readonly Vector3    Scale;
+            // public readonly Vector3    Scale;
 
             public TransformValues(Vector3 position, Quaternion rotation, Vector3 scale)
             {
-                Position = position;
+                // Position = position;
                 Rotation = rotation;
-                Scale = scale;
+                // Scale = scale;
             }
         }
 
@@ -138,8 +149,7 @@ namespace Didimo
 
             animationClips = animationClips.Where(clip => clip != null).ToArray();
 
-            initialHeadJointTransform = headJoint == null ? null
-                : new TransformValues(headJoint.localPosition, headJoint.localRotation, headJoint.localScale);
+            CacheInitialHeadJointTransform();
 
             // For compatibility to ensure we always place animator at the correct level
             if (DidimoComponents == null)

@@ -9,11 +9,12 @@ namespace Didimo.GLTFUtility
 	[Preserve]
 	public class DidimoExtension
 	{
-		public List<GLTFTexture> textures;
-		public List<GLTFImage> images;
-		public string version = "2.5";
-		public string headJoint = "Head";
-		public string faceMeshName = "mesh_m_low_baseFace_001";
+		public List<GLTFTexture>       textures;
+		public List<GLTFImage>         images;
+		public string                  version                 = "2.5";
+		public string                  headJoint               = "Head";
+		public string                  faceMeshName            = "mesh_m_low_baseFace_001";
+		public string                  eyelashMeshName            = "mesh_m_low_eyeLashes_001";
 		public DidimoEyeShadowSettings didimoEyeShadowSettings = new DidimoEyeShadowSettings();
 
 		[Preserve]
@@ -62,6 +63,10 @@ namespace Didimo.GLTFUtility
 
 			importResult.FaceMesh = nodeResult.First(import => import.transform.name == faceMeshName)
 																	.transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+
+			importResult.EyelashMesh = nodeResult.FirstOrDefault(import => import.transform.name == eyelashMeshName)
+												?.transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+
 
 			SetTransforms(nodeResult, didimoEyeShadowSettings.leftEyelidJoints, out importResult.eyeShadowController.LeftEyelidJoints);
 			SetTransforms(nodeResult, didimoEyeShadowSettings.rightEyelidJoints, out importResult.eyeShadowController.RightEyelidJoints);

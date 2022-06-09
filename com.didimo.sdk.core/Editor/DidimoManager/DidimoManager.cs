@@ -46,11 +46,13 @@ namespace Didimo.Core.Editor
         {
             var icon = (Texture)EditorGUIUtility.Load("Packages/com.didimo.sdk.core/Editor/Editor Resources/didimoicon.png");
             var title = new GUIContent("Didimo Manager", icon);
+            
             titleContent = title;
         }
 
         protected void OnGUI()
         {
+            //wantsMouseMove = true;
             GUILayout.Space(PADDING);
             var oldSelectedTab = SelectedTab;
             SelectedTab = GUILayout.Toolbar(SelectedTab,

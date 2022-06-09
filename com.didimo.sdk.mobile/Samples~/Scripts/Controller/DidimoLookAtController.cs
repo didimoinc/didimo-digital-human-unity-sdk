@@ -5,12 +5,21 @@ using System.Linq;
 using Didimo.Core.Inspector;
 using Didimo.Core.Utility;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Didimo.Mobile.Controller
 {
     public class DidimoLookAtController : ASingletonBehaviour<DidimoLookAtController>
     {
+        // const bool IsolationMode = true;
         private bool lookAtEnabled = true;
+
+        // For ASingletonBehaviours, we need to use OnAwake, as using Awake will prevent ASingletonBehaviour from working.
+        protected override void OnAwake()
+        {
+            foreach (var didimo in FindObjectsOfType<DidimoComponents>())
+                DidimoCache.Add(didimo);
+        }
 
         public void EnableLookAt(bool value)
         {
@@ -18,7 +27,8 @@ namespace Didimo.Mobile.Controller
             if (!lookAtEnabled)
             {
                 headTracking.Reset();
-                activeDidimo.Reset();
+                ActiveDidimo.ResetToBindPose();
+                TouchController.Instance.Reset();
             }
         }
 
@@ -30,11 +40,13 @@ namespace Didimo.Mobile.Controller
 
         private Tuple<DidimoComponents, Didimo> _activeDidimo;
 
-        private Didimo activeDidimo
+        DidimoComponents FindDidimo() => DidimoCache.GetAllDidimos().FirstOrDefault(d => d.gameObject.activeSelf);
+
+        private Didimo ActiveDidimo
         {
             get
             {
-                DidimoComponents didimo = DidimoCache.GetAllDidimos().FirstOrDefault(d => d.gameObject.activeSelf);
+                DidimoComponents didimo = FindDidimo();
                 if (didimo != null && (_activeDidimo == null || _activeDidimo.Item1 != didimo))
                 {
                     _activeDidimo = new Tuple<DidimoComponents, Didimo>(didimo, new Didimo(didimo));
@@ -46,14 +58,39 @@ namespace Didimo.Mobile.Controller
 
         static Camera Camera => Camera.main;
 
+        [Button]
         public void Reset()
         {
-            activeDidimo?.Reset();
-            headTracking.Reset();
-            objectRotator.Reset();
+            Reset(true);
         }
 
-        void OnValidate() { objectRotator.OnValidate(); }
+        public void Reset(bool resetCamera)
+        {
+            foreach (DidimoComponents didimoComponents in DidimoCache.GetAllDidimos())
+            {
+                Didimo didimo = new (didimoComponents);
+                didimo.ResetToBindPose();
+            }
+            headTracking.Reset();
+            TouchController.Instance.Reset();
+
+            if (resetCamera)
+            {
+                objectRotator.Reset();
+            }
+        }
+
+        void OnValidate()
+        {
+            try
+            {
+                objectRotator.OnValidate();
+            }
+            catch(Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
 
         void Start() { Reset(); }
 
@@ -61,7 +98,7 @@ namespace Didimo.Mobile.Controller
         {
             if (lookAtEnabled)
             {
-                headTracking.Update(activeDidimo);
+                headTracking.Update(ActiveDidimo);
             }
 
             objectRotator.Update();
@@ -81,11 +118,11 @@ namespace Didimo.Mobile.Controller
             [SerializeField]
             bool hInvert = false;
 
-            [Range(0, 1)]
+            [Range(0, 2)]
             [SerializeField]
             float vSensitivity = 1;
 
-            [Range(0, 1)]
+            [Range(0, 2)]
             [SerializeField]
             float hSensitivity = 1;
 
@@ -139,28 +176,31 @@ namespace Didimo.Mobile.Controller
 
             public void Update()
             {
-                if (TouchController.TouchCount != 2)
+                if (TouchController.Instance.TouchCount != 2)
                 {
                     down = null;
                     return;
                 }
 
-                Touch touch1 = TouchController.GetTouch(0), touch2 = TouchController.GetTouch(1);
+                Touch touch1 = TouchController.Instance.GetTouch(0), touch2 = TouchController.Instance.GetTouch(1);
                 if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
+                {
                     down = new ControlDown
                     {
-                        position = TouchController.ScreenPosition,
+                        position = TouchController.Instance.ScreenPosition,
                         spreadDistance = Vector3.Distance(touch1.position, touch2.position),
                         cameraRotation = this._rotation,
                         cameraDistance = this._distance,
                     };
+                }
+
                 if (down == null) return;
 
-                var axis = TouchController.Unitize(TouchController.ScreenPosition - down.position);
+                var axis = TouchController.Instance.Unitize(TouchController.Instance.ScreenPosition - down.position);
                 SetRotation(down.cameraRotation +
                             new Vector3(axis.y * vSensitivity * SensitivityScale * (vInvert ? -1 : 1), axis.x * hSensitivity * SensitivityScale * (hInvert ? -1 : 1)));
 
-                var zoom = TouchController.Unitize(Vector3.Distance(touch1.position, touch2.position) - down.spreadDistance);
+                var zoom = TouchController.Instance.Unitize(Vector3.Distance(touch1.position, touch2.position) - down.spreadDistance);
                 SetDistance(down.cameraDistance - zoom * zoomSensitivity);
 
                 UpdateCamera();
@@ -192,22 +232,17 @@ namespace Didimo.Mobile.Controller
         {
             const float SensitivityScale = 20;
 
-            [Range(0, 1)]
+            [Range(0, 2)]
             [SerializeField]
             float vSensitivity = 1;
 
-            [Range(0, 1)]
+            [Range(0, 2)]
             [SerializeField]
             float hSensitivity = 1;
 
             [SerializeField]
             [Range(0.1f, 1)]
             float bonesFollowWeight = 0.3f;
-
-            // [SerializeField] Vector3 minEyeRotation = -Vector3.one * 180;
-            // [SerializeField] Vector3 maxEyeRotation = Vector3.one * 180;
-            // [SerializeField] Vector3 minHeadRotation = -Vector3.one * 180;
-            // [SerializeField] Vector3 maxHeadRotation = Vector3.one * 180;
 
             [MinMaxSlider(-180, +180)]
             [SerializeField]
@@ -217,38 +252,26 @@ namespace Didimo.Mobile.Controller
             [SerializeField]
             MinMax<Vector3> headRotationLimits = new MinMax<Vector3>(new Vector3(-45, -70, -15), new Vector3(45, 70, 15));
 
-            // [Header("Output:")]
-            [HideInInspector]
-            [SerializeField]
-            Vector3 headRotation;
-
-            [HideInInspector]
-            [SerializeField]
-            Vector3 neckRotation;
-
-            [HideInInspector]
-            [SerializeField]
-            Vector3 eyeRotation;
-
-            [HideInInspector]
-            [SerializeField]
-            Vector3 targetRotation;
-
             Vector3? targetPosition;
 
             public void Update(Didimo didimo)
             {
                 if (!Camera.main || didimo == null) return;
 
-                if (TouchController.TouchCount == 1)
-                    targetPosition = TouchController.GetLookPosition(hSensitivity * SensitivityScale + 1, vSensitivity * SensitivityScale + 1);
+                if (TouchController.Instance.TouchCount == 1 && TouchController.Instance.GetTouch(0).phase == TouchPhase.Moved)
+                {
+                    targetPosition = TouchController.Instance.GetLookPosition(hSensitivity * SensitivityScale + 1, vSensitivity * SensitivityScale + 1);
+                }
 
                 if (targetPosition == null) return;
 
-                Didimo.Bone leye = didimo.GetBone(Didimo.LeftEye);
-                Didimo.Bone reye = didimo.GetBone(Didimo.RightEye);
-                Didimo.Bone neck = didimo.GetBone(Didimo.Neck);
-                Didimo.Bone head = didimo.GetBone(Didimo.Head);
+                Transform leye = didimo.LeftEyeBone;
+                Transform reye = didimo.RightEyeBone;
+                Transform neck = didimo.NeckBone;
+                Transform head = didimo.HeadBone;
+
+                var side = Vector3.Dot(didimo.EyesCenterForward, (Vector3) targetPosition - didimo.EyesCenter);
+                if (side < 0) return;
 
                 Quaternion rotation = Quaternion.LookRotation((Vector3) targetPosition - didimo.EyesCenter);
                 leye.transform.rotation = reye.transform.rotation = Quaternion.Slerp(leye.transform.rotation, rotation, bonesFollowWeight);
@@ -263,29 +286,13 @@ namespace Didimo.Mobile.Controller
                 var headRotation = Quaternion.Slerp(head.transform.rotation, targetRotation, GetTimeWeight(bonesFollowWeight));
                 headRotation = Quaternion.Euler(ClampEuler(RepeatEuler(headRotation.eulerAngles), headRotationLimits.min, headRotationLimits.max));
 
-                neck.Reset();
+                didimo.ResetNeck();
                 neck.transform.rotation = Quaternion.Lerp(neck.transform.rotation, headRotation, 0.5f);
                 head.transform.rotation = headRotation;
 
                 // clamp the eyes
                 leye.transform.localEulerAngles = reye.transform.localEulerAngles = ClampEuler(euler, eyeRotationLimits.min, eyeRotationLimits.max);
-
-                // debug
-                this.eyeRotation = RepeatEuler(leye.transform.localEulerAngles);
-                this.headRotation = RepeatEuler(head.transform.localEulerAngles);
-                this.neckRotation = RepeatEuler(neck.transform.localEulerAngles);
-                this.targetRotation = RepeatEuler(targetRotation.eulerAngles);
             }
-
-            // public void Update(IEnumerable<Didimo> didimos)
-            // {
-            //     if (!Camera.main || didimos.Count() == 0) return;
-            //
-            //     foreach (var didimo in didimos)
-            //     {
-            //         Update(didimo);
-            //     }
-            // }
 
             static float GetTimeWeight(float weight) => weight * 10 * Time.deltaTime;
 
@@ -314,47 +321,49 @@ namespace Didimo.Mobile.Controller
 
         class Didimo
         {
-            public const string LeftEye = "LeftEye", RightEye = "RightEye", Head = "Head", Neck = "Neck";
+            private const string LeftEye = "LeftEye", RightEye = "RightEye", Head = "Head", Neck = "Neck";
 
-            public DidimoComponents    didimo;
-            public SkinnedMeshRenderer primarySkin;
-            public GameObject gameObject => didimo.gameObject;
+            public  DidimoComponents    didimo;
+            private Matrix4x4           neckInverseBindPose;
+            private SkinnedMeshRenderer primarySkin;
+            public Transform LeftEyeBone { get; private set; }
+            public Transform RightEyeBone { get; private set; }
+            public Transform HeadBone { get; private set; }
 
-            Dictionary<string, Bone> bones = new Dictionary<string, Bone>();
+            public Transform NeckBone { get; private set; }
+
+            public void ResetNeck()
+            {
+                Matrix4x4 wBone = primarySkin.rootBone.localToWorldMatrix * neckInverseBindPose;
+                NeckBone.position = wBone.MultiplyPoint3x4(Vector3.zero);
+                NeckBone.rotation = wBone.rotation;
+            }
 
             public Didimo(DidimoComponents didimo)
             {
                 this.didimo = didimo;
                 primarySkin = didimo.GetComponentsInChildren<SkinnedMeshRenderer>().FirstOrDefault(s => s.name.Contains("baseFace"));
-                bones = primarySkin!.bones.ToDictionary(k => k.name, v => new Bone(v));
-                bones.Remove(primarySkin.rootBone.name);
+                LeftEyeBone = primarySkin.bones.FirstOrDefault(b => b.name == LeftEye);
+                RightEyeBone = primarySkin.bones.FirstOrDefault(b => b.name == RightEye);
+                HeadBone = primarySkin.bones.FirstOrDefault(b => b.name == Head);
+                NeckBone = primarySkin.bones.FirstOrDefault(b => b.name == Neck);
+
+                int neckBoneIndex = Array.IndexOf(primarySkin.bones, NeckBone);
+                neckInverseBindPose = primarySkin.sharedMesh.bindposes[neckBoneIndex].inverse;
             }
 
-            public Bone GetBone(string name) => bones[name];
+            public Vector3 EyesCenter => (LeftEyeBone.transform.position + RightEyeBone.transform.position) / 2;
+            public Vector3 EyesCenterForward => LeftEyeBone.forward;
 
-            public Vector3 EyesCenter => (GetBone(LeftEye).transform.position + GetBone(RightEye).transform.position) / 2;
-
-            public void Reset()
+            public void ResetToBindPose()
             {
-                foreach (var bone in bones.Values) bone.Reset();
-            }
-
-            public class Bone
-            {
-                public readonly Transform transform;
-                readonly        Vector3[] backupTransform;
-
-                public Bone(Transform bone)
+                Transform[] bones = primarySkin.bones;
+                for (int i = 0; i < bones.Length; i++)
                 {
-                    this.transform = bone;
-                    this.backupTransform = new[] {bone.localPosition, bone.localEulerAngles, bone.localScale};
-                }
-
-                public void Reset()
-                {
-                    transform.localPosition = backupTransform[0];
-                    transform.localEulerAngles = backupTransform[1];
-                    transform.localScale = backupTransform[2];
+                    if (bones[i] == didimo.transform) continue;
+                    Matrix4x4 wBone = primarySkin.rootBone.localToWorldMatrix * primarySkin.sharedMesh.bindposes[i].inverse;
+                    primarySkin.bones[i].position = wBone.MultiplyPoint3x4(Vector3.zero);
+                    primarySkin.bones[i].rotation = wBone.rotation;
                 }
             }
         }

@@ -51,12 +51,14 @@ namespace Didimo.Mobile.Communication
         private static extern void registerRegisterTouchEvents(InputDelegate cb);
 
         [MonoPInvokeCallback(typeof(InputDelegate))]
-
 #endif
         private static void CbMessage(TouchCallback doubleTapCallback, TouchCallback startDragCallback, TouchCallback endDragCallback, IntPtr objectPointer)
         {
-            TouchInputProcessor.CallbackEvents callbackEvents = new TouchInputProcessor.CallbackEvents(doubleTapCallback, startDragCallback, endDragCallback, objectPointer);
-            TouchInputProcessor.Instance.Register(callbackEvents);
+            ThreadingUtility.WhenMainThread(() =>
+            {
+                TouchInputProcessor.CallbackEvents callbackEvents = new TouchInputProcessor.CallbackEvents(doubleTapCallback, startDragCallback, endDragCallback, objectPointer);
+                TouchInputProcessor.Instance.Register(callbackEvents);
+            });
         }
     }
 }

@@ -111,7 +111,11 @@
     ],
     "m_Keywords": [],
     "m_Dropdowns": [],
-    "m_CategoryData": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "eada7f5b99964e83a8fcffd4e26b419a"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "d389025016b14e19adcb716a52374d2d"
@@ -2062,10 +2066,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1298.0,
-            "y": -1425.9998779296875,
-            "width": 167.99998474121095,
-            "height": 33.999996185302737
+            "x": 1327.0,
+            "y": -1459.0,
+            "width": 167.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -2696,8 +2700,8 @@
     "m_ObjectId": "1862b899d8cd4408b3e13732d6e676e2",
     "m_Title": "Emission",
     "m_Position": {
-        "x": 2430.99951171875,
-        "y": -2597.0
+        "x": 2119.6767578125,
+        "y": -2817.02490234375
     }
 }
 
@@ -3249,9 +3253,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2754.999755859375,
-            "y": -1393.0,
-            "width": 126.00000762939453,
+            "x": 2745.0,
+            "y": -1363.0,
+            "width": 126.0,
             "height": 118.0
         }
     },
@@ -3597,17 +3601,17 @@
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "321dcf4f59ec4898bc8d4398d1b9b411",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "f5e7372d384e4a11b3be90bd5ccd559b"
     },
     "m_Name": "Property",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2028.0003662109375,
-            "y": -1030.9998779296875,
-            "width": 166.00001525878907,
-            "height": 34.0
+            "x": 2264.0,
+            "y": -1040.0001220703125,
+            "width": 167.0,
+            "height": 34.0001220703125
         }
     },
     "m_Slots": [
@@ -3897,9 +3901,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 3603.0,
-            "y": -1479.0,
-            "width": 130.0,
+            "x": 3697.0,
+            "y": -1585.9998779296875,
+            "width": 126.0,
             "height": 142.0
         }
     },
@@ -5946,10 +5950,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 346.75,
-            "y": -2332.250244140625,
-            "width": 208.0,
-            "height": 302.0
+            "x": 683.0000610351563,
+            "y": -2309.0,
+            "width": 207.9998779296875,
+            "height": 302.0001220703125
         }
     },
     "m_Slots": [
@@ -6209,10 +6213,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1035.75,
-            "y": -2520.25,
-            "width": 239.0,
-            "height": 422.0
+            "x": 1371.9998779296875,
+            "y": -2497.0,
+            "width": 260.0001220703125,
+            "height": 446.0
         }
     },
     "m_Slots": [
@@ -6442,8 +6446,8 @@
     "m_ObjectId": "7d64a384179b47aebecf38f6e0038960",
     "m_Title": "Hair Cap",
     "m_Position": {
-        "x": -5022.0,
-        "y": -2581.999755859375
+        "x": 657.8092041015625,
+        "y": -2556.262939453125
     }
 }
 
@@ -7745,8 +7749,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2455.999755859375,
-            "y": -2538.0,
+            "x": 2145.0,
+            "y": -2757.999755859375,
             "width": 208.0,
             "height": 278.0
         }
@@ -10201,9 +10205,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2226.0,
-            "y": -1219.999755859375,
-            "width": 155.00001525878907,
+            "x": 2250.0,
+            "y": -1219.0,
+            "width": 156.0,
             "height": 34.0
         }
     },
@@ -10706,6 +10710,120 @@
     "m_TextureType": 1,
     "m_NormalMapSpace": 0,
     "m_EnableGlobalMipBias": true
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "eada7f5b99964e83a8fcffd4e26b419a",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "833802c150034e3885879c624706598b"
+        },
+        {
+            "m_Id": "29de143c2d514bf5a4f8094ecc73d4b6"
+        },
+        {
+            "m_Id": "0624bc2765ac482da762c86e49220174"
+        },
+        {
+            "m_Id": "dfae4f82a2ef4bc2b7ad9732683b285f"
+        },
+        {
+            "m_Id": "11eeafab7a724788826103eb2aa14cbe"
+        },
+        {
+            "m_Id": "76e30a0a24dd45c687596b3906c2429d"
+        },
+        {
+            "m_Id": "9ef0d8bb625d424982deb8ed014854d4"
+        },
+        {
+            "m_Id": "be3db9bcb5a243a69808c87f039443ae"
+        },
+        {
+            "m_Id": "de5f08cf22024f838c0b885c9edb3f24"
+        },
+        {
+            "m_Id": "588f5b960a5243e2a101f8920cc47e24"
+        },
+        {
+            "m_Id": "dd4494ce4afe4a508bc09d2d726b0347"
+        },
+        {
+            "m_Id": "25d1009d09464eb194f1e6d4c24576a7"
+        },
+        {
+            "m_Id": "34de90a8d57c4c76973406cb5892a8f6"
+        },
+        {
+            "m_Id": "8f9eef2e1adb4a2e927307d48e4301b9"
+        },
+        {
+            "m_Id": "b883329a7ea843ffbab9304690f8ef64"
+        },
+        {
+            "m_Id": "b95399cd501d4282a928a6a83307f8bb"
+        },
+        {
+            "m_Id": "fad672bb168c400fb1cf948cf5828728"
+        },
+        {
+            "m_Id": "dcd21eb18ed744f0938c8e385818ebd9"
+        },
+        {
+            "m_Id": "03daa13d8eb148bc99148ea146cbba6d"
+        },
+        {
+            "m_Id": "bb0a22d53a164b03837b0f9ec543f895"
+        },
+        {
+            "m_Id": "d12b3f589e524d179803fcfb8e7e4d5f"
+        },
+        {
+            "m_Id": "dc006032b527482b99ec9e9d3ae71ebb"
+        },
+        {
+            "m_Id": "e26d202f3d2640d9ae5524bd267ed71e"
+        },
+        {
+            "m_Id": "1404f4c1bb4e4140bf9618c2c2c8ad80"
+        },
+        {
+            "m_Id": "398075be3688431baa2dbeb03769cb7b"
+        },
+        {
+            "m_Id": "1ed87aafbe0b4551aad167dc6d24f586"
+        },
+        {
+            "m_Id": "71a0f799eef345da90a0104232d57482"
+        },
+        {
+            "m_Id": "4fc9c4f11b3c4810bc4ddec68425b768"
+        },
+        {
+            "m_Id": "165c1262cf904db6b841f2ea2e4b7fce"
+        },
+        {
+            "m_Id": "4dbf17ad56254d34984797dc3216f62a"
+        },
+        {
+            "m_Id": "65bc4c30bf6f498d9459e876285fc499"
+        },
+        {
+            "m_Id": "a3940916d7654837b49cab2ee28a97cd"
+        },
+        {
+            "m_Id": "804103f4884c4416808f01693e8c7ab3"
+        },
+        {
+            "m_Id": "3eb182cdfd6245e9a58b31dd99d3ed7b"
+        },
+        {
+            "m_Id": "17bf8affcfb943da9a49790353beb870"
+        }
+    ]
 }
 
 {

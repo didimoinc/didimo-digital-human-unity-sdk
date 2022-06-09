@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace Didimo.Core.Utility
@@ -15,6 +17,13 @@ namespace Didimo.Core.Utility
             backingField = mono.GetComponent<TComponent>();
             if (backingField != null) return;
             backingField = mono.gameObject.AddComponent<TDefault>();
+        }
+
+        public static void ForEachGameObject(GameObject root, Func<GameObject, GameObject> doit)
+        {
+            doit(root);
+            foreach (Transform t in root.transform)            
+                ForEachGameObject(t.gameObject, doit);            
         }
 
         public static TComponent GetOrAdd<TComponent>(GameObject go) where TComponent : Component

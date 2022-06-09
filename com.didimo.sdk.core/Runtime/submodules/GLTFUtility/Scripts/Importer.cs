@@ -16,18 +16,20 @@ namespace Didimo.GLTFUtility
 
 		public class ImportResult
 		{
-			public GameObject rootObject;
+			public GameObject   rootObject;
+			public GameObject[] hairsObjects;
 			public AnimationClip[] animationClips;
 
 			// Didimo Specific
 
-			public bool isDidimo;
-			public string didimoVersion;
-			public Transform headJoint;
-			public AnimationClip resetAnimationClip;
+			public bool                        isDidimo;
+			public string                      didimoVersion;
+			public Transform                   headJoint;
+			public AnimationClip               resetAnimationClip;
 			public EyeShadowControllerSettings eyeShadowController;
-			public IrisControllerSettings irisController;
-			public SkinnedMeshRenderer FaceMesh;
+			public IrisControllerSettings      irisController;
+			public SkinnedMeshRenderer         FaceMesh;
+			public SkinnedMeshRenderer         EyelashMesh;
 		}
 
 		public class EyeShadowControllerSettings
@@ -305,6 +307,7 @@ namespace Didimo.GLTFUtility
 			importResult.rootObject = nodeTask.Result.GetRoot();
 			importResult.animationClips = animationResult != null ? animationResult.Select(x => x.clip).ToArray() : Array.Empty<AnimationClip>();
 			importResult.isDidimo = isDidimo;
+			importResult.hairsObjects = nodeTask.Result.Where(nt => nt.IsDidimoHair).Select(nt => nt.transform.gameObject).ToArray();
 
 			if (isDidimo)
 			{

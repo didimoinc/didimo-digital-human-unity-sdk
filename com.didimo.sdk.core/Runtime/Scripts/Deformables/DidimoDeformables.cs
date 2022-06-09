@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,9 @@ using Didimo.Core.Utility;
 using UnityEditor;
 using static Didimo.Core.Config.ShaderResources;
 using System.IO;
+using Didimo.Core.Config;
+
+
 
 namespace Didimo.Core.Deformables
 {
@@ -13,20 +17,20 @@ namespace Didimo.Core.Deformables
     {
         // We will only need this temporarily, as hair pieces will be skinned in the future
         [SerializeField, HideInInspector]
-        private Matrix4x4 hairOffset;
+        private Matrix4x4 hairOffset = Matrix4x4.identity;
 
         public void CacheHairOffsets()
         {
             if (transform.TryFindRecursive("Head", out Transform head))
             {
-                hairOffset = head.worldToLocalMatrix;
+                hairOffset = head.worldToLocalMatrix * transform.localToWorldMatrix.inverse;
             }
             else
             {
                 hairOffset = Matrix4x4.identity;
             }
         }
-        
+
         private Dictionary<string, Deformable> _deformables = null;
 
         public enum DeformMode
@@ -81,7 +85,7 @@ namespace Didimo.Core.Deformables
                 return fullPath.Substring(idx);
             return fullPath;
         }
-
+        
         public bool TryFind<TDeformable>(out TDeformable instance) where TDeformable : Deformable
         {
             if (!deformables.Any(d => d.Value is TDeformable))
@@ -89,12 +93,32 @@ namespace Didimo.Core.Deformables
                 instance = null;
                 return false;
             }
-
             instance = deformables.FirstOrDefault(d => d.Value is TDeformable).Value as TDeformable;
             return instance != null;
         }
 
-        public bool TryCreate<TDeformable>(TDeformable deformable, out TDeformable instance, DeformMode deformMode = DeformMode.Nothing, bool forceRemove = false)
+        public static string ExtractMeshID(string meshName)
+        {
+            var underScoreIdx = meshName.LastIndexOf('_');
+            if (underScoreIdx != -1)
+            {
+                var nameBefore = meshName.Substring(0, underScoreIdx);
+                var mindex = nameBefore.LastIndexOf('M');
+                if (mindex != -1)
+                    return nameBefore.Substring(mindex + 1);
+            }
+
+            return meshName;
+        }
+
+        public enum TryCreateFlags
+        {
+            ForceRemove = 0x1,
+            ForceCreateMaterials = 0x2,
+            CreatePrefabs= 0x4
+        }
+        
+        public bool TryCreate<TDeformable>(TDeformable deformable, out TDeformable instance, DeformMode deformMode = DeformMode.Nothing, int flags = 0)
             where TDeformable : Deformable
         {
             if (deformable == null)
@@ -104,7 +128,7 @@ namespace Didimo.Core.Deformables
                 return false;
             }
 
-            if ((deformable.SingleInstancePerDidimo || forceRemove) && Exists<TDeformable>())
+            if ((deformable.SingleInstancePerDidimo || ((flags & (int)TryCreateFlags.ForceRemove) != 0) && Exists<TDeformable>()))
             {
                 DestroyAll<TDeformable>();
             }
@@ -128,6 +152,15 @@ namespace Didimo.Core.Deformables
                     break;
                 }
             }
+            if (idealBone == null)
+            {
+                transform.TryFindRecursive("Head", out idealBone);                
+            }
+
+            if (idealBone == null)
+            {
+                transform.TryFindRecursive("Head", out idealBone);
+            }
 
             if (idealBone == null)
             {
@@ -135,33 +168,99 @@ namespace Didimo.Core.Deformables
             }
 
             Transform instanceTransform = instance.transform;
+            
+            
+            Mesh deformableMesh = MeshUtils.GetMesh(deformable.gameObject);
+            #if UNITY_EDITOR
+            PerformEditorBasedOperations(instanceTransform, deformableMesh, flags, deformMode);
+            #endif
 
-            if (deformMode != DeformMode.Nothing)
+            instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform);
+            if (hairOffset == Matrix4x4.zero)
             {
-#if UNITY_EDITOR
-                Mesh deformableMesh = MeshUtils.GetMesh(deformable.gameObject);
+                CacheHairOffsets();
+            }
+            instanceTransform.localPosition = hairOffset.MultiplyPoint(Vector3.zero);
+            instanceTransform.localRotation = hairOffset.rotation;
+            instance.name = deformable.ID;
+
+            return true;
+        }
+
+        public bool TryCreate<TDeformable>(string deformableId, out TDeformable instance, DeformMode deformMode = DeformMode.Nothing, int flags = 0)
+            where TDeformable : Deformable
+        {
+            if (TryFindDeformable(DeformableUtils.GetAllDeformables().ToArray(), deformableId, out TDeformable deformable) == false)
+            {
+                var experimentalDeformableDatabase = Resources.Load<DeformableDatabase>("ExperimentalDeformableDatabase");                
+                if (TryFindDeformable(experimentalDeformableDatabase.Deformables, deformableId, out TDeformable tdeformable) == false)
+                {
+                    Debug.LogWarning($"No database deformable found with ID: {deformableId}");
+                    instance = null;
+                    return false;
+                }
+                else
+                    deformable = tdeformable;
+            }
+
+            return TryCreate(deformable, out instance, deformMode, flags);
+        }
+      
+        void PerformEditorBasedOperations(Transform instanceTransform, Mesh deformableMesh, int flags, DeformMode deformMode)
+        {
+        #if UNITY_EDITOR
+            string deformableMeshLocation = AssetDatabase.GetAssetPath(deformableMesh);
+            string deformableMeshName = Path.GetFileNameWithoutExtension(deformableMeshLocation);
+            if (deformMode != DeformMode.Nothing)
+            {               
                 Renderer bodyMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(DidimoComponents.gameObject, EBodyPartID.BODY);
+                Renderer headMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(DidimoComponents.gameObject, EBodyPartID.HEAD);
                 if (bodyMeshRenderer != null)
                 {
                     Mesh bodyMesh = MeshUtils.GetMesh(bodyMeshRenderer.gameObject);
-
+                    Mesh headMesh = MeshUtils.GetMesh(headMeshRenderer.gameObject);
                     string bodyMeshLocation = AssetDatabase.GetAssetPath(bodyMesh);
-                    string deformableMeshLocation = AssetDatabase.GetAssetPath(deformableMesh);
+                    var bodyMeshID = ExtractMeshID(bodyMeshLocation);
+
+                    //find the source head asset
+                    Mesh sourceHeadMesh = null;
+
+                    var baseMeshPath = "packages/com.didimo.sdk.internal/Assets/Content/Didimos/GLTFTemplate/avatar.gltf";
+                    GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(baseMeshPath);
+                    if (go)
+                    {
+                        GameObject headgo = ComponentUtility.GetChildWithName(go, "mesh_m_low_baseFace_001", true);
+                        if (headgo)
+                            sourceHeadMesh = MeshUtils.GetMesh(headgo);
+                    }
+                    string sourceDidimoFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(sourceHeadMesh));
 
                     DirectoryInfo bodyMeshDirectory = new DirectoryInfo(Path.GetDirectoryName(bodyMeshLocation));
-                    string deformableMeshName = Path.GetFileNameWithoutExtension(deformableMeshLocation);
-
+                  
                     string bodySpecificHairDirectory =
                         Path.Combine(FeedDirectoryToUnity(bodyMeshDirectory.Parent.FullName), "Hairs", bodyMeshDirectory.Name.Replace("gltf", "hairs"));
                     string[] deformableAssets =
-                        AssetDatabase.FindAssets(deformableMeshName, new string[] {FeedDirectoryToUnity(bodyMeshDirectory.FullName), bodySpecificHairDirectory});
+                        AssetDatabase.FindAssets(deformableMeshName,
+                        new string[] { FeedDirectoryToUnity(bodyMeshDirectory.FullName),
+                                       bodySpecificHairDirectory,
+                                       "Assets/PreDeformables/Hair",
+                                       "Packages/com.didimo.sdk.core/Runtime/Content/Deformables/Hair/",
+                                       "Packages/com.didimo.sdk.experimental/Runtime/Content/Deformables/Hair",
+                                       "Packages/com.didimo.sdk.experimental/Runtime/Content/Deformables/HairHD"});
                     foreach (var asset in deformableAssets)
                     {
                         var path = AssetDatabase.GUIDToAssetPath(asset);
                         if (path.EndsWith("obj"))
                         {
+                            var lowPath = path.ToLower();
+                            int templateIdx = lowPath.IndexOf("template to");
+                            if (templateIdx != -1)
+                            {
+                                var remainingString = lowPath.Substring(templateIdx);
+                                if (remainingString.IndexOf(bodyMeshID) == -1)
+                                    continue;
+                            }
                             Mesh mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
-
                             if (mesh)
                             {
                                 if (deformMode == DeformMode.ReplaceVertexChannelFromPreFittedMesh)
@@ -171,38 +270,118 @@ namespace Didimo.Core.Deformables
                                 }
                                 else if (deformMode == DeformMode.ReplaceWithPreFittedMesh)
                                 {
-                                    MeshUtils.SetMesh(instanceTransform.gameObject, mesh);
+                                    MeshUtils.SetMesh(instanceTransform.gameObject, mesh);                                    
                                 }
+                                else if (deformMode == DeformMode.DeformMesh)
+                                {
+                                    Matrix4x4 fudgeScale = Matrix4x4.identity;
+                                  
+                                    Mesh vswapmesh = DeformMesh(deformableMeshName, deformableMesh, headMesh, sourceHeadMesh, fudgeScale);
+                                    MeshUtils.SetMesh(instanceTransform.gameObject, vswapmesh);
+                                }
+                                
+                                break;  
                             }
                         }
                     }
-                }
+                }                
+            }           
+            if ((flags & (int)TryCreateFlags.ForceCreateMaterials) != 0)
+                MaterialUtility.GenerateHairMaterialsForSelected(new GameObject[] { instanceTransform.gameObject }, true, true);
+            if ((flags & (int)TryCreateFlags.CreatePrefabs) != 0)
+            {      
+                bool success = false;
+                string PipelineSuffix = ResourcesLoader.PipelineName[(int)ResourcesLoader.GetAppropriateID()];
+                var deformableMeshPathAndName = Path.ChangeExtension(deformableMeshLocation, "").TrimEnd('.');
+                string prefabPath = deformableMeshPathAndName + "_" + PipelineSuffix + ".prefab";
+                PrefabUtility.SaveAsPrefabAsset(instanceTransform.gameObject, prefabPath, out success);                
+            }
 #endif
-            }
-            
-            instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform);
-            instanceTransform.localPosition = hairOffset.MultiplyPoint(Vector3.zero);
-            instanceTransform.localRotation = hairOffset.rotation;
-            instance.name = deformable.ID;
-
-            return true;
         }
 
-        public bool TryCreate<TDeformable>(string deformableId, out TDeformable instance, DeformMode deformMode = DeformMode.Nothing, bool forceRemove = false)
-            where TDeformable : Deformable
+        public static Mesh DeformMesh(string deformableName, Mesh sourceDeformable, Mesh targetDidimo, Mesh sourceDidimo, Matrix4x4 transform)
         {
-            var deformableDatabase = Resources.Load<DeformableDatabase>("DeformableDatabase");
 
-            if (TryFindDeformable(deformableDatabase.Deformables, deformableId, out TDeformable deformable) == false)
+#if USING_CLIENT_SIDE_DEFORMER
+            string sourceDidimoFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(sourceDidimo));
+            string targetDidimoFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(targetDidimo));
+            string savePath = targetDidimoFolder + Path.DirectorySeparatorChar + deformableName + ".obj";
+
+            if (!string.IsNullOrEmpty(savePath))
             {
-                Debug.LogWarning($"No database deformable found with ID: {deformableId}");
-                instance = null;
-                return false;
+                var appPath = Path.GetDirectoryName(Application.dataPath);
+
+                List<Vector3> source = sourceDidimo.vertices.ToList();
+                List<Vector3> target = targetDidimo.vertices.ToList();
+
+                var sourceAssetPath = AssetDatabase.GetAssetPath(sourceDeformable);
+                ModelImporter sourceDeformableImporter = AssetImporter.GetAtPath(sourceAssetPath) as ModelImporter;
+
+                Debug.Log("Derforming '" + sourceAssetPath+ "' to '" + savePath + "'" );
+
+                OBJ obj = new OBJ();
+                obj.DeserializeFromFile(sourceAssetPath);
+                obj.ApplyScaleToVertices(sourceDeformableImporter.globalScale);
+
+                List<Vector3> verticesToDeform = obj.vertices;
+
+                CGTPS cgtps = new CGTPS(source, target);
+
+                List<Vector3> deformedVertices = cgtps.TransformVertices(verticesToDeform);      
+                for (var i = 0; i < deformedVertices.Count; ++i)
+                    deformedVertices[i] = transform.MultiplyPoint(deformedVertices[i]);
+                obj.vertices = deformedVertices;
+                obj.ApplyScaleToVertices(1f / sourceDeformableImporter.globalScale);
+
+                obj.SerializeToFile(savePath);
+
+                AssetDatabase.Refresh();
+
+
+                foreach (var mtllib in obj.mtlLibs)
+                {
+                    var destPath = appPath + Path.DirectorySeparatorChar + targetDidimoFolder + Path.DirectorySeparatorChar + deformableName + ".mtl";
+                    //if (!System.IO.File.Exists(destPath))
+                    {
+                        var defoType = (deformableName.ToLower().IndexOf("hat") != -1)? "Hats":"Hair";
+                        var path = appPath + "/Packages/com.didimo.sdk.core/Runtime/Content/Deformables/" + defoType+ "/" + deformableName + "/" + deformableName + ".mtl";
+                        //FileUtil.CopyFileOrDirectory(path.Replace("/", "/"), destPath.Replace("/", "/"));                        
+                        if (!System.IO.File.Exists(path))
+                        {
+                            Debug.LogWarning("Problem copying '" + path + "' to '" + destPath + "', trying variant...");
+                            path = appPath + "/Packages/com.didimo.sdk.core/Runtime/Content/Deformables/" + defoType + "/" + deformableName.Replace("0","00") + "/" + deformableName + ".mtl";
+                        }
+                        try
+                        {
+                            File.Copy(path, destPath, true);
+                            Debug.LogWarning("Copied '" + path + "' to '" + destPath + "', trying variant...");
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Debug.LogWarning("Problem copying '" + path + "' to '" + destPath +"' error was: " + ex.Message) ;
+                        }
+                        
+                    }
+                }
+
+                savePath = savePath.Replace("/", "/");
+                
+                if (savePath.StartsWith(appPath))
+                    savePath = savePath.Remove(0, appPath.Length + 1);
+
+                ModelImporter deformedImporter = AssetImporter.GetAtPath(savePath) as ModelImporter;
+                if (deformedImporter)
+                {
+                    deformedImporter.useFileScale = sourceDeformableImporter.useFileScale;
+                    deformedImporter.globalScale = sourceDeformableImporter.globalScale;
+                }
+                deformedImporter.SaveAndReimport();
+                Mesh mesh = AssetDatabase.LoadAssetAtPath<Mesh>(savePath);
+                return mesh;
             }
-
-            return TryCreate(deformable, out instance, deformMode, forceRemove);
+#endif
+            return null;
         }
-
         public void DestroyAll<TDeformable>() where TDeformable : Deformable
         {
             static void OnRemove(KeyValuePair<string, Deformable> kvp)

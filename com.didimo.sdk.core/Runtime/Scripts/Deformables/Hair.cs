@@ -1,3 +1,4 @@
+using System;
 using Didimo.Builder;
 using Didimo.Core.Config;
 using Didimo.Core.Inspector;
@@ -117,8 +118,13 @@ namespace Didimo.Core.Deformables
 
         public void SetPreset(int preset)
         {
-            Preset.value = preset;
-            ApplyPreset();
+            if (Preset == null)
+                Preset = new HairPreset();
+            if (Preset != null)
+            {
+                Preset.value = preset;
+                ApplyPreset();
+            }
         }
 
         public void ApplyPreset()
@@ -161,16 +167,23 @@ namespace Didimo.Core.Deformables
                         break;
                     }
                 }
-                var hairLayer = outer ? outerHairLayer : innerHairLayer;
-                propertyBlock.SetFloat(PROPERTY_SPECMULTIPLY, hairLayer.shineMultiplier);
-                propertyBlock.SetFloat(PROPERTY_SPECEXP2,     hairLayer.glossiness2);
-                propertyBlock.SetFloat(PROPERTY_SPECEXP1,     hairLayer.glossiness1);
-                propertyBlock.SetFloat(PROPERTY_SPECSHIFT,    hairLayer.specShift1);
-                propertyBlock.SetFloat(PROPERTY_SPECSHIFT2,   hairLayer.specShift2);
-                propertyBlock.SetFloat(PROPERTY_FLOWMULTIPLY, hairLayer.flowMultiply);
-                propertyBlock.SetColor(PROPERTY_HAIRCOLOR,    hairLayer.color);
-                propertyBlock.SetFloat(HAIR_SCALE_NUDGE, hairLayer.hairScaleNudge);
 
+                try
+                {
+                    var hairLayer = outer ? outerHairLayer : innerHairLayer;
+                    propertyBlock.SetFloat(PROPERTY_SPECMULTIPLY, hairLayer.shineMultiplier);
+                    propertyBlock.SetFloat(PROPERTY_SPECEXP2,     hairLayer.glossiness2);
+                    propertyBlock.SetFloat(PROPERTY_SPECEXP1,     hairLayer.glossiness1);
+                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT,    hairLayer.specShift1);
+                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT2,   hairLayer.specShift2);
+                    propertyBlock.SetFloat(PROPERTY_FLOWMULTIPLY, hairLayer.flowMultiply);
+                    propertyBlock.SetColor(PROPERTY_HAIRCOLOR,    hairLayer.color);
+                    propertyBlock.SetFloat(HAIR_SCALE_NUDGE, hairLayer.hairScaleNudge);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.ToString());
+                }
             }
             MaterialBuilder.ProcessPropertyBlocksInHierarchy(DidimoComponents != null
                 ? DidimoComponents.transform : transform, this, OnPropertyBlock);

@@ -15,11 +15,10 @@
 
 half getMainShadow(float3 wP)
 {
-	/*float4 shadowCoord = TransformWorldToShadowCoord(wP);
+	float4 shadowCoord = TransformWorldToShadowCoord(wP);
 	ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
 	half4 shadowParams = GetMainLightShadowParams();
-	return SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, false);*/
-    return 1.0;
+	return SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, false);    
 }
 
 #endif
@@ -339,6 +338,7 @@ float3 calculateDiffuseColour(in float3 normal, in float scatter, in float trans
 
 #define USE_FLOW_MAP
 #define WORLD_SPACE_FLOW_MAP
+
 void evalHairBrdf( in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in half3 tEtoV, 
 				   in half roughness1, in half roughness2, in half specShift, in half specShift2, in half scatter, in half transmissionFactor, in half transmissionHaloSharpness,
 				   inout half3 diffuse, inout half3 spec1, inout half3 spec2)
@@ -387,8 +387,10 @@ void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half
 	half rough1 = specExp1;
 	half rough2 = specExp2;
 
-	evalHairBrdf(tD, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, tN, tT, tEtoV, rough1, rough2, specShift , specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
-				 diffuse, spec1, spec2);
+
+     evalHairBrdf(tD, (mainLight.color * mainLight.distanceAttenuation * ShadowAtten).rgb, tN, tT, tEtoV,
+                      rough1, rough2, specShift , specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
+				      diffuse, spec1, spec2);
 
 	int pixelLightCount = GetAdditionalLightsCount();
 	for (int i = 0; i < pixelLightCount; ++i)

@@ -91,7 +91,7 @@ namespace Didimo.Core.Config
         public static string ExtractValidHairName(string testName)
         {
             testName = testName.ToLower();
-            if (testName.StartsWith("hair"))
+            if (testName.Contains("hair"))
             {
                 var subnames = testName.Split(HairNameSplits);
                 if (subnames.Length >= 2)
@@ -118,6 +118,8 @@ namespace Didimo.Core.Config
                 else
                 {
                     Debug.Log("Problem encountered extracting hair ID");
+                    return "error";
+
                 }
             }
 
@@ -126,7 +128,7 @@ namespace Didimo.Core.Config
             {
                 foreach (var mat in m.sharedMaterials)
                 {
-                    var name = ExtractValidHairName(mat.name.ToLower());
+                    var name = mat ? ExtractValidHairName(mat.name.ToLower()) : "";
                     if (name != null)
                         return name;
                 }
@@ -293,9 +295,9 @@ namespace Didimo.Core.Config
                     Debug.Log("Warning: Hair piece name not found");
                 }
 
-                if (bestInnerMatch != null)
+                if ((bestInnerMatch != null) && (hairObject.innerHairLayer != null))
                     hairObject.innerHairLayer.SetValues(bestInnerMatch);
-                if (bestOuterMatch != null)
+                if ((bestOuterMatch != null) && (hairObject.innerHairLayer != null))
                     hairObject.outerHairLayer.SetValues(bestOuterMatch);
             }
         }

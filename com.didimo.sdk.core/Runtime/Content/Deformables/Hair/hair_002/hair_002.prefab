@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3625363344784802392
+--- !u!1 &8724849144383457546
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5546692837178921315}
-  - component: {fileID: 7218954519179356201}
-  - component: {fileID: 6128091507837750461}
+  - component: {fileID: 3013818201473971799}
+  - component: {fileID: 4034270298779229592}
+  - component: {fileID: 6124413038769343671}
+  - component: {fileID: 7646022273108489327}
   m_Layer: 0
-  m_Name: default
+  m_Name: hair_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5546692837178921315
+--- !u!4 &3013818201473971799
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3625363344784802392}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 8724849144383457546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4546063919658979743}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7218954519179356201
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3625363344784802392}
-  m_Mesh: {fileID: -2432090755550338912, guid: 36986a0c34ad738418fa84de8f43beb4, type: 3}
---- !u!23 &6128091507837750461
+--- !u!23 &4034270298779229592
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3625363344784802392}
+  m_GameObject: {fileID: 8724849144383457546}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -59,9 +54,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23784c03eca3d904a98c2ae03fbbe4eb, type: 2}
-  - {fileID: 2100000, guid: 68290543574e2674a898372171adc5fd, type: 2}
-  - {fileID: 2100000, guid: c20bef8e84ff7f44e9b8d7b9ad807ac1, type: 2}
+  - {fileID: 2100000, guid: 80d9db34946f1dc4596520077f20e2ed, type: 2}
+  - {fileID: 2100000, guid: 71796b8f984c1e244ae472a6a41e185e, type: 2}
+  - {fileID: 2100000, guid: cc5fb4f96deb1284498e3cd831691aba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,45 +78,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &3773187044118760229
-GameObject:
+--- !u!33 &6124413038769343671
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4546063919658979743}
-  - component: {fileID: -8226903175446513334}
-  m_Layer: 0
-  m_Name: hair_002
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4546063919658979743
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773187044118760229}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5546692837178921315}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8226903175446513334
+  m_GameObject: {fileID: 8724849144383457546}
+  m_Mesh: {fileID: -2432090755550338912, guid: 36986a0c34ad738418fa84de8f43beb4, type: 3}
+--- !u!114 &7646022273108489327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773187044118760229}
+  m_GameObject: {fileID: 8724849144383457546}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08e7a91d5d9e96d48a8f61724746beee, type: 3}
@@ -134,22 +105,22 @@ MonoBehaviour:
   - jnt_m_headEnd_001
   hairCapTexture: {fileID: 0}
   outerHairLayer:
-    color: {r: 0.9716981, g: 0.92921823, b: 0.82961017, a: 1}
-    glossiness1: 72
-    glossiness2: 102
-    shineMultiplier: 1
-    specShift1: 0.1
-    specShift2: 0.2
-    flowMultiply: 0.61
+    color: {r: 0, g: 0, b: 0, a: 0}
+    glossiness1: 0
+    glossiness2: 0
+    shineMultiplier: 0
+    specShift1: 0
+    specShift2: 0
+    flowMultiply: 0
     hairScaleNudge: 0
   innerHairLayer:
-    color: {r: 0.8962264, g: 0.8222455, b: 0.7482645, a: 1}
-    glossiness1: 5
-    glossiness2: 15
-    shineMultiplier: 1
-    specShift1: 0.1
-    specShift2: 0.2
-    flowMultiply: 0.8
+    color: {r: 0, g: 0, b: 0, a: 0}
+    glossiness1: 0
+    glossiness2: 0
+    shineMultiplier: 0
+    specShift1: 0
+    specShift2: 0
+    flowMultiply: 0
     hairScaleNudge: 0
   Preset:
-    value: 6
+    value: 4

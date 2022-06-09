@@ -26,16 +26,22 @@ namespace Didimo.Core.Config
         {
             SEPARATE_CHANNELS = 0,
             MERGED_CHANNELS = 1,
-            MERGED_CHANNELS_ATLASED = 2
+            ATLASED = 2,
+            CHANNEL_SETTINGS_MASK = 3,
+            MERGED_CHANNELS_ATLASED = 3,            
+            MSAA_COVERAGE_TO_ALPHA_BLENDED = 4,
+            ALPHA_BLENDED = 8,
+            ALPHA_SETTINGS_MASK = 12,
         }
 
         public enum EHairLayer
         {
             UNKNOWN = -1,
-            INNER_OPAQUE = 0,
-            INNER_FRINGE = 1,
-            OUTER = 2,
-            COUNT = 3,
+            INNER_OPAQUE = 0, //use opaque hair shader
+            INNER_FRINGE = 1, //use alpha blended hair shader but with inner settings
+            OUTER = 2, //use alpha blended hair shader but with outer settings
+            HAT = 3, //use cloth shader - not hair but some models have hair and hat
+            COUNT = 4,
         }
 
         //n.b. these indices are linked - change the indices, change the arrays below
@@ -49,16 +55,21 @@ namespace Didimo.Core.Config
             ID = 5,
             RAMP = 6,
         }
-
      
         public static EHairLayer ClassifyHairLayerFromName(string name)
         {
-            if (name.Contains("opaque"))
+            if (name.Contains("hat", StringComparison.CurrentCultureIgnoreCase))
+                return EHairLayer.HAT;
+            if (name.Contains("opaque", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.INNER_OPAQUE;
-            else if (name.Contains("outer"))
+            if (name.Contains("solid", StringComparison.CurrentCultureIgnoreCase)) //sometimes they call it solid, so solid shall be checked for
+                return EHairLayer.INNER_OPAQUE;
+            else if (name.Contains("outer", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.OUTER;
-            else if (name.Contains("inner"))
+            else if (name.Contains("fringe", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.INNER_FRINGE;
+            else if (name.Contains("inner", StringComparison.CurrentCultureIgnoreCase))
+                return EHairLayer.INNER_OPAQUE;
             else
                 return EHairLayer.UNKNOWN;
         }
@@ -72,12 +83,17 @@ namespace Didimo.Core.Config
         public Shader Mouth;
         public Shader Eyelash;
         public Shader UnlitTexture;
+        public Shader BasicPBRLitShader;
         public Shader Hair;
         public Shader HairOpaque;
-        public Shader Cloth;
-
+        public Shader HairMSAA;
+        public Shader Cloth;    
+        //these should support regex expressions to aid in the matching of names that can vary a great deal
         public static string[] hair_name_fragments = { "albedo", "alpha", "ao", "uniqueao", "flow", "id", "ramp" };
         public static string[] hair_material_texture_names = { "_Albedo", "_Opacity", "_AOMap", "_AOMapUnique", "_flowMap", "_ID", "_rootToTip" };
+        
+        public static string[] cloth_name_fragments = { "albedo", "normal", "metal"};
+        public static string[] cloth_material_texture_names = { "_BaseMap", "_NormalMap", "_Metal_Rough_AO_SS_Map"};
         //this can be used to determine body part IDs for materials and meshes and files - N.B. sensitive to name changes! If asset names are renamed, this needs testing
         public static EBodyPartID GetBodyPartID(string name)
         {
@@ -131,7 +147,7 @@ namespace Didimo.Core.Config
                 case EBodyPartID.EYE: return Eye;
                 case EBodyPartID.BODY: goto case EBodyPartID.HEAD;
                 case EBodyPartID.HEAD:
-                    switch (shaderType)
+                    switch ((EShaderType)((int)(shaderType) & (int)EShaderType.CHANNEL_SETTINGS_MASK))
                     {
                         case EShaderType.SEPARATE_CHANNELS: return Skin;
                         case EShaderType.MERGED_CHANNELS: return SkinMergedTextures;
@@ -139,7 +155,13 @@ namespace Didimo.Core.Config
                     }
                     return null;
                 case EBodyPartID.MOUTH: return Mouth;
-                case EBodyPartID.HAIR: return Hair;
+                case EBodyPartID.HAIR:
+                    switch ((EShaderType)((int)(shaderType) & (int)EShaderType.ALPHA_SETTINGS_MASK))
+                    {
+                        case EShaderType.ALPHA_BLENDED: return Hair;
+                        case EShaderType.MSAA_COVERAGE_TO_ALPHA_BLENDED: return HairMSAA;
+                        default:return HairOpaque;
+                    }
                 case EBodyPartID.EYELASHES: return Eyelash;
                 case EBodyPartID.HAT: return Cloth;
                 case EBodyPartID.CLOTHING: return Cloth;

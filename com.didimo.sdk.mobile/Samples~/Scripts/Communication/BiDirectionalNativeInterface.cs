@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Didimo.Core.Utility;
 
@@ -19,8 +20,11 @@ namespace Didimo.Mobile.Communication
 
         // Default ProgressDelegate
         public delegate void ProgressCallback(IntPtr objectPointer, float progress);
-
+        
 #if UNITY_IOS
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void onInterfaceReady();
+
         protected abstract void RegisterNativeCall();
 
 #elif UNITY_ANDROID
@@ -76,6 +80,9 @@ namespace Didimo.Mobile.Communication
                 instance.RegisterNativeCall(didimoUnityInterface);
 #endif
             }
+#if UNITY_IOS
+            onInterfaceReady();
+#endif
         }
     }
 }

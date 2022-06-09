@@ -53,7 +53,7 @@ namespace Didimo.Mobile.Communication
                 try
                 {
                     DidimoSceneScroller.Instance.ScrollToDidimo(didimoIndex, f => progressCallback(objectPointer, f));
-
+                    CinematicManager.Instance.RemapTimeline(didimoIndex.ToString());
                     successCallback(objectPointer);
                 }
                 catch (Exception e)

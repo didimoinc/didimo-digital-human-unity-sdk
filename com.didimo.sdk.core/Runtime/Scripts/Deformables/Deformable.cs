@@ -13,7 +13,11 @@ namespace Didimo.Core.Deformables
         public string ID => name;
 
         public virtual bool SingleInstancePerDidimo => false;
-        public string[] IdealBoneNames => idealBoneNames;
+        public string[] IdealBoneNames 
+        {
+            get => idealBoneNames;
+            set {idealBoneNames = value;}
+        }
 
         public Type DeformationUtilityType = typeof(ObjDeformationUtility);
         public DeformationUtility GetDeformationUtility()
@@ -59,5 +63,6 @@ namespace Didimo.Core.Deformables
             deformationUtility.Deserialize(data);
             deformationUtility.ApplyToMeshFilters(meshFilters);
         }
+                
     }
 }

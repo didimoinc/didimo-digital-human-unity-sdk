@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AOT;
+using Didimo.Core.Utility;
 using Didimo.Mobile.Controller;
 using UnityEngine;
 
@@ -44,21 +45,25 @@ namespace Didimo.Mobile.Communication
 #endif
         private static void CbMessage(string blendshapeNames, string didimoKey, SuccessCallback successCallback, ErrorCallback errorCallback, IntPtr objectPointer)
         {
-            try
+            ThreadingUtility.WhenMainThread(() =>
             {
-                CinematicManager.Instance.StopCinematic();
-                DidimoLookAtController.Instance.EnableLookAt(false);
-                string[] blendshapeNamesArray = blendshapeNames.Split(',');
-                // Debug.Log($"Blendshape names: {string.Join(", ", blendshapeNamesArray)}");
-                ARKitCaptureStreamController controller = ARKitCaptureStreamController.AddToDidimo(didimoKey);
-                controller.RegisterPoseNames(blendshapeNamesArray);
 
-                successCallback(objectPointer);
-            }
-            catch (Exception e)
-            {
-                errorCallback(objectPointer, e.Message);
-            }
+                try
+                {
+                    CinematicManager.Instance.StopCinematic();
+                    DidimoLookAtController.Instance.EnableLookAt(false);
+                    string[] blendshapeNamesArray = blendshapeNames.Split(',');
+                    // Debug.Log($"Blendshape names: {string.Join(", ", blendshapeNamesArray)}");
+                    ARKitCaptureStreamController controller = ARKitCaptureStreamController.AddToDidimo(didimoKey);
+                    controller.RegisterPoseNames(blendshapeNamesArray);
+
+                    successCallback(objectPointer);
+                }
+                catch (Exception e)
+                {
+                    errorCallback(objectPointer, e.Message);
+                }
+            });
         }
     }
 }
