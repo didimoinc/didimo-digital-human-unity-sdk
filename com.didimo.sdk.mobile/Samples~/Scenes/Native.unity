@@ -156,11 +156,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011039791502210146, guid: 14ab58808c1ff4e00bdda906541d7247, type: 3}
       propertyPath: headTracking.headRotationLimits.max.x
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9011039791502210146, guid: 14ab58808c1ff4e00bdda906541d7247, type: 3}
       propertyPath: headTracking.headRotationLimits.max.y
-      value: 40
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 9011039791502210146, guid: 14ab58808c1ff4e00bdda906541d7247, type: 3}
       propertyPath: headTracking.headRotationLimits.max.z
@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011039791502210146, guid: 14ab58808c1ff4e00bdda906541d7247, type: 3}
       propertyPath: headTracking.headRotationLimits.min.y
-      value: -40
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 9011039791502210146, guid: 14ab58808c1ff4e00bdda906541d7247, type: 3}
       propertyPath: headTracking.headRotationLimits.min.z
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimos:
-  - {fileID: 8779013199455112707, guid: b58b547e4001f4d27a92152673e6389d, type: 3}
+  - {fileID: 1030804031966768930, guid: b58b547e4001f4d27a92152673e6389d, type: 3}
   - {fileID: 758797735210166422, guid: 3e3ef4b5811cf4853ab8b43a31138fbc, type: 3}
   - {fileID: 914828378953895755, guid: e5811d28551d24c65bcfa801ad958e5b, type: 3}
   scrollTime: 0.5
