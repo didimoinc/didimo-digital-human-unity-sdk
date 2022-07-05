@@ -46,9 +46,10 @@ namespace Didimo.Core.Utility
         /// <summary>
         /// Find for a game object with the provided name, starting from the given transform.
         /// </summary>
-        /// <param name="transform">The extended Tranform object.</param>
+        /// <param name="transform">The extended Transform object.</param>
         /// <param name="name">The name to look for.</param>
-        /// <returns>A Transform object with the given name, null if not found.</returns>
+        /// <param name="result">The Transform object with the given name, null if not found.</param>
+        /// <returns>True if the Transform object was found. False otherwise</returns>
         public static bool TryFindRecursive(this Transform transform, string name, out Transform result)
         {
             if (transform.name.Equals(name))
@@ -95,9 +96,10 @@ namespace Didimo.Core.Utility
         /// <param name="index2">Swap the element in this index for the one at index1.</param>
         public static void Swap<T>(this List<T> list, int index1, int index2)
         {
-            T temp = list[index1];
-            list[index1] = list[index2];
-            list[index2] = temp;
+            (list[index1], list[index2]) = (list[index2], list[index1]);
+            // T temp = list[index1];
+            // list[index1] = list[index2];
+            // list[index2] = temp;
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -34,6 +33,8 @@ namespace Didimo.GLTFUtility
 		protected static string PACKAGES_ROOT_PATH      = "Packages/";
 		protected static string PACKAGE_CACHE_ROOT_PATH = "Library/PackageCache/";
 
+		public static readonly string GltfImageSharedPath = Path.Combine(Application.dataPath, "Didimo", "SharedAssets");
+
 		public class ImportResult
 		{
 			public byte[] bytes;
@@ -47,6 +48,14 @@ namespace Didimo.GLTFUtility
 
 			public IEnumerator CreateTextureAsync(bool linear, bool normalMap, Action<Texture2D> onFinish, Action<float> onProgress = null)
 			{
+				Texture2D texture = GLTFImageCache.GetTexture(path);
+				if (texture != null)
+				{
+					// Should onProgress be called?
+					onFinish(texture);
+					yield break;
+				}
+
 				if (!string.IsNullOrEmpty(path))
 				{
 #if UNITY_EDITOR
@@ -93,7 +102,9 @@ namespace Didimo.GLTFUtility
 #endif
 
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS )
-					path = "File://" + path;
+					if(!path.StartsWith("http")){
+						path = "File://" + path;
+					}
 #endif
 					// Don't use UnityWebRequestTexture. It has a bug where isDone is always false.
 					using (UnityWebRequest uwr = UnityWebRequest.Get(new Uri(path)))
@@ -121,8 +132,15 @@ namespace Didimo.GLTFUtility
 						else
 						{
 							Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, true, linear);
-							tex.LoadImage(uwr.downloadHandler.data, true);
+							bool isSharedTexture = path.StartsWith("http");
+							tex.LoadImage(uwr.downloadHandler.data, !isSharedTexture);
 							tex.name = Path.GetFileNameWithoutExtension(path);
+
+							if (isSharedTexture)
+							{
+								GLTFImageCache.AddTexture(path, tex);
+							}
+
 							onFinish(tex);
 						}
 
@@ -144,9 +162,21 @@ namespace Didimo.GLTFUtility
 
 		public class ImportTask : Importer.ImportTask<ImportResult[]>
 		{
+			public bool needsReimport;
+#if UNITY_EDITOR
+			private static string SharedPath(string imageUri)
+			{
+				List<char> invalidPathChars = Path.GetInvalidPathChars().ToList();
+				invalidPathChars.Add(':');
+				string result = Path.Combine(GltfImageSharedPath, string.Concat(imageUri.Split(invalidPathChars.ToArray())));
+				return result.Replace('\\', '/').Replace("//", "/");
+			}
+
+#endif
+
 			public ImportTask(List<GLTFImage> images, string directoryRoot, GLTFBufferView.ImportTask bufferViewTask) : base(bufferViewTask)
 			{
-				task = new Task(() =>
+				task = new Task(async () =>
 				{
 					// No images
 					if (images == null) return;
@@ -157,6 +187,41 @@ namespace Didimo.GLTFUtility
 						string fullUri = directoryRoot + images[i].uri;
 						if (!string.IsNullOrEmpty(images[i].uri))
 						{
+							if (images[i].uri.StartsWith("http"))
+							{
+								if (!Application.isPlaying)
+								{
+#if UNITY_EDITOR
+									if (!string.IsNullOrEmpty(directoryRoot))
+									{
+										fullUri = SharedPath(images[i].uri);
+										if (!File.Exists(fullUri))
+										{
+											using (UnityWebRequest webRequest = UnityWebRequest.Get(images[i].uri))
+											{
+												UnityWebRequestAsyncOperation asyncOperation = webRequest.SendWebRequest();
+												while (!asyncOperation.isDone) { await Task.Delay(100); }
+
+												Directory.CreateDirectory(Path.GetDirectoryName(fullUri)!);
+												File.WriteAllBytes(fullUri, webRequest.downloadHandler.data);
+												string assetPath = Path.GetDirectoryName(Application.dataPath);
+												assetPath = fullUri.Remove(0, assetPath!.Length + 1);
+												// images[i].uri = fullUri;
+												needsReimport = true;
+												AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+												AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+											}
+										}
+									}
+#endif
+								}
+								else
+								{
+									Result[i] = new ImportResult(null, images[i].uri);
+									continue;
+								}
+							}
+
 							if (File.Exists(fullUri))
 							{
 								// If the file is found at fullUri, read it

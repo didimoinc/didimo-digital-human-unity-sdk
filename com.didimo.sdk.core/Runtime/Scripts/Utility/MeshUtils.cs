@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Didimo.Core.Config.ShaderResources;
 
 namespace  Didimo.Core.Utility
@@ -50,10 +51,41 @@ namespace  Didimo.Core.Utility
             return ob != null ? ob.GetComponent<Renderer>() : null;
         }
 
-        public static Mesh DeformMesh(Mesh A, float[] deformationData)
+        /// <summary>
+        /// Create a new mesh from an existing mesh with updated vertex positions,
+        /// while keeping other properties intact. Also copies sub-meshes.
+        /// If new vertices is null, they are taken from the source mesh instead, generating a copy.
+        /// </summary>
+        /// <param name="source">Source mesh to take the data from</param>
+        /// <param name="newVertices">New vertex positions</param>
+        /// <returns>Copy of the source mesh with the updated vertices</returns>
+        public static Mesh ApplyMeshVertexDeformation(Mesh source, Vector3[] newVertices = null)
         {
-            return null;
+            Mesh result = new();
+            result.vertices = newVertices ?? source.vertices;
+            result.normals = source.normals;
+            result.uv = source.uv;
+            result.uv2 = source.uv2;
+            result.uv3 = source.uv3;
+            result.uv4 = source.uv4;
+            result.uv5 = source.uv5;
+            result.uv6 = source.uv6;
+            result.uv7 = source.uv7;
+            result.uv8 = source.uv8;
+            result.tangents = source.tangents;
+            result.colors = source.colors;
+            result.triangles = source.triangles;
+
+            List<SubMeshDescriptor> subMeshDescriptors = new List<SubMeshDescriptor>(source.subMeshCount);
+            for (int submeshIndex = 0; submeshIndex < source.subMeshCount; submeshIndex++)
+            {
+                subMeshDescriptors.Add(source.GetSubMesh(submeshIndex));
+            }
+            result.SetSubMeshes(subMeshDescriptors);
+
+            return result;
         }
+
         public static Mesh TopologyFromAVerticesFromB(Mesh A, Mesh B)
         {
             Mesh result = new Mesh();
@@ -95,7 +127,7 @@ namespace  Didimo.Core.Utility
             return null;
         }
 
-        static void AddOrIncrement<A>(Dictionary<A,int> uniques, A value)
+        public static void AddOrIncrement<T>(Dictionary<T,int> uniques, T value)
         {
             if (uniques.ContainsKey(value))
                 uniques[value] += 1;

@@ -39,7 +39,7 @@ namespace Didimo.Core.Utility
             mainCameraGo.SetActive(false);
             Camera camera = cameraGo.GetComponentInChildren<Camera>();
 
-            RenderTexture rt = new RenderTexture(width, height, RENDER_TEXTURE_DEPTH);
+            RenderTexture rt = new RenderTexture(width, height, 0);
 
             Texture2D screenShot = new Texture2D(rt.width, rt.height, TextureFormat.RGBA32, false);
 

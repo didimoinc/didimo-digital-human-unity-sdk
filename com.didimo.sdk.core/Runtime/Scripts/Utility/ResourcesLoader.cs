@@ -7,7 +7,7 @@ namespace Didimo.Core.Utility
 {
   
 
-    public class ResourcesLoader
+    public static class ResourcesLoader
     {
         public static string[] ResourceIDs = {"ShaderResources", "ShaderResourcesHDRP", "ShaderResourcesSRP", "Unknown"};
         public static string[] PipelineName = { "URP", "HDRP", "SRP", "Unknown" };
@@ -27,8 +27,7 @@ namespace Didimo.Core.Utility
 
         public static void SetPipeline(EPipelineType pipeline)
         {
-            var pipelineDB = UnityEngine.Resources
-                .Load<PipelineResources>("PipelineResources");
+            var pipelineDB = Resources.Load<PipelineResources>("PipelineResources");
             if (pipelineDB)
             {
                 RenderPipelineAsset pipelineAsset = null;

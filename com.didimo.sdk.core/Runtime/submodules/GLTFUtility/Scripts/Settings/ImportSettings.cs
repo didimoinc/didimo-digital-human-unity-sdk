@@ -9,6 +9,8 @@ namespace Didimo.GLTFUtility
 	[Serializable]
 	public class ImportSettings
 	{
+		[HideInInspector]
+		public bool needsReimportForTextures;
 		public enum AnimationType
 		{
 			// None,

@@ -13,7 +13,7 @@ namespace Didimo.Core.Deformables
 
         private static List<Deformable> GetDeformablesFromDatabase(string databaseName)
         {
-            var deformableDatabase = UnityEngine.Resources.Load<DeformableDatabase>(databaseName);
+            DeformableDatabase deformableDatabase = Resources.Load<DeformableDatabase>(databaseName);
             return new List<Deformable>(deformableDatabase.Deformables);
         }
 

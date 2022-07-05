@@ -61,8 +61,7 @@ namespace Didimo
         public const  string RESET_POSE_NAME     = "RESET_POSE";
         private const string DEFAULT_POSE_SOURCE = "ARKit";
 
-        public override ESupportedMovements SupportedMovements
-            => ESupportedMovements.Poses | ESupportedMovements.HeadRotation;
+        public override ESupportedMovements SupportedMovements => ESupportedMovements.Poses | ESupportedMovements.HeadRotation;
 
         [SerializeField, HideInInspector]
         protected Animation animationComponent;
@@ -70,6 +69,7 @@ namespace Didimo
         public  AnimationClip[] animationClips;
         public  AnimationClip   resetAnimationClip;
         public  Transform       headJoint;
+        public  bool            headJointMovementEnabled = true;
         private TransformValues initialHeadJointTransform;
 
 
@@ -82,8 +82,9 @@ namespace Didimo
         private          Dictionary<string, DidimoFaceShape> nameToPoseMapping;
         private          DidimoFaceShape                     resetFaceShape;
 
-        private          bool                                poseDataWasUpdated = false;
-        private readonly HashSet<string>                     shapesToDisable     = new HashSet<string>();
+        private          bool            poseDataWasUpdated = false;
+        private readonly HashSet<string> shapesToDisable    = new HashSet<string>();
+        private          bool            resetHeadPose      = false;
 
         public Dictionary<string, DidimoFaceShape> NameToPoseMapping
         {
@@ -344,8 +345,9 @@ namespace Didimo
         public override bool SetHeadRotation(Quaternion rotation)
         {
             if (headJoint == null || initialHeadJointTransform == null) return false;
+            if (!headJointMovementEnabled || headJointWeight == 0) return true;
 
-            // We set the head rotation in rotation to the "idle" pose.
+            // We set the head rotation in relation to the "idle" pose.
             // i.e.: if Identity rotation, then the face is in the rest pose
             rotation = initialHeadJointTransform.Rotation * rotation;
             if (headJointWeight < 1)
@@ -353,6 +355,8 @@ namespace Didimo
                 rotation = Quaternion.Lerp(initialHeadJointTransform.Rotation, rotation, headJointWeight);
             }
             headJoint.localRotation = rotation;
+
+            resetHeadPose = true;
             return true;
         }
 
@@ -361,7 +365,13 @@ namespace Didimo
         /// </summary>
         public override void ResetHeadRotation()
         {
+            // No head joint
             if (headJoint == null || initialHeadJointTransform == null) return;
+
+            // Not moved or movement was disabled
+            if (!headJointMovementEnabled || !resetHeadPose || headJointWeight == 0) return;
+
+            resetHeadPose = false;
             headJoint.localRotation = initialHeadJointTransform.Rotation;
         }
 

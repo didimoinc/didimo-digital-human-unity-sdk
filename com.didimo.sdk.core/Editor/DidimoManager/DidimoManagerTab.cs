@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 
 namespace Didimo.Core.Editor
 {
@@ -19,7 +18,7 @@ namespace Didimo.Core.Editor
         private static void DidReloadScripts()
         {
             // Get all types that inherit DidimoManagerTab, and register them as tabs for the DidimoManager
-            var type = typeof(DidimoManagerTab);
+            Type type = typeof(DidimoManagerTab);
             List<Type> tabTypes = new List<Type>();
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.Contains("Didimo"));
             foreach (Assembly assembly in assemblies)
@@ -36,7 +35,7 @@ namespace Didimo.Core.Editor
                 }
             }
 
-            foreach (var tabType in tabTypes.Where(t => t != null))
+            foreach (Type tabType in tabTypes.Where(t => t != null))
             {
                 DidimoManager.AddTab(Activator.CreateInstance(tabType) as DidimoManagerTab);
             }

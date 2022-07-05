@@ -10,10 +10,10 @@ namespace Didimo.Core.Deformables
     public class ObjDeformationUtility : DeformationUtility
     {
         // stored in pipeline coordinates
-        private List<Vector3>    vertices;
-        private List<Vector3>    normals;
-        private List<Vector2>    uvs;
-        private List<Vector3Int> faces;
+        protected List<Vector3>    vertices;
+        protected List<Vector3>    normals;
+        protected List<Vector2>    uvs;
+        protected List<Vector3Int> faces;
 
         public override List<Vector3> GetVertices() => PipelineToUnity(vertices);
 

@@ -44,19 +44,16 @@ namespace Didimo.Core.Editor
 
         protected void OnEnable()
         {
-            var icon = (Texture)EditorGUIUtility.Load("Packages/com.didimo.sdk.core/Editor/Editor Resources/didimoicon.png");
-            var title = new GUIContent("Didimo Manager", icon);
-            
-            titleContent = title;
+            Texture icon = (Texture)EditorGUIUtility.Load("Packages/com.didimo.sdk.core/Editor/Editor Resources/didimoicon.png");
+            titleContent = new GUIContent("Didimo Manager", icon);
         }
 
         protected void OnGUI()
         {
             //wantsMouseMove = true;
             GUILayout.Space(PADDING);
-            var oldSelectedTab = SelectedTab;
-            SelectedTab = GUILayout.Toolbar(SelectedTab,
-                tabs.Select(x => x.GetTabName()).ToArray());
+            int oldSelectedTab = SelectedTab;
+            SelectedTab = GUILayout.Toolbar(SelectedTab, tabs.Select(x => x.GetTabName()).ToArray());
             GUILayout.Space(PADDING);
             if (oldSelectedTab != SelectedTab)
                 tabs[SelectedTab].OnActivated();                
