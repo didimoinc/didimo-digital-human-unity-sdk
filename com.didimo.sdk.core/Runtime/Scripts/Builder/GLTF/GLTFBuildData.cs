@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Didimo.Core.Utility;
 using Didimo.GLTFUtility;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -61,7 +61,7 @@ namespace Didimo.Builder.GLTF
                 return shader;
             };
 
-            ImportSettings.postMaterialCreate = material => { return materialBuilder.PostMaterialCreate(material); };
+            ImportSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
 
             Importer.ImportResult importResult = Importer.LoadFromFile(GLTFDidimoFilePath, ImportSettings, Format.GLTF);
             ImportSettings.animationType = configuration.AnimationType;
@@ -83,15 +83,19 @@ namespace Didimo.Builder.GLTF
         /// that creates the GameObject when dragging didimos into the project.
         /// </summary>
         /// <param name="gltfImportResult">Import result returned by the GLTFImporter</param>
+        /// <param name="importSettings">Settings to configure how some parts of the GLTF should be imported</param>
+        /// <param name="assetPath">Path of the GLTF file</param>
         /// <returns>The created <c>DidimoComponents</c> component.</returns>
-        public static DidimoComponents BuildFromScriptedImporter(Importer.ImportResult gltfImportResult, ImportSettings importSettings)
+        public static DidimoComponents BuildFromScriptedImporter(Importer.ImportResult gltfImportResult, ImportSettings importSettings, string assetPath="")
         {
-            GLTFBuildData buildData = new GLTFBuildData(string.Empty, string.Empty);
+            string rootDirectory = Path.GetDirectoryName(assetPath) ?? "";
+
+            GLTFBuildData buildData = new GLTFBuildData(string.Empty, rootDirectory);
             Configuration configuration = Configuration.Default();
 
             // buildData.OnBeforeBuild(configuration, out DidimoBuildContext context);
             DidimoComponents didimoComponents = gltfImportResult.rootObject.AddComponent<DidimoComponents>();
-            DidimoBuildContext context = DidimoBuildContext.CreateNew(didimoComponents, string.Empty);
+            DidimoBuildContext context = DidimoBuildContext.CreateNew(didimoComponents, rootDirectory);
             AddRequiredComponents(gltfImportResult, gltfImportResult.rootObject, importSettings);
             
             GLTFDidimoHair.ApplyHairMaterials(gltfImportResult);
@@ -105,8 +109,9 @@ namespace Didimo.Builder.GLTF
         /// Add the essential components to the didimo. This includes the
         /// animator, pose controller, iris controller and eye shadow controller.
         /// </summary>
-        /// <param name="gltfImportResult"></param>
-        /// <param name="root"></param>
+        /// <param name="gltfImportResult">Import result returned by the GLTFImporter</param>
+        /// <param name="root">Root object where required components will be attached to</param>
+        /// <param name="importSettings">Settings to configure how some parts of the GLTF should be imported</param>
         public static void AddRequiredComponents(Importer.ImportResult gltfImportResult, GameObject root, ImportSettings importSettings)
         {
             root.AddComponent<DidimoAnimator>();

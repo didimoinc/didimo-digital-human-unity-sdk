@@ -303,7 +303,7 @@ namespace Didimo.Core.Editor
                         DidimoMaterialSwitcher dms = smr.GetComponent<DidimoMaterialSwitcher>();
                         if (dms)
                         {
-                            Undo.RecordObject(dms, "settimg material switch entries");
+                            Undo.RecordObject(dms, "setting material switch entries");
                             dms.SetEntryMaterials(materialSwitcherSlot, matlist);
                         }
                         Undo.RecordObject(smr, "setting materials");
@@ -320,7 +320,7 @@ namespace Didimo.Core.Editor
                         if (dms)
                         {
 
-                            Undo.RecordObject(dms, "settimg material switch entries");
+                            Undo.RecordObject(dms, "setting material switch entries");
                             dms.SetEntryMaterials(materialSwitcherSlot, matlist);
                         }
                         Undo.RecordObject(mr, "setting materials");

@@ -4897,6 +4897,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 3709028572992111918}
+  deformationFile: {fileID: 0}
+  hairOffset:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
 --- !u!4 &2095376060771583324
 Transform:
   m_ObjectHideFlags: 0
@@ -8641,7 +8659,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: a52e22427f7f48f458c7c03761ac07eb, type: 3}
 --- !u!4 &5335225659271780523 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 9123162589419083343, guid: a52e22427f7f48f458c7c03761ac07eb, type: 3}
+  m_CorrespondingSourceObject: {fileID: 650824827019169938, guid: a52e22427f7f48f458c7c03761ac07eb, type: 3}
   m_PrefabInstance: {fileID: 5335225659271780522}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5349610780024069636
@@ -10505,7 +10523,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 6dd8c16259eba5a4d998415a2d7e1c89, type: 3}
 --- !u!4 &6669542876596064010 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 9123162589419083343, guid: 6dd8c16259eba5a4d998415a2d7e1c89, type: 3}
+  m_CorrespondingSourceObject: {fileID: 650824827019169938, guid: 6dd8c16259eba5a4d998415a2d7e1c89, type: 3}
   m_PrefabInstance: {fileID: 6669542876596064009}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6674607312695050385
@@ -12281,7 +12299,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c50a7835b83a947a2b9739cabf0b3478, type: 2}
+  - {fileID: 2100000, guid: 71951505fd85bfd4d938af9c441a6510, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

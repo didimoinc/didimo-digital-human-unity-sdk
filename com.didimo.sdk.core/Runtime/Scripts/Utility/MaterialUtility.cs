@@ -1,4 +1,3 @@
-using Didimo.Builder;
 using Didimo.Core.Config;
 using Didimo.Core.Deformables;
 using System;
@@ -10,7 +9,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using static Didimo.Core.Config.ShaderResources;
 
@@ -763,9 +761,9 @@ illum 2
                             {
                                 var v = mat.GetTexture(propName);
 #if UNITY_EDITOR
-                                LogString.AppendFormat("{0} : {1}\n", indentName, (v != null ? v.ToString() + " : " + UnityEditor.AssetDatabase.GetAssetPath(v) : "Empty"));
+                                LogString.AppendFormat("{0} : {1}\n", indentName, v != null ? $"{v} : {AssetDatabase.GetAssetPath(v)}" : "Empty");
 #else
-                                    LogString.AppendFormat("{0} : {1}\n", indentName, v.ToString());
+                                LogString.AppendFormat("{0} : {1}\n", indentName, v);
 #endif
                                 break;
                             }
@@ -833,7 +831,7 @@ illum 2
             if (dms)
             {
 #if UNITY_EDITOR
-                Undo.RecordObject(dms, "settimg material switch entries");
+                Undo.RecordObject(dms, "setting material switch entries");
 #endif
                 dms.SetEntryMaterials(MaterialSwitchSlot, newMatList);
             }
@@ -931,7 +929,7 @@ illum 2
                         if (dms && useMaterialSwitcherIfAvailable)
                         {
 #if UNITY_EDITOR
-                            Undo.RecordObject(dms, "settimg material switch entries");
+                            Undo.RecordObject(dms, "setting material switch entries");
 #endif
                             dms.SetEntryToOwnMaterials(switcherIndex);
                             dms.SetEntryMaterials(switcherIndex, newlist.ToArray());
@@ -957,7 +955,7 @@ illum 2
                         if (dms && useMaterialSwitcherIfAvailable)
                         {
 #if UNITY_EDITOR
-                            Undo.RecordObject(dms, "settimg material switch entries");
+                            Undo.RecordObject(dms, "setting material switch entries");
 #endif
                             dms.SetEntryMaterials(switcherIndex, newlist.ToArray());
                         }

@@ -1,0 +1,17 @@
+{
+    "name": "Didimo.AssetFitter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:95b459ff379a9424ea557aacf5fe885a",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

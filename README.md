@@ -24,12 +24,13 @@ This SDK has been built to work with Unity 2021.3.x LTS (from Unity 2021.3.1 onw
 1. Install via the package manager
    1. Open Unity's Package Manager
    2. Under the `+` button, select `Add package from git URL...`
-   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.3.0` and press `Add`
+   3. Enter `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.core#4.4.0` and press `Add`
    4. Optionally, add any of the following modules, by repeating the previous 2 steps, with the URLs:
 
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.3.0` For didimo API integration
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.3.0` For a communication layer between android/iOS and Unity
-      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.3.0` For integration with Oculus
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.networking#4.4.0` For didimo API integration
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.mobile#4.4.0` For a communication layer between android/iOS and Unity
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.oculus#4.4.0` For integration with Oculus
+      * `https://github.com/didimoinc/didimo-digital-human-unity-sdk.git?path=/com.didimo.sdk.assetfitter#4.4.0` For a tool used to fit apparel
 
 
 2. Setup your project. You can do this by going to Window → Didimo Manager, and following the instructions, or by following these steps 
@@ -72,6 +73,8 @@ This project is broken down into the following modules:
 * **Mobile** - Add the ability of bi-directional communication between Unity and native Android or iOS applications.
 * **Networking** - Allows for immediate interaction with the Didimo API.
 * **Oculus** - Example integration with Oculus quest, and sample meeting room (multiplayer).
+* **Asset Fitter** - A tool used to fit the apparel (clothing, accessories and hairstyle) of a 3rd Party avatar into a didimo.
+
 
 Every module may contain a `Samples` folder, where example assets and scenes of said module can be found. You can import 
 samples into your project through the Package Manager interface, after adding the module to your project. Go to Window →

@@ -7,14 +7,17 @@ using Didimo.Core.Utility;
 using UnityEditor;
 using static Didimo.Core.Config.ShaderResources;
 using System.IO;
-using Didimo.Core.Config;
-
-
+using Didimo.Core.Deformer;
 
 namespace Didimo.Core.Deformables
 {
     public class DidimoDeformables : DidimoBehaviour
     {
+        public TextAsset deformationFile;
+
+        [NonSerialized]
+        public string DeformationFilePath;
+
         // We will only need this temporarily, as hair pieces will be skinned in the future
         [SerializeField, HideInInspector]
         private Matrix4x4 hairOffset = Matrix4x4.identity;
@@ -45,22 +48,45 @@ namespace Didimo.Core.Deformables
         {
             get
             {
-                if (_deformables == null)
-                {
-                    _deformables = new Dictionary<string, Deformable>();
-                    var deformableList = gameObject.GetComponentsInChildren<Deformable>();
-                    foreach (var deformable in deformableList)
-                    {
-                        if (!_deformables.ContainsKey(deformable.ID))
-                            _deformables.Add(deformable.ID, deformable);
-                    }
-                }
-
+                if (_deformables == null) UpdateDeformablesList();
                 return _deformables;
             }
         }
 
-        public void OnAfterAssemblyReload() { Debug.Log("After Assembly Reload"); }
+        protected Deformer.Deformer deformer;
+
+        public Deformer.Deformer Deformer
+        {
+            get
+            {
+                if (deformer == null) BuildDefomer();
+                return deformer;
+            }
+        }
+
+        /// <summary>
+        /// Creates/Updates the associated deformer from the deformationFile or DeformationFilePath variables
+        /// </summary>
+        public void BuildDefomer()
+        {
+            if (deformationFile != null) deformer = DeformerFactory.BuildDeformer(deformationFile);
+            else if (!string.IsNullOrEmpty(DeformationFilePath)) deformer = DeformerFactory.BuildDeformer(DeformationFilePath);
+            else deformer = DeformerFactory.BuildDefaultDeformer();
+        }
+
+        /// <summary>
+        /// Updates all the list of deformables that exist under this didimo root object
+        /// </summary>
+        public void UpdateDeformablesList()
+        {
+            _deformables = new Dictionary<string, Deformable>();
+            Deformable[] deformableList = gameObject.GetComponentsInChildren<Deformable>();
+            foreach (Deformable deformable in deformableList)
+            {
+                if (!_deformables.ContainsKey(deformable.ID))
+                    _deformables.Add(deformable.ID, deformable);
+            }
+        }
 
         public bool TryFind<TDeformable>(string deformableId, out TDeformable instance) where TDeformable : Deformable
         {
@@ -132,13 +158,6 @@ namespace Didimo.Core.Deformables
             {
                 DestroyAll<TDeformable>();
             }
-            else
-            {
-                if (Exists<TDeformable>())
-                    Debug.Log("Not destroying deformable even though one was found");
-                else
-                    Debug.Log("Not destroying deformable");
-            }
 
             deformable.DidimoComponents = DidimoComponents;
             instance = Instantiate(deformable);
@@ -164,15 +183,21 @@ namespace Didimo.Core.Deformables
 
             if (idealBone == null)
             {
-                Debug.LogWarning($"Cannot find ideal deformable bone with any of " + $"the names: '{string.Join(",", instance.IdealBoneNames)}'");
+                Debug.LogWarning($"Cannot find ideal deformable bone with any of the names: '{string.Join(",", instance.IdealBoneNames)}'");
             }
 
             Transform instanceTransform = instance.transform;
             
             
             Mesh deformableMesh = MeshUtils.GetMesh(deformable.gameObject);
+            if (deformMode == DeformMode.DeformMesh)
+            {
+                Mesh deformedMesh = DeformMesh(deformableMesh, deformable.ID);
+                MeshUtils.SetMesh(instance.gameObject, deformedMesh);
+            }
+
             #if UNITY_EDITOR
-            PerformEditorBasedOperations(instanceTransform, deformableMesh, flags, deformMode);
+            // PerformEditorBasedOperations(instanceTransform, deformableMesh, flags, deformMode);
             #endif
 
             instanceTransform.SetParent(idealBone ? idealBone : DidimoComponents.transform);
@@ -180,7 +205,7 @@ namespace Didimo.Core.Deformables
             {
                 CacheHairOffsets();
             }
-            instanceTransform.localPosition = hairOffset.MultiplyPoint(Vector3.zero);
+            instanceTransform.localPosition = hairOffset.GetPosition();
             instanceTransform.localRotation = hairOffset.rotation;
             instance.name = deformable.ID;
 
@@ -190,17 +215,11 @@ namespace Didimo.Core.Deformables
         public bool TryCreate<TDeformable>(string deformableId, out TDeformable instance, DeformMode deformMode = DeformMode.Nothing, int flags = 0)
             where TDeformable : Deformable
         {
-            if (TryFindDeformable(DeformableUtils.GetAllDeformables().ToArray(), deformableId, out TDeformable deformable) == false)
+            if (!TryFindDeformable(DeformableUtils.GetAllDeformables().ToArray(), deformableId, out TDeformable deformable))
             {
-                var experimentalDeformableDatabase = Resources.Load<DeformableDatabase>("ExperimentalDeformableDatabase");                
-                if (TryFindDeformable(experimentalDeformableDatabase.Deformables, deformableId, out TDeformable tdeformable) == false)
-                {
-                    Debug.LogWarning($"No database deformable found with ID: {deformableId}");
-                    instance = null;
-                    return false;
-                }
-                else
-                    deformable = tdeformable;
+                Debug.LogWarning($"No database deformable found with ID: {deformableId}");
+                instance = null;
+                return false;
             }
 
             return TryCreate(deformable, out instance, deformMode, flags);
@@ -274,10 +293,9 @@ namespace Didimo.Core.Deformables
                                 }
                                 else if (deformMode == DeformMode.DeformMesh)
                                 {
-                                    Matrix4x4 fudgeScale = Matrix4x4.identity;
-                                  
-                                    Mesh vswapmesh = DeformMesh(deformableMeshName, deformableMesh, headMesh, sourceHeadMesh, fudgeScale);
-                                    MeshUtils.SetMesh(instanceTransform.gameObject, vswapmesh);
+                                    // Matrix4x4 fudgeScale = Matrix4x4.identity;
+                                    // Mesh vswapmesh = DeformMesh(deformableMeshName, deformableMesh, headMesh, sourceHeadMesh, fudgeScale);
+                                    // MeshUtils.SetMesh(instanceTransform.gameObject, vswapmesh);
                                 }
                                 
                                 break;  
@@ -289,129 +307,64 @@ namespace Didimo.Core.Deformables
             if ((flags & (int)TryCreateFlags.ForceCreateMaterials) != 0)
                 MaterialUtility.GenerateHairMaterialsForSelected(new GameObject[] { instanceTransform.gameObject }, true, true);
             if ((flags & (int)TryCreateFlags.CreatePrefabs) != 0)
-            {      
-                bool success = false;
-                string PipelineSuffix = ResourcesLoader.PipelineName[(int)ResourcesLoader.GetAppropriateID()];
-                var deformableMeshPathAndName = Path.ChangeExtension(deformableMeshLocation, "").TrimEnd('.');
-                string prefabPath = deformableMeshPathAndName + "_" + PipelineSuffix + ".prefab";
-                PrefabUtility.SaveAsPrefabAsset(instanceTransform.gameObject, prefabPath, out success);                
-            }
-#endif
-        }
-
-        public static Mesh DeformMesh(string deformableName, Mesh sourceDeformable, Mesh targetDidimo, Mesh sourceDidimo, Matrix4x4 transform)
-        {
-
-#if USING_CLIENT_SIDE_DEFORMER
-            string sourceDidimoFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(sourceDidimo));
-            string targetDidimoFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(targetDidimo));
-            string savePath = targetDidimoFolder + Path.DirectorySeparatorChar + deformableName + ".obj";
-
-            if (!string.IsNullOrEmpty(savePath))
             {
-                var appPath = Path.GetDirectoryName(Application.dataPath);
-
-                List<Vector3> source = sourceDidimo.vertices.ToList();
-                List<Vector3> target = targetDidimo.vertices.ToList();
-
-                var sourceAssetPath = AssetDatabase.GetAssetPath(sourceDeformable);
-                ModelImporter sourceDeformableImporter = AssetImporter.GetAtPath(sourceAssetPath) as ModelImporter;
-
-                Debug.Log("Derforming '" + sourceAssetPath+ "' to '" + savePath + "'" );
-
-                OBJ obj = new OBJ();
-                obj.DeserializeFromFile(sourceAssetPath);
-                obj.ApplyScaleToVertices(sourceDeformableImporter.globalScale);
-
-                List<Vector3> verticesToDeform = obj.vertices;
-
-                CGTPS cgtps = new CGTPS(source, target);
-
-                List<Vector3> deformedVertices = cgtps.TransformVertices(verticesToDeform);      
-                for (var i = 0; i < deformedVertices.Count; ++i)
-                    deformedVertices[i] = transform.MultiplyPoint(deformedVertices[i]);
-                obj.vertices = deformedVertices;
-                obj.ApplyScaleToVertices(1f / sourceDeformableImporter.globalScale);
-
-                obj.SerializeToFile(savePath);
-
-                AssetDatabase.Refresh();
-
-
-                foreach (var mtllib in obj.mtlLibs)
-                {
-                    var destPath = appPath + Path.DirectorySeparatorChar + targetDidimoFolder + Path.DirectorySeparatorChar + deformableName + ".mtl";
-                    //if (!System.IO.File.Exists(destPath))
-                    {
-                        var defoType = (deformableName.ToLower().IndexOf("hat") != -1)? "Hats":"Hair";
-                        var path = appPath + "/Packages/com.didimo.sdk.core/Runtime/Content/Deformables/" + defoType+ "/" + deformableName + "/" + deformableName + ".mtl";
-                        //FileUtil.CopyFileOrDirectory(path.Replace("/", "/"), destPath.Replace("/", "/"));                        
-                        if (!System.IO.File.Exists(path))
-                        {
-                            Debug.LogWarning("Problem copying '" + path + "' to '" + destPath + "', trying variant...");
-                            path = appPath + "/Packages/com.didimo.sdk.core/Runtime/Content/Deformables/" + defoType + "/" + deformableName.Replace("0","00") + "/" + deformableName + ".mtl";
-                        }
-                        try
-                        {
-                            File.Copy(path, destPath, true);
-                            Debug.LogWarning("Copied '" + path + "' to '" + destPath + "', trying variant...");
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Debug.LogWarning("Problem copying '" + path + "' to '" + destPath +"' error was: " + ex.Message) ;
-                        }
-                        
-                    }
-                }
-
-                savePath = savePath.Replace("/", "/");
-                
-                if (savePath.StartsWith(appPath))
-                    savePath = savePath.Remove(0, appPath.Length + 1);
-
-                ModelImporter deformedImporter = AssetImporter.GetAtPath(savePath) as ModelImporter;
-                if (deformedImporter)
-                {
-                    deformedImporter.useFileScale = sourceDeformableImporter.useFileScale;
-                    deformedImporter.globalScale = sourceDeformableImporter.globalScale;
-                }
-                deformedImporter.SaveAndReimport();
-                Mesh mesh = AssetDatabase.LoadAssetAtPath<Mesh>(savePath);
-                return mesh;
+                string pipelineSuffix = ResourcesLoader.PipelineName[(int)ResourcesLoader.GetAppropriateID()];
+                string deformableMeshPathAndName = Path.ChangeExtension(deformableMeshLocation, "").TrimEnd('.');
+                string prefabPath = deformableMeshPathAndName + "_" + pipelineSuffix + ".prefab";
+                PrefabUtility.SaveAsPrefabAsset(instanceTransform.gameObject, prefabPath);
             }
 #endif
-            return null;
         }
+
+        public Mesh DeformMesh(Mesh sourceDeformable, string deformedMeshName=null)
+        {
+            Vector3[] newVertices = Deformer.DeformVertices(sourceDeformable.vertices);
+            Mesh deformedMesh = MeshUtils.ApplyMeshVertexDeformation(sourceDeformable, newVertices);
+            deformedMesh.name = string.IsNullOrEmpty(deformedMeshName) ? sourceDeformable.name : deformedMeshName;
+            return deformedMesh;
+        }
+
+
+        private static void RemoveDeformableFromScene(Deformable deformable)
+        {
+#if UNITY_EDITOR
+            if (PrefabUtility.GetPrefabAssetType(deformable.gameObject) == PrefabAssetType.NotAPrefab)
+#endif
+            {
+                if (Application.isPlaying)
+                {
+                    Destroy(deformable.gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(deformable.gameObject);
+                }
+            }
+#if UNITY_EDITOR
+            else
+            {
+                deformable.gameObject.SetActive(false);
+                Debug.LogWarning($"Attempting to destroy deformable on prefab ('{deformable.gameObject}'), this is not allowed so it's only been temporarily hidden.");
+            }
+#endif
+        }
+
+        public void DestroyDeformable(Deformable deformable)
+        {
+            deformables.Remove(deformable.ID);
+            RemoveDeformableFromScene(deformable);
+        }
+
+        public void DestroyDeformable(string deformableId)
+        {
+            deformables.Remove(deformableId, out Deformable deformable);
+            RemoveDeformableFromScene(deformable);
+        }
+
+
         public void DestroyAll<TDeformable>() where TDeformable : Deformable
         {
-            static void OnRemove(KeyValuePair<string, Deformable> kvp)
-            {
-                if (kvp.Value != null)
-                {
-#if UNITY_EDITOR
-                    if (PrefabUtility.GetPrefabInstanceHandle(kvp.Value.gameObject) == null)
-#endif
-                    {
-                        if (Application.isPlaying)
-                        {
-                            Destroy(kvp.Value.gameObject);
-                        }
-                        else
-                        {
-                            DestroyImmediate(kvp.Value.gameObject);
-                        }
-                    }
-#if UNITY_EDITOR
-                    else
-                    {
-                        kvp.Value.gameObject.SetActive(false);
-                        Debug.LogWarning($"Attempting to destroy deformable on prefab ('{kvp.Value.gameObject}'), this is not allowed so it's only been temporarily hidden.");
-                    }
-#endif
-                }
-            }
-
-            deformables.RemoveWhere(d => d.Value is TDeformable, OnRemove);
+            deformables.RemoveWhere(d => d.Value is TDeformable, (deformableKeyValue) => RemoveDeformableFromScene(deformableKeyValue.Value));
         }
 
         private bool Exists<TDeformable>() where TDeformable : Deformable { return TryFindAllDeformables<TDeformable>().Any(); }
@@ -421,16 +374,9 @@ namespace Didimo.Core.Deformables
             return deformables.Where(d => d.Value is TDeformable).Select(d => d.Value).Cast<TDeformable>();
         }
 
-        struct DeformableMeshPair
-        {
-            Deformable deformable;
-            Mesh       mesh;
-        }
-
         public static bool TryFindDeformable<TDeformable>(Deformable[] deformableArray, string id, out TDeformable deformable) where TDeformable : Deformable
         {
             deformable = deformableArray.Where(d => d is TDeformable).Cast<TDeformable>().FirstOrDefault(h => h.ID == id);
-
             return deformable != null;
         }
     }

@@ -59,19 +59,19 @@ namespace Didimo.Mobile.Controller
         static Camera Camera => Camera.main;
 
         [Button]
-        public void Reset()
-        {
-            Reset(true);
-        }
+        public void Reset() { Reset(true); }
 
         public void Reset(bool resetCamera)
         {
             foreach (DidimoComponents didimoComponents in DidimoCache.GetAllDidimos())
             {
-                Didimo didimo = new (didimoComponents);
+                Didimo didimo = new(didimoComponents);
                 didimo.ResetToBindPose();
+                headTracking.CacheValues(didimo);
             }
+
             headTracking.Reset();
+
             TouchController.Instance.Reset();
 
             if (resetCamera)
@@ -86,7 +86,7 @@ namespace Didimo.Mobile.Controller
             {
                 objectRotator.OnValidate();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogError(e);
             }
@@ -230,6 +230,11 @@ namespace Didimo.Mobile.Controller
         [Serializable]
         class HeadTracking
         {
+            Quaternion      leyeCache = Quaternion.identity;
+            Quaternion      headCache = Quaternion.identity;
+            private Vector3 eyeCenter;
+            private Vector3 leftEyeForward;
+
             const float SensitivityScale = 20;
 
             [Range(0, 2)]
@@ -244,6 +249,10 @@ namespace Didimo.Mobile.Controller
             [Range(0.1f, 1)]
             float bonesFollowWeight = 0.3f;
 
+            [SerializeField]
+            [Range(0.1f, 1)]
+            float neckContribution = 0.7f;
+
             [MinMaxSlider(-180, +180)]
             [SerializeField]
             MinMax<Vector3> eyeRotationLimits = new MinMax<Vector3>(new Vector3(-25, -30, 0), new Vector3(5, 30, 0));
@@ -253,6 +262,14 @@ namespace Didimo.Mobile.Controller
             MinMax<Vector3> headRotationLimits = new MinMax<Vector3>(new Vector3(-45, -70, -15), new Vector3(45, 70, 15));
 
             Vector3? targetPosition;
+
+            public void CacheValues(Didimo didimo)
+            {
+                leyeCache = didimo.LeftEyeBone.rotation;
+                headCache = didimo.HeadBone.rotation;
+                eyeCenter = (didimo.LeftEyeBone.transform.position + didimo.RightEyeBone.transform.position) / 2;
+                leftEyeForward = didimo.LeftEyeBone.forward;
+            }
 
             public void Update(Didimo didimo)
             {
@@ -270,28 +287,30 @@ namespace Didimo.Mobile.Controller
                 Transform neck = didimo.NeckBone;
                 Transform head = didimo.HeadBone;
 
-                var side = Vector3.Dot(didimo.EyesCenterForward, (Vector3) targetPosition - didimo.EyesCenter);
+                var side = Vector3.Dot(leftEyeForward, (Vector3)targetPosition - eyeCenter);
                 if (side < 0) return;
 
-                Quaternion rotation = Quaternion.LookRotation((Vector3) targetPosition - didimo.EyesCenter);
-                leye.transform.rotation = reye.transform.rotation = Quaternion.Slerp(leye.transform.rotation, rotation, bonesFollowWeight);
+                Quaternion rotation = Quaternion.LookRotation((Vector3)targetPosition - eyeCenter);
+                leye.transform.rotation = reye.transform.rotation = Quaternion.Slerp(leyeCache, rotation, bonesFollowWeight);
 
                 var euler = RepeatEuler(leye.transform.localEulerAngles);
                 float y = euler.y < eyeRotationLimits.min.y ? euler.y - eyeRotationLimits.min.y : (euler.y > eyeRotationLimits.max.y ? euler.y - eyeRotationLimits.max.y : 0);
                 float x = euler.x < eyeRotationLimits.min.x ? euler.x - eyeRotationLimits.min.x : (euler.x > eyeRotationLimits.max.x ? euler.x - eyeRotationLimits.max.x : 0);
                 float z = euler.z;
 
-                Quaternion targetRotation = head.transform.rotation * Quaternion.Euler(x, y, z);
+                Quaternion targetRotation = headCache * Quaternion.Euler(x, y, z);
 
-                var headRotation = Quaternion.Slerp(head.transform.rotation, targetRotation, GetTimeWeight(bonesFollowWeight));
+                var headRotation = Quaternion.Slerp(headCache, targetRotation, GetTimeWeight(bonesFollowWeight));
                 headRotation = Quaternion.Euler(ClampEuler(RepeatEuler(headRotation.eulerAngles), headRotationLimits.min, headRotationLimits.max));
 
                 didimo.ResetNeck();
-                neck.transform.rotation = Quaternion.Lerp(neck.transform.rotation, headRotation, 0.5f);
+                neck.transform.rotation = Quaternion.Lerp(neck.transform.rotation, headRotation, neckContribution);
                 head.transform.rotation = headRotation;
 
                 // clamp the eyes
                 leye.transform.localEulerAngles = reye.transform.localEulerAngles = ClampEuler(euler, eyeRotationLimits.min, eyeRotationLimits.max);
+                
+                CacheValues(didimo);
             }
 
             static float GetTimeWeight(float weight) => weight * 10 * Time.deltaTime;
@@ -352,8 +371,7 @@ namespace Didimo.Mobile.Controller
                 neckInverseBindPose = primarySkin.sharedMesh.bindposes[neckBoneIndex].inverse;
             }
 
-            public Vector3 EyesCenter => (LeftEyeBone.transform.position + RightEyeBone.transform.position) / 2;
-            public Vector3 EyesCenterForward => LeftEyeBone.forward;
+            //public Vector3 EyesCenterForward => LeftEyeBone.forward;
 
             public void ResetToBindPose()
             {

@@ -283,6 +283,7 @@ namespace Didimo.GLTFUtility
 			accessorTask.RunSynchronously();
 			GLTFImage.ImportTask imageTask = new GLTFImage.ImportTask(allImages, directoryRoot, bufferViewTask);
 			imageTask.RunSynchronously();
+			importSettings.needsReimportForTextures = imageTask.needsReimport;
 			GLTFTexture.ImportTask textureTask = new GLTFTexture.ImportTask(allTextures, imageTask);
 			textureTask.RunSynchronously();
 			GLTFMaterial.ImportTask materialTask = new GLTFMaterial.ImportTask(gltfObject.materials, textureTask, importSettings);

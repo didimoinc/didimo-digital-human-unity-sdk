@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Didimo.Speech;
 using Didimo.Core.Deformables;
+using Didimo.Core.Deformer;
 using Didimo.Core.Utility;
+using UnityEditor;
 
 namespace Didimo.Builder
 {
@@ -43,8 +47,34 @@ namespace Didimo.Builder
             context.DidimoComponents.gameObject.AddComponent<DidimoSpeech>();
             DidimoDeformables deformables = context.DidimoComponents.gameObject.AddComponent<DidimoDeformables>();
             deformables.CacheHairOffsets();
+            deformables.deformationFile = GetDeformationFile(context.RootDirectory);
             context.DidimoComponents.gameObject.AddComponent<DidimoMaterials>();
             context.DidimoComponents.gameObject.SetActive(true);
+        }
+
+
+        private static string FindDeformationFile(string rootDirectory)
+        {
+            if (string.IsNullOrEmpty(rootDirectory)) return null;
+            // Find a file in the root folder that is a .dmx or .npz
+            return Directory.EnumerateFiles(rootDirectory, "*.*", new EnumerationOptions {IgnoreInaccessible = true, MatchCasing = MatchCasing.CaseInsensitive}).
+                             FirstOrDefault(s => s.EndsWith(".dmx", StringComparison.InvariantCultureIgnoreCase) ||
+                                                 s.EndsWith(".npz", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private static TextAsset GetDeformationFile(string rootDirectory)
+        {
+            if (string.IsNullOrEmpty(rootDirectory)) return null;
+
+            string deformationFilePath = FindDeformationFile(rootDirectory);
+            if (string.IsNullOrEmpty(deformationFilePath)) return null;
+
+#if UNITY_EDITOR
+            TextAsset deformationFile = AssetDatabase.LoadAssetAtPath<TextAsset>(deformationFilePath.Replace('\\', '/'));
+            if (deformationFile != null) return deformationFile;
+#endif
+            if (File.Exists(deformationFilePath)) return new ByteAsset(File.ReadAllBytes(deformationFilePath));
+            return null;
         }
     }
 }

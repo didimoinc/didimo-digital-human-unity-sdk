@@ -1626,6 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimo: {fileID: 5533232573617417074}
+  deformationFile: {fileID: 0}
   hairOffset:
     e00: 0
     e01: 0
@@ -1909,7 +1910,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -8910198154855153674, guid: 843ce50946c877d458ac367aad169782, type: 3}
   m_Bones:
@@ -5793,7 +5794,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 1962868692608455420, guid: 843ce50946c877d458ac367aad169782, type: 3}
   m_Bones:

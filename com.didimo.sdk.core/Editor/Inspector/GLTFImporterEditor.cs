@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
-using Didimo.Extensions;
 using Didimo.GLTFUtility;
 using GLTFImporter = Didimo.Core.Editor.GLTFImporter;
 using Object = UnityEngine.Object;
@@ -19,16 +18,7 @@ namespace Didimo.Editor.Inspector
         private        Vector2  scrollPosition;
         private static string[] tabNames;
 
-        private static string[] GetTabNames()
-        {
-            if (tabNames == null)
-            {
-                IEnumerable<Tab> tabs = Enum.GetValues(typeof(Tab)).Cast<Tab>();
-                tabNames = tabs.Convert(item => item.ToString()).ToArray();
-            }
-
-            return tabNames;
-        }
+        private static string[] GetTabNames() { return tabNames ??= Enum.GetNames(typeof(Tab)); }
 
         private enum Tab
         {
