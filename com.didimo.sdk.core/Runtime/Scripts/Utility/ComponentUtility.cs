@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using UnityEngine;
 
 namespace Didimo.Core.Utility
-{
+{   
     public static class ComponentUtility
     {
         public static void GetOrAdd<TComponent>(MonoBehaviour mono, ref TComponent backingField)
@@ -35,6 +35,9 @@ namespace Didimo.Core.Utility
                 comp = go.AddComponent<TComponent>();
             return comp;
         }
+
+  
+
         public static TComponent SafeGetComponent<TComponent>(GameObject go) where TComponent : Component
         {
             return go != null ? go.GetComponent<TComponent>() : null;

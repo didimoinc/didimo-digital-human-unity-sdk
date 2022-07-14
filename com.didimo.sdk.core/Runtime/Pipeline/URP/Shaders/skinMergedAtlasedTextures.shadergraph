@@ -962,6 +962,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "82b6579f8f9c4dc9ac5ec9063ef6b572"
+                },
+                "m_SlotId": 3
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "c1d50eed979d42d59a6e766544d23333"
+                },
+                "m_SlotId": 767561123
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "843879ee3e3e4769a31b1df694e165f8"
                 },
                 "m_SlotId": 0
@@ -2173,7 +2187,7 @@
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_1bac527357c140fc95558b8d571bc147",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Rough_Spec_Cavity_AO",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -3681,7 +3695,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "5679e0cb05f2403ba9253302f3bf5ebd",
     "m_Id": -563994223,
-    "m_DisplayName": "HairCapOpacity",
+    "m_DisplayName": "HaircapOpacity",
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "Vector1_fad672bb168c400fb1cf948cf5828728",
@@ -7074,8 +7088,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1635.0001220703125,
-            "y": 1191.0,
+            "x": -1586.0,
+            "y": 1125.0,
             "width": 182.0,
             "height": 34.0
         }

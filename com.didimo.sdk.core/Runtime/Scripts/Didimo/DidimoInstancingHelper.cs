@@ -13,7 +13,6 @@ namespace Didimo
         public int InstanceIndex = 0;
 
         public const string InstanceIndexName = "_InstanceIndex";
-
         int InstanceIndexID = -1;
         MaterialPropertyBlock SkinBlock = null;
         SkinnedMeshRenderer HeadMeshRenderer = null;

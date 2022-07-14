@@ -14,8 +14,7 @@ namespace Didimo.Core.Utility
         public const int PROC_LINEAR_COLOURSPACE = 0x2;
         public const int PROC_LOAD_ORIGINAL_IMAGE = 0x4;
         public const int PROC_CREATE_IF_NOT_PRESENT = 0x8;
-        public const int PROC_STAMP_IMAGES = 0x10;
-
+        public const int PROC_STAMP_IMAGES = 0x10;   
         public const int MODE_LINEAR_TO_SRGB = 0x1;
         public const int MODE_SRGB_TO_LINEAR = 0x2;
         public const int MODE_RG_NORMAL_TO_XYZ = 0x4;
@@ -191,7 +190,9 @@ namespace Didimo.Core.Utility
                            RenderTextureReadWrite.Linear);
                     Graphics.Blit(sourceTextureSrc, sourceTexture); //blit it over
                     RenderTexture prev = RenderTexture.active;
+                    
                     RenderTexture.active = sourceTexture;
+                    
                     Texture2D readableTexture = new Texture2D(minSize.x, minSize.y);
                     readableTexture.ReadPixels(new Rect(0, 0, minSize.x, minSize.y), 0, 0);
                     readableTexture.Apply();
@@ -203,7 +204,6 @@ namespace Didimo.Core.Utility
 
             Texture2D mergedTexture = new Texture2D(minSize.x, minSize.y, TextureFormat.ARGB32, false, true);  //merged texture ought to be linear     
             Color outPix = new Color();
-
             NativeArray<int>[] sourceTextureData = new NativeArray<int>[propertyNames.Length];
             int pixCount = minSize.x * minSize.y;
             for (int i = 0; i < propertyNames.Length; ++i)
@@ -220,7 +220,7 @@ namespace Didimo.Core.Utility
                     }
                 }
             }
-
+           
             for (int i = 0; i < pixCount; ++i)
             {
                 outPix.r = (sourceTextureData[0][i] & 0xFF) / 255.0f;
@@ -234,7 +234,7 @@ namespace Didimo.Core.Utility
             {
                 sourceTextureData[i].Dispose();
             }
-
+            
             return mergedTexture;
         }
     }

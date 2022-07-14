@@ -14,6 +14,9 @@ using static Didimo.Core.Config.ShaderResources;
 
 namespace Didimo.Core.Utility
 {
+
+
+
     public static class MaterialUtility
     {
         public enum BlendMode
@@ -24,6 +27,7 @@ namespace Didimo.Core.Utility
             Transparent
         }
 
+   
 #if UNITY_EDITOR
         public static void GenerateMaterialForSelected(GameObject[] objects, bool createDiskBasedAsset = true)
         {
@@ -785,6 +789,21 @@ illum 2
             return LogString.ToString();
         }
 
+        public static void CreateDidimoInstancingHelpers(GameObject [] selection)
+        {
+            var rootDidimos = selection.SelectMany(x => x.transform.TransformAndAllDecendants().Where(x => x.GetComponent<DidimoComponents>() != null).ToArray()).ToArray();
+            int idx = 0;
+            foreach (var didimo in rootDidimos)
+            {
+                DidimoInstancingHelper dih = didimo.GetComponent<DidimoInstancingHelper>();
+                if (!dih)
+                    dih = didimo.gameObject.AddComponent<DidimoInstancingHelper>();
+                if (dih)
+                    dih.InstanceIndex = idx;
+                ++idx;
+            }
+        }
+
         public static Material[] MergedAtlasedInner(Component comp, Material[] ml, DidimoInstancingHelper dih, int cidx, Material mergedAtlasedMaterial,
             Material[] altasMaterialSlots, int MaterialSwitchSlot)
         {
@@ -848,22 +867,63 @@ illum 2
             return alist.ToArray();
         }
 
+        //For now, a simple test for body or face meshes but this may need to become more sophisticated in the future
+        public static bool IsRendererAtlasable(Renderer r)
+        {
+            if (r.gameObject.name.Contains("face", StringComparison.CurrentCultureIgnoreCase) || r.gameObject.name.Contains("body", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static TComponent FindOrAddComponent<TComponent>(GameObject go) where TComponent : Component
+        {
+            if (!go)
+                return null;
+            TComponent comp = go.GetComponent<TComponent>();
+            if (comp == null)
+            {
+#if UNITY_EDITOR
+                comp = Undo.AddComponent<TComponent>(go);
+#else
+                comp = go.AddComponent<TComponent>();
+#endif
+            }
+            return comp;
+        }
+
         public static void EnsureMaterialSwitcher(GameObject[] objects, bool createIfNotPresent = false)
         {
+            
             foreach (var go in objects)
             {
-                var dms = go.GetComponent<DidimoMaterialSwitcher>();
-                if (!dms && createIfNotPresent)
+                Renderer [] renderList = go.GetComponentsInChildren<Renderer>();
+                if (renderList != null)
                 {
-#if UNITY_EDITOR
-                    dms = Undo.AddComponent<DidimoMaterialSwitcher>(go);
-#else
-                    dms = go.AddComponent<DidimoMaterialSwitcher>();
-#endif
+                    Renderer r = go.GetComponent<Renderer>();
+                    if (!r)
+                    {
+                        var dgmc = go.GetComponent<DidimoGlobalMaterialIndexChooser>();
+                        if (dgmc == null)
+                        {
+                            FindOrAddComponent<DidimoGlobalMaterialIndexChooser>(go);
+                        }                    
+                    }
                 }
-
-                if (dms.MaterialSets.Count == 0)
-                    dms.SetEntryToOwnMaterials(0);
+                foreach (var r in renderList)
+                {
+                    if (IsRendererAtlasable(r)) //not all renderables are suitable for atlasing
+                    {
+                        var dms = r.GetComponent<DidimoMaterialSwitcher>();
+                        if (!dms && createIfNotPresent)
+                        {
+                            dms = FindOrAddComponent<DidimoMaterialSwitcher>(r.gameObject);
+                            if (dms != null && dms.MaterialSets.Count == 0)
+                                dms.SetEntryToOwnMaterials(0);
+                        }
+                    }
+                }
             }
         }
 

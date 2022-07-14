@@ -1202,9 +1202,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 106.25,
-            "y": 447.25,
-            "width": 158.0,
+            "x": 100.0,
+            "y": 270.0,
+            "width": 165.99996948242188,
             "height": 34.0
         }
     },
@@ -1547,9 +1547,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 106.25,
-            "y": 477.25,
-            "width": 218.00001525878907,
+            "x": 46.9999885559082,
+            "y": 304.0,
+            "width": 218.99998474121095,
             "height": 34.0
         }
     },
@@ -2139,10 +2139,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 21.999969482421876,
-            "y": 382.0,
-            "width": 168.0,
-            "height": 34.0
+            "x": 98.99999237060547,
+            "y": 236.00001525878907,
+            "width": 166.99996948242188,
+            "height": 33.99998474121094
         }
     },
     "m_Slots": [
@@ -3013,7 +3013,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "5679e0cb05f2403ba9253302f3bf5ebd",
     "m_Id": -563994223,
-    "m_DisplayName": "HairCapOpacity",
+    "m_DisplayName": "HaircapOpacity",
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "Vector1_fad672bb168c400fb1cf948cf5828728",
@@ -3528,8 +3528,8 @@
             "serializedVersion": "2",
             "x": -391.0000305175781,
             "y": 1260.0,
-            "width": 208.0000457763672,
-            "height": 435.0
+            "width": 207.99998474121095,
+            "height": 435.0001220703125
         }
     },
     "m_Slots": [
@@ -4134,9 +4134,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 62.0,
-            "y": 330.0,
-            "width": 161.00001525878907,
+            "x": 105.99996948242188,
+            "y": 202.00001525878907,
+            "width": 160.0,
             "height": 34.0
         }
     },
