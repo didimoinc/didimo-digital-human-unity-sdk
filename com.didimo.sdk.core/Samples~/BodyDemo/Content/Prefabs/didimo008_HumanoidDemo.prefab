@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7230116633931072049
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413686677244662010, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: m_Name
+      value: didimo008_HumanoidDemo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e00
+      value: -0.012603016
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e01
+      value: -0.00008810851
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e03
+      value: -0.03457976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e10
+      value: -0.0007684292
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e11
+      value: -0.0063201766
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e20
+      value: 0.0035244012
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e21
+      value: -0.0016597267
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e00
+      value: -0.012725448
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e01
+      value: 0.00008870195
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e03
+      value: 0.03563776
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e10
+      value: 0.00075323635
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e11
+      value: -0.0065663536
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e20
+      value: -0.0034534975
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+      propertyPath: RightEyeHoleMatrix.e21
+      value: -0.0017254088
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}

@@ -323,9 +323,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimos:
-  - {fileID: 8779013199455112707, guid: b58b547e4001f4d27a92152673e6389d, type: 3}
-  - {fileID: 758797735210166422, guid: 3e3ef4b5811cf4853ab8b43a31138fbc, type: 3}
-  - {fileID: 914828378953895755, guid: e5811d28551d24c65bcfa801ad958e5b, type: 3}
+  - {fileID: 278509918018740084, guid: 69af03afacd4d6c459aeecfbbefa5922, type: 3}
+  - {fileID: 8374324519988279624, guid: 86421468c39d2fa4cade1c20984ded1c, type: 3}
+  - {fileID: 2349665122931529357, guid: fdd09ca1d8a1a734eba41632ed3eca7c, type: 3}
   scrollTime: 0.5
   scrollToDidimo: 0
 --- !u!4 &892001400
