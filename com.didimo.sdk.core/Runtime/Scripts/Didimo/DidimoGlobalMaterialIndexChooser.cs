@@ -8,8 +8,8 @@ namespace Didimo
 {
     public class DidimoGlobalMaterialIndexChooser : MonoBehaviour
     {
-        int CurrentMaterialSetIndex = 0;
-        public IntRange GlobalMaterialSetSelectionIndex = new IntRange(0, 0);
+        public int CurrentMaterialSetIndex = 0;
+        public IntRange GlobalMaterialSetSelectionIndex = new IntRange(0, 0);        
 
         public void SetCurrentMaterialSetIndex(int index)
         {

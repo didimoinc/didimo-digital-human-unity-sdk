@@ -5,25 +5,35 @@ using System.Linq;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.Presets;
 
 namespace Didimo.Core.Utility
 {
     public static class EditorTextureUtility
-    {
-
-        public static Texture2D SerialiseTexture(Texture2D texture, string fileName)
+    {       
+        public static Texture2D SerialiseTexture(Texture2D texture, string fileName, int flags = 0)
         {
             Debug.Log("Saving texture file to '" + fileName + "'");
             byte[] itemBGBytes = texture.EncodeToPNG();
+            TextureImporter importer = null;
+            if (flags != 0)
+            {
+                importer = (TextureImporter)TextureImporter.GetAtPath(fileName);
+                importer.sRGBTexture = ((flags & (int)TextureUtility.PROC_LINEAR_COLOURSPACE) == 0);
+                EditorUtility.SetDirty(importer);
+                importer.SaveAndReimport();
+                AssetDatabase.ImportAsset(fileName, ImportAssetOptions.ForceUpdate);
+            }
+            
             FileStream file = File.Create(fileName);
             BinaryWriter binary = new BinaryWriter(file);
             binary.Write(itemBGBytes);
             file.Close();           
             Texture2D retTex = retTex = (Texture2D)AssetDatabase.LoadAssetAtPath(fileName, typeof(Texture2D));
-            if (!retTex)
-            {              
+            if (importer != null)
+                AssetDatabase.ImportAsset(fileName, ImportAssetOptions.ForceUpdate);
+            if (!retTex)                           
                 retTex = (Texture2D)AssetDatabase.LoadAssetAtPath(fileName, typeof(Texture2D));
-            }
             return retTex;
         }
 
@@ -34,14 +44,19 @@ namespace Didimo.Core.Utility
                 return existingTexture;
             Debug.Log("Creating merged texture: " + textureFileName);
             Texture2D mergedTexture = TextureUtility.CreateMergedTextureFromMaterial(sourceMaterial, propertyNames);
-            return SerialiseTexture(mergedTexture, textureFileName);
+            return SerialiseTexture(mergedTexture, textureFileName, processFlags);
         }
 
         static Texture2D HandleExistingTexture(string textureFileName, int processFlags)
         {
             if (File.Exists(textureFileName))
             {
-                if ((processFlags & TextureUtility.PROC_CREATE_EVEN_IF_EXISTS) != 0)
+                TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(textureFileName);
+                bool recreate = (processFlags & TextureUtility.PROC_CREATE_EVEN_IF_EXISTS) != 0;
+                if (importer.sRGBTexture && ((processFlags & TextureUtility.PROC_LINEAR_COLOURSPACE) != 0))
+                    recreate = true;                
+
+                if (recreate)
                 {
                     File.Delete(textureFileName);
                 }
@@ -98,7 +113,7 @@ namespace Didimo.Core.Utility
             if (existingTexture)
                 return existingTexture;
             var mergedTexture = TextureUtility.CreateTextureAtlas(sourceTextures, atlasSize, cellCount, processFlags, modeFlags);
-            return SerialiseTexture(mergedTexture, textureFileName);
+            return SerialiseTexture(mergedTexture, textureFileName, 0);
         }
 
         public static Texture FindTextureFile(string[] fileList, string[] prefixes, string failLog)
