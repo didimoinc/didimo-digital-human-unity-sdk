@@ -59,6 +59,7 @@ namespace Didimo.GLTFUtility
 				if (!string.IsNullOrEmpty(path))
 				{
 #if UNITY_EDITOR
+
 					// Must be relative path with forward slashes
 					string pathFormatted = path.Replace("\\", "/");
 
@@ -69,6 +70,8 @@ namespace Didimo.GLTFUtility
 						string rootPathAbsl = Path.GetFullPath(rootPath).Replace("\\", "/");
 						if (pathFormatted.StartsWith(rootPathAbsl))
 						{
+							// In case path contains "../"
+							pathFormatted = Path.GetFullPath(pathFormatted);
 							pathFormatted = pathFormatted.Substring(rootPathAbsl.Length);
 							// Package Caches have name@hash, so we need to strip that out
 							if (rootPath == PACKAGE_CACHE_ROOT_PATH)
