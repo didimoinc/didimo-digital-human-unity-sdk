@@ -1,6 +1,6 @@
 {
   "name": "com.didimo.sdk.networking",
-  "version": "4.4.4",
+  "version": "4.4.5",
   "displayName": "Didimo SDK - Networking",
   "description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\n\nThis module provides a sample integration with our APIs.",
   "unity": "2020.3",
@@ -9,7 +9,7 @@
   "licensesUrl": "https://privacy.didimo.co/didimo-source-code-license/",
   "license": "Didimo Source Code License",
   "dependencies": {
-    "com.didimo.sdk.core": "4.4.4"
+    "com.didimo.sdk.core": "4.4.5"
  },
  "keywords": [
   "avatar", "sdk", "face", "didimo", "human", "character"

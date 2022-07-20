@@ -1,5 +1,5 @@
 {
-    "name": "Didimo.Core.Samples",
+    "name": "Didimo.Core.MeetADidimo",
     "rootNamespace": "",
     "references": [
         "Didimo.Core",
@@ -12,12 +12,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [
-        {
-            "name": "com.unity.live-capture",
-            "expression": "1.0.0",
-            "define": "USING_LIVE_CAPTURE"
-        }
-    ],
+    "versionDefines": [],
     "noEngineReferences": false
 }
