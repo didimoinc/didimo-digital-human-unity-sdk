@@ -1,6 +1,6 @@
 {
 	"name": "com.didimo.sdk.core",
-	"version": "4.4.4",
+	"version": "4.4.5",
 	"displayName": "Didimo SDK - Core",
 	"description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\n\nUtilising this code library and tools, you can easily integrate digital humans into your existing software and enable your users to easily generate and load digital doubles of themselves directly into your experience, all at runtime.",
 	"unity": "2020.3",
@@ -18,9 +18,38 @@
 
 	},
 	"samples": [{
-		"displayName": "Core Samples",
-		"path": "Samples~"
-	}],
+    "displayName": "Meet A Didimo",
+    "description": "Consists of a scene where two didimos automatically demonstrate their built-in functionalities.",
+    "path": "Samples~/MeetADidimo"
+  },{
+		"displayName": "Body Demo",
+    "description": "Example of how to use Unity's Generic and Humanoid avatars to have body animation on your didimos.",
+		"path": "Samples~/BodyDemo"
+	},{
+    "displayName": "Idle Animation",
+    "description": "Demonstrates the Didimo Animation system using a didimo hooked up with the various animation components.",
+    "path": "Samples~/IdleAnimation"
+  },{
+    "displayName": "Loot At Target",
+    "description": "Shows how the head and eyes can track an object.",
+    "path": "Samples~/LookatTarget"
+  },{
+    "displayName": "Didimo Inspector",
+    "description": "Inspect a didimo and some metrics such as number of meshes, vertices, triangles, and performance (FPS).",
+    "path": "Samples~/DidimoInspector"
+  },{
+    "displayName": "Audio2Face Integration",
+    "description": "Integration with Nvidia's Omniverse Audio2Face. Quickly and easily generate expressive facial animation from just an audio source with NVIDIA’s Deep Learning AI technology.",
+    "path": "Samples~/Audio2FaceIntegration"
+  },{
+    "displayName": "ARKit Live Capture",
+    "description": "Provide a way to record ARKit driven MoCap animations, and rapidly experiencing them on a didimo, right after recording.",
+    "path": "Samples~/ARKitLiveCapture"
+  },{
+    "displayName": "Example Animation Scripts",
+    "description": "Provides examples of scripts that can be used to control or implement various features.",
+    "path": "Samples~/ExampleAnimationScripts"
+  }],
 	"keywords": [
 		"avatar", "sdk", "face", "didimo", "human", "character"
 	],

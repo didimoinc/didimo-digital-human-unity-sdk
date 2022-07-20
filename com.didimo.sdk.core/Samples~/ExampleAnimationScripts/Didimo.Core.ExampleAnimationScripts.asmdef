@@ -1,0 +1,16 @@
+{
+    "name": "Didimo.Core.ExampleAnimationScripts",
+    "rootNamespace": "",
+    "references": [
+        "Didimo.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

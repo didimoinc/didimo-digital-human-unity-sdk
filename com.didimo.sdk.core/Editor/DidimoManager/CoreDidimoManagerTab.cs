@@ -69,7 +69,7 @@ namespace Didimo.Core.Editor
 
         public static async void OpenMeetADidimo()
         {
-            Sample? sample = await PackageUtility.GetSample("com.didimo.sdk.core", "Core Samples");
+            Sample? sample = await PackageUtility.GetSample("com.didimo.sdk.core", "Meet A Didimo");
             bool isImported = sample != null && sample!.Value.isImported;
             if (!isImported && sample != null)
             {
@@ -79,7 +79,7 @@ namespace Didimo.Core.Editor
                 }
             }
 
-            if (sample != null && PackageUtility.LoadSceneFromSample(sample!.Value, "MeetADidimo/MeetADidimo.unity"))
+            if (sample != null && PackageUtility.LoadSceneFromSample(sample!.Value, "MeetADidimo.unity"))
             {
 EditorUtility.DisplayDialog("Re-open Scene",
                     "There is a Unity bug where the first time we open this scene, it doesn't de-serialize properly. If you see errors in the console, please exit play mode, re-open the (MeetADidimo) scene manually , and hit play to see didimos in action.",
