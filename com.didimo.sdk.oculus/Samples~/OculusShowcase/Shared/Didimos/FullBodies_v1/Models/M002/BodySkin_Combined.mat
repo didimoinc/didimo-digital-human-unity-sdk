@@ -91,17 +91,36 @@ Material:
     - Vector1_15989e1079284c8cbb7d93f9540fb043: 0.8
     - Vector1_257b073579014133bd2832f2c7de3d0c: 0.63
     - Vector1_64497f05465b4b1aa8a676fcbc9f6c8a: 0.0001
+    - Vector1_797569035c9841eb9068459138ee7872: 0
     - Vector1_834d776300044ed0bd51463bdf65fffc: 0.7
     - Vector1_a0734e08321d499aac36c70d660f3ef9: 0
     - Vector1_c273109cf9264167a980b5eca43a3d7d: 0.325
     - Vector1_c273109cf9264167a980b5eca43a3d7d_1: 0.27
+    - _AOAdd: 0.325
+    - _AOPow: 0.27
+    - _AlphaClipThreshold: 0.5
     - _DidimoMicroNormalStrength: 0.035
     - _DidimoMicroNormalTiling: 100
     - _DidimoNormalStrength: 0.4
+    - _DidimoRoughnessBias: 0.33
     - _DidimoSSSAdd: 0.1
     - _EnableSRGBGammaCorrection: 0
+    - _HairCapModulate: 0.8
+    - _HaircapOpacity: 0
+    - _LightingToggle: 0
+    - _MicroNormalStrength: 0.035
+    - _MicroNormalTiling: 100
+    - _NormalStrength: 0.4
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _RGBHaircap: 0
     - _RoughnessBase: 0.5
     - _RoughnessTextureFactor: 1
+    - _SSSAdd: 0.1
+    - _SSSblendtoggle: 1
+    - _SSSonlytoggle: 0
+    - _SpecularCavityContribution: 0.7
+    - _SpecularStrength: 0.63
     - _SssAoFactor: 1
     - _UseMask: 1
     - _ZBias: 0
@@ -114,6 +133,10 @@ Material:
     - _DidimoSpecColor: {r: 0.9110512, g: 1, b: 0.9973065, a: 0}
     - _DidimoTransColor: {r: 0.5, g: 0, b: 0, a: 0}
     - _HairColor: {r: 0.24499992, g: 0.17811492, b: 0.14944994, a: 0}
+    - _LeftEyePosition: {r: 0, g: 0, b: 0, a: 0}
+    - _RightEyePosition: {r: 0, g: 0, b: 0, a: 0}
+    - _SSSColor: {r: 0.6698113, g: 0.29428363, b: 0.29428363, a: 0}
+    - _TransColor: {r: 0.5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3349569916041844292
 MonoBehaviour:
