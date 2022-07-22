@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: EditableEyeMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 44c91b7e09ca249409e715cf8abb0b9d, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: b236798d2de41ec4fb2c0308e05b0624, type: 3}
+        m_Texture: {fileID: 2800000, guid: e98e6a903503746939313cc45faf82ee, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -52,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: a4dad14b29c7f2f4a8be7b28516999f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1f2eb8a106c02ab48948616c6f32f6f5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap_1:
@@ -108,6 +109,9 @@ Material:
     - Vector1_cbd5abcf129e46a4be33cbf8bf4a2d05: 0.03
     - Vector1_dcf8f220f0f1434f9810e4e195e014dd: 0.08
     - Vector1_dcf8f220f0f1434f9810e4e195e014dd_1: 0.272
+    - _AOCornerTightness: 1
+    - _AOStrength: 0.94
+    - _AOpow: 0.1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -115,20 +119,35 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DebugIrisNormals: 0
+    - _DebugNormals: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EnvContribScale: 0.1
     - _EnvironmentReflections: 1
+    - _EyeShininess: 937
+    - _EyeSpecStrength: 5
     - _EyeUVScaleP1: 0.03
+    - _EyeUVScaleP2: 0.08
+    - _EyeUVScaleP3: 0.272
+    - _EyeUVScaleT1: 0.03
+    - _EyeUVScaleT2: 0.08
+    - _EyeUVScaleT3: 0.272
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _IrisNormalStrength: 1.1
+    - _IrisShininess: 50
+    - _IrisSpecStrength: 0.01
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _OverrideEyeColor: 0
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Scattering: 0.2
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -136,6 +155,9 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _corneaNormalStrength: 0.2
+    - _eyeRefraction: 0.35
+    - _eyeShadowMultiply: 19
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
