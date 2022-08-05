@@ -32,7 +32,6 @@ namespace Didimo.AssetFitter.Editor.Graph
         public static void RemoveAssetPath(string assetPath) => AssetDatabase.DeleteAsset(assetPath);
 #else
         public static void CreateAssetPath(string assetPath){}
-
         public static void RemoveAssetPath(string assetPath){}
 #endif
     }

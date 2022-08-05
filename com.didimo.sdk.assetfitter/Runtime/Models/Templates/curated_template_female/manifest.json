@@ -1,0 +1,55 @@
+{
+    "textures": {
+        "baseface_albedo": "baseFace_BaseColor_pub_1001.png",
+        "baseface_normal": "baseFace_Normal_pub_1001.png",
+        "baseface_micro_normal": "baseFace_MicroNormal_pub_1001.png",
+        "baseface_ambient_occlusion": "baseFace_AO_pub_1001.png",
+        "baseface_SSS_AO_mask": "baseFace_SSS_AO_Mask_pub_1001.png",
+        "baseface_specular": "baseFace_Spec_pub_1001.png",
+        "baseface_roughness": "baseFace_Rough_pub_1001.png",
+        "baseface_translucency": "baseFace_Trans_pub_1001.png",
+        "baseface_zbias": "baseFace_zBiasMask_pub_1001.png",
+        "baseface_cavity": "baseFace_Cavity_pub_1001.png",
+        "eye_albedo": "cornea_BaseColor_pub_1001.png",
+        "eye_normal": "cornea_Normal_pub_1001.png",
+        "eyelash_opacity": "eyeLash_Opacity_pub_1001.png",
+        "mouth_albedo": "mouthTongue_BaseColor_pub_1001.png",
+        "mouth_normal": "mouthTongue_Normal_pub_1001.png",
+        "basebody_albedo": "baseBody_BaseColor_pub_1001.png",
+        "basebody_normal": "baseBody_Normal_pub_1001.png",
+        "basebody_micro_normal": "baseBody_MicroNormal_pub_1001.png",
+        "basebody_ambient_occlusion": "baseBody_AO_pub_1001.png",
+        "basebody_SSS_AO_mask": "baseBody_SSS_AO_Mask_pub_1001.png",
+        "basebody_specular": "baseBody_Spec_pub_1001.png",
+        "basebody_roughness": "baseBody_Rough_pub_1001.png",
+        "basebody_translucency": "baseBody_Trans_pub_1001.png",
+        "basebody_zbias": "baseBody_zBiasMask_pub_1001.png",
+        "basebody_cavity": "baseBody_Cavity_pub_1001.png"
+    },
+    "meshes": {
+        "baseface": "mesh_m_low_baseFace_001.obj",
+        "left_eye": "mesh_l_low_eye_001.obj",
+        "right_eye": "mesh_r_low_eye_001.obj",
+        "mouth": "mesh_m_low_mouth_001.obj",
+        "eyelashes": "mesh_m_low_eyeLashes_001.obj",
+        "basebody": "mesh_m_low_baseBody_001.obj"
+    },
+    "fbx": {
+        "main_file": "avatar_model.fbx"
+    },
+    "gltf": {
+        "main_file": "avatar.gltf",
+        "animations_bin": "animations.bin",
+        "baseface_bin": "mesh_m_low_baseFace_001.bin",
+        "left_eye_bin": "mesh_l_low_eye_001.bin",
+        "right_eye_bin": "mesh_r_low_eye_001.bin",
+        "eyelash_bin": "mesh_m_low_eyeLashes_001.bin",
+        "mouth_bin": "mesh_m_low_mouth_001.bin",
+        "basebody_bin": "mesh_m_low_baseBody_001.bin"
+    },
+    "preview": {
+        "front": "front.png",
+        "side": "side.png",
+        "corner": "corner.png"
+    }
+}

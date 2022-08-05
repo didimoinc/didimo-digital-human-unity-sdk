@@ -14,8 +14,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 {
     // [StyleSheet("DefaultNode")]
     [System.Serializable]
-    [MenuPath("Mesh/Mesh Blend Shapes")]
-    [DisplayName("Mesh Blend Shapes")]
+    [MenuPath("Mesh/Mesh Blendshapes")]
+    [DisplayName("Blendshapes")]
     [HeaderColor(TypeColors.Mesh)]
     [Width(160)]
     public class CommandMeshBlendShapes : GraphNode

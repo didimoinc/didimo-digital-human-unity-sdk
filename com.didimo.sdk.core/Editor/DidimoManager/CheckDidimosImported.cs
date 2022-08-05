@@ -13,8 +13,8 @@ namespace Didimo.Core.Editor
                                       "Please click the \"Reimport didimos\" button.";
 
         private List<string> didimosToReimport = null;
-
-        public bool CheckOk()
+        
+        public List<string> GetDidimosThatFailedImport()
         {
             if (didimosToReimport == null)
             {
@@ -33,6 +33,13 @@ namespace Didimo.Core.Editor
                     }
                 }
             }
+            
+            return didimosToReimport;
+        }
+
+        public bool CheckOk()
+        {
+            GetDidimosThatFailedImport();
 
             if (didimosToReimport.Count != 0)
             {

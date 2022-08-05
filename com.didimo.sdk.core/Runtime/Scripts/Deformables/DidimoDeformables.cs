@@ -69,6 +69,7 @@ namespace Didimo.Core.Deformables
         /// </summary>
         public void BuildDefomer()
         {
+            
             if (deformationFile != null) deformer = DeformerFactory.BuildDeformer(deformationFile);
             else if (!string.IsNullOrEmpty(DeformationFilePath)) deformer = DeformerFactory.BuildDeformer(DeformationFilePath);
             else deformer = DeformerFactory.BuildDefaultDeformer();

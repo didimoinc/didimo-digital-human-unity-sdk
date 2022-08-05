@@ -47,9 +47,12 @@ namespace Didimo.Mobile.Communication
         {
             ThreadingUtility.WhenMainThread(() =>
             {
+                DidimoComponents didimo = null;
+                Hair hair = null;
+
                 try
                 {
-                    if (!DidimoCache.TryFindDidimo(didimoKey, out DidimoComponents didimo))
+                    if (!DidimoCache.TryFindDidimo(didimoKey, out didimo))
                     {
                         throw new Exception($"Could not find didimo with ID {didimoKey}");
                     }
@@ -58,19 +61,20 @@ namespace Didimo.Mobile.Communication
                     {
                         didimo.Deformables.DestroyAll<Hair>();
                     }
-                    else if (didimo.Deformables.TryCreate(styleID, out Hair hair))
+                    else if (!didimo.Deformables.TryCreate(styleID, out hair, DidimoDeformables.DeformMode.DeformMesh))
                     {
-                        hair.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        throw new Exception($"Could not create hairstyle with ID {styleID}");
+                        throw new Exception($"Could not create hairstyle with ID {styleID}.");
                     }
 
                     successCallback(objectPointer);
                 }
                 catch (Exception e)
                 {
+                    if (didimo != null && hair != null)
+                    {
+                        didimo.Deformables.DestroyDeformable(hair);
+                    }
+
                     errorCallback(objectPointer, e.Message);
                 }
             });

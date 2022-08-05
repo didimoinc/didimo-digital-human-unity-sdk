@@ -36,17 +36,23 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             VisualElement titleLabel = titleContainer.Q("title-label");
             titleLabel.tooltip = node.tooltip;
+            titleLabel.style.flexGrow = 1;
 
-            Button collapseButton = titleButtonContainer.Q<Button>("collapse-button");
-
-            Button button;
-            titleContainer.Insert(0, button = new Button(ToggleIDField) { text = "+", style = { width = 10, marginTop = 8, marginBottom = 8 } });
-            button.visible = node is IExposable;
+            // if (node is IExposable)
+            {
+                titleContainer.Insert(0, new Button(ToggleIDField)
+                {
+                    text = "+",
+                    style = { fontSize = 8, width = 7, marginTop = 10, marginBottom = 10, marginRight = -4,
+                        borderBottomWidth=0,borderTopWidth=0,borderLeftWidth=0,borderRightWidth=0, backgroundColor = new Color(1, 1, 1, 0.2f) },
+                });
+            }
 
             style.width = node.width;
 
             CreateMonoScriptField();
             CreatePorts();
+
             if (!node.expanded) ToggleCollapse();
             RegisterCallback<GeometryChangedEvent>(OnGeometryChangedEvent);
 

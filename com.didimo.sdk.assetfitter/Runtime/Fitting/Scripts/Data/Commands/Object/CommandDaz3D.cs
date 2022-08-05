@@ -100,14 +100,9 @@ namespace Didimo.AssetFitter.Editor.Graph
              prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 FirstOrDefault(s => s.transform.parent.name == s.name.Split(".")[0]);
 
-        SkinnedMeshRenderer[] GetAccessorySkins()
-        {
-            var skins = prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-            //Debug.Log(string.Join(",", skins.Select(v => (v as SkinnedMeshRenderer).name)));
-            var name = GetShapeSkin().transform.parent.name;
-            return skins.Where(s => !s.name.StartsWith(name)).ToArray();
-        }
-
+        SkinnedMeshRenderer[] GetAccessorySkins() =>
+             prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
+                Where(s => !s.name.StartsWith(s.transform.parent.name)).ToArray();
 
         enum Surface
         {

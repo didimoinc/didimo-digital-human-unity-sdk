@@ -18,5 +18,7 @@ namespace Didimo.Core.Deformer
         // Undo coordinate system transformation
         protected static Vector3 RevertVertexCoordinates(Vector3 vector) => new Vector3(-vector.x, vector.y, vector.z) / SCALE;
         protected static IEnumerable<Vector3> RevertVertexCoordinates(IEnumerable<Vector3> vectors) => vectors.Select(RevertVertexCoordinates);
+
+        public virtual bool IsAbleToDeform() { return false; }
     }
 }
