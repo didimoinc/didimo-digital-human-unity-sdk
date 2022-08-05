@@ -1,6 +1,6 @@
 {
 	"name": "com.didimo.sdk.core",
-	"version": "4.4.8",
+	"version": "4.4.9",
 	"displayName": "Didimo SDK - Core",
 	"description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\n\nUtilising this code library and tools, you can easily integrate digital humans into your existing software and enable your users to easily generate and load digital doubles of themselves directly into your experience, all at runtime.",
 	"unity": "2020.3",
@@ -45,6 +45,10 @@
     "displayName": "ARKit Live Capture",
     "description": "Provide a way to record ARKit driven MoCap animations, and rapidly experiencing them on a didimo, right after recording.",
     "path": "Samples~/ARKitLiveCapture"
+  },{
+    "displayName": "Azure TTS Integration",
+    "description": "Integration with Microsoft Azure Text-to-Speech. With this sample you'll animate a didimo with TTS, generated from a string or SSML file.",
+    "path": "Samples~/AzureTTSIntegration"
   },{
     "displayName": "Example Animation Scripts",
     "description": "Provides examples of scripts that can be used to control or implement various features.",

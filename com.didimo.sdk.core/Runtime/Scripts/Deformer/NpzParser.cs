@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Didimo.Core.Deformer;
 using UnityEngine;
 using ArrayData = Didimo.Utils.NpyParser.ArrayData;
@@ -16,30 +17,67 @@ namespace Didimo.Utils
     /// </summary>
     public class NpzParser
     {
-        protected readonly Stream stream;
-        protected readonly bool leaveStreamOpen;
+        private readonly byte[] fileBytes;
 
-        public NpzParser(string filepath) : this(File.Open(filepath, FileMode.Open), false) { }
+        public static byte[] RemoveAPIHeader(byte[] fileBytes)
+        {
+            byte[] signatureZip = { 0x50, 0x4b, 0x03, 0x04 };
+            const int signatureSize = 4;
 
-        public NpzParser(byte[] filebytes) : this(new MemoryStream(filebytes, false), false) {  }
+            if (fileBytes.Length < signatureSize)
+                return fileBytes;
+
+            byte[] signature = fileBytes.Take(4).ToArray();
+
+            if (signature.SequenceEqual(signatureZip))
+            {
+                // Its a zip file (npz), so just return it.
+                return fileBytes;
+            }
+            // Its not a zip file. Check if the file is a Didimo API DMX file.
+
+            byte[] signatureDmx = { 0x44, 0x4d, 0x58 };
+            byte[] apiHeaderFirstValye = fileBytes.Take(Array.IndexOf<byte>(fileBytes, 0x00, 0)).ToArray();
+
+            if (!apiHeaderFirstValye.SequenceEqual(signatureDmx))
+            {
+                Debug.LogError("Unsupported deformation file.");
+                return null;
+            }
+
+            // If it is, remove the header.
+            // The header is comprised of 3 strings, separated by the byte 0x00
+            int startIndex = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                int idx = Array.IndexOf<byte>(fileBytes, 0x00, startIndex);
+
+                if (idx == -1)
+                {
+                    Debug.LogError("Deformation file was not a zip, but we failed to remove API header from it.");
+                    return null;
+                }
+
+                startIndex = idx + 1;
+            }
+
+            return fileBytes.TakeLast(fileBytes.Length - startIndex).ToArray();
+        }
+        
+        public NpzParser(string filepath) : this(File.ReadAllBytes(filepath)) { }
+
+        public NpzParser(byte[] filebytes)
+        {
+            fileBytes = RemoveAPIHeader(filebytes);
+        }
 
         public NpzParser(TextAsset byteAsset) : this(ByteAsset.ToByteArray(byteAsset)) { }
 
-        public NpzParser(Stream dataStream, bool leaveOpen = true)
-        {
-            stream = dataStream;
-            leaveStreamOpen = leaveOpen;
-        }
-
-        ~NpzParser()
-        {
-            if (!leaveStreamOpen) stream.Dispose();
-        }
-
         public Dictionary<string, ArrayData> Parse()
         {
-            Dictionary<string, ArrayData> result = new Dictionary<string, ArrayData>();
-            ZipArchive zip = new ZipArchive(stream, ZipArchiveMode.Read);
+            Dictionary<string, ArrayData> result = new();
+            using MemoryStream stream = new(fileBytes, false);
+            ZipArchive zip = new(stream, ZipArchiveMode.Read);
             foreach (ZipArchiveEntry zipEntry in zip.Entries)
             {
                 try

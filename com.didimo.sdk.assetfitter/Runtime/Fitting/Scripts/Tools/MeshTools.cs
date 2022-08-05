@@ -13,6 +13,72 @@ namespace Didimo.AssetFitter.Editor.Graph
 {
     public static class MeshTools
     {
+        public class BoneMap
+        {
+            Transform[] bones;
+            Dictionary<string, Transform> map;
+            public BoneMap(SkinnedMeshRenderer skin)
+            {
+                this.bones = skin.bones;
+                this.map = this.bones.ToDictionary(k => k.name, v => v);
+            }
+        }
+
+        public class BoneWeights
+        {
+            public readonly string[] names;
+            public readonly List<WeightIndex[]> weights;
+
+            public BoneWeights(BoneWeight[] weights)
+            {
+                this.weights = weights.Select(w => Create(w)).ToList();
+                this.names = Enumerable.Range(0, this.weights.Count).Select(i => i.ToString()).ToArray();
+            }
+
+            public BoneWeights(SkinnedMeshRenderer skin)
+            {
+                this.weights = skin.sharedMesh.boneWeights.Select(w => Create(w)).ToList();
+                this.names = skin.bones.Select(b => b.name).ToArray();
+            }
+
+            static WeightIndex[] Create(BoneWeight boneWeight)
+            {
+                return new WeightIndex[] {
+                        new WeightIndex(boneWeight.boneIndex0, boneWeight.weight0),
+                        new WeightIndex(boneWeight.boneIndex1, boneWeight.weight1),
+                        new WeightIndex(boneWeight.boneIndex2, boneWeight.weight2),
+                        new WeightIndex(boneWeight.boneIndex3, boneWeight.weight3) }.Where(w => !w.isZero).ToArray();
+            }
+
+            public static BoneWeight Create(WeightIndex[] boneWeight)
+            {
+                BoneWeight result = new BoneWeight();
+                if (boneWeight.Length > 0) { result.boneIndex0 = boneWeight[0].index; result.weight0 = boneWeight[0].weight; }
+                if (boneWeight.Length > 1) { result.boneIndex1 = boneWeight[1].index; result.weight1 = boneWeight[1].weight; }
+                if (boneWeight.Length > 2) { result.boneIndex2 = boneWeight[2].index; result.weight2 = boneWeight[2].weight; }
+                if (boneWeight.Length > 3) { result.boneIndex3 = boneWeight[3].index; result.weight3 = boneWeight[3].weight; }
+                return result;
+            }
+
+            public struct WeightIndex
+            {
+                public int index;
+                public float weight;
+                public bool isZero => index == 0 && weight == 0;
+
+                public WeightIndex(int index, float weight)
+                {
+                    this.index = index;
+                    this.weight = weight;
+                }
+
+
+            }
+
+            public override string ToString() =>
+                string.Join("\n", this.weights.Select(bw => string.Join(",", bw.Select(w => names[w.index] + ":" + w.weight))));
+        }
+
         public static class Writer
         {
             public static void WriteFBX(Mesh mesh, string assetPath)
@@ -448,5 +514,163 @@ namespace Didimo.AssetFitter.Editor.Graph
             public List<Frame> frames = new List<Frame>();
         }
 
+        public static Mesh ReorderVertices(Mesh mesh, int[] order)
+        {
+            T[] remapArray<T>(T[] input) =>
+                mesh.vertexCount == input.Length ? order.Select(i => input[i]).ToArray() : new T[0];
+
+            mesh = AssetTools.CloneAsset(mesh);
+            mesh.subMeshCount = 1;
+
+            // Remap all vertices
+            mesh.vertices = remapArray(mesh.vertices);
+            mesh.normals = remapArray(mesh.normals);
+            mesh.tangents = remapArray(mesh.tangents);
+
+            mesh.uv = remapArray(mesh.uv);
+            mesh.uv2 = remapArray(mesh.uv2);
+            mesh.uv3 = remapArray(mesh.uv3);
+            mesh.uv4 = remapArray(mesh.uv4);
+            mesh.uv5 = remapArray(mesh.uv5);
+            mesh.uv6 = remapArray(mesh.uv6);
+            mesh.uv7 = remapArray(mesh.uv7);
+            mesh.uv8 = remapArray(mesh.uv8);
+
+            if (mesh.blendShapeCount > 0)
+            {
+                Blendshape[] blendshapes = new Blendshape[mesh.blendShapeCount];
+                for (int b = 0; b < mesh.blendShapeCount; b++)
+                {
+                    blendshapes[b] = new Blendshape { name = mesh.GetBlendShapeName(b) };
+                    var name = mesh.GetBlendShapeName(b);
+                    for (int f = 0, fc = mesh.GetBlendShapeFrameCount(b); f < fc; f++)
+                    {
+                        var frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
+                        blendshapes[b].frames.Add(frame);
+                        mesh.GetBlendShapeFrameVertices(b, f, frame.dv, frame.dn, frame.dt);
+                    }
+                }
+
+                mesh.ClearBlendShapes();
+                foreach (var blendshape in blendshapes)
+                    foreach (var frame in blendshape.frames)
+                        mesh.AddBlendShapeFrame(blendshape.name, frame.weight, remapArray(frame.dv), remapArray(frame.dn), remapArray(frame.dt));
+
+            }
+            return mesh;
+        }
     }
 }
+
+// From Command Manifold
+// public static List<Mesh> MergeSeams(List<Mesh> meshes, float tolerance = 0.0001f)
+// {
+//     int[] RemoveNonTriangles(int[] indices) =>
+//          Enumerable.Range(0, indices.Length / 3).Where(j => indices.Skip(j * 3).Take(3).Distinct().Count() == 3).
+//              SelectMany(j => indices.Skip(j * 3).Take(3)).ToArray();
+
+//     Mesh _mergeSeams(Mesh mesh)
+//     {
+//         Vector3[] vertices = mesh.vertices;
+//         int[] nindices = new int[vertices.Length];
+//         List<Vector3> nvertices = new List<Vector3>();
+
+//         for (int i = 0; i < vertices.Length; i++)
+//         {
+//             Vector3 p = vertices[i];
+//             for (int j = 0; j < nvertices.Count; j++)
+//             {
+//                 if (CompareVertex.Position(p, nvertices[j], 0.000001f))
+//                 {
+//                     nindices[i] = j;
+//                     break;
+//                 }
+//             }
+//             if (nindices[i] == 0)
+//             {
+//                 nindices[i] = nvertices.Count;
+//                 nvertices.Add(p);
+//             }
+//         }
+//         var nmesh = new Mesh() { name = mesh.name };
+//         nmesh.vertices = nvertices.ToArray();
+//         nmesh.uv = new Vector2[nvertices.Count];
+
+//         // remove non-triangles
+//         var indices = RemoveNonTriangles(mesh.triangles.Select(i => nindices[i]).ToArray());
+
+//         nmesh.triangles = indices.ToArray();
+
+//         nmesh.RecalculateNormals();
+//         nmesh.RecalculateTangents();
+//         nmesh.RecalculateBounds();
+//         return nmesh;
+//     }
+//     return meshes.Select(m => _mergeSeams(m as Mesh)).ToList();
+// }
+
+
+
+// long getEdgeID(int _0, int _1) => _0 > _1 ? ((long)_0 << 32) | (long)_1 : ((long)_1 << 32) | ((long)_0);
+// int[] getIndices(long id) => new[] { (int)(id & 0xffffffff), (int)(id >> 32) };
+
+// int[] indices = mesh.triangles;
+// Dictionary<long, int> edges = new Dictionary<long, int>();
+
+// indices.Select((index, i) => getEdgeID(index, indices[i + offsets[i % 3]])).
+//     ForEach(e => edges[e] = edges.ContainsKey(e) ? edges[e] + 1 : 1);
+
+// var hardEdges = edges.Where(p => p.Value == 1).Select(p => getIndices(p.Key)).ToArray();
+// var trace = new Dictionary<int, List<int>>();
+
+// foreach (var edge in hardEdges)
+// {
+//     void add(int e1, int e2) { if (trace.ContainsKey(e1)) trace[e1].Add(e2); else trace[e1] = new List<int> { e2 }; }
+//     add(edge[0], edge[1]);
+//     add(edge[1], edge[0]);
+// }
+
+// Debug.Log("Starts: " + trace.Where(t => t.Value.Count == 1).Count());
+// Debug.Log(">2: " + trace.Where(t => t.Value.Count > 2).Count());
+
+// // bool[] touched = new bool[indices.Length];
+// // List<int> edgeLoop = new List<int>();
+// // void fill()
+// // {
+// //     int last = edgeLoop.Last();
+// //     if (!touched[last])
+// //     {
+// //         touched[last] = true;
+// //         if (!touched[trace[last][0]])
+// //         {
+// //             edgeLoop(
+// //         }
+
+// //         edgeLoop.Add(trace[last]
+// //     }
+// // }
+
+// // edgeLoop.Clear();
+// // var key = trace.First().Key;
+// // edgeLoop.Add(key);
+// // edgeLoop.Insert(0, trace[key][0]);
+// // edgeLoop.Add(trace[key][1]);
+// // fill();
+
+
+
+
+
+
+
+// // 1-2 5-2 6-7 7-5 = 1,2,5,7,6
+
+// // dict[1] = 2
+// // dict[2] = 1,5
+// // dict[5] = 2,7
+// // dict[6] = 7
+// // dict[7] = 6,5
+
+
+
+// return edges.Where(p => p.Value == 1).Select(p => getIndices(p.Key)).ToArray();

@@ -50,12 +50,16 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             CheckLengths("Vertex count matching", mesh.vertexCount, mesh1.vertexCount, mesh2.vertexCount);
 
-            int[] indices = CompareVertex.Positions(mesh1.vertices, mesh2.vertices, threshold).ToArray();
-            CheckLengths("Match vertices", indices.Length, mesh1.vertices.Length, mesh2.vertexCount);
+            int[] indexRemap = CompareVertex.Positions(mesh1.vertices, mesh2.vertices, threshold).ToArray();
+            CheckLengths("Match vertices", indexRemap.Length, mesh1.vertices.Length, mesh2.vertexCount);
 
-            mesh = CloneAsset(mesh);
-            CommandMeshVertexReorder.ReorderVertices(mesh, indices);
+            mesh = CommandMeshVertexReorder.ReorderVertices(CloneAsset(mesh), indexRemap);
             mesh.triangles = mesh2.triangles;
+
+            // [SEAN]
+            // mesh = CloneAsset(mesh);
+            // CommandMeshVertexReorder.ReorderVertices(mesh, indexRemap);
+            // mesh.triangles = mesh2.triangles;
 
             return mesh;
         }

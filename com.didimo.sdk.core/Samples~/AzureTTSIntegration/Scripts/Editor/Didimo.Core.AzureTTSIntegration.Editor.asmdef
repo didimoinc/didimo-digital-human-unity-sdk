@@ -1,0 +1,20 @@
+{
+    "name": "Didimo.Core.AzureTTSIntegration.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:95b459ff379a9424ea557aacf5fe885a",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:fdd120ccd5bd73242bd422bcb2ac6eeb"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

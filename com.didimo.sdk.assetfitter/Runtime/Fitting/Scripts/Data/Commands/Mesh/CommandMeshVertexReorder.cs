@@ -45,48 +45,46 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             CheckLengths("Vertex count matching", mesh1.vertexCount, mesh2.vertexCount);
 
-            int[] indices = CompareVertex.Positions(mesh2.vertices, mesh1.vertices, threshold).ToArray();
-            CheckLengths("Match vertices", indices.Length, mesh1.vertices.Length);
+            int[] indexRemap = CompareVertex.Positions(mesh2.vertices, mesh1.vertices, threshold).ToArray();
+            CheckLengths("Match vertices", indexRemap.Length, mesh1.vertexCount);
 
-            var mesh = CloneAsset(mesh2);
-            ReorderVertices(mesh, indices);
-            mesh.SetTriangles(mesh1.triangles, 0);
-            return mesh;
+            mesh2 = ReorderVertices(CloneAsset(mesh2), indexRemap);
+            mesh2.triangles = mesh1.triangles;
+            return mesh2;
         }
 
-        public static void ReorderVertices(Mesh mesh, int[] order)
+        public static Mesh ReorderVertices(Mesh mesh, int[] order)
         {
-            T[] RemapArray<T>(T[] input) => order.Select(i => input[i]).ToArray();
-            mesh.vertices = RemapArray(mesh.vertices);
-            mesh.normals = RemapArray(mesh.normals);
-            mesh.tangents = RemapArray(mesh.tangents);
+            return MeshTools.ReorderVertices(mesh, order);
+            // T[] remapArray<T>(T[] input) => order.Select(i => input[i]).ToArray();
+            // mesh.vertices = remapArray(mesh.vertices);
+            // mesh.normals = remapArray(mesh.normals);
+            // mesh.tangents = remapArray(mesh.tangents);
 
-            // remap blendshapes
-            if (mesh.blendShapeCount > 0)
-            {
-                Blendshape[] blendshapes = new Blendshape[mesh.blendShapeCount];
-                for (int b = 0; b < mesh.blendShapeCount; b++)
-                {
-                    blendshapes[b] = new Blendshape { name = mesh.GetBlendShapeName(b) };
-                    var name = mesh.GetBlendShapeName(b);
-                    for (int f = 0, fc = mesh.GetBlendShapeFrameCount(b); f < fc; f++)
-                    {
-                        var frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
-                        blendshapes[b].frames.Add(frame);
-                        mesh.GetBlendShapeFrameVertices(b, f, frame.dv, frame.dn, frame.dt);
-                        RemapArray(frame.dv);
-                        RemapArray(frame.dn);
-                        RemapArray(frame.dt);
-                    }
-                }
+            // if (mesh.blendShapeCount > 0)
+            // {
+            //     Blendshape[] blendshapes = new Blendshape[mesh.blendShapeCount];
+            //     for (int b = 0; b < mesh.blendShapeCount; b++)
+            //     {
+            //         blendshapes[b] = new Blendshape { name = mesh.GetBlendShapeName(b) };
+            //         var name = mesh.GetBlendShapeName(b);
+            //         for (int f = 0, fc = mesh.GetBlendShapeFrameCount(b); f < fc; f++)
+            //         {
+            //             var frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
+            //             blendshapes[b].frames.Add(frame);
+            //             mesh.GetBlendShapeFrameVertices(b, f, frame.dv, frame.dn, frame.dt);
+            //             remapArray(frame.dv);
+            //             remapArray(frame.dn);
+            //             remapArray(frame.dt);
+            //         }
+            //     }
 
-                mesh.ClearBlendShapes();
+            //     mesh.ClearBlendShapes();
+            //     foreach (var blendshape in blendshapes)
+            //         foreach (var frame in blendshape.frames)
+            //             mesh.AddBlendShapeFrame(blendshape.name, frame.weight, remapArray(frame.dv), remapArray(frame.dn), remapArray(frame.dt));
 
-                foreach (var blendshape in blendshapes)
-                    foreach (var frame in blendshape.frames)
-                        mesh.AddBlendShapeFrame(blendshape.name, frame.weight, RemapArray(frame.dv), RemapArray(frame.dn), RemapArray(frame.dt));
-
-            }
+            // }
         }
 
         class Blendshape

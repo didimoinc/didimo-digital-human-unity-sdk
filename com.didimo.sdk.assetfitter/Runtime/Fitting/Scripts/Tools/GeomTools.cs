@@ -62,7 +62,12 @@ namespace Didimo.AssetFitter.Editor.Graph
                     //     }
                     var indices = partition.Get(v);
                     if (indices.Count() > 0)
-                        yield return indices.Select(i => (i, v)).OrderBy(g => (v2[g.i] - g.v).sqrMagnitude).Last().i;
+                    {
+                        var idx = indices.Select(i => (i, v)).
+                            Where(g => Position(g.v, v1[g.i], threshold)).
+                            OrderBy(g => (v1[g.i] - g.v).sqrMagnitude);
+                        if (idx.Count() > 0) yield return idx.First().i;
+                    }
                 }
             }
         }

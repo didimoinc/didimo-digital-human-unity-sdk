@@ -54,6 +54,8 @@ namespace Didimo.AssetFitter.Editor.Graph
                             " path:" + filename +
                             " vertices:" + mesh.vertexCount +
                             " indicies:" + mesh.triangles.Length +
+                            " bindposes:" + mesh.bindposes.Length +
+                            " boneWeights:" + mesh.boneWeights.Length +
                             " blendshapes:" + mesh.blendShapeCount +
                             " submeshes:" + mesh.subMeshCount + "\n" +
                             " submeshes.indices:" + String.Join(",", Enumerable.Range(0, mesh.subMeshCount).Select(i => mesh.GetIndices(i).Length)));
@@ -61,7 +63,11 @@ namespace Didimo.AssetFitter.Editor.Graph
                         switch (fileType)
                         {
                             case FileType.UnityAsset:
-                                CreateAsset(CloneAsset(mesh), filename + ".asset");
+                                {
+                                    mesh = CloneAsset(mesh);
+                                    mesh.name = filename.Split('/').Last();
+                                    CreateAsset(CloneAsset(mesh), filename + ".asset");
+                                }
                                 break;
 
                             case FileType.OBJ:
@@ -74,16 +80,22 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                             case FileType.InSceneAsMesh:
                                 {
-                                    var meshFilter = new GameObject(mesh.name).AddComponent<MeshFilter>();
-                                    meshFilter.sharedMesh = mesh;
+                                    mesh.bindposes = null;
+                                    mesh.boneWeights = null;
+
+                                    var meshFilter = new GameObject(filename.Split('/').Last()).AddComponent<MeshFilter>();
                                     var renderer = meshFilter.gameObject.AddComponent<MeshRenderer>();
+                                    meshFilter.sharedMesh = mesh;
                                     renderer.sharedMaterials = GetColorMaterials(mesh.subMeshCount);
                                 }
                                 break;
 
                             case FileType.InSceneAsSkin:
                                 {
-                                    var renderer = new GameObject(mesh.name).AddComponent<SkinnedMeshRenderer>();
+                                    mesh.bindposes = null;
+                                    mesh.boneWeights = null;
+
+                                    var renderer = (new GameObject(filename.Split('/').Last())).AddComponent<SkinnedMeshRenderer>();
                                     renderer.sharedMesh = mesh;
                                     renderer.sharedMaterials = GetColorMaterials(mesh.subMeshCount);
                                 }
