@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(NetworkManager))]
 public class DidimoNetworkBootstrapManager : MonoBehaviour
 {
+    public NetworkManager networkManager; 
     [Tooltip("Should we automatically start as a client if not in editor and not in batch mode?")]
     public bool autoStartAsClientIfNotEditorAndNotBatch = true;
 
@@ -27,7 +28,16 @@ public class DidimoNetworkBootstrapManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
+    {
+        if (NetworkManager.Singleton != null && networkManager != NetworkManager.Singleton)
+        {
+            Destroy(networkManager.gameObject);
+            NetworkManager.Singleton.GetComponent<DidimoNetworkBootstrapManager>().Initialize();
+        }
+    }
+
+    public void Initialize()
     {
         if (Application.isBatchMode && autoStartAsServerIfBatchMode)
         {
@@ -37,20 +47,25 @@ public class DidimoNetworkBootstrapManager : MonoBehaviour
         {
             NetworkManager.Singleton.StartClient();
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void Start()
     {
-        Destroy(gameObject);
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        Initialize();
+        // SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     Destroy(gameObject);
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
+    //
+    // private void OnDestroy()
+    // {
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 
     /* private void OnGUI()
      {

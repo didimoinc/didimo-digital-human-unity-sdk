@@ -14,21 +14,31 @@ namespace Didimo.Core.Utility
         public static Texture2D SerialiseTexture(Texture2D texture, string fileName, int flags = 0)
         {
             Debug.Log("Saving texture file to '" + fileName + "'");
+            fileName = IOUtility.NormalizePath(fileName);
+            
             byte[] itemBGBytes = texture.EncodeToPNG();
             TextureImporter importer = null;
+                     
+            FileStream file = File.Create(fileName);
+
+            BinaryWriter binary = new BinaryWriter(file);
+            binary.Write(itemBGBytes);
+            file.Close();
+
             if (flags != 0)
             {
                 importer = (TextureImporter)TextureImporter.GetAtPath(fileName);
-                importer.sRGBTexture = ((flags & (int)TextureUtility.PROC_LINEAR_COLOURSPACE) == 0);
-                EditorUtility.SetDirty(importer);
-                importer.SaveAndReimport();
+                if (importer)
+                {
+                    importer.sRGBTexture = ((flags & (int)TextureUtility.PROC_LINEAR_COLOURSPACE) == 0);
+                    EditorUtility.SetDirty(importer);
+                    importer.SaveAndReimport();
+                }
+                else
+                    Debug.Log("Importer object for '" + fileName + "' could not be generated");
                 AssetDatabase.ImportAsset(fileName, ImportAssetOptions.ForceUpdate);
             }
-            
-            FileStream file = File.Create(fileName);
-            BinaryWriter binary = new BinaryWriter(file);
-            binary.Write(itemBGBytes);
-            file.Close();           
+
             Texture2D retTex = retTex = (Texture2D)AssetDatabase.LoadAssetAtPath(fileName, typeof(Texture2D));
             if (importer != null)
                 AssetDatabase.ImportAsset(fileName, ImportAssetOptions.ForceUpdate);

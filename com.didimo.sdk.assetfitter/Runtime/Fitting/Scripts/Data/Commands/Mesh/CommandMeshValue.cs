@@ -10,6 +10,6 @@ namespace Didimo.AssetFitter.Editor.Graph
     [HeaderColor(TypeColors.Mesh)]
     public class CommandMeshValue : GraphNode
     {
-        [Output("Mesh"), Expose] public Mesh meshOutput;
+        [Output("Mesh"), Expose(false)] public Mesh meshOutput;
     }
 }

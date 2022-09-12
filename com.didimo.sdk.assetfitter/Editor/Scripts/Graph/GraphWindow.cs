@@ -27,7 +27,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             else window = CreateInstance<GraphWindow>();
             window.graphData = graphData;
             window.titleContent = new GUIContent(graphData.name);
-            window.CreateGraphView();
+            window.BuildView();
             window.Show();
             return true;
         }

@@ -24,7 +24,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
-            var skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
+            List<SkinnedMeshRenderer> skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
 
             switch (info.Name)
             {

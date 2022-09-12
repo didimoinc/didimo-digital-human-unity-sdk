@@ -1761,7 +1761,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Bright Blonde
+  - name: Light Blonde
     list:
     - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
       glossiness1: 188
@@ -2203,7 +2203,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Red
+  - name: Ginger
     list:
     - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
       glossiness1: 173

@@ -30,10 +30,10 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (info.Name == nameof(prefabOutput))
             {
-                var prefabs = GetInputValues<GameObject>(nameof(prefabInput));
-                var skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
+                List<GameObject> prefabs = GetInputValues<GameObject>(nameof(prefabInput));
+                List<SkinnedMeshRenderer> skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
 
-                var prefab = prefabs[0] as GameObject;
+                GameObject prefab = prefabs[0] as GameObject;
 
                 if (Prerequisite(prefabs, skins) && Combine(prefabs, skins, out GameObject newPrefab))
                 {
@@ -47,7 +47,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         bool Combine(List<GameObject> prefabs, IEnumerable<SkinnedMeshRenderer> skins, out GameObject gameObject)
         {
             gameObject = null;
-            var prefab = prefabs.First();
+            GameObject prefab = prefabs.First();
             // PrefabUtility.SaveAsPrefabAsset(prefab, State.TempPath);
 
             // Create instance of the prefab
@@ -55,7 +55,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             gameObject.name = prefab.name;
 
             // Get the first skin and use as combined
-            var skin = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>().First();
+            SkinnedMeshRenderer skin = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>().First();
             skin.name = "Combined";
 
             // create the combined mesh from skins
@@ -79,18 +79,18 @@ namespace Didimo.AssetFitter.Editor.Graph
             if (prefabs.Count != 1)
             { Error("Too many Prefab inputs: " + prefabs.Count + "."); return true; }
 
-            var prefab = prefabs.First();
-            var pskins = prefab.GetComponentsInChildren<SkinnedMeshRenderer>();
+            GameObject prefab = prefabs.First();
+            SkinnedMeshRenderer[] pskins = prefab.GetComponentsInChildren<SkinnedMeshRenderer>();
 
             if (!skins.All(s => pskins.Contains(s)))
             { Error("Skins do not belong to prefab!"); return false; }
 
-            var rootBones = pskins.Select(s => s.rootBone);
+            IEnumerable<Transform> rootBones = pskins.Select(s => s.rootBone);
             if (!rootBones.All(b => b == prefab.transform))
             { Error("Root bone must equal the prefab!"); return false; }
 
-            var meshes = skins.Select(s => s.sharedMesh).ToArray();
-            var materials = skins.SelectMany(s => s.sharedMaterials).ToArray();
+            Mesh[] meshes = skins.Select(s => s.sharedMesh).ToArray();
+            Material[] materials = skins.SelectMany(s => s.sharedMaterials).ToArray();
 
             if (meshes.Length != materials.Length)
             { Error("Doesn't support submeshes, must be single mesh per skin!"); return false; }

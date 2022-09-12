@@ -57,8 +57,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         Mesh GetComponentByName(string name)
         {
-            var prefabMesh = CloneAsset(prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true)?.FirstOrDefault(s => s.name == name).sharedMesh);
-            var templateMesh = templateOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true)?.FirstOrDefault(s => s.name == name).sharedMesh;
+            Mesh prefabMesh = CloneAsset(prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true)?.FirstOrDefault(s => s.name == name).sharedMesh);
+            Mesh templateMesh = templateOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true)?.FirstOrDefault(s => s.name == name).sharedMesh;
 
             if (prefabMesh.subMeshCount > 1) throw new Exception("Submeshes not support");
 
@@ -77,16 +77,16 @@ namespace Didimo.AssetFitter.Editor.Graph
             headMesh = ExtractSubMeshes(UVGroups.ConvertToSubmeshes(headMesh)).OrderBy(m => m.bounds.Volume()).Last();
 
             // stitch back of head seam only
-            var headBackSeam = Seams.GetEdgeGroups(headMesh).OrderBy(e => Measure.GetBounds(headMesh, e).Volume()).Last();
+            int[] headBackSeam = Seams.GetEdgeGroups(headMesh).OrderBy(e => Measure.GetBounds(headMesh, e).Volume()).Last();
             headMesh = Seams.MergeEdges(headMesh, new int[][] { headBackSeam }, true);
 
             // stitch all internal seams
             bodyMesh = Seams.MergeEdges(bodyMesh, true);
 
             // merge the meshs
-            var combined = CombineMeshes(new List<Mesh> { headMesh, bodyMesh });
+            Mesh combined = CombineMeshes(new List<Mesh> { headMesh, bodyMesh });
 
-            var merged = Seams.MergeEdges(combined);
+            Mesh merged = Seams.MergeEdges(combined);
             merged.name = prefabOutput.name + "_manifold";
             return CommandMeshIndexToUV.IndexToUV(new List<Mesh> { merged }).ToList<object>();
         }

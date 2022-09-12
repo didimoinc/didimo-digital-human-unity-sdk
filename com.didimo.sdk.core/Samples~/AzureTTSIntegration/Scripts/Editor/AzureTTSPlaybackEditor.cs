@@ -1,11 +1,11 @@
+#if !UNITY_WEBGL
 using UnityEngine;
 using UnityEditor;
-using Didimo;
 
 namespace Didimo.Core.Examples.AzureTTSIntegration
 {
     [CustomEditor(typeof(AzureTTSPlayback))]
-    public class AzureTTSPlaybackEditor : Editor
+    public class AzureTTSPlaybackEditor : UnityEditor.Editor
     {
         // Layout Config Constants
         private const float SPACING = 5;
@@ -93,3 +93,4 @@ namespace Didimo.Core.Examples.AzureTTSIntegration
         }
     }
 }
+#endif

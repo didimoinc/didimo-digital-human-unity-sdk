@@ -16,9 +16,9 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public static TPSWeights CreateInstance(Vector3[] vertices1, Vector3[] vertices2)
         {
-            var weights = ScriptableObject.CreateInstance<TPSWeights>();
+            TPSWeights weights = ScriptableObject.CreateInstance<TPSWeights>();
 
-            var tps = new CGTPS(vertices1.ToList(), vertices2.ToList());
+            CGTPS tps = new CGTPS(vertices1.ToList(), vertices2.ToList());
             weights.data = tps.Serialize();
             weights.dataSize = weights.data.Length;
 

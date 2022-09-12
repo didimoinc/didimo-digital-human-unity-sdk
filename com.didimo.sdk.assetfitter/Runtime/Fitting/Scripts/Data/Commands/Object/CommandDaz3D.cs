@@ -34,29 +34,46 @@ namespace Didimo.AssetFitter.Editor.Graph
         [Output(nameof(Surface.Irises))] public Mesh irisesOutput;
         [Output(nameof(Surface.Sclera))] public Mesh scleraOutput;
         [Output(nameof(Surface.Toenails))] public Mesh toenailsOutput;
-        [Output("Accessory")] public SkinnedMeshRenderer accessoryOutput;
+        [Output("Accessory Skins")] public SkinnedMeshRenderer accessoryOutput;
+        [Output("Accessory Filters")] public MeshFilter accessoryFilterOutput;
         [Output("Manifold")] public Mesh manifoldOutput;
+        [Expose] public EyelashFilter eyelashFilter;
 
-        public override Gender gender => !GetShapeSkin() ? Gender.None :
-            (GetShapeSkin().sharedMesh.name.Contains("8Female") ? Gender.Female : Gender.Male);
+        public override Gender gender => !GetCharacterShapeSkin() ? Gender.None :
+            (GetCharacterShapeSkin().sharedMesh.name.Contains("8Female") ? Gender.Female : Gender.Male);
 
         public override GameObject GetPrefab() => prefabOutput;
 
+        GameObject builtPrefab;
+
+        internal override void Build()
+        {
+            builtPrefab = CloneAsset(this.prefabOutput);
+            GraphData.State.Add(builtPrefab);
+        }
+
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
+            GameObject prefabOutput = builtPrefab;
+
             if (prefabOutput)
             {
                 switch (info.Name)
                 {
                     case nameof(shapeOutput):
-                        values = new List<object>() { GetShapeSkin() };
+                        values = new List<object>() { GetCharacterShapeSkin() };
                         return true;
 
                     case nameof(accessoryOutput):
                         values = GetAccessorySkins().ToList<object>();
-                        Debug.Log(string.Join(",", values.Select(v => (v as SkinnedMeshRenderer).name)));
 
-                        Debug.Log("Accessory count " + values.Count);
+                        Debug.Log("Accessory Skin count " + values.Count);
+                        return true;
+
+                    case nameof(accessoryFilterOutput):
+                        values = GetAccessoryFilters().ToList<object>();
+
+                        Debug.Log("Accessory Filter count " + values.Count);
                         return true;
 
                     case nameof(manifoldOutput):
@@ -64,8 +81,8 @@ namespace Didimo.AssetFitter.Editor.Graph
                         return true;
 
                     default:
-                        var surface = (Surface)Enum.Parse(typeof(Surface), info.GetCustomAttribute<OutputAttribute>().name);
-                        values = new List<object>() { GetSubMesh(GetShapeSkin().sharedMesh, surface) };
+                        Surface surface = (Surface)Enum.Parse(typeof(Surface), info.GetCustomAttribute<OutputAttribute>().name);
+                        values = new List<object>() { GetSubMesh(GetCharacterShapeSkin().sharedMesh, surface) };
                         return true;
                 }
             }
@@ -74,8 +91,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public override List<object> CreateManifold()
         {
-            var mesh = GetShapeSkin().sharedMesh;
-            var combined = CombineMeshesIntoSubMeshes(new[] {
+            Mesh mesh = GetCharacterShapeSkin().sharedMesh;
+            Mesh combined = CombineMeshesIntoSubMeshes(new[] {
                 GetSubMesh(mesh,Surface.Face),
                 GetSubMesh(mesh,Surface.Lips),
                 GetSubMesh(mesh,Surface.Ears),
@@ -89,20 +106,43 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         Mesh GetSubMesh(Mesh mesh, Surface surface)
         {
-            var order = gender == Gender.Female ? FemaleSurface : MaleSurface;
+            Surface[] order = gender == Gender.Female ? FemaleSurface : MaleSurface;
             int subMeshIndex = order.ToList().IndexOf(surface);
-            var submesh = ExtractSubMesh(mesh, subMeshIndex);
+            Mesh submesh = ExtractSubMesh(mesh, subMeshIndex);
             submesh.name = prefabOutput.name + "_" + Enum.GetName(typeof(Surface), surface);
             return submesh;
         }
 
-        SkinnedMeshRenderer GetShapeSkin() =>
+        SkinnedMeshRenderer GetCharacterShapeSkin() =>
              prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
-                FirstOrDefault(s => s.transform.parent.name == s.name.Split(".")[0]);
+                FirstOrDefault(s => s.name == CharacterNameId + ".Shape");
 
-        SkinnedMeshRenderer[] GetAccessorySkins() =>
-             prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
-                Where(s => !s.name.StartsWith(s.transform.parent.name)).ToArray();
+        SkinnedMeshRenderer[] GetAccessorySkins()
+        {
+            bool Filter(SkinnedMeshRenderer skin)
+            {
+                if (skin.name.StartsWith(CharacterNameId))
+                {
+                    return skin.name.Contains("Eyelashes") && eyelashFilter == EyelashFilter.IncludeEyelashes;
+                }
+                return true;
+            }
+
+            return prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).Where(Filter).ToArray();
+        }
+
+        MeshFilter[] GetAccessoryFilters()
+        {
+            return prefabOutput.GetComponentsInChildren<MeshFilter>(true);
+        }
+
+        string CharacterNameId => GetPrefab().transform.GetChild(0).name;
+
+        public enum EyelashFilter
+        {
+            ExcludeEyelashes = 0,
+            IncludeEyelashes = 1,
+        }
 
         enum Surface
         {

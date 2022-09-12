@@ -29,6 +29,8 @@ namespace Didimo.AssetFitter.Editor.Graph
             public readonly string[] names;
             public readonly List<WeightIndex[]> weights;
 
+            public WeightIndex[] this[int index] => weights[index];
+
             public BoneWeights(BoneWeight[] weights)
             {
                 this.weights = weights.Select(w => Create(w)).ToList();
@@ -38,10 +40,10 @@ namespace Didimo.AssetFitter.Editor.Graph
             public BoneWeights(SkinnedMeshRenderer skin)
             {
                 this.weights = skin.sharedMesh.boneWeights.Select(w => Create(w)).ToList();
-                this.names = skin.bones.Select(b => b.name).ToArray();
+                this.names = skin.bones.Select(b => b ? b.name : "null").ToArray();
             }
 
-            static WeightIndex[] Create(BoneWeight boneWeight)
+            public static WeightIndex[] Create(BoneWeight boneWeight)
             {
                 return new WeightIndex[] {
                         new WeightIndex(boneWeight.boneIndex0, boneWeight.weight0),
@@ -71,8 +73,6 @@ namespace Didimo.AssetFitter.Editor.Graph
                     this.index = index;
                     this.weight = weight;
                 }
-
-
             }
 
             public override string ToString() =>
@@ -108,7 +108,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     normals = mesh.normals.Select(n => UnityToPipeline(n, false)).ToList();
                     vertices = mesh.vertices.Select(v => UnityToPipeline(v)).ToList();
                     uvs = mesh.uv.ToList();
-                    var tris = mesh.triangles;
+                    int[] tris = mesh.triangles;
                     faces = new List<Vector3Int>();
                     for (int j = 0; j < tris.Length; j += 3)
                         faces.Add(new Vector3Int(tris[j + 2], tris[j + 1], tris[j + 0]));
@@ -116,8 +116,18 @@ namespace Didimo.AssetFitter.Editor.Graph
             }
         }
 
+        public static Mesh GetMesh(this Renderer renderer) =>
+            renderer is SkinnedMeshRenderer ? (renderer as SkinnedMeshRenderer).sharedMesh :
+                (renderer.TryGetComponent(out MeshFilter filter) ? filter.sharedMesh : null);
+
+        public static void SetMesh(this Renderer renderer, Mesh mesh)
+        {
+            if (renderer is SkinnedMeshRenderer) (renderer as SkinnedMeshRenderer).sharedMesh = mesh;
+            if (renderer.TryGetComponent(out MeshFilter filter)) filter.sharedMesh = mesh;
+        }
+
         public static List<Mesh> ExtractSubMeshes(Mesh mesh) =>
-            Enumerable.Range(0, mesh.subMeshCount).Select(i => ExtractSubMesh(mesh, i)).ToList();
+                Enumerable.Range(0, mesh.subMeshCount).Select(i => ExtractSubMesh(mesh, i)).ToList();
 
         public static Mesh ExtractSubMesh(Mesh mesh, int subMeshIndex)
         {
@@ -136,7 +146,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             }
 
             T[] RemapArray<T>(T[] input) => remapVertices.Select(i => input[i]).ToArray();
-            var result = new Mesh()
+            Mesh result = new Mesh()
             {
                 name = mesh.name + "-" + subMeshIndex,
                 vertices = RemapArray(mesh.vertices),
@@ -155,6 +165,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         public static Mesh CombineMeshes(List<Mesh> meshes)
         {
             // Assign and create the new combined mesh
+            if (meshes.Count == 0) return null;
             Mesh result = new Mesh()
             {
                 name = String.Join("_", meshes.Select(m => m.name)),
@@ -179,6 +190,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public static Mesh CombineMeshesIntoSubMeshes(IEnumerable<Mesh> meshes)
         {
+            if (meshes.Count() == 0) return null;
+
             // Assign and create the new combined mesh
             Mesh result = new Mesh()
             {
@@ -223,7 +236,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             public static int[][] GetEdgeGroups(Mesh mesh)
             {
-                var isolatedEdgeGroups = UVGroups.GetGroups(mesh.triangles).SelectMany(g => IsolateEdges(GetEdges(g).Select(e => e.ToList()).ToList())).ToArray();
+                List<int>[] isolatedEdgeGroups = UVGroups.GetGroups(mesh.triangles).SelectMany(g => IsolateEdges(GetEdges(g).Select(e => e.ToList()).ToList())).ToArray();
 
                 // return groups.Select(g => GetEdges(g).SelectMany(e => e).Distinct().OrderBy(i => i).ToArray()).ToArray();
 
@@ -256,7 +269,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             public static Mesh MergeEdges(Mesh mesh, bool self = false) => MergeEdges(mesh, GetEdgeGroups(mesh), self);
             public static Mesh MergeEdges(Mesh mesh, int[][] seams, bool self = false)
             {
-                var vertices = mesh.vertices;
+                Vector3[] vertices = mesh.vertices;
                 Dictionary<int, List<int>> remap = new Dictionary<int, List<int>>();
 
                 void CompareSeams(int[] seam1, int[] seam2)
@@ -310,7 +323,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 // value  key     value  key
                 // 40  =  10,     50  =  10
                 // 60  =  40,     70  =  40
-                var indexRemap = Enumerable.Range(0, vertices.Length).Select(i => i).ToArray();
+                int[] indexRemap = Enumerable.Range(0, vertices.Length).Select(i => i).ToArray();
                 foreach (var pair in remap.OrderBy(p => p.Key))
                     foreach (var value in pair.Value)
                         indexRemap[value] = indexRemap[pair.Key];
@@ -326,8 +339,8 @@ namespace Didimo.AssetFitter.Editor.Graph
                 // 50  -  50
                 // 60  -  50
                 // 70  -  10
-                var nvertices = mesh.vertices.ToList();
-                var originalRemap = indexRemap.ToArray();
+                List<Vector3> nvertices = mesh.vertices.ToList();
+                int[] originalRemap = indexRemap.ToArray();
                 for (int i = 0, o = 0, n = indexRemap.Length; i < n; o++, i++)
                 {
                     if (originalRemap[i] != i)
@@ -349,7 +362,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     }
                 }
 
-                var result = new Mesh()
+                Mesh result = new Mesh()
                 {
                     name = mesh.name,
                     vertices = nvertices.ToArray(),
@@ -368,8 +381,8 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             public static Bounds GetBounds(Mesh mesh, int[] indices)
             {
-                var vertices = mesh.vertices;
-                var bounds = new Bounds(vertices[indices.First()], Vector3.zero);
+                Vector3[] vertices = mesh.vertices;
+                Bounds bounds = new Bounds(vertices[indices.First()], Vector3.zero);
                 indices.ForEach(i => bounds.Encapsulate(vertices[i]));
                 return bounds;
             }
@@ -381,7 +394,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             const int MaxGroups = 50;
             public static Mesh ConvertToSubmeshes(Mesh mesh)
             {
-                var groups = GetGroups(mesh);
+                int[][] groups = GetGroups(mesh);
                 Mesh result = CloneAsset(mesh);
                 result.subMeshCount = groups.Length;
 
@@ -433,16 +446,16 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                 for (int i = 0; i < indices.Length; i += 3)
                 {
-                    var t = new Triangle(indices[i + 0], indices[i + 1], indices[i + 2]);
+                    Triangle t = new Triangle(indices[i + 0], indices[i + 1], indices[i + 2]);
                     triangles.Add(t);
                     void Add(long e) { if (edgeMap.ContainsKey(e)) edgeMap[e].Add(t); else edgeMap[e] = new List<Triangle>() { t }; }
                     t.edges.ForEach(e => Add(e));
                 }
 
-                var edges = triangles.SelectMany(t => t.edges).ToArray();
-                var distinctEdges = edges.Distinct().ToArray();
-                var distinctEdgesHEX = edges.Distinct().Select(e => e.ToString("X16")).ToArray();
-                var distinctIndices = indices.Distinct().ToArray();
+                long[] edges = triangles.SelectMany(t => t.edges).ToArray();
+                long[] distinctEdges = edges.Distinct().ToArray();
+                string[] distinctEdgesHEX = edges.Distinct().Select(e => e.ToString("X16")).ToArray();
+                int[] distinctIndices = indices.Distinct().ToArray();
 
                 return edgeMap;
             }
@@ -485,10 +498,10 @@ namespace Didimo.AssetFitter.Editor.Graph
             for (int b = 0; b < mesh.blendShapeCount; b++)
             {
                 blendshapes[b] = new Blendshape { name = mesh.GetBlendShapeName(b) };
-                var name = mesh.GetBlendShapeName(b);
+                string name = mesh.GetBlendShapeName(b);
                 for (int f = 0, fc = mesh.GetBlendShapeFrameCount(b); f < fc; f++)
                 {
-                    var frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
+                    Blendshape.Frame frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
                     blendshapes[b].frames.Add(frame);
                     mesh.GetBlendShapeFrameVertices(b, f, frame.dv, frame.dn, frame.dt);
                 }
@@ -542,10 +555,10 @@ namespace Didimo.AssetFitter.Editor.Graph
                 for (int b = 0; b < mesh.blendShapeCount; b++)
                 {
                     blendshapes[b] = new Blendshape { name = mesh.GetBlendShapeName(b) };
-                    var name = mesh.GetBlendShapeName(b);
+                    string name = mesh.GetBlendShapeName(b);
                     for (int f = 0, fc = mesh.GetBlendShapeFrameCount(b); f < fc; f++)
                     {
-                        var frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
+                        Blendshape.Frame frame = new Blendshape.Frame(mesh.vertexCount) { weight = mesh.GetBlendShapeFrameWeight(b, f) };
                         blendshapes[b].frames.Add(frame);
                         mesh.GetBlendShapeFrameVertices(b, f, frame.dv, frame.dn, frame.dt);
                     }

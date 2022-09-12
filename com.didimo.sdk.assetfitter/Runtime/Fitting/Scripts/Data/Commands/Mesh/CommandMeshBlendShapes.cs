@@ -29,8 +29,8 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (info.Name == nameof(meshOutput))
             {
-                var primaryMesh = GetInputValue<Mesh>(nameof(this.primaryMesh));
-                var deltaMesh = GetInputValues<Mesh>(nameof(this.deltaMesh));
+                Mesh primaryMesh = GetInputValue<Mesh>(nameof(this.primaryMesh));
+                List<Mesh> deltaMesh = GetInputValues<Mesh>(nameof(this.deltaMesh));
                 if (primaryMesh && deltaMesh.Count() > 0)
                 {
                     values = new List<object>() { BuildBlendShapes(primaryMesh, deltaMesh) };
@@ -43,7 +43,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         Mesh BuildBlendShapes(Mesh primary, List<Mesh> delta)
         {
-            var mesh = CloneAsset(primary);
+            Mesh mesh = CloneAsset(primary);
 
             if ((action & Action.ClearBones) > 0)
             {
@@ -51,7 +51,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 mesh.bindposes = null;
             }
 
-            var tris1 = primary.triangles;
+            int[] tris1 = primary.triangles;
             Vector3[] vts1 = primary.vertices;
             Dictionary<string, int> names = new Dictionary<string, int>();
             foreach (var d in delta)

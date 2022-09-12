@@ -14,13 +14,13 @@ namespace Didimo.Core.Utility
         public const int PROC_LINEAR_COLOURSPACE = 0x2;
         public const int PROC_LOAD_ORIGINAL_IMAGE = 0x4;
         public const int PROC_CREATE_IF_NOT_PRESENT = 0x8;
-        public const int PROC_STAMP_IMAGES = 0x10;   
+        public const int PROC_STAMP_IMAGES = 0x10;
         public const int MODE_LINEAR_TO_SRGB = 0x1;
         public const int MODE_SRGB_TO_LINEAR = 0x2;
         public const int MODE_RG_NORMAL_TO_XYZ = 0x4;
         public static Texture OpacityToDiffuseAlpha(Texture texture) => EncodeToAlpha(texture, Color.white);
         public static Texture RoughnessToMetallicAlpha(Texture texture) => EncodeToAlpha(texture, Color.black, true);
-        
+
         public static Texture EncodeToAlpha(Texture input, Color rgb, bool invert = false)
         {
             RenderTexture output = new RenderTexture(
@@ -99,7 +99,7 @@ namespace Didimo.Core.Utility
         }
 
         public static Texture2D CreateTextureAtlas(Texture2D[] sourceTextures, Vector2Int atlasSize, Vector2Int cellCount, int processFlags, int modeFlags)
-        {           
+        {
             Vector2Int cellSize = new Vector2Int(atlasSize.x / cellCount.x, atlasSize.y / cellCount.y);
             RenderTexture mergedTextureRT = RenderTexture.GetTemporary(
                      atlasSize.x,
@@ -141,7 +141,7 @@ namespace Didimo.Core.Utility
         }
 
         public static Texture2D CreateMergedTextureFromMaterial(Material sourceMaterial, string[] propertyNames)
-        {           
+        {
             Texture2D[] sourceTextures = new Texture2D[propertyNames.Length];
             Vector2Int minSize = new Vector2Int(int.MaxValue, int.MaxValue), maxSize = new Vector2Int(0, 0);
             for (int i = 0; i < propertyNames.Length; ++i)
@@ -171,10 +171,9 @@ namespace Didimo.Core.Utility
                     {
                         Debug.Log("Error creating merged texture: " + e.Message);
                     }
-
                 }
-
             }
+
             //Now make readable copies, downscale if necessary
             for (int i = 0; i < propertyNames.Length; ++i)
             {
@@ -190,9 +189,9 @@ namespace Didimo.Core.Utility
                            RenderTextureReadWrite.Linear);
                     Graphics.Blit(sourceTextureSrc, sourceTexture); //blit it over
                     RenderTexture prev = RenderTexture.active;
-                    
+
                     RenderTexture.active = sourceTexture;
-                    
+
                     Texture2D readableTexture = new Texture2D(minSize.x, minSize.y);
                     readableTexture.ReadPixels(new Rect(0, 0, minSize.x, minSize.y), 0, 0);
                     readableTexture.Apply();
@@ -220,7 +219,7 @@ namespace Didimo.Core.Utility
                     }
                 }
             }
-           
+
             for (int i = 0; i < pixCount; ++i)
             {
                 outPix.r = (sourceTextureData[0][i] & 0xFF) / 255.0f;
@@ -234,7 +233,7 @@ namespace Didimo.Core.Utility
             {
                 sourceTextureData[i].Dispose();
             }
-            
+
             return mergedTexture;
         }
     }

@@ -55,6 +55,9 @@ namespace Didimo.AssetFitter.Editor.Graph
         public IEnumerable<FieldInfo> outputs => GetType().GetFields().Where(f => f.GetCustomAttribute<OutputAttribute>() != null);
         public IEnumerable<FieldInfo> exposedFields => GetType().GetFields().Where(f => f.GetCustomAttribute<ExposeAttribute>() != null);
 
+        internal virtual void Build() { }
+
+
         internal virtual void EndPoint(bool Build = false) { }
 
         protected T GetInputValue<T>(string fieldName)

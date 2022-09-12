@@ -13,7 +13,7 @@ namespace Didimo.Core.Animation
         private const float MIN_ANIM_DURATION = 0f;
 
         [SerializeField]
-        private List<TextAsset> MocapAnimations;
+        private List<TextAsset> MocapAnimations = new List<TextAsset>();
 
         private List<DidimoAnimation> didimoAnimations;
 
@@ -32,6 +32,11 @@ namespace Didimo.Core.Animation
         private float currentTime       = 0;
         private float animationDuration = 0;
         private int   currentAnimation  = -1;
+
+        public void AddMocapAnimation(TextAsset t)
+        {
+            MocapAnimations.Add(t);
+        }
 
         private void Start()
         {

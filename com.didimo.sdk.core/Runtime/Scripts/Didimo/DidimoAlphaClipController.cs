@@ -22,15 +22,15 @@ public class DidimoAlphaClipController : MonoBehaviour
     {
         if (alphaThresholdID == -1)
             alphaThresholdID = Shader.PropertyToID(alphaThresholdName);
-        BuildFromComponents();
+        // BuildFromComponents();
     }
-    public void BuildFromComponents()
-    {
-        if (bodyRenderer == null)
-            bodyRenderer = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.Body, true));
-        if (headRenderer == null)
-            headRenderer = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.HeadMesh, true));        
-    }
+    // public void BuildFromComponents()
+    // {
+    //     if (bodyRenderer == null)
+    //         bodyRenderer = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.Body, true));
+    //     if (headRenderer == null)
+    //         headRenderer = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.HeadMesh, true));        
+    // }
 
     [Button]
     public void ResetInternals()

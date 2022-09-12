@@ -28,11 +28,11 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
-            var prefab = GetInputValues<GameObject>(nameof(prefabInput)).FirstOrDefault();
-            var remap = GetInputValues<BoneIndexRemap>(nameof(boneMapInput)).FirstOrDefault();
-            var bones = GetInputValues<Transform[]>(nameof(skinBonesInput));
-            var materials = GetInputValues<Material[]>(nameof(materialsInput));
-            var meshes = GetInputValues<Mesh>(nameof(meshInput));
+            GameObject prefab = GetInputValues<GameObject>(nameof(prefabInput)).FirstOrDefault();
+            BoneIndexRemap remap = GetInputValues<BoneIndexRemap>(nameof(boneMapInput)).FirstOrDefault();
+            List<Transform[]> bones = GetInputValues<Transform[]>(nameof(skinBonesInput));
+            List<Material[]> materials = GetInputValues<Material[]>(nameof(materialsInput));
+            List<Mesh> meshes = GetInputValues<Mesh>(nameof(meshInput));
 
             if (Bind(prefab, remap, bones, materials, meshes, out GameObject newPrefab))
             {
@@ -42,31 +42,41 @@ namespace Didimo.AssetFitter.Editor.Graph
             return base.GetOutputValues(info, out values);
         }
 
-        bool Bind(GameObject prefab, BoneIndexRemap remap, List<Transform[]> boneGroups, List<Material[]> materials, List<Mesh> meshes, out GameObject gameObject)
+        public static bool Bind(GameObject prefab, BoneIndexRemap remap, List<Transform[]> boneGroups, List<Material[]> materials, List<Mesh> meshes, out GameObject gameObject)
         {
             if (boneGroups.Count != meshes.Count || materials.Count != meshes.Count)
                 throw new Exception("Bones Count doesn't equal Meshes Count: '" + boneGroups.Count + "' != '" + meshes.Count + "' != '" + materials.Count);
 
             gameObject = CloneAsset(prefab);
+            Bind(gameObject, remap, boneGroups, materials, meshes);
 
-            var primarySkin = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+            return true;
+        }
+
+        public static bool Bind(GameObject gameObject, BoneIndexRemap remap, List<Transform[]> boneGroups, List<Material[]> materials, List<Mesh> meshes)
+        {
+            if (boneGroups.Count != meshes.Count || materials.Count != meshes.Count)
+                throw new Exception("Bones Count doesn't equal Meshes Count: '" + boneGroups.Count + "' != '" + meshes.Count + "' != '" + materials.Count);
+
+            SkinnedMeshRenderer primarySkin = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
 
             for (int i = 0; i < boneGroups.Count; i++)
             {
-                var bones = boneGroups[i];
-                var mesh = meshes[i];
-                var map = remap?.GetRemapTable(bones, primarySkin.bones);
+                Transform[] bones = boneGroups[i];
+                Mesh mesh = meshes[i];
+                Dictionary<int, int> map = remap?.GetRemapTable(bones, primarySkin.bones);
 
-                var nskin = new GameObject(mesh.name) { transform = { parent = primarySkin.transform.parent } }.
+                SkinnedMeshRenderer nskin = new GameObject(mesh.name) { transform = { parent = primarySkin.transform.parent } }.
                     AddComponent<SkinnedMeshRenderer>();
 
-                nskin.sharedMaterials = materials[i]; //something wrong here
+                nskin.sharedMaterials = materials[i];
                 Debug.Log(string.Join(",", materials[i].Select(v => v.name + " " + v.shader.name)));
                 nskin.sharedMesh = CloneAsset(mesh);
 
                 string[] boneNames = bones.Select(b => b.name).ToArray();
 
-                nskin.sharedMesh.boneWeights = mesh.boneWeights.Select((bw, i) => RemapBone(boneNames, i, bw, map)).ToArray();
+                nskin.sharedMesh.boneWeights = mesh.boneWeights.Select((bw, i) => RemapBone(boneNames, i, bw,
+                                                                        remap?.GetRemapTable(bones, primarySkin.bones))).ToArray();
                 nskin.sharedMesh.bindposes = GetBindPoses(primarySkin.bones);
                 nskin.rootBone = primarySkin.rootBone;
                 nskin.bones = primarySkin.bones;
@@ -74,12 +84,14 @@ namespace Didimo.AssetFitter.Editor.Graph
             return true;
         }
 
-        BoneWeight RemapBone(string[] boneNames, int i, BoneWeight weight, Dictionary<int, int> iRemap)
+
+
+        public static BoneWeight RemapBone(string[] boneNames, int i, BoneWeight weight, Dictionary<int, int> iRemap)
         {
             // if (iRemap == null) return new BoneWeight();
             int change = 0;
             int hasBone = 0;
-            var originalWeights = weight;
+            BoneWeight originalWeights = weight;
 
             if (!(weight.boneIndex0 == 0 && weight.weight0 == 0))
             {

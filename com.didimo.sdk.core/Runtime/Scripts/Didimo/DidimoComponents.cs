@@ -3,6 +3,7 @@ using UnityEngine.Serialization;
 using Didimo.Builder;
 using Didimo.Speech;
 using Didimo.Core.Deformables;
+using Didimo.Core.Inspector;
 using Didimo.Core.Utility;
 
 namespace Didimo
@@ -18,6 +19,7 @@ namespace Didimo
         public string DidimoKey;
 
         private DidimoAnimator didimoAnimator;
+        private new Animation animation;
         private DidimoIrisController irisController;
         private DidimoDeformables didimoDeformables;
         private DidimoSpeech didimoSpeech;
@@ -25,6 +27,14 @@ namespace Didimo
         private DidimoMaterials didimoMaterials;
         private DidimoEyeShadowController didimoEyeShadowController;
         private TextureCache textureCache;
+
+        // [HideInInspector]
+        // TODO: recover didimo version, when for some reason it didn't serialize
+        // For now, just assume it should be version 2.5
+        [Readonly]
+        public string didimoVersion = "2.5";
+
+        private DidimoParts parts;
         public TextureCache TextureCache => textureCache ??= new TextureCache();
         public DidimoBuildContext BuildContext { get; set; }
 
@@ -36,7 +46,39 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref didimoAnimator);
                 }
+
                 return didimoAnimator;
+            }
+        }
+
+        public Animation Animation
+        {
+            get
+            {
+                if (animation == null)
+                {
+                    ComponentUtility.GetOrAdd(this, ref animation);
+                }
+
+                return animation;
+            }
+        }
+
+        public DidimoParts Parts
+        {
+            get
+            {
+                if (parts == null)
+                {
+                    parts = GetComponent<DidimoParts>();
+                    if(parts == null)
+                    {
+                        parts = gameObject.AddComponent<DidimoParts>();
+                        parts.SetupForDidimoVersion(didimoVersion);
+                    }
+                }
+
+                return parts;
             }
         }
 
@@ -48,18 +90,20 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref irisController);
                 }
+
                 return irisController;
             }
         }
+
         public DidimoPoseController PoseController
         {
             get
             {
                 if (didimoPoseController == null)
                 {
-                    ComponentUtility
-                    .GetOrAdd<DidimoPoseController, FallbackPoseController>(this, ref didimoPoseController);
+                    ComponentUtility.GetOrAdd<DidimoPoseController, FallbackPoseController>(this, ref didimoPoseController);
                 }
+
                 return didimoPoseController;
             }
         }
@@ -72,6 +116,7 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref didimoDeformables);
                 }
+
                 return didimoDeformables;
             }
         }
@@ -84,6 +129,7 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref didimoSpeech);
                 }
+
                 return didimoSpeech;
             }
         }
@@ -96,6 +142,7 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref didimoMaterials);
                 }
+
                 return didimoMaterials;
             }
         }
@@ -108,6 +155,7 @@ namespace Didimo
                 {
                     ComponentUtility.GetOrAdd(this, ref didimoEyeShadowController);
                 }
+
                 return didimoEyeShadowController;
             }
         }

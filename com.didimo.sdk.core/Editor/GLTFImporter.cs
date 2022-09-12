@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,19 +11,20 @@ using Didimo.GLTFUtility;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Didimo.Core.Editor
 {
     public class GLTFPreProcessor : AssetPostprocessor
     {
-        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
+            string[] movedFromAssetPaths, bool didDomainReload)
         {
             // If we just imported a shared texture, re-import didimos that need the textures
-            if (importedAssets.FirstOrDefault(asset => Path.GetFullPath(asset).StartsWith(Path.GetFullPath(GLTFImage.GltfImageSharedPath))) != null)
+            if (importedAssets.FirstOrDefault(asset =>
+                    Path.GetFullPath(asset).StartsWith(Path.GetFullPath(GLTFImage.GltfImageSharedPath))) != null)
             {
-                    
-                List<string> allDidimoPaths = Directory.GetFiles("Assets", "*.gltf", SearchOption.AllDirectories).ToList();
+                List<string> allDidimoPaths =
+                    Directory.GetFiles("Assets", "*.gltf", SearchOption.AllDirectories).ToList();
                 foreach (var packageRoot in new[] {"Packages", "Library/PackageCache"})
                 {
                     foreach (var package in Directory.EnumerateDirectories(packageRoot))
@@ -50,12 +52,12 @@ namespace Didimo.Core.Editor
 #if USE_DIDIMO_CUSTOM_FILE_EXTENSION
     [ScriptedImporter(GLTF_IMPORTER_VERSION, new string[]{"gltfd", "glbd"}, importQueueOffset: 100)]
 #else
-    [ScriptedImporter(GLTF_IMPORTER_VERSION,  new string[]{"gltf", "glb"}, importQueueOffset: 100)]
+    [ScriptedImporter(GLTF_IMPORTER_VERSION, new string[] {"gltf", "glb"}, importQueueOffset: 100)]
 #endif
 
     public class GLTFImporter : ScriptedImporter
     {
-        public const int GLTF_IMPORTER_VERSION = 12;
+        public const int GLTF_IMPORTER_VERSION = 15;
 
         public ImportSettings importSettings;
 
@@ -70,7 +72,6 @@ namespace Didimo.Core.Editor
             }
 
             MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
-            //MaterialBuilder materialBuilder = new UniversalRenderingPipelineMaterialBuilder();
 
             if (importSettings == null) importSettings = new ImportSettings();
             importSettings.animationSettings.useLegacyClips = true;
@@ -80,17 +81,46 @@ namespace Didimo.Core.Editor
                 return shader;
             };
 
+            DidimoImporterJsonConfig didimoImporterJsonConfig =
+                DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(ctx.assetPath)!);
             importSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
 
-            Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings, Format.GLTF);
-            if (importResult.isDidimo)
+            Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings,
+                gltfObject =>
+                {
+                    if (didimoImporterJsonConfig != null)
+                    {
+                        // We will be settings the materials na importing the textures after importing the gltf
+                        gltfObject.images = null;
+                        gltfObject.textures = null;
+                        gltfObject.materials = null;
+                        gltfObject.extensions ??= new GLTFObject.Extensions();
+                        gltfObject.extensions.Didimo = new DidimoExtension();
+                    }
+                }, Format.GLTF);
+            
+            if (importResult.isDidimo || didimoImporterJsonConfig != null)
             {
+                importResult.isDidimo = true;
                 importSettings.isDidimo = true;
-                GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings, ctx.assetPath);
+                
+                if (didimoImporterJsonConfig != null)
+                {
+                    DidimoImporterJsonConfigUtils.SetupDidimoForEditor(importResult.rootObject,
+                        didimoImporterJsonConfig, assetPath, importResult.animationClips,
+                        importResult.resetAnimationClip, null);
+                    GLTFBuildData.SetAvatar(importSettings, importResult.rootObject);
+                }
+                else
+                {
+                    GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings, ctx.assetPath);
+                }
+                
                 // Save asset with reset pose Animation Clip
-                List<AnimationClip> gltfAnimationClips = new List<AnimationClip>(importResult.animationClips);
+                List<AnimationClip> gltfAnimationClips = importResult.animationClips.ToList();
                 if (importResult.resetAnimationClip != null) gltfAnimationClips.Add(importResult.resetAnimationClip);
-                GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx, importSettings);
+                GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx,
+                    importSettings);
             }
             else
             {
@@ -99,6 +129,9 @@ namespace Didimo.Core.Editor
             }
         }
 
-        public override bool SupportsRemappedAssetType(Type type) { return type == typeof(Material); }
+        public override bool SupportsRemappedAssetType(Type type)
+        {
+            return type == typeof(Material);
+        }
     }
 }

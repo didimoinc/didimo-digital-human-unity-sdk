@@ -1,0 +1,355 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3e1b8a03be5a6429b63824e0578d72, type: 3}
+  m_Name: G8 Didimo BoneRemap_Glasses
+  m_EditorClassIdentifier: 
+  remaps:
+  - from: head
+    to: Head
+  - from: hip
+    to: Hips
+  - from: pelvis
+    to: Hips
+  - from: abdomenLower
+    to: Spine
+  - from: abdomenUpper
+    to: Spine1
+  - from: chestLower
+    to: Spine2
+  - from: chestUpper
+    to: Spine3
+  - from: neckUpper
+    to: Neck
+  - from: neckLower
+    to: Neck
+  - from: lCollar
+    to: LeftShoulder
+  - from: rCollar
+    to: RightShoulder
+  - from: lShldrBend
+    to: LeftArm
+  - from: lShldrTwist
+    to: LeftArm
+  - from: rShldrBend
+    to: RightArm
+  - from: rShldrTwist
+    to: RightArm
+  - from: lForearmBend
+    to: LeftForeArm
+  - from: lForearmTwist
+    to: LeftForeArm
+  - from: rForearmBend
+    to: RightForeArm
+  - from: rForearmTwist
+    to: RightForeArm
+  - from: lThighBend
+    to: LeftUpLeg
+  - from: lThighTwist
+    to: LeftUpLeg
+  - from: rThighBend
+    to: RightUpLeg
+  - from: rThighTwist
+    to: RightUpLeg
+  - from: lFoot
+    to: LeftFoot
+  - from: lShin
+    to: LeftLeg
+  - from: rFoot
+    to: RightFoot
+  - from: rShin
+    to: RightLeg
+  - from: lBigToe
+    to: LeftToeBase
+  - from: lBigToe_2
+    to: LeftToeEnd
+  - from: lMetatarsals
+    to: LeftFoot
+  - from: lSmallToe1
+    to: LeftToeBase
+  - from: lSmallToe1_2
+    to: LeftToeEnd
+  - from: lSmallToe2
+    to: LeftToeBase
+  - from: lSmallToe2_2
+    to: LeftToeEnd
+  - from: lSmallToe3
+    to: LeftToeBase
+  - from: lSmallToe3_2
+    to: LeftToeEnd
+  - from: lSmallToe4
+    to: LeftToeBase
+  - from: lSmallToe4_2
+    to: LeftToeEnd
+  - from: lToe
+    to: LeftToeBase
+  - from: rBigToe
+    to: RightToeBase
+  - from: rBigToe_2
+    to: RightToeBase
+  - from: rMetatarsals
+    to: RightFoot
+  - from: rSmallToe1
+    to: RightToeBase
+  - from: rSmallToe1_2
+    to: RightToeEnd
+  - from: rSmallToe2
+    to: RightToeBase
+  - from: rSmallToe2_2
+    to: RightToeEnd
+  - from: rSmallToe3
+    to: RightToeBase
+  - from: rSmallToe3_2
+    to: RightToeEnd
+  - from: rSmallToe4
+    to: RightToeBase
+  - from: rSmallToe4_2
+    to: RightToeEnd
+  - from: rToe
+    to: RightToeBase
+  - from: lHand
+    to: LeftHand
+  - from: lCarpal1
+    to: LeftHand
+  - from: lCarpal2
+    to: LeftHand
+  - from: lCarpal3
+    to: LeftHand
+  - from: lCarpal4
+    to: LeftHandPinky0
+  - from: lThumb1
+    to: LeftHandThumb0
+  - from: lThumb2
+    to: LeftHandThumb3
+  - from: lThumb3
+    to: LeftHandThumb4
+  - from: lIndex1
+    to: LeftHandIndex1
+  - from: lIndex2
+    to: LeftHandIndex2
+  - from: lIndex3
+    to: LeftHandIndex3
+  - from: lMid1
+    to: LeftHandMiddle1
+  - from: lMid2
+    to: LeftHandMiddle2
+  - from: lMid3
+    to: LeftHandMiddle3
+  - from: lRing1
+    to: LeftHandRing1
+  - from: lRing2
+    to: LeftHandRing2
+  - from: lRing3
+    to: LeftHandRing3
+  - from: lPinky1
+    to: LeftHandPinky1
+  - from: lPinky2
+    to: LeftHandPinky2
+  - from: lPinky3
+    to: LeftHandPinky3
+  - from: rHand
+    to: RightHand
+  - from: rCarpal1
+    to: RightHand
+  - from: rCarpal2
+    to: RightHand
+  - from: rCarpal3
+    to: RightHand
+  - from: rCarpal4
+    to: RightHandPinky0
+  - from: rThumb1
+    to: RightHandThumb0
+  - from: rThumb2
+    to: RightHandThumb3
+  - from: rThumb3
+    to: RightHandThumb4
+  - from: rIndex1
+    to: RightHandIndex1
+  - from: rIndex2
+    to: RightHandIndex2
+  - from: rIndex3
+    to: RightHandIndex3
+  - from: rMid1
+    to: RightHandMiddle1
+  - from: rMid2
+    to: RightHandMiddle2
+  - from: rMid3
+    to: RightHandMiddle3
+  - from: rRing1
+    to: RightHandRing1
+  - from: rRing2
+    to: RightHandRing2
+  - from: rRing3
+    to: RightHandRing3
+  - from: rPinky1
+    to: RightHandPinky1
+  - from: rPinky2
+    to: RightHandPinky2
+  - from: rPinky3
+    to: RightHandPinky3
+  - from: tongue01
+    to: Head
+  - from: tongue02
+    to: Head
+  - from: tongue03
+    to: Head
+  - from: tongue04
+    to: Head
+  - from: lPectoral
+    to: Spine2
+  - from: rPectoral
+    to: Spine2
+  - from: lCheekUpper
+    to: Head
+  - from: LipUpperMiddle
+    to: Head
+  - from: lLipBelowNose
+    to: Head
+  - from: lLipCorner
+    to: Head
+  - from: lLipLowerOuter
+    to: Head
+  - from: lLipNasolabialCrease
+    to: Head
+  - from: lLipUpperInner
+    to: Head
+  - from: lLipUpperOuter
+    to: Head
+  - from: lNasolabialLower
+    to: Head
+  - from: lNasolabialMiddle
+    to: Head
+  - from: lNasolabialMouthCorner
+    to: Head
+  - from: lNasolabialUpper
+    to: Head
+  - from: lNostril
+    to: Head
+  - from: Nose
+    to: Head
+  - from: rCheekUpper
+    to: Head
+  - from: rLipBelowNose
+    to: Head
+  - from: rLipCorner
+    to: Head
+  - from: rLipLowerOuter
+    to: Head
+  - from: rLipNasolabialCrease
+    to: Head
+  - from: rLipUpperInner
+    to: Head
+  - from: rLipUpperOuter
+    to: Head
+  - from: rNasolabialMiddle
+    to: Head
+  - from: rNasolabialLower
+    to: Head
+  - from: rNasolabialMouthCorner
+    to: Head
+  - from: rNasolabialUpper
+    to: Head
+  - from: rNostril
+    to: Head
+  - from: CenterBrow
+    to: Head
+  - from: lBrowMid
+    to: Head
+  - from: rBrowMid
+    to: Head
+  - from: lBrowOuter
+    to: Head
+  - from: rBrowOuter
+    to: Head
+  - from: lEar
+    to: Head
+  - from: rEar
+    to: Head
+  - from: BelowJaw
+    to: Head
+  - from: Chin
+    to: Head
+  - from: lCheekLower
+    to: Head
+  - from: LipBelow
+    to: Head
+  - from: LipLowerMiddle
+    to: Head
+  - from: lJawClench
+    to: Head
+  - from: lLipLowerInner
+    to: Head
+  - from: upperTeeth
+    to: Head
+  - from: lowerJaw
+    to: Head
+  - from: lowerTeeth
+    to: Head
+  - from: rCheekLower
+    to: Head
+  - from: rJawClench
+    to: Head
+  - from: rLipLowerInner
+    to: Head
+  - from: lSquintOuter
+    to: Head
+  - from: rSquintOuter
+    to: Head
+  - from: upperFaceRig
+    to: Head
+  - from: lowerFaceRig
+    to: Head
+  - from: rSquintInner
+    to: Head
+  - from: lSquintInner
+    to: Head
+  - from: rBrowInner
+    to: Head
+  - from: lBrowInner
+    to: Head
+  - from: MidNoseBridge
+    to: Head
+  - from: rEye
+    to: Head
+  - from: rEyelidUpper
+    to: Head
+  - from: rEyelidInner
+    to: Head
+  - from: rEyelidUpperInner
+    to: Head
+  - from: rEyelidUpperOuter
+    to: Head
+  - from: rEyelidOuter
+    to: Head
+  - from: rEyelidLower
+    to: Head
+  - from: rEyelidLowerOuter
+    to: Head
+  - from: rEyelidLowerInner
+    to: Head
+  - from: lEye
+    to: Head
+  - from: lEyelidUpper
+    to: Head
+  - from: lEyelidInner
+    to: Head
+  - from: lEyelidUpperOuter
+    to: Head
+  - from: lEyelidLowerOuter
+    to: Head
+  - from: lEyelidUpperInner
+    to: Head
+  - from: lEyelidOuter
+    to: Head
+  - from: lEyelidLower
+    to: Head
+  - from: lEyelidLowerInner
+    to: Head

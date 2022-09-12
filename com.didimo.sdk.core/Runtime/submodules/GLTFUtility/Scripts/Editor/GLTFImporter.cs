@@ -11,7 +11,7 @@ namespace Didimo.GLTFUtility {
 		public override void OnImportAsset(AssetImportContext ctx) {
 			// Load asset
 			if (importSettings == null) importSettings = new ImportSettings();
-			Importer.ImportResult importResult = Importer.LoadFromFile(ctx.assetPath, importSettings, Format.GLTF);
+			Importer.ImportResult importResult = Importer.LoadFromFile(ctx.assetPath, importSettings, null, Format.GLTF);
 
 			// Save asset
 			GLTFAssetUtility.SaveToAsset(importResult.rootObject, importResult.animationClips, ctx, importSettings);

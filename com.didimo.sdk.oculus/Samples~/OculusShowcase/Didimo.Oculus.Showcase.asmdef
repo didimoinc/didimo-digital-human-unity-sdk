@@ -13,7 +13,9 @@
     ],
     "includePlatforms": [],
     "excludePlatforms": [
-        "iOS"
+        "iOS",
+        "macOSStandalone",
+        "WebGL"
     ],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -27,7 +27,6 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             this.node = node;
 
-            title = node.title;
 
             // VisualElement titleContainer = this.Q("title");
             titleContainer.style.backgroundColor = bgcolor;
@@ -50,19 +49,19 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             style.width = node.width;
 
+            UpdateNodeTitle();
             CreateMonoScriptField();
             CreatePorts();
 
             if (!node.expanded) ToggleCollapse();
             RegisterCallback<GeometryChangedEvent>(OnGeometryChangedEvent);
-
-            // EditorApplication.delayCall += () => initialize();
         }
 
-        // void initialize()
-        // {
-        //     RefreshExpandedState();
-        // }
+        void UpdateNodeTitle()
+        {
+            title = node.title;
+            if (!string.IsNullOrEmpty(node.id)) title += " (" + node.id + ")";
+        }
 
         void OnGeometryChangedEvent(GeometryChangedEvent e)
         {
@@ -78,10 +77,12 @@ namespace Didimo.AssetFitter.Editor.Graph
             foreach (var info in node.GetType().GetFields())
             {
                 DirectionAttribute direction = info.GetCustomAttribute<DirectionAttribute>();
+                ExposeAttribute expose = info.GetCustomAttribute<ExposeAttribute>();
                 if (direction != null)
                 {
-                    var expose = info.GetCustomAttribute<ExposeAttribute>();
-                    Port port = CreatePort(expose == null ? direction.name : "", direction, info.FieldType);
+                    // Port port = CreatePort(expose == null ? direction.name : "", direction, info.FieldType);
+                    bool showName = expose != null ? expose.showLabel : true;
+                    Port port = CreatePort(showName ? direction.name : "", direction, info.FieldType);
 
                     if (expose != null)
                     {
@@ -94,7 +95,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 }
                 else if (info.GetCustomAttribute<ExposeAttribute>() != null)
                 {
-                    TryGetContainer("properties").Add(GetExposedControl(info, info.Name));
+                    TryGetContainer("properties").Add(GetExposedControl(info));
                 }
             }
 
@@ -107,7 +108,9 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         Port CreatePort(string name, DirectionAttribute direction, Type type)
         {
-            var port = InstantiatePort(Orientation.Horizontal, direction is InputAttribute ? Direction.Input : Direction.Output, direction.single ? Capacity.Single : Capacity.Multi, type);
+            Port port = InstantiatePort(Orientation.Horizontal, direction is InputAttribute ? Direction.Input : Direction.Output, direction.single ? Capacity.Single : Capacity.Multi, type);
+            // if (String.IsNullOrEmpty(name)) port.Remove(port.Q("type"));
+            // else 
             port.portName = name;
             if (TypeColors.GetColorByType(type, out Color color, 2f))
                 port.portColor = color;
@@ -123,7 +126,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         void OnExposedValueChanged(FieldInfo fieldInfo) { }
 
-        VisualElement GetExposedControl(FieldInfo fieldInfo, string label = "") =>
+        VisualElement GetExposedControl(FieldInfo fieldInfo) =>
             FieldView.GetInstance(node, fieldInfo).element;
 
         VisualElement TryGetContainer(string name) => this.Q(name) != null ? this.Q(name) : AddContainer(name);
@@ -138,13 +141,12 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         void CreateMonoScriptField()
         {
-            var guids = AssetDatabase.FindAssets("t:MonoScript " + node.GetType().Name);
+            string[] guids = AssetDatabase.FindAssets("t:MonoScript " + node.GetType().Name);
             for (int i = 0; i < guids.Length; i++)
             {
-                var scriptAsset = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[i]), typeof(MonoScript)) as MonoScript;
+                MonoScript scriptAsset = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[i]), typeof(MonoScript)) as MonoScript;
                 if (scriptAsset.name == node.GetType().Name)
                 {
-                    // var contents = this.Q("contents");
                     var container = new VisualElement() { style = { backgroundColor = bgcolor } };
                     container.Add(new ObjectField() { objectType = typeof(MonoScript), value = scriptAsset });
                     this.Q("contents").Insert(0, container);
@@ -168,6 +170,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             else RemoveIDField();
         }
 
+
         void CreateIDField()
         {
             if (idFieldContainer != null) return;
@@ -175,7 +178,11 @@ namespace Didimo.AssetFitter.Editor.Graph
             idFieldContainer = new VisualElement() { style = { backgroundColor = bgcolor } };
             idFieldContainer.Add(idField = new TextField());
             this.Q("contents").Insert(0, idFieldContainer);
-            idField.RegisterValueChangedCallback(evt => node.id = idField.text);
+            void Changed(string text)
+            {
+                node.id = idField.text;
+            }
+            idField.RegisterValueChangedCallback(e => Changed(idField.text)); //evt => node.id = idField.text
             idField.SetValueWithoutNotify(node.id);
         }
 

@@ -20,13 +20,14 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (isFile)
             {
-                var file = new FileInfo(path);
+                FileInfo file = new FileInfo(path);
                 path = file.DirectoryName;
             }
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
         }
+
 #if UNITY_EDITOR
         public static void CreateAssetPath(string assetPath) => AssetDatabase.CreateFolder(Path.GetDirectoryName(assetPath), Path.GetFileName(assetPath));
         public static void RemoveAssetPath(string assetPath) => AssetDatabase.DeleteAsset(assetPath);

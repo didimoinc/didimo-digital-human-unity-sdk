@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8016243090658098278}
   - component: {fileID: 1254613922973597723}
   - component: {fileID: 4988774945147338756}
-  - component: {fileID: 506672629937002875}
+  - component: {fileID: 8485650560845156758}
   m_Layer: 0
   m_Name: hair_003
   m_TagString: Untagged
@@ -86,7 +86,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8845313494596842652}
   m_Mesh: {fileID: -2432090755550338912, guid: f8154ab04b7298649a2a81f40d1cd453, type: 3}
---- !u!114 &506672629937002875
+--- !u!114 &8485650560845156758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

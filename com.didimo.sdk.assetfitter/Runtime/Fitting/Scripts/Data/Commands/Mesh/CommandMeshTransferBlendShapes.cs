@@ -46,16 +46,16 @@ namespace Didimo.AssetFitter.Editor.Graph
             int count = mesh1.vertexCount;
             Vector3[] deltas = new Vector3[count], normals = new Vector3[count], tangents = new Vector3[count];
 
-            var mesh = AssetTools.CloneAsset(mesh2);
+            Mesh mesh = AssetTools.CloneAsset(mesh2);
 
             for (int i = 0; i < mesh1.blendShapeCount; i++)
             {
-                var name = mesh1.GetBlendShapeName(i);
+                string name = mesh1.GetBlendShapeName(i);
                 name = name.Split('.').Last();
                 for (int f = 0, bsc = mesh1.GetBlendShapeFrameCount(i); f < bsc; f++)
                 {
                     Debug.Log("Adding " + name + " " + mesh1.GetBlendShapeFrameWeight(i, f));
-                    var weight = mesh1.GetBlendShapeFrameWeight(i, f);
+                    float weight = mesh1.GetBlendShapeFrameWeight(i, f);
                     mesh1.GetBlendShapeFrameVertices(i, f, deltas, normals, tangents);
 
                     mesh.AddBlendShapeFrame(name, weight, deltas, normals, tangents);

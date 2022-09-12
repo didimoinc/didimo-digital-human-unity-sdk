@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Didimo;
-using Didimo.Core.Inspector;
-using Didimo.Core.Utility;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,11 +8,15 @@ using UnityEngine.SceneManagement;
 [DefaultExecutionOrder(1001)]
 public class DVRNetworkManager : NetworkBehaviour
 {
-    [SerializeField] List<Transform> slots;
+    [SerializeField]
+    List<Transform> slots;
+
     List<Transform> slotsAllocated = new List<Transform>();
 
-    [SerializeField] List<GameObject> playerPrefabs;
-    public Vector3 playerAvatarPositionOffset;
+    [SerializeField]
+    List<GameObject> playerPrefabs;
+
+    public Vector3          playerAvatarPositionOffset;
     public List<GameObject> bots;
 
     private Dictionary<ulong, NetworkObject> connectedPlayers = new Dictionary<ulong, NetworkObject>();
@@ -24,19 +24,19 @@ public class DVRNetworkManager : NetworkBehaviour
     private Dictionary<ulong, int> clientIdToSlot = new Dictionary<ulong, int>();
     private ClientRemoteController clientRemoteController;
 
-    private void ApprovalCheck(byte[] arg1, ulong arg2, NetworkManager.ConnectionApprovedDelegate callback)
+    private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest arg1, NetworkManager.ConnectionApprovalResponse arg2)
     {
-        string scene = System.Text.Encoding.ASCII.GetString(arg1);
+        string scene = System.Text.Encoding.ASCII.GetString(arg1.Payload);
         bool approved = scene != null && scene == SceneManager.GetActiveScene().name;
         string approvedStr = approved ? "Approved" : "Rejected";
-        Debug.Log($"{approvedStr} client connection {arg2}");
-        callback(false, null, approved, null, null);
+        Debug.Log($"{approvedStr} client connection {arg1.ClientNetworkId}");
+        arg2.CreatePlayerObject = false;
+        arg2.Approved = approved;
     }
 
     public void Awake()
     {
-        NetworkManager.Singleton.NetworkConfig.ConnectionData =
-            System.Text.Encoding.ASCII.GetBytes(SceneManager.GetActiveScene().name);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(SceneManager.GetActiveScene().name);
 
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
 
@@ -45,7 +45,7 @@ public class DVRNetworkManager : NetworkBehaviour
         {
             bots.Add(slot.GetComponentInChildren<DidimoComponents>(true).gameObject);
         }
-
+        
         NetworkManager.Singleton.OnClientConnectedCallback += clientId =>
         {
             print($"Client connected with ID : {clientId}");
@@ -66,10 +66,6 @@ public class DVRNetworkManager : NetworkBehaviour
         };
     }
 
-    private void OnValidate()
-    {
-    }
-
     public Transform AllocateSlot()
     {
         var slot = slots.Except(slotsAllocated).FirstOrDefault();
@@ -81,10 +77,7 @@ public class DVRNetworkManager : NetworkBehaviour
         return slot;
     }
 
-    public void DeallocateSlot(Transform slot)
-    {
-        slotsAllocated.Remove(slot);
-    }
+    public void DeallocateSlot(Transform slot) { slotsAllocated.Remove(slot); }
 
     public override void OnDestroy()
     {
@@ -107,7 +100,7 @@ public class DVRNetworkManager : NetworkBehaviour
             clientIdToSlot[clientId] = clientSlot;
 
             GameObject go = playerPrefabs[clientSlot];
-            go = Instantiate(go, slot.position + playerAvatarPositionOffset, slot.rotation);
+            go = Instantiate(go, slot.position, slot.rotation);
             NetworkObject networkObject = go.GetComponent<NetworkObject>();
             networkObject.SpawnWithOwnership(clientId);
 

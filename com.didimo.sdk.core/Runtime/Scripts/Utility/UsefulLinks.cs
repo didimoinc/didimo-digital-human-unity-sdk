@@ -11,6 +11,7 @@ namespace Didimo.Core.Utility
         public static readonly string URP_DOCUMENTATION = "https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@11.0/manual/";
         public static readonly string HDRP_DOCUMENTATION = "https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/index.html";
         public static readonly string BIRP_DOCUMENTATION = "https://docs.unity3d.com/Manual/built-in-render-pipeline.html";
+        public static readonly string TEXTURE_CONTROL_DOCUMENTATION = "https://dash.readme.com/project/didimo/v2.5/docs/generating-texture-atlases";
 
     }
 }

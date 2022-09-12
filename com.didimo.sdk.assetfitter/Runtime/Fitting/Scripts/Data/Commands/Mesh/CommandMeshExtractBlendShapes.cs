@@ -49,8 +49,8 @@ namespace Didimo.AssetFitter.Editor.Graph
                 tangentDeltas = new Vector3[mesh.vertexCount];
 
             mesh.GetBlendShapeFrameVertices(index, frameIndex, vertexDeltas, normalDeltas, tangentDeltas);
-            var w = mesh.GetBlendShapeFrameWeight(index, frameIndex);
-            var m = new Mesh()
+            float w = mesh.GetBlendShapeFrameWeight(index, frameIndex);
+            Mesh m = new Mesh()
             {
                 name = mesh.name + "_" + mesh.GetBlendShapeName(index) + "_" + mesh.GetBlendShapeFrameWeight(index, frameIndex),
                 vertices = mesh.vertices.Select((v, k) => v + vertexDeltas[k]).ToArray(),

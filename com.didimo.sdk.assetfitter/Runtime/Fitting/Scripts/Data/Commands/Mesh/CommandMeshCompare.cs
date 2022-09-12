@@ -16,18 +16,18 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         internal override void EndPoint(bool Build = false)
         {
-            var meshes = GetInputValues<Mesh>(GetType().GetField(nameof(meshInput)));
+            System.Collections.Generic.List<Mesh> meshes = GetInputValues<Mesh>(GetType().GetField(nameof(meshInput)));
 
             Debug.Log("Compare " + meshes.Count + " meshes:");
             Debug.Log(String.Join(",", meshes.Select(m => m.name + " v:" + m.vertexCount + " t:" + m.triangles.Length / 3)));
 
             for (int x = 0; x < meshes.Count; x++)
             {
-                var tris1 = meshes[x].triangles;
+                int[] tris1 = meshes[x].triangles;
                 for (int y = x; y < meshes.Count; y++)
                 {
-                    var tris2 = meshes[y].triangles;
-                    var b = CompareSequence(tris1, tris2, out string r);
+                    int[] tris2 = meshes[y].triangles;
+                    bool b = CompareSequence(tris1, tris2, out string r);
                     Debug.Log("Compare " + x + " == " + y + " " + tris1.Length + " == " + tris2.Length + " && " + b + " == true [" + r + "] (" + tris1.Intersect(tris2).Count() + ")");
                 }
             }

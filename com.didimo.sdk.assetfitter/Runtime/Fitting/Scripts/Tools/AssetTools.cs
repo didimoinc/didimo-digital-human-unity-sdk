@@ -36,7 +36,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (!DefaultMaterial)
             {
-                var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 DefaultMaterial = UnityEngine.Object.Instantiate(cube.GetComponent<MeshRenderer>().sharedMaterial);
                 UnityEngine.Object.DestroyImmediate(cube);
             }
@@ -51,7 +51,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public static T CloneAsset<T>(T obj, Action<T> initialize = null) where T : UnityEngine.Object
         {
-            var result = UnityEngine.Object.Instantiate(obj);
+            T result = UnityEngine.Object.Instantiate(obj);
             result.name = obj.name;
             initialize?.Invoke(result);
             return result;
@@ -61,6 +61,11 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             return gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(true).Select(m => m.sharedMesh).
                 Concat(gameObject.GetComponentsInChildren<MeshFilter>().Select(m => m.sharedMesh)).ToArray();
+        }
+
+        public static Renderer[] GetAllRenderers(GameObject gameObject)
+        {
+            return gameObject.GetComponentsInChildren<Renderer>(true);
         }
 
         public static Material[] GetAllMaterials(GameObject gameObject)

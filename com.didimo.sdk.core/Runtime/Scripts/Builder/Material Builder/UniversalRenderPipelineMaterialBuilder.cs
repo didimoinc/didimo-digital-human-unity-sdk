@@ -83,8 +83,8 @@ namespace Didimo.Builder
 
         public override bool PostMaterialCreate(Material mat)
         {
-            var bodyPart = ShaderResources.GetBodyPartID(mat.name);
-            MaterialUtility.FixupDefaultShaderParams(mat, bodyPart);            
+            // var bodyPart = components.Parts.GetBodyPartType(renderer.transform);
+            // MaterialUtility.FixupDefaultShaderParams(mat, bodyPart);            
             return true;
         }
     }
