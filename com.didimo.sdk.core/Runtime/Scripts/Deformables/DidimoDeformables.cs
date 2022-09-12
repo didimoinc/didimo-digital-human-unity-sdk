@@ -5,7 +5,6 @@ using UnityEngine;
 using Didimo.Extensions;
 using Didimo.Core.Utility;
 using UnityEditor;
-using static Didimo.Core.Config.ShaderResources;
 using System.IO;
 using Didimo.Core.Deformer;
 
@@ -22,6 +21,33 @@ namespace Didimo.Core.Deformables
         [SerializeField, HideInInspector]
         private Matrix4x4 hairOffset = Matrix4x4.identity;
 
+        public static string FindDeformationFile(string rootDirectory)
+        {
+            if (string.IsNullOrEmpty(rootDirectory)) return null;
+            // Find a file in the root folder that is a .dmx or .npz
+            return Directory.EnumerateFiles(rootDirectory, "*.*",
+                    new EnumerationOptions {IgnoreInaccessible = true, MatchCasing = MatchCasing.CaseInsensitive})
+                .FirstOrDefault(s =>
+                    s.EndsWith(".dmx", StringComparison.InvariantCultureIgnoreCase) ||
+                    s.EndsWith(".npz", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public static TextAsset GetDeformationFile(string rootDirectory)
+        {
+            if (string.IsNullOrEmpty(rootDirectory)) return null;
+
+            string deformationFilePath = FindDeformationFile(rootDirectory);
+            if (string.IsNullOrEmpty(deformationFilePath)) return null;
+
+#if UNITY_EDITOR
+            TextAsset deformationFile =
+                AssetDatabase.LoadAssetAtPath<TextAsset>(deformationFilePath.Replace('\\', '/'));
+            if (deformationFile != null) return deformationFile;
+#endif
+            if (File.Exists(deformationFilePath)) return new ByteAsset(File.ReadAllBytes(deformationFilePath));
+            return null;
+        }
+        
         public void CacheHairOffsets()
         {
             if (transform.TryFindRecursive("Head", out Transform head))
@@ -232,9 +258,9 @@ namespace Didimo.Core.Deformables
             string deformableMeshLocation = AssetDatabase.GetAssetPath(deformableMesh);
             string deformableMeshName = Path.GetFileNameWithoutExtension(deformableMeshLocation);
             if (deformMode != DeformMode.Nothing)
-            {               
-                Renderer bodyMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(DidimoComponents.gameObject, EBodyPartID.BODY);
-                Renderer headMeshRenderer = MeshUtils.GetMeshRendererFromBodyPart(DidimoComponents.gameObject, EBodyPartID.HEAD);
+            {
+                Renderer bodyMeshRenderer = DidimoComponents.Parts.BodyMeshRenderer;
+                Renderer headMeshRenderer = DidimoComponents.Parts.HeadMeshRenderer;
                 if (bodyMeshRenderer != null)
                 {
                     Mesh bodyMesh = MeshUtils.GetMesh(bodyMeshRenderer.gameObject);

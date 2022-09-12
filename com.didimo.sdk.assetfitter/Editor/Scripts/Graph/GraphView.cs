@@ -47,7 +47,9 @@ namespace Didimo.AssetFitter.Editor.Graph
         GraphViewChange OnGraphViewChanged(GraphViewChange change)
         {
             if (change.edgesToCreate != null)
+            {
                 change.edgesToCreate.ForEach(CreateEdge);
+            }
 
             if (change.elementsToRemove != null)
             {
@@ -58,6 +60,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     else Debug.Log("Unknown type " + element.GetType());
                 }
             }
+
             EditorUtility.SetDirty(graphData);
             return change;
         }

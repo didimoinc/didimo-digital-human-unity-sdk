@@ -21,7 +21,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (info.Name == nameof(meshOutput))
             {
-                var input = GetInputValues(nameof(filterInput));
+                List<object> input = GetInputValues(nameof(filterInput));
                 values = Convert(input);
                 return true;
             }

@@ -15,13 +15,14 @@ namespace Didimo.AssetFitter.Editor.Graph
         public const string GameObject = "#4040B0" + Alpha;
         public const string Material = "#1040B0" + Alpha;
         public const string String = "#F0D817" + Alpha;
+        public const string Texture = "#5D6D7E" + Alpha;
 
         public static bool GetColorByType(Type type, out Color color, float brightness = 1f, float alpha = 1f)
         {
-            var name = type.Name.Replace("[]", "");
-            var field = typeof(TypeColors).GetField(name, BindingFlags.Static | BindingFlags.Public);
-            var value = field?.GetValue(null) as string;
-            var result = ColorUtility.TryParseHtmlString(value, out Color c);
+            string name = type.Name.Replace("[]", "");
+            FieldInfo field = typeof(TypeColors).GetField(name, BindingFlags.Static | BindingFlags.Public);
+            string value = field?.GetValue(null) as string;
+            bool result = ColorUtility.TryParseHtmlString(value, out Color c);
             if (result)
             {
                 Color.RGBToHSV(c, out float h, out float s, out float v);

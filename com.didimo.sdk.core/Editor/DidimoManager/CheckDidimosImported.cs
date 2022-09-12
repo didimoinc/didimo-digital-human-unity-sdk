@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Didimo.Builder;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,7 +23,12 @@ namespace Didimo.Core.Editor
                                                         .Where(asset => asset.StartsWith("Packages/com.didimo", StringComparison.InvariantCultureIgnoreCase) &&
                                                                         asset.EndsWith(".gltf", StringComparison.InvariantCultureIgnoreCase))
                                                         .ToList();
-
+                List<string> fbxDidimoPaths = AssetDatabase.GetAllAssetPaths()
+                                                        .Where(asset => asset.StartsWith("Packages/com.didimo", StringComparison.InvariantCultureIgnoreCase) &&
+                                                                        asset.EndsWith(".fbx", StringComparison.InvariantCultureIgnoreCase))
+                                                        .ToList();
+                fbxDidimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(s));
+                didimoPaths.AddRange(fbxDidimoPaths);
                 didimosToReimport = new List<string>();
                 foreach (string didimoPath in didimoPaths)
                 {

@@ -43,15 +43,15 @@ public class MainMenu : MonoBehaviour
     [Button]
     public void LoadMultiUserScene()
     {
-        if (serverManager?.GetComponent<ServerIndicator>()?.serverIsActive ?? false)
-        {
-            Destroy(NetworkManager.Singleton.gameObject);
-            LoadScene("MultiUser");
-        }
-        else
-        {
+        // if (serverManager?.GetComponent<ServerIndicator>()?.serverIsActive ?? false)
+        // {
+        //     // Destroy(NetworkManager.Singleton.gameObject);
+        //     LoadScene("MultiUser");
+        // }
+        // else
+        // {
             LoadScene("MultiUser2");
-        }
+        // }
     }
 
     private void Update()
@@ -59,8 +59,16 @@ public class MainMenu : MonoBehaviour
         // OVRInput.Update(); // Not needed as OVRManager is in the scene - regardless of what the Oculus website says.
         if (OVRInput.GetDown(OVRInput.Button.Start) && SceneManager.GetActiveScene().name != mainMenu)
         {
-            OnExit();
+        OnExit();
             LoadScene(mainMenu);
+        }
+        
+        if(Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Loading multi user");
+
+            LoadMultiUserScene();
+            enabled = false;
         }
     }
 

@@ -6,9 +6,10 @@ namespace Didimo.AssetFitter.Editor.Graph
     [System.Serializable]
     [MenuPath("Texture/Texture")]
     [DisplayName("Texture")]
-    [Width(200)]
+    [Width(160)]
+    [HeaderColor(TypeColors.Texture)]
     public class CommandTextureValue : GraphNode
     {
-        [Output("Texture"), Expose] public Texture textureOutput;
+        [Output("Texture"), Expose(false)] public Texture textureOutput;
     }
 }

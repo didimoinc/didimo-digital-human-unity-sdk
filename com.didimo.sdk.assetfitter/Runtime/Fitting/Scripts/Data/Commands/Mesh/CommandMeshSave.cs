@@ -30,17 +30,17 @@ namespace Didimo.AssetFitter.Editor.Graph
         internal override void EndPoint(bool Build = false)
         {
 #if UNITY_EDITOR
-            var meshes = GetInputValues(GetType().GetField(nameof(meshInput)));
+            System.Collections.Generic.List<object> meshes = GetInputValues(GetType().GetField(nameof(meshInput)));
 
             if (meshes.Count > 0)
             {
-                var path = this.path;
+                string path = this.path;
                 if (GetAssetFolder(ref path))
                 {
                     for (int i = 0; i < meshes.Count; i++)
                     {
                         // var filename = path + "/" + "mesh-" + i.ToString().PadLeft(3, '0');
-                        var mesh = meshes[i] as Mesh;
+                        Mesh mesh = meshes[i] as Mesh;
                         string filename;
                         switch (actionType)
                         {
@@ -83,8 +83,8 @@ namespace Didimo.AssetFitter.Editor.Graph
                                     mesh.bindposes = null;
                                     mesh.boneWeights = null;
 
-                                    var meshFilter = new GameObject(filename.Split('/').Last()).AddComponent<MeshFilter>();
-                                    var renderer = meshFilter.gameObject.AddComponent<MeshRenderer>();
+                                    MeshFilter meshFilter = new GameObject(filename.Split('/').Last()).AddComponent<MeshFilter>();
+                                    MeshRenderer renderer = meshFilter.gameObject.AddComponent<MeshRenderer>();
                                     meshFilter.sharedMesh = mesh;
                                     renderer.sharedMaterials = GetColorMaterials(mesh.subMeshCount);
                                 }
@@ -95,7 +95,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                                     mesh.bindposes = null;
                                     mesh.boneWeights = null;
 
-                                    var renderer = (new GameObject(filename.Split('/').Last())).AddComponent<SkinnedMeshRenderer>();
+                                    SkinnedMeshRenderer renderer = (new GameObject(filename.Split('/').Last())).AddComponent<SkinnedMeshRenderer>();
                                     renderer.sharedMesh = mesh;
                                     renderer.sharedMaterials = GetColorMaterials(mesh.subMeshCount);
                                 }
@@ -105,7 +105,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                                 {
                                     CreatePath(Path.GetDirectoryName(path));
                                     File.WriteAllText(filename + ".vertices.txt", String.Join("\n", mesh.vertices.Select(v => v.x + "," + v.y + "," + v.z)));
-                                    var triangles = mesh.triangles;
+                                    int[] triangles = mesh.triangles;
                                     File.WriteAllText(filename + ".indices.txt", String.Join("\n",
                                         Enumerable.Range(0, triangles.Length / 3).Select(i =>
                                             triangles[i * 3 + 0] + "," + triangles[i * 3 + 1] + "," + triangles[i * 3 + 2])));

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Didimo.Core.Utility;
 using Didimo.Extensions;
 using UnityEngine;
 
@@ -10,6 +9,7 @@ namespace Didimo
     /// Pose Controller class for low-level control of the didimo's facial animations.
     /// This system is built on top of Unity's Legacy Animation system that provides full runtime support.
     /// </summary>
+    [DefaultExecutionOrder(-5)]
     public class LegacyAnimationPoseController : DidimoPoseController
     {
         /// <summary>
@@ -35,7 +35,8 @@ namespace Didimo
 
         private void CacheInitialHeadJointTransform()
         {
-            initialHeadJointTransform = headJoint == null ? null
+            initialHeadJointTransform = headJoint == null
+                ? null
                 : new TransformValues(headJoint.localPosition, headJoint.localRotation, headJoint.localScale);
         }
 
@@ -58,39 +59,37 @@ namespace Didimo
             }
         }
 
-        public const  string RESET_POSE_NAME     = "RESET_POSE";
+        public const string RESET_POSE_NAME = "RESET_POSE";
         private const string DEFAULT_POSE_SOURCE = "ARKit";
 
-        public override ESupportedMovements SupportedMovements => ESupportedMovements.Poses | ESupportedMovements.HeadRotation;
+        public override ESupportedMovements SupportedMovements =>
+            ESupportedMovements.Poses | ESupportedMovements.HeadRotation;
 
-        [SerializeField, HideInInspector]
-        protected Animation animationComponent;
-
-        public  AnimationClip[] animationClips;
-        public  AnimationClip   resetAnimationClip;
-        public  Transform       headJoint;
-        public  bool            headJointMovementEnabled = true;
+        public AnimationClip[] animationClips;
+        public AnimationClip resetAnimationClip;
+        public Transform headJoint;
+        public bool headJointMovementEnabled = true;
         private TransformValues initialHeadJointTransform;
 
 
-        [Range(0, 1)]
-        public float headJointWeight = 1f;
+        [Range(0, 1)] public float headJointWeight = 1f;
 
         // We may not have a 1:1 match between user names and clip/pose names
         // if something changes. Good to allow for config file (ex: eyeBlink_L -> eyeBlinkLeft)
-        private readonly Dictionary<string, string>          namePoseAliases = new Dictionary<string, string>();
-        private          Dictionary<string, DidimoFaceShape> nameToPoseMapping;
-        private          DidimoFaceShape                     resetFaceShape;
+        private readonly Dictionary<string, string> namePoseAliases = new Dictionary<string, string>();
+        private Dictionary<string, DidimoFaceShape> nameToPoseMapping;
+        private DidimoFaceShape resetFaceShape;
 
-        private          bool            poseDataWasUpdated = false;
-        private readonly HashSet<string> shapesToDisable    = new HashSet<string>();
-        private          bool            resetHeadPose      = false;
+        private bool poseDataWasUpdated = false;
+        private readonly HashSet<string> shapesToDisable = new HashSet<string>();
+        private bool resetHeadPose = false;
+
 
         public Dictionary<string, DidimoFaceShape> NameToPoseMapping
         {
             get
             {
-                if (nameToPoseMapping == null && animationClips.Length > 0 && resetAnimationClip != null)
+                if ((nameToPoseMapping == null && animationClips.Length > 0 && resetAnimationClip != null))
                 {
                     BuildController();
                 }
@@ -104,13 +103,14 @@ namespace Didimo
         /// </summary>
         /// <returns>List of all the poses</returns>
         public override IReadOnlyList<string> GetAllIncludedPoses() => NameToPoseMapping.Keys.ToList();
-        
+
         /// <summary>
         /// Query if the pose with the given name is included in the didimo for animation.
         /// </summary>
         /// <param name="poseName">Name of the pose</param>
         /// <returns>True if the pose is included. False otherwise.</returns>
-        public override bool IsPoseIncluded(string poseName) => namePoseAliases.ContainsKey(poseName) || NameToPoseMapping.ContainsKey(poseName);
+        public override bool IsPoseIncluded(string poseName) =>
+            namePoseAliases.ContainsKey(poseName) || NameToPoseMapping.ContainsKey(poseName);
 
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Didimo
             if (animationClips.IsNullOrEmpty() || resetAnimationClip == null)
             {
                 Debug.LogWarning("Cannot build LegacyAnimationPoseController"
-                    + "without providing animationClips and the resetAnimationClip");
+                                 + " without providing animationClips and the resetAnimationClip");
                 return;
             }
 
@@ -152,44 +152,28 @@ namespace Didimo
 
             CacheInitialHeadJointTransform();
 
-            // For compatibility to ensure we always place animator at the correct level
-            if (DidimoComponents == null)
-            {
-                ComponentUtility.GetOrAdd(gameObject, ref animationComponent);
-            }
-            // It's a didimo, but lost context reference when recompiling. Let's try our best to find it
-            else if (DidimoComponents.BuildContext == null || DidimoComponents.BuildContext.MeshHierarchyRoot == null)
-            {
-                animationComponent = gameObject.GetComponentInChildren<Animation>();
-
-                if (animationComponent == null)
-                {
-                    animationComponent = gameObject.AddComponent<Animation>();
-                }
-            }
-            else
-            {
-                ComponentUtility.GetOrAdd(DidimoComponents.BuildContext.MeshHierarchyRoot.gameObject,
-                    ref animationComponent);
-            }
-
-            animationComponent.animatePhysics = false;
-            animationComponent.playAutomatically = false;
+            DidimoComponents.Animation.animatePhysics = false;
+            DidimoComponents.Animation.playAutomatically = false;
             nameToPoseMapping = new Dictionary<string, DidimoFaceShape>(animationClips.Length);
 
             // Create state for Reset Pose. Tip in Additive Animations:
             // https://docs.unity3d.com/Manual/AnimationScripting.html
-            animationComponent.AddClip(resetAnimationClip, RESET_POSE_NAME);
-            AnimationState resetPoseState = animationComponent[RESET_POSE_NAME];
+            if (gameObject.scene.isLoaded)
+            {
+                // Only do this if this component is in a scene.
+                // If we do it on a component from a prefab asset, Unity will have GC handle errors
+                DidimoComponents.Animation.AddClip(resetAnimationClip, RESET_POSE_NAME);
+                AnimationState resetPoseState = DidimoComponents.Animation[RESET_POSE_NAME];
 
-            resetPoseState.layer = 0;
-            resetPoseState.blendMode = AnimationBlendMode.Blend;
-            resetPoseState.wrapMode = WrapMode.Loop;
-            resetPoseState.enabled = false;
-            resetPoseState.speed = 0f;
-            resetPoseState.weight = 1f;
+                resetPoseState.layer = 0;
+                resetPoseState.blendMode = AnimationBlendMode.Blend;
+                resetPoseState.wrapMode = WrapMode.Loop;
+                resetPoseState.enabled = false;
+                resetPoseState.speed = 0f;
+                resetPoseState.weight = 1f;
 
-            resetFaceShape = new DidimoFaceShape(RESET_POSE_NAME, resetPoseState);
+                resetFaceShape = new DidimoFaceShape(RESET_POSE_NAME, resetPoseState);
+            }
 
             // Create states for all actual poses
             for (int i = 0; i < animationClips.Length; i++)
@@ -197,15 +181,22 @@ namespace Didimo
                 AnimationClip poseAnimationClip = animationClips[i];
                 string poseAnimationName = poseAnimationClip.name;
 
-                animationComponent.AddClip(poseAnimationClip, poseAnimationName);
-                AnimationState poseState = animationComponent[poseAnimationName];
-                poseState.layer = i + 1;
-                poseState.blendMode = AnimationBlendMode.Additive;
-                // Needs to be clamp forever, otherwise values >1 stop pose completely
-                poseState.wrapMode = WrapMode.ClampForever;
-                poseState.enabled = false;
-                poseState.speed = 0f;
-                poseState.weight = 1f;
+                DidimoComponents.Animation.AddClip(poseAnimationClip, poseAnimationName);
+                AnimationState poseState = null;
+
+                if (gameObject.scene.isLoaded)
+                {
+                    // Only do this if this component is in a scene.
+                    // If we do it on a component from a prefab asset, Unity will have GC handle errors
+                    poseState = DidimoComponents.Animation[poseAnimationName];
+                    poseState.layer = i + 1;
+                    poseState.blendMode = AnimationBlendMode.Additive;
+                    // Needs to be clamp forever, otherwise values >1 stop pose completely
+                    poseState.wrapMode = WrapMode.ClampForever;
+                    poseState.enabled = false;
+                    poseState.speed = 0f;
+                    poseState.weight = 1f;
+                }
 
                 DidimoFaceShape didimoFaceShape = new DidimoFaceShape(poseAnimationName, poseState);
                 NameToPoseMapping.Add(poseAnimationName, didimoFaceShape);
@@ -329,6 +320,7 @@ namespace Didimo
                 if (!NameToPoseMapping.TryGetValue(shapeName, out DidimoFaceShape faceShape)) continue;
                 faceShape.AnimationState.enabled = false;
             }
+
             shapesToDisable.Clear();
             poseDataWasUpdated = false;
         }
@@ -354,6 +346,7 @@ namespace Didimo
             {
                 rotation = Quaternion.Lerp(initialHeadJointTransform.Rotation, rotation, headJointWeight);
             }
+
             headJoint.localRotation = rotation;
 
             resetHeadPose = true;
@@ -389,7 +382,7 @@ namespace Didimo
         /// </summary>
         public override void ForceUpdateAnimation()
         {
-            animationComponent.Sample();
+            DidimoComponents.Animation.Sample();
             CleanupEnabledAnimationStates();
         }
     }

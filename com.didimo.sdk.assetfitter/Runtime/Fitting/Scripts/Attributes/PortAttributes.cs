@@ -29,7 +29,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 
     public class ExposeAttribute : Attribute
     {
-        public ExposeAttribute() { }
+        public bool showLabel;
+        public ExposeAttribute(bool showLabel = true) { this.showLabel = showLabel; }
     }
 
     public class OutputValuesAttribute : Attribute

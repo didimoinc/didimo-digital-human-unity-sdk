@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,8 @@ namespace Didimo.Builder.GLTF
         /// <param name="didimoKey">Key of this didimo. Can be an empty string.</param>
         /// <param name="gltfDidimoFilePath">Path to the GLTF file of the didimo package.</param>
         /// <param name="gltfImportSettings">Import settings for the didimo.</param>
-        public GLTFBuildData(string didimoKey, string gltfDidimoFilePath, ImportSettings gltfImportSettings) : base(didimoKey, gltfDidimoFilePath)
+        public GLTFBuildData(string didimoKey, string gltfDidimoFilePath, ImportSettings gltfImportSettings) : base(
+            didimoKey, gltfDidimoFilePath)
         {
             GLTFDidimoFilePath = gltfDidimoFilePath;
             ImportSettings = gltfImportSettings;
@@ -62,18 +64,49 @@ namespace Didimo.Builder.GLTF
             };
 
             ImportSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
+            DidimoImporterJsonConfig didimoImporterJsonConfig =
+                DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(GLTFDidimoFilePath)!);
 
-            Importer.ImportResult importResult = Importer.LoadFromFile(GLTFDidimoFilePath, ImportSettings, Format.GLTF);
+            Importer.ImportResult importResult = Importer.LoadFromFile(GLTFDidimoFilePath, ImportSettings, gltfObject =>
+            {
+                if (didimoImporterJsonConfig != null)
+                {
+                    // We will be settings the materials na importing the textures after importing the gltf
+                    gltfObject.images = null;
+                    gltfObject.textures = null;
+                    gltfObject.materials = null;
+                    gltfObject.extensions ??= new GLTFObject.Extensions();
+                    gltfObject.extensions.Didimo = new DidimoExtension();
+                }
+            }, Format.GLTF);
             ImportSettings.animationType = configuration.AnimationType;
             ImportSettings.avatar = configuration.Avatar;
-            ImportSettings.avatarDefinition = configuration.Avatar ? ImportSettings.AvatarDefinition.CopyFromAnotherAvatar : ImportSettings.AvatarDefinition.CreateFromThisModel;
+            ImportSettings.avatarDefinition = configuration.Avatar
+                ? ImportSettings.AvatarDefinition.CopyFromAnotherAvatar
+                : ImportSettings.AvatarDefinition.CreateFromThisModel;
             GameObject didimoGO = importResult.rootObject;
             didimoGO.transform.SetParent(context.RootTransform);
             context.MeshHierarchyRoot = didimoGO.transform;
 
-            AddRequiredComponents(importResult, context.DidimoComponents.gameObject, ImportSettings);
+            context.DidimoComponents.didimoVersion = importResult.didimoVersion;
 
-            OnAfterBuild(configuration, context);
+            if (didimoImporterJsonConfig == null)
+            {
+                context.DidimoComponents.gameObject.AddComponent<DidimoParts>();
+                context.DidimoComponents.Parts.SetupForDidimoVersion(context.DidimoComponents.didimoVersion);
+                AddRequiredComponents(importResult, context.DidimoComponents.gameObject, ImportSettings,
+                    context.DidimoComponents.Parts.HeadJoint);
+
+                OnAfterBuild(configuration, context);
+            }
+            else
+            {
+                DidimoImporterJsonConfigUtils.SetupDidimoForRuntime(didimoGO, didimoImporterJsonConfig, GLTFDidimoFilePath,
+                    importResult.animationClips, importResult.resetAnimationClip, null).RunCoroutine();
+
+                SetAvatar(ImportSettings, didimoGO);
+            }
+
             return Task.FromResult((true, context.DidimoComponents));
         }
 
@@ -86,20 +119,46 @@ namespace Didimo.Builder.GLTF
         /// <param name="importSettings">Settings to configure how some parts of the GLTF should be imported</param>
         /// <param name="assetPath">Path of the GLTF file</param>
         /// <returns>The created <c>DidimoComponents</c> component.</returns>
-        public static DidimoComponents BuildFromScriptedImporter(Importer.ImportResult gltfImportResult, ImportSettings importSettings, string assetPath="")
+        public static DidimoComponents BuildFromScriptedImporter(Importer.ImportResult gltfImportResult,
+            ImportSettings importSettings, string assetPath = "")
         {
             string rootDirectory = Path.GetDirectoryName(assetPath) ?? "";
 
             GLTFBuildData buildData = new GLTFBuildData(string.Empty, rootDirectory);
+            DidimoImporterJsonConfig importerJsonConfig = DidimoImporterJsonConfigUtils.GetConfigAtFolder(rootDirectory);
             Configuration configuration = Configuration.Default();
 
+            if (!gltfImportResult.isDidimo && importerJsonConfig == null) return null;
+
+
+            gltfImportResult.isDidimo = true;
             // buildData.OnBeforeBuild(configuration, out DidimoBuildContext context);
             DidimoComponents didimoComponents = gltfImportResult.rootObject.AddComponent<DidimoComponents>();
+
+            if (importerJsonConfig != null)
+            {
+                DidimoImporterJsonConfigUtils.BuildDidimoParts(didimoComponents, importerJsonConfig);
+            }
+            else
+            {
+                gltfImportResult.rootObject.AddComponent<DidimoParts>()
+                    .SetupForDidimoVersion(gltfImportResult.didimoVersion);
+            }
+
+            didimoComponents.Parts.LeftEyeMeshRenderer.updateWhenOffscreen = true;
+            didimoComponents.Parts.RightEyeMeshRenderer.updateWhenOffscreen = true;
+            if (didimoComponents.Parts.EyeLashesMeshRenderer != null)
+            {
+                didimoComponents.Parts.EyeLashesMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
+            }
+
+            didimoComponents.didimoVersion = gltfImportResult.didimoVersion;
             DidimoBuildContext context = DidimoBuildContext.CreateNew(didimoComponents, rootDirectory);
-            AddRequiredComponents(gltfImportResult, gltfImportResult.rootObject, importSettings);
-            
+            AddRequiredComponents(gltfImportResult, gltfImportResult.rootObject, importSettings,
+                didimoComponents.Parts.HeadJoint);
+
             GLTFDidimoHair.ApplyHairMaterials(gltfImportResult);
-            
+
             buildData.OnAfterBuild(configuration, context);
 
             return context.DidimoComponents;
@@ -112,7 +171,8 @@ namespace Didimo.Builder.GLTF
         /// <param name="gltfImportResult">Import result returned by the GLTFImporter</param>
         /// <param name="root">Root object where required components will be attached to</param>
         /// <param name="importSettings">Settings to configure how some parts of the GLTF should be imported</param>
-        public static void AddRequiredComponents(Importer.ImportResult gltfImportResult, GameObject root, ImportSettings importSettings)
+        public static void AddRequiredComponents(Importer.ImportResult gltfImportResult, GameObject root,
+            ImportSettings importSettings, Transform headJoint)
         {
             root.AddComponent<DidimoAnimator>();
 #if INSTANCING_SUPPORT
@@ -124,32 +184,24 @@ namespace Didimo.Builder.GLTF
                 dih.Build(gltfImportResult.FaceMesh);
             }
 #endif
-            if (gltfImportResult.eyeShadowController != null)
-            {
-                DidimoEyeShadowController eyeShadowController = root.AddComponent<DidimoEyeShadowController>();
-                eyeShadowController.Build(gltfImportResult.eyeShadowController);
-            }
+            root.AddComponent<DidimoEyeShadowController>();
 
-            if (gltfImportResult.irisController != null)
-            {
-                DidimoIrisController didimoIrisController = root.AddComponent<DidimoIrisController>();
-                didimoIrisController.Build(gltfImportResult.irisController);
-                gltfImportResult.irisController.LeftEyeMesh.updateWhenOffscreen = true;
-                gltfImportResult.irisController.RightEyeMesh.updateWhenOffscreen = true;
-            }
-
-            if (gltfImportResult.EyelashMesh != null)
-            {
-                gltfImportResult.EyelashMesh.shadowCastingMode = ShadowCastingMode.Off;
-            }
+            root.AddComponent<DidimoIrisController>();
 
             LegacyAnimationPoseController poseController = root.AddComponent<LegacyAnimationPoseController>();
-            poseController.BuildController(gltfImportResult.animationClips, gltfImportResult.resetAnimationClip, gltfImportResult.headJoint);
+            poseController.BuildController(gltfImportResult.animationClips, gltfImportResult.resetAnimationClip,
+                headJoint);
 
-            if ((importSettings.animationType == ImportSettings.AnimationType.Generic || importSettings.animationType == ImportSettings.AnimationType.Humanoid) &&
+            SetAvatar(importSettings, root);
+        }
+
+        public static void SetAvatar(ImportSettings importSettings, GameObject root)
+        {
+            if ((importSettings.animationType == ImportSettings.AnimationType.Generic ||
+                 importSettings.animationType == ImportSettings.AnimationType.Humanoid) &&
                 importSettings.avatarDefinition != ImportSettings.AvatarDefinition.NoAvatar)
             {
-                Animator animator = root.AddComponent<Animator>();
+                Animator animator = ComponentUtility.GetOrAdd<Animator>(root);
 
                 if (importSettings.avatarDefinition == ImportSettings.AvatarDefinition.CreateFromThisModel)
                 {
@@ -174,7 +226,6 @@ namespace Didimo.Builder.GLTF
             List<SkeletonBone> skeletonBones = new List<SkeletonBone>(transforms.Length);
 
             Avatar defaultAvatar = ResourcesLoader.DidimoDefaultAvatar();
-            
 
             for (int i = 0; i < transforms.Length; i++)
             {
@@ -182,7 +233,8 @@ namespace Didimo.Builder.GLTF
                 skeletonBone.name = transforms[i].name;
                 try
                 {
-                    skeletonBone.rotation = defaultAvatar.humanDescription.skeleton.First(s => s.name == skeletonBone.name).rotation;
+                    skeletonBone.rotation = defaultAvatar.humanDescription.skeleton
+                        .First(s => s.name == skeletonBone.name).rotation;
                 }
                 catch (Exception)
                 {

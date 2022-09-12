@@ -1,19 +1,21 @@
 using UnityEngine;
-using Didimo;
 using Didimo.Speech;
 using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+#if !UNITY_WEBGL
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
+#endif
 using System.Threading;
 
 namespace Didimo.Core.Examples.AzureTTSIntegration
 {
     public class AzureTTSPlayback : MonoBehaviour
     {
+        #if !UNITY_WEBGL
         [SerializeField]
         public DidimoComponents didimoComponents;
 
@@ -265,5 +267,6 @@ namespace Didimo.Core.Examples.AzureTTSIntegration
                 Debug.Log("Please write some text on the Inspector!");
             }
         }
+#endif
     }
 }

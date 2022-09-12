@@ -11,7 +11,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 {
     [System.Serializable]
     [MenuPath("Object/Reallusion")]
-    [DisplayName("Reallusion")]
+    [DisplayName("Reallusion CC")]
     [Width(240)]
     [HeaderColor("#2883bcCC")]
     public class CommandReallusion : CommandAvatar
@@ -40,8 +40,8 @@ namespace Didimo.AssetFitter.Editor.Graph
         // [Output(nameof(TeethSurface.LowerTeeth))] public Mesh lowerTeethOutput;
 
         // [Output("Tongue")] public SkinnedMeshRenderer tongueOutput;
-
-        [Output("Accessory")] public SkinnedMeshRenderer accessoryOutput;
+        [Output("Accessory Skins")] public SkinnedMeshRenderer accessoryOutput;
+        [Output("Accessory Filters")] public MeshFilter accessoryFilterOutput;
         [Output("Manifold")] public Mesh manifoldOutput;
 
         public override Gender gender => !GetGender() ? Gender.None :
@@ -49,8 +49,17 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public override GameObject GetPrefab() => prefabOutput;
 
+        GameObject builtPrefab;
+        internal override void Build()
+        {
+            builtPrefab = CloneAsset(this.prefabOutput);
+            GraphData.State.Add(builtPrefab);
+        }
+
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
+            GameObject prefabOutput = builtPrefab;
+
             if (prefabOutput)
             {
                 switch (info.Name)
@@ -64,12 +73,18 @@ namespace Didimo.AssetFitter.Editor.Graph
                         Debug.Log("Accessory count " + values.Count);
                         return true;
 
+                    case nameof(accessoryFilterOutput):
+                        values = GetAccessoryFilters().ToList<object>();
+
+                        Debug.Log("Accessory Filter count " + values.Count);
+                        return true;
+
                     case nameof(manifoldOutput):
                         values = CreateManifold();
                         return true;
 
                     default:
-                        var surface = (BodySurface)Enum.Parse(typeof(BodySurface), info.GetCustomAttribute<OutputAttribute>().name);
+                        BodySurface surface = (BodySurface)Enum.Parse(typeof(BodySurface), info.GetCustomAttribute<OutputAttribute>().name);
                         values = new List<object>() { GetSubMesh(GetShapeSkin().sharedMesh, surface) };
                         return true;
                 }
@@ -111,6 +126,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 FirstOrDefault(s => s.name.Contains("CC_Base_Body"));
 
+        //Fetch gender from "Female / Male" key word in eyebrow GO that comes with Reallusion Avatars
         SkinnedMeshRenderer GetGender() =>
             prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 FirstOrDefault(s => s.name.Contains("Female"));
@@ -121,6 +137,10 @@ namespace Didimo.AssetFitter.Editor.Graph
                            !s.name.Contains("Camera") &&
                            !s.name.Contains("Shadow")).ToArray();
 
+        MeshFilter[] GetAccessoryFilters()
+        {
+            return prefabOutput.GetComponentsInChildren<MeshFilter>(true);
+        }
 
         enum BodySurface
         {
@@ -131,6 +151,16 @@ namespace Didimo.AssetFitter.Editor.Graph
             Nails = 4,
             Eyelash = 5,
         }
+
+        BodySurface[] ReallusionBodySurface =
+        {
+            BodySurface.Head,
+            BodySurface.Body,
+            BodySurface.Arm,
+            BodySurface.Leg,
+            BodySurface.Nails,
+            BodySurface.Eyelash,
+        };
 
         /*        enum EyeSurface
                 {
@@ -157,18 +187,6 @@ namespace Didimo.AssetFitter.Editor.Graph
                     UpperTeeth = 0,
                     LowerTeeth = 1,
                 } */
-
-        BodySurface[] ReallusionBodySurface =
-        {
-            BodySurface.Head,
-            BodySurface.Body,
-            BodySurface.Arm,
-            BodySurface.Leg,
-            BodySurface.Nails,
-            BodySurface.Eyelash,
-        };
-
-
     }
 
 }

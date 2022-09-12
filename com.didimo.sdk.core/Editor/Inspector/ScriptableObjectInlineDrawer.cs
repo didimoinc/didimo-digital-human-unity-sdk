@@ -13,14 +13,14 @@ namespace Didimo.Editor.Inspector
 
     public class ScriptableObjectInlineDrawer<T> : PropertyDrawer where T : ScriptableObject
     {
-        protected virtual DrawStyle drawStyle => DrawStyle.Folder;
+        // protected virtual DrawStyle drawStyle => DrawStyle.Folder;
         protected virtual bool newInherited => false;
 
         static float LineHeight => EditorGUIUtility.singleLineHeight;
         static float Spacing => EditorGUIUtility.standardVerticalSpacing;
         const float ButtonWidth = 44;
 
-        string getPath(SerializedProperty property, ScriptableObject data)
+        string GetPath(SerializedProperty property, ScriptableObject data)
         {
             if (data) return AssetDatabase.GetAssetPath(data);
             var target = property.serializedObject.targetObject as UnityEngine.Component;
@@ -38,10 +38,10 @@ namespace Didimo.Editor.Inspector
                 Rect rb = new Rect(position) { x = r1.xMax, width = c == 1 ? ButtonWidth : ButtonWidth * 2 - 1, height = LineHeight };
                 switch (GUI.Toolbar(rb, -1, new string[] { "New", "Clone" }.Take(c).ToArray()))
                 {
-                    case 0: newData(property, typeof(T)); break;
-                    case 1: setData(property, CloneInstance(property)); break;
+                    case 0: NewData(property, typeof(T)); break;
+                    case 1: SetData(property, CloneInstance(property)); break;
                 }
-                showInEditor(position, property);
+                ShowInEditor(position, property);
             }
             else
             {
@@ -49,19 +49,14 @@ namespace Didimo.Editor.Inspector
             }
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return property.isExpanded ? iterateVisibleProperties(new Rect(), property) : base.GetPropertyHeight(property, label);
-        }
+        public void NewData(SerializedProperty property, Type type) =>
+            SetData(property, CreateInstance(type, GetPath(property, GetObject(property))));
 
-        public void newData(SerializedProperty property, Type type) =>
-            setData(property, CreateInstance(type, getPath(property, GetObject(property))));
-
-        void setData(SerializedProperty property, ScriptableObject data)
+        void SetData(SerializedProperty property, ScriptableObject data)
         {
             if (data == null) return;
             property.serializedObject.Update();
-            assign(property, data);
+            Assign(property, data);
             EditorUtility.SetDirty(property.serializedObject.targetObject);
             property.serializedObject.ApplyModifiedProperties();
             RefreshSelection();
@@ -74,65 +69,103 @@ namespace Didimo.Editor.Inspector
             EditorApplication.delayCall += () => Selection.objects = objects;
         }
 
-        void showInEditor(Rect position, SerializedProperty property)
+        UnityEditor.Editor editor = null;
+        void ShowInEditor(Rect position, SerializedProperty property)
         {
             if (!property.objectReferenceValue) return;
 
-            void draw(int indent = 0)
-            {
-                var backupIndent = EditorGUI.indentLevel;
-                EditorGUI.indentLevel += indent;
-                iterateVisibleProperties(position, property, (rect, prop) => EditorGUI.PropertyField(rect, prop, true));
-                EditorGUI.indentLevel = backupIndent;
-            }
+            // void draw(bool indent = false)
+            // {
+            //     if (!editor) UnityEditor.Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
+            //     if (indent) using (new EditorGUI.IndentLevelScope())
+            //             editor.OnInspectorGUI();
+            //     else editor.OnInspectorGUI();
+            // }
 
-            switch (drawStyle)
+            // void draw(int indent = 0)
+            // {
+            //     using (new EditorGUI.IndentLevelScope())
+            //     {
+            //         void DrawProperty(Rect rect, SerializedProperty prop)
+            //         {
+            //             EditorGUI.PropertyField(rect, prop, true);
+            //         }
+            //         IterateVisibleProperties(position, property, DrawProperty);
+            //     }
+            //     // var backupIndent = EditorGUI.indentLevel;
+            //     // EditorGUI.indentLevel += indent;
+            //     // IterateVisibleProperties(position, property, (rect, prop) => EditorGUI.PropertyField(rect, prop, true));
+            //     // EditorGUI.indentLevel = backupIndent;
+            // }
+
+            // switch (drawStyle)
+            // {
+            //     case DrawStyle.None:
+            //         break;
+            //     case DrawStyle.Folder:
+            if (!editor) UnityEditor.Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
+            if (property.isExpanded = EditorGUI.Foldout(new Rect(position) { height = LineHeight }, property.isExpanded, GUIContent.none))
             {
-                case DrawStyle.None:
-                    break;
-                case DrawStyle.Folder:
-                    if (property.isExpanded = EditorGUI.Foldout(new Rect(position) { height = LineHeight }, property.isExpanded, GUIContent.none))
-                        draw(1);
-                    break;
-                case DrawStyle.Open:
-                    draw();
-                    break;
+                using (new EditorGUI.IndentLevelScope())
+                    editor.OnInspectorGUI();
             }
+            //     break;
+            // case DrawStyle.Open:
+            //     draw();
+            //     break;
         }
 
-        static float iterateVisibleProperties(Rect position, SerializedProperty property, Action<Rect, SerializedProperty> action = null)
-        {
-            Rect pos = new Rect(position) { y = position.y + LineHeight + Spacing };
-            if (property.objectReferenceValue && property.isExpanded)
-            {
-                var data = property.objectReferenceValue as ScriptableObject;
-                if (data == null) return LineHeight;
+        // public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        // {
+        //     return property.isExpanded ? IterateVisibleProperties(new Rect(), property) : base.GetPropertyHeight(property, label);
+        // }
 
-                SerializedObject serializedObject = new SerializedObject(data);
-                SerializedProperty prop = serializedObject.GetIterator();
+        // static float IterateVisibleProperties(Rect position, SerializedProperty property, Action<Rect, SerializedProperty> action = null)
+        // {
+        //     Rect pos = new Rect(position) { y = position.y + LineHeight + Spacing };
+        //     if (property.objectReferenceValue && property.isExpanded)
+        //     {
+        //         var data = property.objectReferenceValue as ScriptableObject;
+        //         if (data == null) return LineHeight;
 
-                for (bool firstTime = true; prop.NextVisible(firstTime); firstTime = false)
-                {
-                    if (prop.name == "m_Script")
-                        continue;
-                    pos.height = EditorGUI.GetPropertyHeight(serializedObject.FindProperty(prop.name), null, true) + Spacing;
-                    action?.Invoke(pos, prop);
-                    pos.y += pos.height + Spacing;
-                }
+        //         SerializedObject serializedObject = new SerializedObject(data);
+        //         SerializedProperty prop = serializedObject.GetIterator();
 
-                if (GUI.changed)
-                    serializedObject.ApplyModifiedProperties();
+        //         for (bool firstTime = true; prop.NextVisible(firstTime); firstTime = false)
+        //         {
+        //             if (prop.name == "m_Script") continue;
 
-            }
-            return pos.y - position.y;
-        }
+        //             // pos.height = EditorGUI.GetPropertyHeight(serializedObject.FindProperty(prop.name), null, true) + Spacing;
+        //             pos.height = EditorGUI.GetPropertyHeight(prop, null, true) + Spacing;
 
-        public virtual void assign(SerializedProperty property, ScriptableObject objectReferenceValue) =>
+        //             EditorGUI.BeginChangeCheck();
+        //             action?.Invoke(pos, prop);
+        //             if (EditorGUI.EndChangeCheck())
+        //             {
+        //                 Debug.Log("Has chnaged!");
+        //                 Debug.Log(GUI.changed);
+        //                 serializedObject.ApplyModifiedProperties();
+        //                 serializedObject.Update();
+        //             }
+        //             pos.y += pos.height + Spacing;
+        //         }
+
+        //         if (GUI.changed)
+        //         {
+        //             // Debug.Log(GUI.changed);
+        //             // serializedObject.ApplyModifiedProperties();
+        //             // serializedObject.Update();
+        //         }
+        //     }
+        //     return pos.y - position.y;
+        // }
+
+        public virtual void Assign(SerializedProperty property, ScriptableObject objectReferenceValue) =>
             property.objectReferenceValue = objectReferenceValue;
 
         protected enum DrawStyle { None, Folder, Open, }
 
-        static string getAssetPath(string path) => "Assets" + path.Substring(Application.dataPath.Length);
+        static string GetAssetPath(string path) => "Assets" + path.Substring(Application.dataPath.Length);
 
         public static ScriptableObject CreateInstance(Type type, string path = "Assets")
         {
@@ -141,7 +174,7 @@ namespace Didimo.Editor.Inspector
             if (path.Length > 0)
             {
                 var instance = ScriptableObject.CreateInstance(type);
-                var assetPath = getAssetPath(path);
+                var assetPath = GetAssetPath(path);
                 AssetDatabase.CreateAsset(instance, assetPath);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -158,7 +191,7 @@ namespace Didimo.Editor.Inspector
             if (path.Length > 0)
             {
                 var assetPath = AssetDatabase.GetAssetPath(target);
-                var newAssetPath = getAssetPath(path);
+                var newAssetPath = GetAssetPath(path);
                 if (AssetDatabase.CopyAsset(assetPath, newAssetPath))
                 {
                     var instance = AssetDatabase.LoadAssetAtPath(newAssetPath, target.GetType());

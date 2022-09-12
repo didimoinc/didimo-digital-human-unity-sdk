@@ -1,6 +1,5 @@
-using Didimo.Core.Config;
+using System;
 using Didimo.Core.Utility;
-using Didimo.GLTFUtility;
 using UnityEngine;
 
 namespace Didimo
@@ -12,10 +11,11 @@ namespace Didimo
         [InspectorName("Instance Index")]
         public int InstanceIndex = 0;
 
-        public const string InstanceIndexName = "_InstanceIndex";
-        int InstanceIndexID = -1;
-        MaterialPropertyBlock SkinBlock = null;
-        SkinnedMeshRenderer HeadMeshRenderer = null;
+        public const string      InstanceIndexName = "_InstanceIndex";
+        int                      InstanceIndexID   = -1;
+        MaterialPropertyBlock    SkinBlock         = null;
+        SkinnedMeshRenderer      HeadMeshRenderer  = null;
+        private DidimoComponents didimoComponents;
 
         void ProcessPropBlock(MaterialPropertyBlock propBlock, Renderer renderer)
         {
@@ -26,17 +26,37 @@ namespace Didimo
 
         public void OnValidate() { ApplyBlocks(); }
 
-        public void Build(SkinnedMeshRenderer faceMeshRenderer) { HeadMeshRenderer = faceMeshRenderer; }
+        public void Build(DidimoComponents components, SkinnedMeshRenderer faceMeshRenderer)
+        {
+            didimoComponents = components;
+            HeadMeshRenderer = faceMeshRenderer;
+        }
 
         public void ApplyBlocks()
         {
             if (!HeadMeshRenderer)
             {
+                didimoComponents = GetComponent<DidimoComponents>();
+                if (didimoComponents == null)
+                {
+                    Debug.LogWarning("No didimo components found. Disabling.");
+                    enabled = false;
+                }
                 var meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
                 foreach (var i in meshes)
                 {
-                    if (i.sharedMesh.name.ToLower().Contains("face"))
-                        HeadMeshRenderer = i;
+                    try
+                    {
+                        if (didimoComponents.Parts.GetBodyPartType(i.transform) == DidimoParts.BodyPart.HeadMesh)
+                        {
+                            HeadMeshRenderer = i;
+                            break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);
+                    }
                 }
             }
 

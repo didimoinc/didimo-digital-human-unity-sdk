@@ -1,11 +1,10 @@
 using Didimo.Core.Config;
 using Didimo.Core.Utility;
-using Didimo.GLTFUtility;
 using UnityEngine;
 
 namespace Didimo
 {
-    [System.Serializable]
+    [System.Serializable, ExecuteInEditMode]
     public class IrisPresetValues
     {
         static public IrisPresetValues[] presets =
@@ -49,17 +48,10 @@ namespace Didimo
 
         Texture2D irisTexture = null;
 
-        [SerializeField, HideInInspector]
-        SkinnedMeshRenderer LeftEye;
+        SkinnedMeshRenderer LeftEye => DidimoComponents.Parts.LeftEyeMeshRenderer;
 
-        [SerializeField, HideInInspector]
-        SkinnedMeshRenderer RightEye;
+        SkinnedMeshRenderer RightEye => DidimoComponents.Parts.RightEyeMeshRenderer;
 
-        public void Build(Importer.IrisControllerSettings DidimoIrisControllerConfig)
-        {
-            LeftEye = DidimoIrisControllerConfig.LeftEyeMesh;
-            RightEye = DidimoIrisControllerConfig.RightEyeMesh;
-        }
 
         public const string DiffuseTextureName = "_BaseMap";
         public const string IrisScaleName = "_EyeUVScaleP1";
@@ -95,11 +87,14 @@ namespace Didimo
             ApplyBlocks();
         }
 
-        public void OnValidate() { ApplyBlocks(); }
+        // public void OnValidate()
+        // {
+        //     ApplyBlocks();
+        // }
 
         void ApplyBlocks()
         {
-            if (LeftEye != null && RightEye != null)
+            if (!string.IsNullOrEmpty(DidimoComponents.didimoVersion) && LeftEye != null && RightEye != null)
             {
                 LeftpropBlock ??= new MaterialPropertyBlock();
                 RightpropBlock ??= new MaterialPropertyBlock();
@@ -113,12 +108,15 @@ namespace Didimo
         private void ProcessIDs()
         {
             if (DiffuseTextureID == -1)
-                DiffuseTextureID = Shader.PropertyToID(DidimoIrisController.DiffuseTextureName);
+                DiffuseTextureID = Shader.PropertyToID(DiffuseTextureName);
          
             if (IrisScaleNameID == -1)
-                IrisScaleNameID = Shader.PropertyToID(DidimoIrisController.IrisScaleName);
+                IrisScaleNameID = Shader.PropertyToID(IrisScaleName);
         }
 
-        private void LateUpdate() { ApplyBlocks(); }
+        private void LateUpdate()
+        {
+            ApplyBlocks();
+        }
     }
 }

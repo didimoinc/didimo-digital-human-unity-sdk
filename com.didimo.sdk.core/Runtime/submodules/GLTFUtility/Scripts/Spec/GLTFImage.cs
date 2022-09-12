@@ -48,6 +48,8 @@ namespace Didimo.GLTFUtility
 
 			public IEnumerator CreateTextureAsync(bool linear, bool normalMap, Action<Texture2D> onFinish, Action<float> onProgress = null)
 			{
+				if(path == null && bytes == null) yield break;
+
 				Texture2D texture = GLTFImageCache.GetTexture(path);
 				if (texture != null)
 				{
@@ -94,6 +96,8 @@ namespace Didimo.GLTFUtility
 								textureImporter!.sRGBTexture = !linear;
 								textureImporter!.textureType = normalMap ? TextureImporterType.NormalMap : TextureImporterType.Default;
 								// We only save them at the end, to prevent errors of loading this texture again after calling import
+								// textureImporter.SaveAndReimport();
+								AssetDatabase.WriteImportSettingsIfDirty(pathFormatted);
 
 								onFinish(assetTexture);
 								if (onProgress != null) onProgress(1f);
@@ -187,7 +191,7 @@ namespace Didimo.GLTFUtility
 					Result = new ImportResult[images.Count];
 					for (int i = 0; i < images.Count; i++)
 					{
-						string fullUri = directoryRoot + images[i].uri;
+						string fullUri = Path.Combine(directoryRoot, images[i].uri);
 						if (!string.IsNullOrEmpty(images[i].uri))
 						{
 							if (images[i].uri.StartsWith("http"))
@@ -230,6 +234,7 @@ namespace Didimo.GLTFUtility
 								// If the file is found at fullUri, read it
 								byte[] bytes = File.ReadAllBytes(fullUri);
 								Result[i] = new ImportResult(bytes, fullUri);
+								continue;
 							}
 							else if (images[i].uri.StartsWith("data:"))
 							{
@@ -237,6 +242,7 @@ namespace Didimo.GLTFUtility
 								string content = images[i].uri.Split(',').Last();
 								byte[] imageBytes = Convert.FromBase64String(content);
 								Result[i] = new ImportResult(imageBytes);
+								continue;
 							}
 						}
 						else if (images[i].bufferView.HasValue && !string.IsNullOrEmpty(images[i].mimeType))
@@ -246,11 +252,11 @@ namespace Didimo.GLTFUtility
 							view.stream.Position = view.byteOffset;
 							view.stream.Read(bytes, 0, view.byteLength);
 							Result[i] = new ImportResult(bytes);
+							continue;
 						}
-						else
-						{
-							Debug.Log("Couldn't find texture at " + fullUri);
-						}
+
+						Result[i] = new ImportResult(null);
+						Debug.LogWarning($"Couldn't find image {images[i].uri}");
 					}
 				});
 			}

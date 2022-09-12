@@ -280,7 +280,8 @@ illum 2
             return new Vector4(intToFloatBits(value.x), intToFloatBits(value.y), intToFloatBits(value.z), intToFloatBits(value.w));
         }
 
-        public static void FixupDefaultShaderParams(Material mat, EBodyPartID bpid)
+        /*
+        public static void FixupDefaultShaderParams(Material mat, DidimoParts.BodyPart bpid)
         {
             Vector4 EyeProfileAsset = intToFloatBits(new Vector4Int(263726704, -1537711319, -872588405, -926254750));
             float EyeDiffuseHash = intToFloatBits(1080904598); // 2.066104f;
@@ -299,19 +300,19 @@ illum 2
                 if (propName == "_DiffusionProfileHash")
                 {
                     float hash = mat.GetFloat("_DiffusionProfileHash");
-                    mat.SetFloat(propName, (bpid == EBodyPartID.EYE) ? EyeDiffuseHash : SkinDiffuseHash);
+                    mat.SetFloat(propName, (bpid == DidimoParts.BodyPart.EyeLashesMesh || bpid == DidimoParts.BodyPart.RightEyeMesh) ? EyeDiffuseHash : SkinDiffuseHash);
                     Debug.Log("Diffuse profile hash: " + hash.ToString());
                 }
 
                 if (propName == "_DiffusionProfileAsset")
                 {
-                    mat.SetVector(propName, (bpid == EBodyPartID.EYE) ? EyeProfileAsset : SkinProfileAsset);
+                    mat.SetVector(propName, (bpid == DidimoParts.BodyPart.EyeLashesMesh || bpid == DidimoParts.BodyPart.RightEyeMesh) ? EyeProfileAsset : SkinProfileAsset);
                 }
 
                 //Ensure that body texture has correct combined, shared effects texture
                 if (propName == "_Trans_Bias_SSSAO")
                 {
-                    if (bpid == EBodyPartID.BODY)
+                    if (bpid == DidimoParts.BodyPart.BodyMesh)
                     {
                         Texture tex = mat.GetTexture(propName);
 
@@ -337,7 +338,7 @@ illum 2
                     }
                 }
 
-                if (bpid == EBodyPartID.EYELASHES)
+                if (bpid == DidimoParts.BodyPart.EyeLashesMesh)
                 {
                     if (propName.ToLower().Contains("surface"))
                     {
@@ -346,7 +347,7 @@ illum 2
                 }
 
                 if (propName == "_AlphaClipThreshold")
-                    mat.SetFloat(propName, (bpid == EBodyPartID.HEAD) ? 0.0f : 0.5f);
+                    mat.SetFloat(propName, (bpid == DidimoParts.BodyPart.HeadMesh) ? 0.0f : 0.5f);
 
                 if (propType == ShaderPropertyType.Texture)
                 {
@@ -394,7 +395,7 @@ illum 2
                 }
             }
 
-            if (bpid == EBodyPartID.BODY)
+            if (bpid == DidimoParts.BodyPart.BodyMesh)
             {
                 int propID = mat.shader.FindPropertyIndex("_UseAlphaClip");
                 if (propID != -1)
@@ -405,7 +406,7 @@ illum 2
 #if UNITY_EDITOR
             EditorUtility.SetDirty(mat);
 #endif
-        }
+        }*/
 
         public static int ClassifyHairTextureFromName(string name)
         {

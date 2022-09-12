@@ -1,4 +1,4 @@
-#if UNITY_EDITOR && USING_LIVE_CAPTURE
+#if USING_LIVE_CAPTURE
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEngine;  
 
 
-namespace Didimo.Editor
+namespace Didimo.LiveCapture.Editor
 {
     /// <summary>
     /// Class for Unity's ARKit LiveCapture Integration. It contains methods to convert

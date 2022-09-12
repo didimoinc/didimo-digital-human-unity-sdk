@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using UnityEngine;
+using static Didimo.AssetFitter.Editor.Graph.AssetTools;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
@@ -19,29 +20,33 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
-            if (info.Name == nameof(meshOutput))
+            List<Mesh> meshInputs = GetInputValues<Mesh>(nameof(meshInput));
+            Debug.Log(meshInputs.Count);
+            if (meshInputs.Count != 0)
             {
-                var meshInputs = GetInputValues(nameof(meshInput));
-                var tpsWeightsInputs = GetInputValues(nameof(tpsWeightsInput));
+                List<TPSWeights> tpsWeightsInputs = GetInputValues<TPSWeights>(nameof(tpsWeightsInput));
                 return Transform(meshInputs, tpsWeightsInputs, out values);
             }
             values = null;
             return false;
         }
 
-        bool Transform(List<object> meshes, List<object> tpsWeights, out List<object> values)
+        public static bool Transform(List<Mesh> meshes, List<TPSWeights> tpsWeights, out List<object> values)
         {
             values = new List<object>();
             for (int i = 0; i < tpsWeights.Count; i++)
             {
-                var tps = tpsWeights[i] as TPSWeights;
+                TPSWeights tps = tpsWeights[i] as TPSWeights;
                 for (int j = 0; j < meshes.Count; j++)
                 {
-                    var mesh = meshes[j] as Mesh;
-                    var result = Object.Instantiate(mesh);
+                    Mesh mesh = meshes[j] as Mesh;
+                    Mesh result = CloneAsset(mesh);
                     result.name = mesh.name + " (" + tps.name + ")";
                     result.vertices = tps.Transform(result.vertices);
+                    result.RecalculateBounds();
                     values.Add(result);
+
+                    Debug.Log("Deform TPS::Transform " + mesh.name);
                 }
             }
             return true;

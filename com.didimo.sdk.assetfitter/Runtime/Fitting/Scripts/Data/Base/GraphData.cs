@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using static Didimo.AssetFitter.Editor.Graph.PathTools;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 namespace Didimo.AssetFitter.Editor.Graph
 {
     [CreateAssetMenu(fileName = "New Graph Data", menuName = "Didimo/Graph/Graph Data", order = 10)]
@@ -22,8 +25,41 @@ namespace Didimo.AssetFitter.Editor.Graph
             public string[] exposeFields;
         }
 
-        public void Run() => Start(this);
-        public void Build() { }
+        public static CachedState State;
+
+        public void Run()
+        {
+#if UNITY_EDITOR
+            if (State) return;
+
+            //Phase 2
+            EditorApplication.delayCall += () => EditorApplication.delayCall += () =>
+            {
+                Debug.Log("Run Complete");
+                State.Dispose();
+                State = null;
+            };
+
+            // Phase 0
+            State = new CachedState(this);
+            Debug.Log("State Created");
+
+            Debug.Log("Starting Graph: '" + this.name + "'");
+            Build();
+
+            //Phase 1
+            EditorApplication.delayCall += () =>
+            {
+                Debug.Log("Parsing End Points");
+                this.nodes.ForEach(n => n.EndPoint());
+            };
+#endif
+        }
+
+        private void Build()
+        {
+            nodes.ForEach(n => n.Build());
+        }
 
         // Nodes ///////////////
         public void AddNode(GraphNode node) => nodes.Add(node);
@@ -47,22 +83,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             edges.Where(e => (connector == e.input || connector == e.output));
 
         // Compile //////////////
-        public static void Start(GraphData data, bool catchExceptions = true)
-        {
-            Debug.Log("Starting Graph: '" + data.name + "'");
-            using (State = new CachedState(data))
-            {
-                if (catchExceptions)
-                {
-                    try { data.nodes.ForEach(n => n.EndPoint()); }
-                    catch (Exception e) { Debug.LogError(e); }
-                }
-                else data.nodes.ForEach(n => n.EndPoint());
-            }
-            State = null;
-        }
 
-        public static CachedState State;
         public class CachedState : IDisposable
         {
             public string TempPath = "Assets/_graphtemp";
@@ -80,7 +101,17 @@ namespace Didimo.AssetFitter.Editor.Graph
             // Dispose
             public void Dispose()
             {
-                hierarchyObjects.ForEach(g => { if (g) DestroyImmediate(g); });
+                //hierarchyObjects.ForEach(g => { if (g) DestroyImmediate(g); });
+                Debug.Log("Destroying" + " " + hierarchyObjects.Count);
+
+                foreach (var g in hierarchyObjects)
+                {
+                    if (g)
+                    {
+                        Debug.Log("DestroyImmediate" + " " + g.name);
+                        DestroyImmediate(g);
+                    }
+                }
                 RemoveAssetPath(TempPath);
             }
 
@@ -95,6 +126,8 @@ namespace Didimo.AssetFitter.Editor.Graph
             public bool Has(string key) => values.ContainsKey(key);
             public object AddValues(string key, object value) => this.values[key] = value;
             public string CKEY(GraphNode node, string name) => node.guid + "::" + name;
+            public static implicit operator bool(CachedState empty) => empty != null;
+
         }
 
     }
@@ -122,7 +155,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             if (GUILayout.Button("Run"))
             {
-                data.Build();
+                //data.Build();
                 data.Run();
             }
         }
@@ -139,7 +172,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             foreach (string path in imported.Where(p => p.EndsWith(".asset")))
             {
-                var graphData = AssetDatabase.LoadAssetAtPath<GraphData>(path);
+                GraphData graphData = AssetDatabase.LoadAssetAtPath<GraphData>(path);
                 if (graphData)
                 {
                     var _nodes = new List<GraphNode>();

@@ -4,8 +4,10 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+#if !UNITY_WEBGL
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
+#endif
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,6 +17,7 @@ namespace Didimo.Core.Examples.AzureTTSIntegration
 {
     public class AzureTTSCreation : MonoBehaviour
     {
+#if !UNITY_WEBGL
         [Header("API Connection Details")]
         [SerializeField]
         public string yourSubscriptionKey;
@@ -152,7 +155,8 @@ namespace Didimo.Core.Examples.AzureTTSIntegration
                 Debug.Log("Please write some text in the Inspector!");
             }
         }
-    }
+#endif
 
+    }
 
 }

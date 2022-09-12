@@ -1,115 +1,200 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7230116633931072049
+--- !u!1001 &1409398379350132496
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 201414134366953848, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: m_Name
+      value: didimo008_HumanoidDemo_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e00
+      value: -0.012603191
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e01
+      value: -0.00008809516
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e03
+      value: 4.2854204
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e10
+      value: -0.0007684629
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e11
+      value: -0.006320196
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e20
+      value: 0.0035244355
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e21
+      value: -0.001659732
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: LeftEyeHoleMatrix.e23
+      value: 4.3885508
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e00
+      value: -0.012725474
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e01
+      value: 0.000088787885
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e03
+      value: 4.3556376
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e10
+      value: 0.0007530308
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e11
+      value: -0.0065663042
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e20
+      value: -0.003453359
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e21
+      value: -0.0017253979
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901040645683022658, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: RightEyeHoleMatrix.e23
+      value: 4.3883905
+      objectReference: {fileID: 0}
+    - target: {fileID: 4578771555550633385, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 0b9234b45afdd49d6a541f08e524d2ab, type: 3}
+    - target: {fileID: 4578771555550633385, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: da50575c4dad5418d920d80808fc0536, type: 2}
+    - target: {fileID: 4578771555550633385, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069833035227796116, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.32
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4.3
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3016459899674922603, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+    - target: {fileID: 8221023496602927081, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6413686677244662010, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: m_Name
-      value: didimo008_HumanoidDemo
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e00
-      value: -0.012603016
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e01
-      value: -0.00008810851
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e03
-      value: -0.03457976
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e10
-      value: -0.0007684292
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e11
-      value: -0.0063201766
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e20
-      value: 0.0035244012
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: LeftEyeHoleMatrix.e21
-      value: -0.0016597267
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e00
-      value: -0.012725448
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e01
-      value: 0.00008870195
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e03
-      value: 0.03563776
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e10
-      value: 0.00075323635
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e11
-      value: -0.0065663536
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e20
-      value: -0.0034534975
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919906326781737664, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
-      propertyPath: RightEyeHoleMatrix.e21
-      value: -0.0017254088
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 26e7d8372c1fc4585bd1624045ed8863, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+--- !u!1 &1244296750748034664 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 201414134366953848, guid: 345de89eb71b0474ab7ee6b28a29d61f, type: 3}
+  m_PrefabInstance: {fileID: 1409398379350132496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-2303427072351368498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244296750748034664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98071383555b54bbdb6f15726c129608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlType: 1
+  walkSpeed: 2
+  runSpeed: 6
+  lookForward: 3
+  waitTime: 5
+  waitChance: 0.3
+  currentSpeed: 0
+--- !u!114 &-532421455073139831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244296750748034664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae579e9cbe53143728c5c3417fac3039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headTrackingDistance: 8
+  headTrackingAngle: 90
+  eyeHeight: 1.7
+--- !u!195 &1396831077
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244296750748034664}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

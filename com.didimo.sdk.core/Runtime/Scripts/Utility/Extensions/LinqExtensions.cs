@@ -399,7 +399,7 @@ namespace Didimo.Extensions
         /// <summary>
         /// Convert a colletion to a HashSet.
         /// </summary>
-        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> self) => new HashSet<T>(self);
+        //public static HashSet<T> ToHashSet<T>(this IEnumerable<T> self) => new HashSet<T>(self);
 
         /// <summary>
         /// Add an item to the beginning of a collection.

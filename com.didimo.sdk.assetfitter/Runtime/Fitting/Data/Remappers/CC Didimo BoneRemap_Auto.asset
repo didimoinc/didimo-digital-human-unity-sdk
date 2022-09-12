@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3e1b8a03be5a6429b63824e0578d72, type: 3}
+  m_Name: CC Didimo BoneRemap_Auto
+  m_EditorClassIdentifier: 
+  remaps:
+  - from: CC_Base_Head
+    to: Head
+  - from: CC_Base_JawRoot
+    to: Jaw
+  - from: CC_Base_NeckTwist01
+    to: Neck
+  - from: CC_Base_NeckTwist02
+    to: Neck
+  - from: CC_Base_L_Clavicle
+    to: LeftShoulder
+  - from: CC_Base_R_Clavicle
+    to: RightShoulder
+  - from: CC_Base_L_UpperarmTwist01
+    to: LeftArm
+  - from: CC_Base_R_UpperarmTwist01
+    to: RightArm
+  - from: CC_Base_R_UpperarmTwist02
+    to: RightArm
+  - from: CC_Base_L_UpperarmTwist02
+    to: LeftArm
+  - from: CC_Base_L_ElbowShareBone
+    to: LeftForeArm
+  - from: CC_Base_L_ForearmTwist02
+    to: LeftForeArm
+  - from: CC_Base_R_ForearmTwist02
+    to: RightForeArm
+  - from: CC_Base_R_ElbowShareBone
+    to: RightForeArm
+  - from: CC_Base_Spine02
+    to: Spine2
+  - from: CC_Base_R_Breast
+    to: Spine2
+  - from: CC_Base_L_Breast
+    to: Spine2
+  - from: CC_Base_R_RibsTwist
+    to: Spine2
+  - from: CC_Base_L_RibsTwist
+    to: Spine2
+  - from: CC_Base_Spine01
+    to: Spine1
+  - from: CC_Base_Waist
+    to: Spine
+  - from: CC_Base_Pelvis
+    to: Hips
+  - from: CC_Base_R_ThighTwist01
+    to: RightUpLeg
+  - from: CC_Base_L_ThighTwist01
+    to: LeftUpLeg
+  - from: CC_Base_L_ThighTwist02
+    to: LeftUpLeg
+  - from: CC_Base_R_ThighTwist02
+    to: RightUpLeg
+  - from: CC_Base_R_KneeShareBone
+    to: RightLeg
+  - from: CC_Base_L_KneeShareBone
+    to: LeftLeg
+  - from: CC_Base_L_CalfTwist02
+    to: LeftLeg
+  - from: CC_Base_R_CalfTwist02
+    to: RightLeg
+  - from: CC_Base_R_Foot
+    to: RightFoot
+  - from: CC_Base_L_Foot
+    to: LeftFoot
+  - from: CC_Base_R_PinkyToe1
+    to: RightToeBase
+  - from: CC_Base_R_RingToe1
+    to: RightToeBase
+  - from: CC_Base_R_MidToe1
+    to: RightToeBase
+  - from: CC_Base_R_IndexToe1
+    to: RightToeBase
+  - from: CC_Base_R_BigToe1
+    to: RightToeBase
+  - from: CC_Base_L_BigToe1
+    to: LeftToeBase
+  - from: CC_Base_L_PinkyToe1
+    to: LeftToeBase
+  - from: CC_Base_L_RingToe1
+    to: LeftToeBase
+  - from: CC_Base_L_MidToe1
+    to: LeftToeBase
+  - from: CC_Base_L_IndexToe1
+    to: LeftToeBase
+  - from: CC_Base_R_Hand
+    to: RightHand
+  - from: CC_Base_L_Hand
+    to: LeftHand
+  - from: CC_Base_R_Thumb1
+    to: RightHandThumb0
+  - from: CC_Base_L_Thumb1
+    to: LeftHandThumb0
+  - from: CC_Base_R_Thumb2
+    to: RightHandThumb2
+  - from: CC_Base_R_Thumb3
+    to: RightHandThumb3
+  - from: CC_Base_L_Thumb3
+    to: LeftHandThumb3
+  - from: CC_Base_L_Thumb2
+    to: LeftHandThumb2
+  - from: CC_Base_R_Index1
+    to: RightHandIndex1
+  - from: CC_Base_R_Index2
+    to: RightHandIndex2
+  - from: CC_Base_R_Index3
+    to: RightHandIndex3
+  - from: CC_Base_R_Mid1
+    to: RightHandMiddle1
+  - from: CC_Base_R_Mid2
+    to: RightHandMiddle2
+  - from: CC_Base_R_Mid3
+    to: RightHandMiddle3
+  - from: CC_Base_R_Ring1
+    to: RightHandRing1
+  - from: CC_Base_R_Ring2
+    to: RightHandRing2
+  - from: CC_Base_R_Ring3
+    to: RightHandRing3
+  - from: CC_Base_R_Pinky1
+    to: RightHandPinky1
+  - from: CC_Base_R_Pinky2
+    to: RightHandPinky2
+  - from: CC_Base_R_Pinky3
+    to: RightHandPinky3
+  - from: CC_Base_L_Index1
+    to: LeftHandIndex1
+  - from: CC_Base_L_Index2
+    to: LeftHandIndex2
+  - from: CC_Base_L_Index3
+    to: LeftHandIndex3
+  - from: CC_Base_L_Mid1
+    to: LeftHandMiddle1
+  - from: CC_Base_L_Mid2
+    to: LeftHandMiddle2
+  - from: CC_Base_L_Mid3
+    to: LeftHandMiddle3
+  - from: CC_Base_L_Ring1
+    to: LeftHandRing1
+  - from: CC_Base_L_Ring2
+    to: LeftHandRing2
+  - from: CC_Base_L_Ring3
+    to: LeftHandRing3
+  - from: CC_Base_L_Pinky1
+    to: LeftHandPinky1
+  - from: CC_Base_L_Pinky2
+    to: LeftHandPinky2
+  - from: CC_Base_L_Pinky3
+    to: LeftHandPinky3
+  - from: CC_Base_L_CalfTwist01
+    to: LeftLeg
+  - from: CC_Base_R_CalfTwist01
+    to: RightLeg
+  - from: CC_Base_R_ForearmTwist01
+    to: RightForeArm
+  - from: CC_Base_L_ForearmTwist01
+    to: LeftForeArm

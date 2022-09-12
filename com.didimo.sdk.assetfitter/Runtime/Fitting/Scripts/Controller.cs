@@ -17,11 +17,12 @@ namespace Didimo.AssetFitter.Editor.Graph
         public GameObject input;
         public GameObject output;
         public string path;
+        public CommandPrefabSave.SaveType saveType;
 
         public AssetGraph GetValidGraph(GameObject input, GameObject output)
         {
             foreach (var graph in assetGraphs)
-                if (graph.IsValid(input, output))
+                if (graph.IsValid(input, output, saveType))
                     return graph;
             return null;
         }
@@ -34,30 +35,48 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             GraphData tempGraph;
 
-            public void Run(GameObject input, GameObject output)
+            public void Run(GameObject input, GameObject output, CommandPrefabSave.SaveType saveType)
             {
-                if (IsValid(input, output))
+                if (IsValid(input, output, saveType))
                     tempGraph.Run();
 
             }
 
-            public bool IsValid(GameObject input, GameObject output)
+            public bool IsValid(GameObject input, GameObject output, CommandPrefabSave.SaveType saveType)
             {
                 if (!graph || !input || !output) return false;
 
                 tempGraph = AssetTools.CloneAsset(graph);
 
-                var daz3DNode = tempGraph.FindNode<CommandDaz3D>("input");
+                CommandDaz3D daz3DNode = tempGraph.FindNode<CommandDaz3D>("input");
+                CommandDidimo didimoNode = tempGraph.FindNode<CommandDidimo>("output");
+                CommandPrefabSave prefabNode = tempGraph.FindNode<CommandPrefabSave>("SavePrefab");
+
+                if (!daz3DNode)
+                    Debug.LogError("No 3rd Party Avatar Input");
+
+                if (!didimoNode)
+                    Debug.LogError("No didimo to Output");
+
+                if (!prefabNode)
+                    Debug.LogError("Save Node not correct");
+
                 if (daz3DNode)
                 {
                     daz3DNode.prefabOutput = input;
                     if (daz3DNode.gender == gender)
                     {
-                        var didimoNode = tempGraph.FindNode<CommandDidimo>("output");
                         if (didimoNode)
                         {
                             didimoNode.prefabOutput = output;
-                            return true;
+
+                            if (prefabNode)
+                            {
+                                prefabNode.saveType = saveType;
+                                return true;
+                            }
+
+
                         }
                     }
                 }
@@ -85,10 +104,10 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             if (!defaultController)
             {
-                var guid = UnityEditor.AssetDatabase.FindAssets("t:Didimo.AssetFitter.Editor.Graph.Controller").FirstOrDefault();
+                string guid = UnityEditor.AssetDatabase.FindAssets("t:Didimo.AssetFitter.Editor.Graph.Controller").FirstOrDefault();
                 if (guid != null)
                 {
-                    var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
 
                     if (Path.GetFileNameWithoutExtension(path) == assetFitterID)
                     {
@@ -120,6 +139,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public override void OnInspectorGUI()
         {
+
             DrawLabel(target.title, Styles.Title);
 
             DrawLinkButton(target.documentation, Styles.Link);
@@ -134,12 +154,14 @@ namespace Didimo.AssetFitter.Editor.Graph
             target.output = GameObjectDropBox(target.output, "Target Didimo", ValidateDidimo);
             GUILayout.Space(LineSpace);
 
-            var graph = target.GetValidGraph(target.input, target.output);
+            //EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(Controller.saveType)));
+
+            Controller.AssetGraph graph = target.GetValidGraph(target.input, target.output);
             GUI.enabled = graph;
 
             if (GUILayout.Button("Transfer Assets", Styles.Button, GUILayout.Height(50)))
             {
-                graph.Run(target.input, target.output);
+                graph.Run(target.input, target.output, target.saveType);
             }
         }
 
@@ -161,15 +183,19 @@ namespace Didimo.AssetFitter.Editor.Graph
         GameObject GameObjectDropBox(GameObject gameObject, string title, Func<GameObject[], GameObject> validate)
         {
             DrawLabel(title, Styles.Header);
-            Rect area = GUILayoutUtility.GetRect(0.0f, Mathf.Min(360, Screen.width * 1f), GUILayout.ExpandWidth(true));
+            Rect area = GUILayoutUtility.GetRect(64, Mathf.Min(360, Screen.width * 1f));// GUILayout.ExpandWidth(true));
 
             if (gameObject) DrawGameObject(gameObject, area);
-            else { GUI.Box(area, ""); GUI.Label(area, "Drag & Drop", Styles.DragAndDrop); }
+            else
+            {
+                GUI.Box(area, "");
+                GUI.Label(area, "Drag & Drop", Styles.DragAndDrop);
+            }
 
             if ((Event.current.type == EventType.DragUpdated || Event.current.type == EventType.DragPerform) &&
                 area.Contains(Event.current.mousePosition))
             {
-                var droppedGameObject = validate(DragAndDrop.objectReferences.Where(o => o is GameObject).Select(o => o as GameObject).ToArray());
+                GameObject droppedGameObject = validate(DragAndDrop.objectReferences.Where(o => o is GameObject).Select(o => o as GameObject).ToArray());
                 if (droppedGameObject)
                 {
                     DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
@@ -242,7 +268,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             public static GUIStyle Title, Header, Body, Link, DragAndDrop, PreviewGameObject, Button;
 
             static Texture2D GetTextureColor(Color color)
-            { var t = new Texture2D(1, 1); t.SetPixel(0, 0, color); t.Apply(); return t; }
+            { Texture2D t = new Texture2D(1, 1); t.SetPixel(0, 0, color); t.Apply(); return t; }
         }
 
 

@@ -29,9 +29,9 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
-            var prefab = GetInputValues<GameObject>(nameof(prefabInput)).FirstOrDefault();
-            var skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
-            var meshes = GetInputValues<Mesh>(nameof(meshInput));
+            GameObject prefab = GetInputValues<GameObject>(nameof(prefabInput)).FirstOrDefault();
+            List<SkinnedMeshRenderer> skins = GetInputValues<SkinnedMeshRenderer>(nameof(skinInput));
+            List<Mesh> meshes = GetInputValues<Mesh>(nameof(meshInput));
 
             if (Bind(prefab, skins, meshes, out GameObject newPrefab))
             {
@@ -44,16 +44,16 @@ namespace Didimo.AssetFitter.Editor.Graph
         bool Bind(GameObject prefab, IEnumerable<SkinnedMeshRenderer> skins, IEnumerable<Mesh> meshes, out GameObject gameObject)
         {
             gameObject = Instantiate(prefab);
-            var primarySkin = skins.First();
-            var primaryIndex = GetDescendants(prefab.transform).IndexOf(primarySkin.transform);
+            SkinnedMeshRenderer primarySkin = skins.First();
+            int primaryIndex = GetDescendants(prefab.transform).IndexOf(primarySkin.transform);
 
             primarySkin = GetDescendants(gameObject.transform)[primaryIndex].GetComponent<SkinnedMeshRenderer>();
 
-            var volume = GetMeshVolume(skins);
+            MeshVolume volume = GetMeshVolume(skins);
 
             foreach (var mesh in meshes)
             {
-                var skin = new GameObject("Mesh") { transform = { parent = primarySkin.transform.parent } }.
+                SkinnedMeshRenderer skin = new GameObject("Mesh") { transform = { parent = primarySkin.transform.parent } }.
                     AddComponent<SkinnedMeshRenderer>();
 
                 skin.rootBone = primarySkin.rootBone;
@@ -97,7 +97,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                 for (int i = 0, n = indices.Length; i < n; i += 3)
                 {
-                    var v = Partition3D<int>.GetVolume(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+                    Bounds v = Partition3D<int>.GetVolume(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
                     partition.Add(i, v);
                 }
 
@@ -110,7 +110,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             PointHit GetClosest(Vector3 point, IEnumerable<int> faceIndices)
             {
-                var closest = new PointHit { distance = 1000, triangleIndex = -1 };
+                PointHit closest = new PointHit { distance = 1000, triangleIndex = -1 };
                 foreach (int i in faceIndices)
                 {
                     if (PointToTriangle(point, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]], out PointHit hit))
@@ -162,7 +162,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             public BoneWeight GetBoneWeight(Vector3 point)
             {
-                var closest = GetClosest(new Bounds(point, Vector3.one * 0.1f));
+                PointHit closest = GetClosest(new Bounds(point, Vector3.one * 0.1f));
 
                 if (closest.triangleIndex == -1)
                 {

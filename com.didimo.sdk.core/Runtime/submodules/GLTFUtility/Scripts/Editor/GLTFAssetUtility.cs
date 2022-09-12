@@ -24,7 +24,7 @@ namespace Didimo.GLTFUtility
 			AddMaterials(renderers, skinnedRenderers, ctx);
 			AddAnimations(animations, ctx, settings.animationSettings);
 
-			if ((settings.animationType == ImportSettings.AnimationType.Generic || settings.animationType == ImportSettings.AnimationType.Humanoid) &&
+			if (settings.avatar != null && (settings.animationType == ImportSettings.AnimationType.Generic || settings.animationType == ImportSettings.AnimationType.Humanoid) &&
 				settings.avatarDefinition == ImportSettings.AvatarDefinition.CreateFromThisModel)
 			{
 				if (string.IsNullOrEmpty(settings.avatar.name))

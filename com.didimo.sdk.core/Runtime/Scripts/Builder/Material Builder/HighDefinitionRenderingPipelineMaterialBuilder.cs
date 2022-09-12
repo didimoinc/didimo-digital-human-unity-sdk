@@ -50,8 +50,8 @@ namespace Didimo.Builder
             }
             modificationAction = (m) =>
             {
-                var bodyPart = ShaderResources.GetBodyPartID(name);
-                MaterialUtility.FixupDefaultShaderParams(m, bodyPart);                
+                // var bodyPart = ShaderResources.GetBodyPartID(name);
+                // MaterialUtility.FixupDefaultShaderParams(m, bodyPart);                
             };
             return true;
 
@@ -59,8 +59,8 @@ namespace Didimo.Builder
 
         public override bool PostMaterialCreate(Material mat)
         {
-            var bodyPart = ShaderResources.GetBodyPartID(mat.name);
-            MaterialUtility.FixupDefaultShaderParams(mat, bodyPart);
+            // var bodyPart = ShaderResources.GetBodyPartID(mat.name);
+            // MaterialUtility.FixupDefaultShaderParams(mat, bodyPart);
             return true;
         }           
     }

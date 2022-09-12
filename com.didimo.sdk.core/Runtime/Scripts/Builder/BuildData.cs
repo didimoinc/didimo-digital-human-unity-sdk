@@ -21,8 +21,7 @@ namespace Didimo.Builder
         protected BuildData(string didimoKey, string didimoFilePath)
         {
             DidimoKey = didimoKey;
-            RootDirectory = string.IsNullOrEmpty(didimoFilePath) ? string.Empty
-                : IOUtility.SanitisePath(Path.GetDirectoryName(didimoFilePath));
+            RootDirectory = string.IsNullOrEmpty(didimoFilePath) ? string.Empty : IOUtility.SanitisePath(Path.GetDirectoryName(didimoFilePath));
         }
 
         public abstract Task<(bool success, DidimoComponents didimo)> Build(Configuration configuration);
@@ -47,34 +46,9 @@ namespace Didimo.Builder
             context.DidimoComponents.gameObject.AddComponent<DidimoSpeech>();
             DidimoDeformables deformables = context.DidimoComponents.gameObject.AddComponent<DidimoDeformables>();
             deformables.CacheHairOffsets();
-            deformables.deformationFile = GetDeformationFile(context.RootDirectory);
+            deformables.deformationFile = DidimoDeformables.GetDeformationFile(context.RootDirectory);
             context.DidimoComponents.gameObject.AddComponent<DidimoMaterials>();
             context.DidimoComponents.gameObject.SetActive(true);
-        }
-
-
-        private static string FindDeformationFile(string rootDirectory)
-        {
-            if (string.IsNullOrEmpty(rootDirectory)) return null;
-            // Find a file in the root folder that is a .dmx or .npz
-            return Directory.EnumerateFiles(rootDirectory, "*.*", new EnumerationOptions {IgnoreInaccessible = true, MatchCasing = MatchCasing.CaseInsensitive}).
-                             FirstOrDefault(s => s.EndsWith(".dmx", StringComparison.InvariantCultureIgnoreCase) ||
-                                                 s.EndsWith(".npz", StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        private static TextAsset GetDeformationFile(string rootDirectory)
-        {
-            if (string.IsNullOrEmpty(rootDirectory)) return null;
-
-            string deformationFilePath = FindDeformationFile(rootDirectory);
-            if (string.IsNullOrEmpty(deformationFilePath)) return null;
-
-#if UNITY_EDITOR
-            TextAsset deformationFile = AssetDatabase.LoadAssetAtPath<TextAsset>(deformationFilePath.Replace('\\', '/'));
-            if (deformationFile != null) return deformationFile;
-#endif
-            if (File.Exists(deformationFilePath)) return new ByteAsset(File.ReadAllBytes(deformationFilePath));
-            return null;
         }
     }
 }

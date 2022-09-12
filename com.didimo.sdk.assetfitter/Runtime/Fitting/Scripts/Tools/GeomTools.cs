@@ -25,6 +25,9 @@ namespace Didimo.AssetFitter.Editor.Graph
         public static class CompareVertex
         {
             const float NearDistance = 0.0001f;
+
+            public static bool PositionNearZero(Vector3 v1) => Position(v1, Vector3.zero, NearDistance);
+
             public static bool Position(Vector3 v1, Vector3 v2) => Position(v1, v2, NearDistance);
             // Mathf.Approximately(v1.x, v2.x) && Mathf.Approximately(v1.y, v2.y) && Mathf.Approximately(v1.z, v2.z);
 
@@ -33,7 +36,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             public static IEnumerable<int> Positions(Vector3[] v1, float threshold = 0.00001f)
             {
-                var partition = new Partition3D<int>(v1, 0.01f);
+                Partition3D<int> partition = new Partition3D<int>(v1, 0.01f);
                 for (int i = 0; i < v1.Length; i++)
                     partition.Add(i, v1[i]);
 
@@ -48,7 +51,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             public static IEnumerable<int> Positions(Vector3[] v1, Vector3[] v2, float threshold = 0.00001f)
             {
-                var partition = new Partition3D<int>(v1, 0.01f);
+                Partition3D<int> partition = new Partition3D<int>(v1, 0.01f);
                 for (int i = 0; i < v1.Length; i++)
                     partition.Add(i, v1[i]);
 
@@ -60,10 +63,10 @@ namespace Didimo.AssetFitter.Editor.Graph
                     //         yield return i;
                     //         break;
                     //     }
-                    var indices = partition.Get(v);
+                    IEnumerable<int> indices = partition.Get(v);
                     if (indices.Count() > 0)
                     {
-                        var idx = indices.Select(i => (i, v)).
+                        IOrderedEnumerable<(int i, Vector3 v)> idx = indices.Select(i => (i, v)).
                             Where(g => Position(g.v, v1[g.i], threshold)).
                             OrderBy(g => (v1[g.i] - g.v).sqrMagnitude);
                         if (idx.Count() > 0) yield return idx.First().i;
@@ -74,7 +77,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public static List<Transform> GetDescendants(Transform root)
         {
-            var transforms = new List<Transform>();
+            List<Transform> transforms = new List<Transform>();
             void Children(Transform transform)
             {
                 transforms.Add(transform);
@@ -88,6 +91,12 @@ namespace Didimo.AssetFitter.Editor.Graph
         public static Matrix4x4[] GetBindPoses(Transform[] bones) =>
             bones.Select(b => b.worldToLocalMatrix).ToArray();
 
+        public static Matrix4x4[] GetBindPoses(SkinnedMeshRenderer skin) =>
+            GetBindPoses(skin.bones, skin.transform);
+
+        public static Matrix4x4[] GetBindPoses(Transform[] bones, Transform skinTransform) =>
+            bones.Select(b => b.worldToLocalMatrix * skinTransform.localToWorldMatrix).ToArray();
+
         public static bool RayCast(Ray ray, Mesh mesh, out PointHit hit)
         {
             int[] indices = mesh.triangles;
@@ -100,6 +109,47 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             hit.point = ray.origin + ray.direction * hit.distance;
             return hit.triangleIndex > -1;
+        }
+
+
+        public class TriangleVolume
+        {
+            public readonly Mesh mesh;
+            public readonly Vector3[] vertices;
+            public readonly int[] indices;
+            public readonly Partition3D<int> partition;
+
+            public TriangleVolume(Mesh mesh)
+            {
+                this.mesh = mesh;
+                vertices = mesh.vertices;
+                indices = mesh.triangles;
+                partition = new Partition3D<int>(new Bounds(mesh.bounds.center, mesh.bounds.size * 1.01f), 0.1f);
+                for (int i = 0, n = indices.Length; i < n; i += 3)
+                {
+                    Bounds v = Partition3D<int>.GetVolume(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+                    partition.Add(i, v);
+                }
+            }
+
+            PointHit GetClosest(Vector3 point, IEnumerable<int> faceIndices)
+            {
+                PointHit closest = new PointHit { distance = 1000, triangleIndex = -1 };
+                foreach (int i in faceIndices)
+                {
+                    if (PointToTriangle(point, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]], out PointHit hit))
+                    {
+                        if (hit.distance < closest.distance)
+                        {
+                            hit.triangleIndex = i;
+                            closest = hit;
+                        }
+                    }
+                }
+                return closest;
+            }
+            public PointHit GetClosest(Vector3 point) => GetClosest(point, partition.Get(point));
+            public PointHit GetClosest(Bounds area) => GetClosest(area.center, partition.Get(area));
         }
 
         public struct PointHit

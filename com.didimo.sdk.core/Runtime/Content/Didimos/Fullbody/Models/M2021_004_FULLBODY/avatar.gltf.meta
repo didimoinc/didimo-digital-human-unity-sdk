@@ -9,6 +9,7 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: f762c10ef46e7374fbb8914152259594, type: 3}
   importSettings:
+    needsReimportForTextures: 0
     materials: 1
     shaderOverrides:
       metallic: {fileID: -6465566751694194690, guid: a08f3a1c845d57c4293a42c3202574a1, type: 3}
@@ -29,6 +30,6 @@ ScriptedImporter:
     tangents: 0
     animationType: 1
     avatarDefinition: 1
-    avatar: {instanceID: 0}
+    avatar: {fileID: -332913546920706231, guid: c892c9d58e56d54409a611f58ab51298, type: 3}
     isDidimo: 1
     interpolationMode: -1

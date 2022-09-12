@@ -2,10 +2,10 @@ using Didimo.Core.Utility;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Didimo.Builder;
 using UnityEditor;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Didimo.Core.Editor
 {
@@ -96,6 +96,9 @@ EditorUtility.DisplayDialog("Re-open Scene",
         public static void ReimportAllDidimos()
         {
             List<string> allDidimoPaths = Directory.GetFiles("Assets", "*.gltf", SearchOption.AllDirectories).ToList();
+            List<string> fbxDidimoPaths = Directory.GetFiles("Assets", "*.fbx", SearchOption.AllDirectories).ToList();
+            fbxDidimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(s));
+            allDidimoPaths.AddRange(fbxDidimoPaths);
             foreach (var packageRoot in new[] {"Packages", "Library/PackageCache"})
             {
                 foreach (var package in Directory.EnumerateDirectories(packageRoot))
@@ -103,6 +106,9 @@ EditorUtility.DisplayDialog("Re-open Scene",
                     if (package.Replace("\\", "/").StartsWith(packageRoot + "/com.didimo"))
                     {
                         allDidimoPaths.AddRange(Directory.GetFiles(package, "*.gltf", SearchOption.AllDirectories));
+                        fbxDidimoPaths = Directory.GetFiles(package, "*.fbx", SearchOption.AllDirectories).ToList();
+                        fbxDidimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(s));
+                        allDidimoPaths.AddRange(fbxDidimoPaths);
                     }
                 }
             }

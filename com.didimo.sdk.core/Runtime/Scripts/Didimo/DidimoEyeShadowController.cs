@@ -1,8 +1,5 @@
 using System;
-using Didimo.Builder;
-using Didimo.Core.Inspector;
 using Didimo.Core.Utility;
-using Didimo.GLTFUtility;
 using UnityEngine;
 
 namespace Didimo
@@ -63,59 +60,17 @@ namespace Didimo
         [SerializeField]
         protected Transform RightEyeManualTransform;
 
-        [SerializeField, HideInInspector]
-        SkinnedMeshRenderer LeftEye;
+        SkinnedMeshRenderer LeftEye => DidimoComponents.Parts.LeftEyeMeshRenderer;
+        SkinnedMeshRenderer RightEye => DidimoComponents.Parts.RightEyeMeshRenderer;
+        Transform[] LeftEyeHoleBoneTransforms => DidimoComponents.Parts.LeftEyelidJointsRenderer;
+        Transform[] RightEyeHoleBoneTransforms => DidimoComponents.Parts.RightEyelidJointsRenderer;
 
-        [SerializeField, HideInInspector]
-        SkinnedMeshRenderer RightEye;
-
-        [SerializeField, HideInInspector]
-        Transform[] LeftEyeHoleBoneTransforms;
-
-        [SerializeField, HideInInspector]
-        Transform[] RightEyeHoleBoneTransforms;
-
-        [SerializeField, HideInInspector]
-        public Transform HeadTransform;
+        public Transform HeadTransform => DidimoComponents.Parts.HeadJoint;
 
         [SerializeField, HideInInspector]
         private Matrix4x4 LeftEyeHoleMatrix;
-
         [SerializeField, HideInInspector]
         private Matrix4x4 RightEyeHoleMatrix;
-
-        bool initialised = false;
-
-        public void Build(Importer.EyeShadowControllerSettings didimoEyeShadowControllerConfig)
-        {
-            LeftEyeHoleBoneTransforms = didimoEyeShadowControllerConfig.LeftEyelidJoints;
-            RightEyeHoleBoneTransforms = didimoEyeShadowControllerConfig.RightEyelidJoints;
-            HeadTransform = didimoEyeShadowControllerConfig.HeadJoint;
-            LeftEye = didimoEyeShadowControllerConfig.LeftEyeMesh;
-            RightEye = didimoEyeShadowControllerConfig.RightEyeMesh;
-            initialised = true;
-        }
-
-        private static Transform[] SetTransforms(GameObject go, string[] transformNames)
-        {
-            Transform[] transforms = new Transform[transformNames.Length];
-            for (int i = 0; i < transformNames.Length; i++)
-                transforms[i] = ComponentUtility.SafeGetComponent <Transform>(ComponentUtility.GetChildWithName(go, transformNames[i], true));
-            return transforms;
-        }
-
-        public void BuildFromComponents()
-        {
-            HeadTransform = ComponentUtility.SafeGetComponent<Transform>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.HeadJoint, true));
-            LeftEye = ComponentUtility.SafeGetComponent<SkinnedMeshRenderer>(ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.LeftEyeMesh, true));
-            RightEye = ComponentUtility.SafeGetComponent < SkinnedMeshRenderer > (ComponentUtility.GetChildWithName(gameObject, MeshUtils.DidimoMeshPartNames.RightEyeMesh, true));
-            if (HeadTransform == null)
-                HeadTransform = gameObject.transform;
-            LeftEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.LeftEyelidJoints);
-            RightEyeHoleBoneTransforms = SetTransforms(gameObject, MeshUtils.DidimoMeshPartNames.RightEyelidJoints);
-            AOpowVarNameID = -1;
-            initialised = true;
-        }
 
 #if DEBUG_
         [Button]
@@ -231,13 +186,13 @@ namespace Didimo
             CalculateBounds(eyeMat, out bounds, eye);
             float eyeNegator = eye == Eye.Left ? 1.0f : -1.0f;
             Matrix4x4 translate = Matrix4x4.Translate(new Vector3(
-                this.offset_X * eyeNegator,
-                this.offset_Y,
+                offset_X * eyeNegator,
+                offset_Y,
                 0.0f));
-            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(bounds.width * 0.5f * this.scale_X,
-            bounds.height * 0.5f * this.scale_Y, 1.0f));
+            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(bounds.width * 0.5f * scale_X,
+            bounds.height * 0.5f * scale_Y, 1.0f));
             Matrix4x4 rotate = Matrix4x4.Rotate(
-                Quaternion.AngleAxis(this.rotation * eyeNegator, new Vector3(0, 0, 1)));
+                Quaternion.AngleAxis(rotation * eyeNegator, new Vector3(0, 0, 1)));
             eyeMat = HeadTransform.localToWorldMatrix * eyeMat * translate * rotate * scale;
             SetEyeHoleMatrix(eye, eyeMat);
         }
@@ -270,30 +225,25 @@ namespace Didimo
             RightpropBlock ??= new MaterialPropertyBlock();
             processIDs();
 
-            if (!initialised)
-            {
-                BuildFromComponents();
-            }
-           
-
-            if (HeadTransform != null)
+            if (!string.IsNullOrEmpty(DidimoComponents.didimoVersion) && HeadTransform != null)
             {
                 ProcessEyepropBlock(Eye.Left, LeftpropBlock, LeftEye);
                 ProcessEyepropBlock(Eye.Right, RightpropBlock, RightEye);
             }
         }
-        public void OnValidate()
-        {
-            ApplyBlocks();
-        }
+        // public void OnValidate()
+        // {
+        //     if (string.IsNullOrEmpty(DidimoComponents.didimoVersion)) return;
+        //     ApplyBlocks();
+        // }
         public void processIDs()
         {
             if (AOpowVarNameID == -1)
             {
-                AOpowVarNameID = Shader.PropertyToID(DidimoEyeShadowController.AOpowVarName);
-                EyeHoleInvMatrixVarNameID = Shader.PropertyToID(DidimoEyeShadowController.EyeHoleInvMatrixVarName);
-                CornerTightnessVarNameID = Shader.PropertyToID(DidimoEyeShadowController.CornerTightnessVarName);
-                AOstrengthVarNameID = Shader.PropertyToID(DidimoEyeShadowController.AOstrengthVarName);
+                AOpowVarNameID = Shader.PropertyToID(AOpowVarName);
+                EyeHoleInvMatrixVarNameID = Shader.PropertyToID(EyeHoleInvMatrixVarName);
+                CornerTightnessVarNameID = Shader.PropertyToID(CornerTightnessVarName);
+                AOstrengthVarNameID = Shader.PropertyToID(AOstrengthVarName);
             }
         }
 

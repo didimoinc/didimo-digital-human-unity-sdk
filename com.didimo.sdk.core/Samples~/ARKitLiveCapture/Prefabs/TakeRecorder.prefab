@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7149245445297459574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7149245445297459464}
+  - component: {fileID: 7149245445297459465}
+  m_Layer: 0
+  m_Name: New FaceDevice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7149245445297459464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149245445297459574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7149245445515916354}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7149245445297459465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149245445297459574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c82e07b9a14fe3958806045dbb5693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Live: 1
+  m_Actor: {fileID: 0}
+  m_Channels: 15
+  m_Pose:
+    BlendShapes:
+      BrowDownLeft: 0
+      BrowDownRight: 0
+      BrowInnerUp: 0.30817026
+      BrowOuterUpLeft: 0.24859196
+      BrowOuterUpRight: 0.24862425
+      CheekPuff: 0.04171155
+      CheekSquintLeft: 0.07432276
+      CheekSquintRight: 0.068729356
+      EyeBlinkLeft: 3.7587403e-12
+      EyeBlinkRight: 3.667299e-12
+      EyeLookDownLeft: 0.039476342
+      EyeLookDownRight: 0.039157473
+      EyeLookInLeft: 0
+      EyeLookInRight: 0.14736138
+      EyeLookOutLeft: 0.036060818
+      EyeLookOutRight: 0
+      EyeLookUpLeft: 0
+      EyeLookUpRight: 0
+      EyeSquintLeft: 0.19131853
+      EyeSquintRight: 0.19128287
+      EyeWideLeft: 0.52503824
+      EyeWideRight: 0.5250399
+      JawForward: 0.12588786
+      JawLeft: 0
+      JawOpen: 0.115733415
+      JawRight: 0.010836393
+      MouthClose: 0.115733415
+      MouthDimpleLeft: 0.086621895
+      MouthDimpleRight: 0.087312385
+      MouthFrownLeft: 0
+      MouthFrownRight: 0
+      MouthFunnel: 0.06605062
+      MouthLeft: 0
+      MouthLowerDownLeft: 0.23603982
+      MouthLowerDownRight: 0.23091942
+      MouthPressLeft: 0.0559535
+      MouthPressRight: 0.052805956
+      MouthPucker: 0.08387126
+      MouthRight: 0.02562935
+      MouthRollLower: 0.16677123
+      MouthRollUpper: 0.10794264
+      MouthShrugLower: 0.06356884
+      MouthShrugUpper: 0.0931002
+      MouthSmileLeft: 0.027743315
+      MouthSmileRight: 0.051289108
+      MouthStretchLeft: 0.1858515
+      MouthStretchRight: 0.194849
+      MouthUpperUpLeft: 0.013222397
+      MouthUpperUpRight: 0.013013304
+      NoseSneerLeft: 0.05422522
+      NoseSneerRight: 0.05139027
+      TongueOut: 0.000044521294
+    HeadPosition: {x: -0.0028037701, y: 0.019041799, z: -0.3416983}
+    HeadOrientation: {x: 0.037719816, y: 0.001668578, z: 0.00080356, w: -0.99928665}
+    LeftEyeOrientation: {x: -0.011947572, y: 0.04499056, z: 0.0005381114, w: -0.99891585}
+    RightEyeOrientation: {x: -0.012056341, y: 0.011013128, z: 0.00013279573, w: -0.99986666}
+--- !u!1 &7149245445515916353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7149245445515916354}
+  - component: {fileID: 7149245445515916355}
+  - component: {fileID: 7149245445515916352}
+  m_Layer: 0
+  m_Name: TakeRecorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7149245445515916354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149245445515916353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7149245445297459464}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &7149245445515916355
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149245445515916353}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: a42ca493bba0c314e86e05cbd6ec9ddf, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References:
+    - avatar: {fileID: 0}
+--- !u!114 &7149245445515916352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149245445515916353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2c132feb88d6345985a670b685927d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NullPlayableAsset: {fileID: 11400000, guid: a42ca493bba0c314e86e05cbd6ec9ddf, type: 2}
+  m_DefaultSlatePlayer:
+    m_UnityObject: {fileID: 7149245445515916352}
+    m_Directory: Assets/LiveCapture/Takes
+    m_SceneNumber: 1
+    m_Name: New Shot
+    m_TakeNumber: 1
+    m_Description: 
+    m_Take: {fileID: 0}
+    m_IterationBase: {fileID: 0}
+    m_Director: {fileID: 7149245445515916355}
+  m_TakePlayer:
+    m_FallbackPlayableAsset: {fileID: 11400000, guid: a42ca493bba0c314e86e05cbd6ec9ddf, type: 2}
+    m_Director: {fileID: 7149245445515916355}
+    m_Take: {fileID: 0}
+  m_FrameRate:
+    m_Numerator: 60
+    m_Denominator: 1
+    m_IsDropFrame: 0
+  m_Devices:
+  - {fileID: 7149245445297459465}
+  m_Live: 1

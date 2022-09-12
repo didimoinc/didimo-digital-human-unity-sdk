@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d95ef9c3819e843b9042fe9ed3640a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkManager: {fileID: 1580444572915726513}
   autoStartAsClientIfNotEditorAndNotBatch: 1
   autoStartAsServerIfBatchMode: 1
 --- !u!114 &1580444572915726513
@@ -68,7 +70,7 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 0}
     NetworkPrefabs:
     - Override: 0
-      Prefab: {fileID: 1928206000478757395, guid: 0f03306930ff624448d3116cb8d036ef, type: 3}
+      Prefab: {fileID: 1928206000478757395, guid: fc7066d377420de4fb98c2c41628db7a, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
@@ -130,7 +132,7 @@ MonoBehaviour:
     NetworkIdRecycleDelay: 120
     RpcHashSize: 1
     LoadSceneTimeOut: 120
-    MessageBufferTimeout: 20
+    SpawnTimeout: 1
     EnableNetworkLogs: 1
 --- !u!114 &1580444572915726516
 MonoBehaviour:
@@ -145,9 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProtocolType: 0
-  m_MaxPacketQueueSize: 128
-  m_MaxPayloadSize: 100000
-  m_MaxSendQueueSize: 983040
+  m_MaxPacketQueueSize: 1280
+  m_MaxPayloadSize: 1000000
+  m_MaxSendQueueSize: 9830400
   m_HeartbeatTimeoutMS: 500
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 60
@@ -173,4 +175,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   address: ec2-3-85-221-183.compute-1.amazonaws.com
-  performDNSLookup: 1
+  performDNSLookup: 0

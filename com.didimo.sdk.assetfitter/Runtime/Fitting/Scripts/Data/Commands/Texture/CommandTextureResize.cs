@@ -11,6 +11,7 @@ namespace Didimo.AssetFitter.Editor.Graph
     [MenuPath("Texture/Texture resize")]
     [DisplayName("Texture resize")]
     [Width(160)]
+    [HeaderColor(TypeColors.Texture)]
     public class CommandTextureResize : GraphNode
     {
         [Input("Texture")] public Texture textureInput;

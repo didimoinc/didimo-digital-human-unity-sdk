@@ -6,6 +6,7 @@ using Didimo.Core.Config;
 using Didimo.Core.Model;
 using Didimo.Core.Utility;
 using UnityEngine.Rendering;
+using static Didimo.Core.Utility.DidimoParts;
 
 namespace Didimo.Builder
 {
@@ -49,6 +50,44 @@ namespace Didimo.Builder
             if (shader == null)
             {
                 shader = Shader.Find(shaderName);
+            }
+
+            return shader != null;
+        }
+
+        public virtual bool FindIdealShaderForBodyPart(
+           BodyPart bodyPart, out Shader shader)
+        {
+            shader = null;
+
+            ShaderResources shaderResources = ResourcesLoader.ShaderResources(EPipelineType.EPT_UNKNOWN);
+
+            switch (bodyPart)
+            {
+                case BodyPart.RightEyeMesh:
+                    shader = shaderResources.Eye;
+                    break;
+                case BodyPart.LeftEyeMesh:
+                    shader = shaderResources.Eye;
+                    break;
+                case BodyPart.BodyMesh:
+                    shader = shaderResources.Skin;
+                    break;
+                case BodyPart.HeadMesh:
+                    shader = shaderResources.Skin;
+                    break;
+                case BodyPart.MouthMesh:
+                    shader = shaderResources.Mouth;
+                    break;
+                case BodyPart.EyeLashesMesh:
+                    shader = shaderResources.Eyelash;
+                    break;
+                case BodyPart.HairMesh:
+                    shader = shaderResources.Hair;
+                    break;
+                case BodyPart.ClothingMesh:
+                    shader = shaderResources.Cloth;
+                    break;
             }
 
             return shader != null;
