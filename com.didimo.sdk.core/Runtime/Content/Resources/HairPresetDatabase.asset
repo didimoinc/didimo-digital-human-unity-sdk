@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HairPresetDatabase
   m_EditorClassIdentifier: 
   Hairs:
-  - name: Black
+  - name: black
     list:
     - color: {r: 0.106000006, g: 0.106000006, b: 0.106000006, a: 1}
       glossiness1: 96
@@ -435,7 +435,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Dark Brown
+  - name: dark_brown
     list:
     - color: {r: 0.16037738, g: 0.09830943, b: 0.061528422, a: 1}
       glossiness1: 131
@@ -877,7 +877,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Light Brown
+  - name: light_brown
     list:
     - color: {r: 0.7735849, g: 0.54563326, b: 0.46342114, a: 1}
       glossiness1: 45
@@ -1319,7 +1319,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Dark Blonde
+  - name: dark_blonde
     list:
     - color: {r: 0.644, g: 0.53591245, b: 0.34776, a: 1}
       glossiness1: 150
@@ -1761,7 +1761,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Light Blonde
+  - name: light_blonde
     list:
     - color: {r: 0.8207547, g: 0.77315646, b: 0.6633143, a: 1}
       glossiness1: 188
@@ -2203,7 +2203,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Ginger
+  - name: ginger
     list:
     - color: {r: 0.63, g: 0.3505813, b: 0.24822, a: 1}
       glossiness1: 173
@@ -2645,7 +2645,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_010.obj
       hairLayer: 1
-  - name: Grey
+  - name: grey
     list:
     - color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
       glossiness1: 189
@@ -3067,7 +3067,7 @@ MonoBehaviour:
       hairScaleNudge: 0
       key: hair_009.obj
       hairLayer: 0
-  - name: White
+  - name: white
     list:
     - color: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
       glossiness1: 2

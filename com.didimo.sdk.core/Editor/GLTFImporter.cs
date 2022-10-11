@@ -57,7 +57,7 @@ namespace Didimo.Core.Editor
 
     public class GLTFImporter : ScriptedImporter
     {
-        public const int GLTF_IMPORTER_VERSION = 15;
+        public const int GLTF_IMPORTER_VERSION = 17;
 
         public ImportSettings importSettings;
 
@@ -90,7 +90,7 @@ namespace Didimo.Core.Editor
                 {
                     if (didimoImporterJsonConfig != null)
                     {
-                        // We will be settings the materials na importing the textures after importing the gltf
+                        // We will be settings the materials and importing the textures after importing the gltf
                         gltfObject.images = null;
                         gltfObject.textures = null;
                         gltfObject.materials = null;

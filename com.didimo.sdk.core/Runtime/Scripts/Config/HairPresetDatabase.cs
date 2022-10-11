@@ -42,6 +42,7 @@ namespace Didimo.Core.Config
         [Range(-0.1f, 0.1f)]
         public float hairScaleNudge = 0.0f;
 
+        public HairLayerSettings(){}
         public HairLayerSettings(HairLayerSettings other)
         {
             color = new Color(other.color.r, other.color.g, other.color.b);

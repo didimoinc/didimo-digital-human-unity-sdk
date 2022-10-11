@@ -10,6 +10,7 @@ namespace Didimo.Core.Editor
 {
     public class FBXDidimoImporter : AssetPostprocessor
     {
+        public const string FBX_EXTENSION = ".fbx";
 
         public static Dictionary<string, DidimoImporterJsonConfig> ImporterConfigCache = new ();
 
@@ -23,20 +24,32 @@ namespace Didimo.Core.Editor
 
         void OnPreprocessModel()
         {
+            // Only process .FBX files. This gets called for every ModelImporter
+            if (!assetPath.ToLowerInvariant().EndsWith(FBX_EXTENSION)) return;
+
             DidimoImporterJsonConfig importerJsonConfig = DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(assetPath));
             if (importerJsonConfig == null) return;
 
-            (assetImporter as ModelImporter).materialImportMode = ModelImporterMaterialImportMode.None;
-            (assetImporter as ModelImporter).importAnimation = true;
-            (assetImporter as ModelImporter).animationType = ModelImporterAnimationType.Legacy;
-            (assetImporter as ModelImporter).animationCompression = ModelImporterAnimationCompression.Off;
-            (assetImporter as ModelImporter).SaveAndReimport();
+            ModelImporter importer = assetImporter as ModelImporter;
+            importer.materialImportMode = ModelImporterMaterialImportMode.None;
+            importer.importAnimation = true;
+            importer.animationType = ModelImporterAnimationType.Legacy;
+            importer.animationCompression = ModelImporterAnimationCompression.Off;
+            // Temporary settings while we don't have multiple materials on hair pieces, on the DGP
+            importer.optimizeMeshPolygons = false;
+            importer.optimizeMeshVertices = false;
+            importer.isReadable = true;
+            importer.weldVertices = false;
+            importer.SaveAndReimport();
 
             SplitAnimationClips(importerJsonConfig);
         }
 
         void OnPostprocessModel(GameObject g)
         {
+            // Only process .FBX files. This gets called for every ModelImporter
+            if (!assetPath.ToLowerInvariant().EndsWith(FBX_EXTENSION)) return;
+
             DidimoImporterJsonConfig importerJsonConfig = DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(assetPath));
             if (importerJsonConfig == null) return;
             

@@ -12,12 +12,14 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering;
 using BodyPart = Didimo.Core.Utility.DidimoParts.BodyPart;
+using Object = UnityEngine.Object;
 
 namespace Didimo.Builder
 {
     public class DidimoImporterJsonConfigUtils
     {
         const string JSON_NAME = "avatar_info.json";
+
         public static DidimoImporterJsonConfig GetConfigAtFolder(string folder)
         {
             DidimoImporterJsonConfig jsonConfig = null;
@@ -29,21 +31,21 @@ namespace Didimo.Builder
 
             return jsonConfig;
         }
-        
+
         public static bool CheckIfJsonExists(string folder)
         {
             return File.Exists(Path.Combine(folder, JSON_NAME));
         }
-        
-        
+
+
 #if UNITY_EDITOR
         public static void SetupDidimoForEditor(GameObject didimoGameObject,
             DidimoImporterJsonConfig importerJsonConfig,
             string assetPath, AnimationClip[] animationClips,
-            AnimationClip resetAnimationClip, Action<Material> onMaterialCreated)
+            AnimationClip resetAnimationClip, Action<Object> onObjectCreated)
         {
             IEnumerator en = SetupDidimoImpl(didimoGameObject, importerJsonConfig, assetPath, animationClips,
-                resetAnimationClip, true, onMaterialCreated);
+                resetAnimationClip, true, onObjectCreated);
             while (en.MoveNext())
             {
             }
@@ -53,7 +55,7 @@ namespace Didimo.Builder
         public static IEnumerator SetupDidimoForRuntime(GameObject didimoGameObject,
             DidimoImporterJsonConfig importerJsonConfig,
             string assetPath, AnimationClip[] animationClips, AnimationClip resetAnimationClip,
-            Action<Material> onMaterialCreated)
+            Action<Object> onObjectCreated)
         {
             if (!Application.isPlaying)
             {
@@ -61,13 +63,13 @@ namespace Didimo.Builder
             }
 
             yield return SetupDidimoImpl(didimoGameObject, importerJsonConfig, assetPath, animationClips,
-                resetAnimationClip, false, onMaterialCreated);
+                resetAnimationClip, false, onObjectCreated);
         }
 
         private static IEnumerator SetupDidimoImpl(GameObject didimoGameObject,
             DidimoImporterJsonConfig importerJsonConfig,
             string assetPath, AnimationClip[] animationClips,
-            AnimationClip resetAnimationClip, bool isAssetImporter, Action<Material> onMaterialCreated)
+            AnimationClip resetAnimationClip, bool isAssetImporter, Action<Object> onObjectCreated)
         {
             List<string> texturePaths = new();
             foreach (var mesh in importerJsonConfig.meshList)
@@ -104,24 +106,8 @@ namespace Didimo.Builder
                 new GLTFImage.ImportTask(images, Path.GetFullPath(Path.GetDirectoryName(assetPath)!), null);
             GLTFTexture.ImportTask textureTask = new GLTFTexture.ImportTask(textures, imageTask);
 
-            if (isAssetImporter)
-            {
-                imageTask.RunSynchronously();
-                textureTask.RunSynchronously();
-            }
-            else
-            {
-                importTasks.Add(imageTask);
-                importTasks.Add(textureTask);
-                // Ignite
-                foreach (var importTask in importTasks)
-                {
-                    Importer.TaskSupervisor(importTask).RunCoroutine();
-                }
-
-                // Wait for all tasks to finish
-                while (!importTasks.All(x => x.IsCompleted)) yield return null;
-            }
+            imageTask.RunSynchronously();
+            textureTask.RunSynchronously();
 
             ShaderResources shaderResources = ResourcesLoader.ShaderResources();
 
@@ -133,21 +119,32 @@ namespace Didimo.Builder
 
             MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
 
-            DidimoComponents didimoComponents = didimoGameObject.AddComponent<DidimoComponents>();
+            DidimoComponents didimoComponents = ComponentUtility.GetOrAdd<DidimoComponents>(didimoGameObject);
             didimoGameObject.AddComponent<DidimoParts>();
 
             BuildDidimoParts(didimoComponents, importerJsonConfig);
+
+            DidimoDeformables deformables = didimoGameObject.AddComponent<DidimoDeformables>();
+            deformables.CacheHairOffsets();
+            deformables.deformationFile = DidimoDeformables.GetDeformationFile(Path.GetDirectoryName(assetPath) + "/");
+
             foreach (MeshProperties m in importerJsonConfig.meshList)
             {
                 BodyPart bodyPart = BodyPart.Unknown;
                 BodyPartMap.TryGetValue(m.bodyPart, out bodyPart);
+
+                if (bodyPart == BodyPart.HairMesh)
+                {
+                    HandleHair(didimoComponents, m, onObjectCreated);
+                    continue;
+                }
 
                 Renderer bodyPartRenderer = didimoComponents.Parts.BodyPartToRenderer(bodyPart);
 
                 materialBuilder.FindIdealShaderForBodyPart(bodyPart, out Shader shader);
                 Material material = new Material(shader);
                 material.name = m.meshName + "_MAT";
-                onMaterialCreated?.Invoke(material);
+                onObjectCreated?.Invoke(material);
                 if (m.textures != null)
                 {
                     foreach (var t in m.textures)
@@ -175,7 +172,7 @@ namespace Didimo.Builder
 
                 bodyPartRenderer.material = material;
             }
-            
+
             didimoGameObject.AddComponent<DidimoMaterials>();
             didimoGameObject.AddComponent<DidimoAnimator>();
 
@@ -186,9 +183,6 @@ namespace Didimo.Builder
 
 
             didimoGameObject.AddComponent<DidimoSpeech>();
-            DidimoDeformables deformables = didimoGameObject.AddComponent<DidimoDeformables>();
-            deformables.CacheHairOffsets();
-            deformables.deformationFile = DidimoDeformables.GetDeformationFile(Path.GetDirectoryName(assetPath) + "/");
 
             didimoGameObject.AddComponent<DidimoEyeShadowController>();
             didimoGameObject.AddComponent<DidimoIrisController>();
@@ -200,6 +194,46 @@ namespace Didimo.Builder
                 didimoComponents.Parts.EyeLashesMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
             }
         }
+
+        private static void HandleHair(DidimoComponents didimoComponents, MeshProperties hairProperties,
+            Action<Object> onObjectCreated)
+        {
+            GameObject didimoHair = didimoComponents.Parts.HairMesh.gameObject;
+            var deformableDatabase = DeformableUtils.GetAllDeformables();
+            GameObject prefabHair = deformableDatabase.FirstOrDefault(d => d.name.Equals(hairProperties.meshId))
+                ?.gameObject;
+            if (prefabHair != null)
+            {
+                SkinnedMeshRenderer targetSkinMR = didimoHair.GetComponent<SkinnedMeshRenderer>();
+
+                List<Material> newMaterials = new List<Material>();
+                foreach (Material mat in prefabHair.GetComponent<MeshRenderer>().sharedMaterials)
+                {
+                    Material newMaterial = new Material(mat);
+                    onObjectCreated?.Invoke(newMaterial);
+                    newMaterials.Add(newMaterial);
+                }
+
+                targetSkinMR.sharedMaterials = newMaterials.ToArray();
+
+                Mesh prefabMesh = prefabHair.GetComponent<MeshFilter>().sharedMesh;
+                Mesh didimoMesh = targetSkinMR.sharedMesh;
+
+                didimoMesh.name = hairProperties.meshName;
+
+                didimoMesh.subMeshCount = prefabMesh.subMeshCount;
+                for (int i = 0; i < prefabMesh.subMeshCount; i++)
+                {
+                    didimoMesh.SetSubMesh(i, prefabMesh.GetSubMesh(i));
+                }
+
+                targetSkinMR.sharedMesh = didimoMesh;
+                
+                Hair hair = didimoHair.AddComponent<Hair>();
+                hair.SetPreset(hairProperties.color);
+            }
+        }
+
 
         const string HEAD_JOINT_NAME = "Head";
 

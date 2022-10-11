@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Didimo.Builder;
 using Didimo.Core.Config;
 using Didimo.Core.Inspector;
@@ -24,23 +25,19 @@ namespace Didimo.Core.Deformables
         private static readonly int PROPERTY_FLOWMULTIPLY = Shader.PropertyToID("_flowMultiplier");
         private static readonly int HAIR_SCALE_NUDGE = Shader.PropertyToID("_hairScaleNudge");
 
-        [Header("Hair")]
-        [SerializeField]
-        [OnValueChanged("ApplyHairPropertiesToHierarchy")]
+        [Header("Hair")] [SerializeField] [OnValueChanged("ApplyHairPropertiesToHierarchy")]
         protected Texture2D hairCapTexture;
+
         public Texture2D HairCapTexture => hairCapTexture;
 
-        [SerializeField]
-        public HairLayerSettings outerHairLayer;
+        [SerializeField] public HairLayerSettings outerHairLayer = new ();
 
-        [SerializeField]
-        public HairLayerSettings innerHairLayer;
+        [SerializeField] public HairLayerSettings innerHairLayer = new ();
 
-        [SerializeField]
-        HairPreset Preset;
+        [SerializeField] HairPreset Preset;
 
         //[Tooltip("Every non colour setting will be applied to every per mesh preset override")]
-        [Button("Apply all non-colour settings to all per-mesh colour presets")]        
+        [Button("Apply all non-colour settings to all per-mesh colour presets")]
         private void ApplyAllNonColourSettingsToAllMeshPresets()
         {
             Hair hair = this;
@@ -55,10 +52,11 @@ namespace Didimo.Core.Deformables
                     hdb.FindOrAddentryUseColourDefault(hairpieceName, HairLayer.Outer, this.outerHairLayer.Clone());
                     hdb.FindOrAddentryUseColourDefault(hairpieceName, HairLayer.Inner, this.innerHairLayer.Clone());
                 }
+
                 hairPresetDatabase.UpdateDatabase();
             }
         }
-        
+
         [Button("Clear all mesh presets")]
         private void ClearAllMeshPresets()
         {
@@ -68,18 +66,19 @@ namespace Didimo.Core.Deformables
                 var hairPresetDatabase = UnityEngine.Resources
                     .Load<HairPresetDatabase>("HairPresetDatabase");
                 var hairpieceName = HairLayerSettings.GetHairIDFromObject(hair);
-                hairPresetDatabase.RemoveEntriesReferringTo(hairpieceName);                
+                hairPresetDatabase.RemoveEntriesReferringTo(hairpieceName);
             }
         }
+
         public Color Color
         {
             get
             {
-                if( innerHairLayer != null)
+                if (innerHairLayer != null)
                 {
                     return innerHairLayer.color;
                 }
-                else if( outerHairLayer != null)
+                else if (outerHairLayer != null)
                 {
                     return outerHairLayer.color;
                 }
@@ -101,7 +100,10 @@ namespace Didimo.Core.Deformables
 
         public override bool SingleInstancePerDidimo => true;
 
-        protected void Start() { ApplyHairPropertiesToHierarchy(); }
+        protected void Start()
+        {
+            ApplyHairPropertiesToHierarchy();
+        }
 
         private void OnDestroy()
         {
@@ -119,11 +121,27 @@ namespace Didimo.Core.Deformables
         public void SetPreset(int preset)
         {
             if (Preset == null)
-                Preset = new HairPreset();
-            if (Preset != null)
             {
-                Preset.value = preset;
-                ApplyPreset();
+                Preset = new HairPreset();
+            }
+
+            Preset.value = preset;
+            ApplyPreset();
+        }
+
+        public void SetPreset(string presetName)
+        {
+            var hairPresetDatabase = Resources
+                .Load<HairPresetDatabase>("HairPresetDatabase");
+            HairLayerDatabaseGroupEntry preset =
+                hairPresetDatabase.Hairs.FirstOrDefault(preset => preset.name == presetName);
+            if (preset == null)
+            {
+                Debug.LogWarning($"Failed to find hair color preset with name {presetName}");
+            }
+            else
+            {
+                SetPreset(Array.IndexOf(hairPresetDatabase.Hairs, preset));
             }
         }
 
@@ -147,11 +165,12 @@ namespace Didimo.Core.Deformables
             ApplyHairPropertiesToHierarchy();
         }
 
-        readonly string[] testOuterLayerStrings = { "cards", "outer" };
+        readonly string[] testOuterLayerStrings = {"cards", "outer"};
+
         private void ApplyHairPropertiesToHierarchy()
         {
             void OnPropertyBlock(MaterialPropertyBlock propertyBlock,
-            Component callingComponent, Renderer render, Material currentMaterial)
+                Component callingComponent, Renderer render, Material currentMaterial)
             {
                 if (currentMaterial == null) return;
                 if (HairCapTexture != null) propertyBlock.SetTexture(PROPERTY_HAIRCAP, HairCapTexture);
@@ -161,7 +180,7 @@ namespace Didimo.Core.Deformables
                 foreach (string s in testOuterLayerStrings)
                 {
                     if ((matname.IndexOf(s, System.StringComparison.OrdinalIgnoreCase) >= 0)
-                       || (rendername.IndexOf(s, System.StringComparison.OrdinalIgnoreCase) >= 0))
+                        || (rendername.IndexOf(s, System.StringComparison.OrdinalIgnoreCase) >= 0))
                     {
                         outer = true;
                         break;
@@ -172,12 +191,12 @@ namespace Didimo.Core.Deformables
                 {
                     var hairLayer = outer ? outerHairLayer : innerHairLayer;
                     propertyBlock.SetFloat(PROPERTY_SPECMULTIPLY, hairLayer.shineMultiplier);
-                    propertyBlock.SetFloat(PROPERTY_SPECEXP2,     hairLayer.glossiness2);
-                    propertyBlock.SetFloat(PROPERTY_SPECEXP1,     hairLayer.glossiness1);
-                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT,    hairLayer.specShift1);
-                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT2,   hairLayer.specShift2);
+                    propertyBlock.SetFloat(PROPERTY_SPECEXP2, hairLayer.glossiness2);
+                    propertyBlock.SetFloat(PROPERTY_SPECEXP1, hairLayer.glossiness1);
+                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT, hairLayer.specShift1);
+                    propertyBlock.SetFloat(PROPERTY_SPECSHIFT2, hairLayer.specShift2);
                     propertyBlock.SetFloat(PROPERTY_FLOWMULTIPLY, hairLayer.flowMultiply);
-                    propertyBlock.SetColor(PROPERTY_HAIRCOLOR,    hairLayer.color);
+                    propertyBlock.SetColor(PROPERTY_HAIRCOLOR, hairLayer.color);
                     propertyBlock.SetFloat(HAIR_SCALE_NUDGE, hairLayer.hairScaleNudge);
                 }
                 catch (Exception e)
@@ -185,8 +204,10 @@ namespace Didimo.Core.Deformables
                     Debug.Log(e.ToString());
                 }
             }
+
             MaterialBuilder.ProcessPropertyBlocksInHierarchy(DidimoComponents != null
-                ? DidimoComponents.transform : transform, this, OnPropertyBlock);
+                ? DidimoComponents.transform
+                : transform, this, OnPropertyBlock);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Didimo.Builder
                     shader = shaderResources.Mouth;
                     break;
                 case BodyPart.EyeLashesMesh:
-                    shader = shaderResources.Eyelash;
+                    shader = shaderResources.PBRTransparent;
                     break;
                 case BodyPart.HairMesh:
                     shader = shaderResources.Hair;

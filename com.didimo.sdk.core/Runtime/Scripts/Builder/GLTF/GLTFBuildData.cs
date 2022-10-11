@@ -46,6 +46,22 @@ namespace Didimo.Builder.GLTF
             ImportSettings = gltfImportSettings;
         }
 
+        public static void WaitCoroutine(IEnumerator func) {
+            while (func.MoveNext ()) {
+                if (func.Current != null) {
+                    IEnumerator num;
+                    try {
+                        num = (IEnumerator)func.Current;
+                    } catch (InvalidCastException) {
+                        if (func.Current.GetType () == typeof(WaitForSeconds))
+                            Debug.LogWarning ("Skipped call to WaitForSeconds. Use WaitForSecondsRealtime instead.");
+                        return;  // Skip WaitForSeconds, WaitForEndOfFrame and WaitForFixedUpdate
+                    }
+                    WaitCoroutine (num);
+                }
+            }
+        }
+        
         /// <summary>
         /// Build the didimo GameObject with the adequate materials and add the required components.
         /// </summary>
@@ -54,7 +70,7 @@ namespace Didimo.Builder.GLTF
         /// If the task fails the component is null instead.</returns>
         public override Task<(bool success, DidimoComponents didimo)> Build(Configuration configuration)
         {
-            OnBeforeBuild(configuration, out DidimoBuildContext context);
+            // OnBeforeBuild(configuration, out DidimoBuildContext context);
 
             MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
             ImportSettings.shaderForName = shaderName =>
@@ -85,29 +101,34 @@ namespace Didimo.Builder.GLTF
                 ? ImportSettings.AvatarDefinition.CopyFromAnotherAvatar
                 : ImportSettings.AvatarDefinition.CreateFromThisModel;
             GameObject didimoGO = importResult.rootObject;
-            didimoGO.transform.SetParent(context.RootTransform);
-            context.MeshHierarchyRoot = didimoGO.transform;
+            didimoGO.transform.SetParent(configuration.Parent);
+            // context.MeshHierarchyRoot = didimoGO.transform;
 
-            context.DidimoComponents.didimoVersion = importResult.didimoVersion;
+            // context.DidimoComponents.didimoVersion = importResult.didimoVersion;
 
+            DidimoComponents didimoComponents = ComponentUtility.GetOrAdd<DidimoComponents>(didimoGO);
+            didimoComponents.DidimoKey = DidimoKey;
             if (didimoImporterJsonConfig == null)
             {
-                context.DidimoComponents.gameObject.AddComponent<DidimoParts>();
-                context.DidimoComponents.Parts.SetupForDidimoVersion(context.DidimoComponents.didimoVersion);
-                AddRequiredComponents(importResult, context.DidimoComponents.gameObject, ImportSettings,
-                    context.DidimoComponents.Parts.HeadJoint);
+                didimoComponents.gameObject.AddComponent<DidimoParts>();
+                didimoComponents.Parts.SetupForDidimoVersion(importResult.didimoVersion);
+                AddRequiredComponents(importResult, didimoComponents.gameObject, ImportSettings,
+                    didimoComponents.Parts.HeadJoint, didimoComponents);
 
-                OnAfterBuild(configuration, context);
             }
             else
             {
-                DidimoImporterJsonConfigUtils.SetupDidimoForRuntime(didimoGO, didimoImporterJsonConfig, GLTFDidimoFilePath,
-                    importResult.animationClips, importResult.resetAnimationClip, null).RunCoroutine();
-
-                SetAvatar(ImportSettings, didimoGO);
+                WaitCoroutine(DidimoImporterJsonConfigUtils.SetupDidimoForRuntime(didimoComponents.gameObject, didimoImporterJsonConfig, GLTFDidimoFilePath,
+                    importResult.animationClips, importResult.resetAnimationClip, null));
+                
+                SetAvatar(ImportSettings, didimoComponents.gameObject);
             }
 
-            return Task.FromResult((true, context.DidimoComponents));
+
+            DidimoBuildContext didimoBuildContext = DidimoBuildContext.CreateNew(didimoComponents, RootDirectory);
+            OnAfterBuild(configuration, didimoBuildContext);
+
+            return Task.FromResult((true, didimoComponents));
         }
 
         /// <summary>
@@ -145,17 +166,10 @@ namespace Didimo.Builder.GLTF
                     .SetupForDidimoVersion(gltfImportResult.didimoVersion);
             }
 
-            didimoComponents.Parts.LeftEyeMeshRenderer.updateWhenOffscreen = true;
-            didimoComponents.Parts.RightEyeMeshRenderer.updateWhenOffscreen = true;
-            if (didimoComponents.Parts.EyeLashesMeshRenderer != null)
-            {
-                didimoComponents.Parts.EyeLashesMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
-            }
-
             didimoComponents.didimoVersion = gltfImportResult.didimoVersion;
             DidimoBuildContext context = DidimoBuildContext.CreateNew(didimoComponents, rootDirectory);
             AddRequiredComponents(gltfImportResult, gltfImportResult.rootObject, importSettings,
-                didimoComponents.Parts.HeadJoint);
+                didimoComponents.Parts.HeadJoint, didimoComponents);
 
             GLTFDidimoHair.ApplyHairMaterials(gltfImportResult);
 
@@ -171,8 +185,9 @@ namespace Didimo.Builder.GLTF
         /// <param name="gltfImportResult">Import result returned by the GLTFImporter</param>
         /// <param name="root">Root object where required components will be attached to</param>
         /// <param name="importSettings">Settings to configure how some parts of the GLTF should be imported</param>
+        /// <param name="didimoComponents">The DidimoComponents component of the didimo</param>
         public static void AddRequiredComponents(Importer.ImportResult gltfImportResult, GameObject root,
-            ImportSettings importSettings, Transform headJoint)
+            ImportSettings importSettings, Transform headJoint, DidimoComponents didimoComponents)
         {
             root.AddComponent<DidimoAnimator>();
 #if INSTANCING_SUPPORT
@@ -192,6 +207,13 @@ namespace Didimo.Builder.GLTF
             poseController.BuildController(gltfImportResult.animationClips, gltfImportResult.resetAnimationClip,
                 headJoint);
 
+            didimoComponents.Parts.LeftEyeMeshRenderer.updateWhenOffscreen = true;
+            didimoComponents.Parts.RightEyeMeshRenderer.updateWhenOffscreen = true;
+            if (didimoComponents.Parts.EyeLashesMeshRenderer != null)
+            {
+                didimoComponents.Parts.EyeLashesMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
+            }
+            
             SetAvatar(importSettings, root);
         }
 

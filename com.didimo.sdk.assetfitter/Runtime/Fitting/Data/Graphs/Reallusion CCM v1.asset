@@ -103,7 +103,7 @@ MonoBehaviour:
     output:
       node: 6fca55d3-c16b-4397-87ee-ff4f68743970
       field: accessoryFilterOutput
-  viewPosition: {x: -171, y: 176, z: 0}
+  viewPosition: {x: -127, y: 78, z: 0}
   viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
   config:
     exposeFields: []
@@ -117,7 +117,7 @@ MonoBehaviour:
         id: 
         position: {x: 625, y: 453}
         expanded: 1
-        meshOutput: {fileID: 0}
+        meshOutput: {fileID: -2432090755550338912, guid: 8169314b42d6ede41b7348e3cde896be, type: 3}
     - rid: 6544325761883701500
       type: {class: CommandTPSWeightsCreate, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
@@ -226,6 +226,7 @@ MonoBehaviour:
         wrapMesh: {fileID: 0}
         tpsWeightsInput: {fileID: 0}
         prefabOutput: {fileID: 0}
+        excludeDidimoMeshes: 0
     - rid: 6544325761883701509
       type: {class: CommandReallusion, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:

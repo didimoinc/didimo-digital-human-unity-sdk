@@ -77,7 +77,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                         return true;
 
                     case nameof(manifoldOutput):
-                        values = CreateManifold();
+                        values = new List<object> { CreateManifold() };
                         return true;
 
                     default:
@@ -89,7 +89,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             return base.GetOutputValues(info, out values);
         }
 
-        public override List<object> CreateManifold()
+        public override Mesh CreateManifold()
         {
             Mesh mesh = GetCharacterShapeSkin().sharedMesh;
             Mesh combined = CombineMeshesIntoSubMeshes(new[] {
@@ -100,8 +100,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 GetSubMesh(mesh,Surface.Legs),
                 GetSubMesh(mesh,Surface.Arms),
             });
-            return CommandMeshIndexToUV.IndexToUV(
-                Seams.MergeEdges(new List<Mesh> { combined })).ToList<object>();
+            return CommandMeshIndexToUV.IndexToUV(Seams.MergeEdges(new List<Mesh> { combined }))[0];
         }
 
         Mesh GetSubMesh(Mesh mesh, Surface surface)
