@@ -361,10 +361,10 @@ namespace Didimo.Mobile.Controller
             public Didimo(DidimoComponents didimo)
             {
                 this.didimo = didimo;
-                primarySkin = didimo.GetComponentsInChildren<SkinnedMeshRenderer>().FirstOrDefault(s => s.name.Contains("baseFace"));
+                primarySkin = didimo.Parts.HeadMeshRenderer;
                 LeftEyeBone = primarySkin.bones.FirstOrDefault(b => b.name == LeftEye);
                 RightEyeBone = primarySkin.bones.FirstOrDefault(b => b.name == RightEye);
-                HeadBone = primarySkin.bones.FirstOrDefault(b => b.name == Head);
+                HeadBone = didimo.Parts.HeadJoint;
                 NeckBone = primarySkin.bones.FirstOrDefault(b => b.name == Neck);
 
                 int neckBoneIndex = Array.IndexOf(primarySkin.bones, NeckBone);

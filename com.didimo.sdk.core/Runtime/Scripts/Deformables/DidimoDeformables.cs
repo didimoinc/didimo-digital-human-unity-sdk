@@ -40,8 +40,9 @@ namespace Didimo.Core.Deformables
             if (string.IsNullOrEmpty(deformationFilePath)) return null;
 
 #if UNITY_EDITOR
+            string projectPath = Path.GetDirectoryName(Application.dataPath)!.Replace('\\', '/');
             TextAsset deformationFile =
-                AssetDatabase.LoadAssetAtPath<TextAsset>(deformationFilePath.Replace('\\', '/'));
+                AssetDatabase.LoadAssetAtPath<TextAsset>(deformationFilePath.Replace('\\', '/').Replace(projectPath + "/", ""));
             if (deformationFile != null) return deformationFile;
 #endif
             if (File.Exists(deformationFilePath)) return new ByteAsset(File.ReadAllBytes(deformationFilePath));

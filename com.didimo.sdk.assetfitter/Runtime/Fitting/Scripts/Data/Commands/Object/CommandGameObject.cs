@@ -51,7 +51,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     case nameof(garmentOutput): if ((values = getBodyPart(Clothing)) != null) return true; break;
                     // case nameof(hairOutput): if ((values = getBodyPart(Hair)) != null) return true; break;
 
-                    case nameof(manifoldOutput): values = CreateManifold(); return true;
+                    case nameof(manifoldOutput): values = new List<object> { CreateManifold() }; return true;
                 }
             }
             return base.GetOutputValues(info, out values);
@@ -71,7 +71,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         List<object> getBodyPart(string name) => new List<object>() { getComponentByName(name) };
 
-        public override List<object> CreateManifold()
+        public override Mesh CreateManifold()
         {
             Mesh headMesh = getComponentByName(HeadMesh), bodyMesh = getComponentByName(Body);
 
@@ -90,7 +90,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
             Mesh merged = Seams.MergeEdges(combined);
             merged.name = prefabOutput.name + "_manifold";
-            return CommandMeshIndexToUV.IndexToUV(new List<Mesh> { merged }).ToList<object>();
+            return CommandMeshIndexToUV.IndexToUV(new List<Mesh> { merged })[0];
         }
 
         public static string HeadJoint = "Head";

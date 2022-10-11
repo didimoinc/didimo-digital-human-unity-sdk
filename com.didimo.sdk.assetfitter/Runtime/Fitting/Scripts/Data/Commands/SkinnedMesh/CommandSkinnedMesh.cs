@@ -21,6 +21,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         [Output("Bones")] public Transform[] bonesOutput;
         [Output("Materials")] public Material[] materialsOutput;
         [Output("Mesh")] public Mesh meshOutput;
+        [Expose] public MeshBake meshBake = MeshBake.NoBake;
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
@@ -29,7 +30,17 @@ namespace Didimo.AssetFitter.Editor.Graph
             switch (info.Name)
             {
                 case nameof(meshOutput):
-                    values = new List<object>(skins.Select(s => s.sharedMesh).Where(m => m).Select(m => CloneAsset(m)));
+                    switch (meshBake)
+                    {
+                        default:
+                        case MeshBake.NoBake:
+                            values = skins.Where(s => s.sharedMesh).Select(s => CloneAsset(s.sharedMesh)).ToList<object>();
+                            break;
+
+                        case MeshBake.Bake:
+                            values = skins.Where(s => s.sharedMesh).Select(s => s.BakeMeshPreserveBindings()).ToList<object>();
+                            break;
+                    }
                     return true;
                 case nameof(rootBoneOutput):
                     values = skins.Select(s => s.rootBone).ToList<object>();
@@ -42,6 +53,12 @@ namespace Didimo.AssetFitter.Editor.Graph
                     return true;
             }
             return base.GetOutputValues(info, out values);
+        }
+
+        public enum MeshBake
+        {
+            NoBake = 0,
+            Bake = 1,
         }
     }
 }

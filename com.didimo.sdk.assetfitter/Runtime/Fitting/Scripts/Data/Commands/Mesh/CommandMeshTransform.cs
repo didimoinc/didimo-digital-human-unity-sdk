@@ -33,7 +33,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             return false;
         }
 
-        static List<Mesh> TransformVertices(List<Mesh> meshes, Matrix4x4 matrix)
+        public static List<Mesh> TransformVertices(List<Mesh> meshes, Matrix4x4 matrix)
         {
             List<Mesh> output = new List<Mesh>();
             for (int i = 0; i < meshes.Count; i++)

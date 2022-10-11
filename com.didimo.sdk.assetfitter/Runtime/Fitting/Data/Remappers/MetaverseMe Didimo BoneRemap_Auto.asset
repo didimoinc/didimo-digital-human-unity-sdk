@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3e1b8a03be5a6429b63824e0578d72, type: 3}
+  m_Name: MetaverseMe Didimo BoneRemap_Auto
+  m_EditorClassIdentifier: 
+  remaps:
+  - from: Head
+    to: Head
+  - from: HeadTop_End
+    to: Head
+  - from: Neck
+    to: Neck
+  - from: LeftShoulder
+    to: LeftShoulder
+  - from: RightShoulder
+    to: RightShoulder
+  - from: LeftArm
+    to: LeftArm
+  - from: RightArm
+    to: RightArm
+  - from: LeftForeArm
+    to: LeftForeArm
+  - from: RightForeArm
+    to: RightForeArm
+  - from: Spine2
+    to: Spine2
+  - from: Spine1
+    to: Spine1
+  - from: Spine
+    to: Spine
+  - from: Hips
+    to: Hips
+  - from: RightHand
+    to: RightHand
+  - from: LeftHand
+    to: LeftHand
+  - from: RightHandThumb1
+    to: RightHandThumb1
+  - from: RightHandThumb2
+    to: RightHandThumb2
+  - from: RightHandThumb3
+    to: RightHandThumb3
+  - from: RightHandThumb4
+    to: RightHandThumb4
+  - from: LeftHandThumb1
+    to: LeftHandThumb1
+  - from: LeftHandThumb2
+    to: LeftHandThumb2
+  - from: LeftHandThumb3
+    to: LeftHandThumb3
+  - from: LeftHandThumb4
+    to: LeftHandThumb4
+  - from: RightHandIndex1
+    to: RightHandIndex1
+  - from: RightHandIndex2
+    to: RightHandIndex2
+  - from: RightHandIndex3
+    to: RightHandIndex3
+  - from: RightHandIndex4
+    to: RightHandIndex4
+  - from: LeftHandIndex1
+    to: LeftHandIndex1
+  - from: LeftHandIndex2
+    to: LeftHandIndex2
+  - from: LeftHandIndex3
+    to: LeftHandIndex3
+  - from: LeftHandIndex4
+    to: LeftHandIndex4
+  - from: RightHandMiddle1
+    to: RightHandMiddle1
+  - from: RightHandMiddle2
+    to: RightHandMiddle2
+  - from: RightHandMiddle3
+    to: RightHandMiddle3
+  - from: RightHandMiddle4
+    to: RightHandMiddle4
+  - from: LeftHandMiddle1
+    to: LeftHandMiddle1
+  - from: LeftHandMiddle2
+    to: LeftHandMiddle2
+  - from: LeftHandMiddle3
+    to: LeftHandMiddle3
+  - from: LeftHandMiddle4
+    to: LeftHandMiddle4
+  - from: RightHandRing1
+    to: RightHandRing1
+  - from: RightHandRing2
+    to: RightHandRing2
+  - from: RightHandRing3
+    to: RightHandRing3
+  - from: RightHandRing4
+    to: RightHandRing4
+  - from: LeftHandRing1
+    to: LeftHandRing1
+  - from: LeftHandRing2
+    to: LeftHandRing2
+  - from: LeftHandRing3
+    to: LeftHandRing3
+  - from: LeftHandRing4
+    to: LeftHandRing4
+  - from: RightHandPinky1
+    to: RightHandPinky1
+  - from: RightHandPinky2
+    to: RightHandPinky2
+  - from: RightHandPinky3
+    to: RightHandPinky3
+  - from: RightHandPinky4
+    to: RightHandPinky4
+  - from: LeftHandPinky1
+    to: LeftHandPinky1
+  - from: LeftHandPinky2
+    to: LeftHandPinky2
+  - from: LeftHandPinky3
+    to: LeftHandPinky3
+  - from: LeftHandPinky4
+    to: LeftHandPinky4
+  - from: LeftUpLeg
+    to: LeftUpLeg
+  - from: RightUpLeg
+    to: RightUpLeg
+  - from: LeftLeg
+    to: LeftLeg
+  - from: RightLeg
+    to: RightLeg
+  - from: RightFoot
+    to: RightFoot
+  - from: LeftFoot
+    to: LeftFoot
+  - from: LeftToeBase
+    to: LeftToeBase
+  - from: LeftToe_End
+    to: LeftToeEnd
+  - from: RightToe_End
+    to: RightToeEnd
+  - from: RightToeBase
+    to: RightToeBase

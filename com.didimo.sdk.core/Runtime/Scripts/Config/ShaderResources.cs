@@ -52,14 +52,14 @@ namespace Didimo.Core.Config
                 return EHairLayer.INNER_OPAQUE;
             if (name.Contains("solid", StringComparison.CurrentCultureIgnoreCase)) //sometimes they call it solid, so solid shall be checked for
                 return EHairLayer.INNER_OPAQUE;
-            else if (name.Contains("outer", StringComparison.CurrentCultureIgnoreCase))
+            if (name.Contains("outer", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.OUTER;
-            else if (name.Contains("fringe", StringComparison.CurrentCultureIgnoreCase))
+            if (name.Contains("fringe", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.INNER_FRINGE;
-            else if (name.Contains("inner", StringComparison.CurrentCultureIgnoreCase))
+            if (name.Contains("inner", StringComparison.CurrentCultureIgnoreCase))
                 return EHairLayer.INNER_OPAQUE;
-            else
-                return EHairLayer.UNKNOWN;
+            
+            return EHairLayer.UNKNOWN;
         }
 
 
@@ -70,6 +70,7 @@ namespace Didimo.Core.Config
         public Shader SkinMergedAtlasedTextures;
         public Shader Mouth;
         public Shader Eyelash;
+        public Shader PBRTransparent;
         public Shader UnlitTexture;
         public Shader BasicPBRLitShader;
         public Shader Hair;

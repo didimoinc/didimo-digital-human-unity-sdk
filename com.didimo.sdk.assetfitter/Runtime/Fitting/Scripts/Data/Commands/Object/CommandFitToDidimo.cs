@@ -46,7 +46,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                 SkinnedMeshRenderer primarySkin = didimo.GetComponentInChildren<SkinnedMeshRenderer>();
 
-                Transform[] sourceBones = GetInputValue<SkinnedMeshRenderer>(nameof(sourceSkinInput)).bones;
+                Transform[] sourceBones = shapeSkin.bones;
                 BoneIndexRemap boneStructure = GetBoneIndexRemap();
                 Dictionary<int, int> remapIndex = boneStructure?.GetRemapTable(sourceBones, primarySkin.bones);
 
@@ -55,33 +55,44 @@ namespace Didimo.AssetFitter.Editor.Graph
                     AccessoryType type = GetAccessoryType(accessory);
                     if (type == AccessoryType.Ignore) continue;
 
-                    Mesh bmesh = CloneAsset(accessory.sharedMesh);
-                    //Debug.Log("Accessory: " + mesh.boneWeights.Count());
-                    accessory.BakeMesh(bmesh);
-                    //Debug.Log("After Bake: " + mesh.boneWeights.Count());
-                    Mesh mesh = CloneAsset(accessory.sharedMesh);
-                    mesh.vertices = bmesh.vertices;
-                    mesh.normals = bmesh.normals;
-                    mesh.tangents = bmesh.tangents;
-                    mesh.RecalculateBounds();
+                    /* Mesh bmesh = CloneAsset(accessory.sharedMesh);
+                     //Debug.Log("Accessory: " + mesh.boneWeights.Count());
+                     accessory.BakeMesh(bmesh);
+                     //Debug.Log("After Bake: " + mesh.boneWeights.Count());
+                     Mesh mesh = CloneAsset(accessory.sharedMesh);
+                     mesh.vertices = bmesh.vertices;
+                     mesh.normals = bmesh.normals;
+                     mesh.tangents = bmesh.tangents;
+                     mesh.RecalculateBounds();*/
+
+                    Mesh mesh = accessory.BakeMeshPreserveBindings();
+
+                    BoneIndexRemap remap = GetBoneIndexRemap(type);
+                    var remapTable = remap?.GetRemapTable(accessory.bones, primarySkin.bones);
 
                     if (shapeSkin.bones.Intersect(accessory.bones).Count() == 0)
                     {
                         Transform parent = boneStructure.FindParentBone(accessory.transform, sourceBones, primarySkin.bones);
-                        if (!parent)
+                        if (parent)
                         {
-                            Debug.LogWarning(accessory.name + " can't find parent to remap to.");
+                            GameObject obj = new GameObject(accessory.name) { transform = { parent = parent } };
+                            obj.AddComponent<MeshFilter>().sharedMesh = ApplyTransform(mesh, accessory.transform);
+                            obj.AddComponent<MeshRenderer>().sharedMaterials = accessory.sharedMaterials;
                             continue;
                         }
 
-                        GameObject obj = new GameObject(accessory.name) { transform = { parent = parent } };
+                        // no parent == not in the bone structure of the avatar
+                        // this may fail on certain accessories
+                        // this is not optimised
+                        foreach (var b in accessory.bones)
+                        {
+                            var p = boneStructure.FindParentBone(b, sourceBones, primarySkin.bones);
+                            remapTable.TryAdd(accessory.bones.ToList().IndexOf(b), primarySkin.bones.ToList().IndexOf(p));
+                        }
 
-                        obj.AddComponent<MeshFilter>().sharedMesh = ApplyTransform(mesh, accessory.transform);
-                        obj.AddComponent<MeshRenderer>().sharedMaterials = accessory.sharedMaterials;
-                        continue;
                     }
 
-                    BoneIndexRemap remap = GetBoneIndexRemap(type);
+
                     SkinnedMeshRenderer nskin = new GameObject(mesh.name) { transform = { parent = primarySkin.transform.parent } }.
                         AddComponent<SkinnedMeshRenderer>();
 
@@ -91,7 +102,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     string[] boneNames = accessory.bones.Select(b => b.name).ToArray();
 
                     nskin.sharedMesh.boneWeights = mesh.boneWeights.Select((bw, i) => CommandSkinnedMeshRemapBind.RemapBone(boneNames, i, bw,
-                                                                                remap?.GetRemapTable(accessory.bones, primarySkin.bones))).ToArray();
+                                                                               remapTable)).ToArray();
 
                     nskin.sharedMesh.bindposes = GetBindPoses(primarySkin.bones);
                     nskin.rootBone = primarySkin.rootBone;

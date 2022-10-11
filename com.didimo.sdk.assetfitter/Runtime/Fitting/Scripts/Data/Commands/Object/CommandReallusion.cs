@@ -6,12 +6,13 @@ using System.Reflection;
 using UnityEngine;
 using static Didimo.AssetFitter.Editor.Graph.MeshTools;
 using static Didimo.AssetFitter.Editor.Graph.AssetTools;
+using Didimo.Extensions;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
     [System.Serializable]
     [MenuPath("Object/Reallusion")]
-    [DisplayName("Reallusion CC")]
+    [DisplayName("Reallusion CC3")]
     [Width(240)]
     [HeaderColor("#2883bcCC")]
     public class CommandReallusion : CommandAvatar
@@ -53,14 +54,15 @@ namespace Didimo.AssetFitter.Editor.Graph
         internal override void Build()
         {
             builtPrefab = CloneAsset(this.prefabOutput);
+            builtPrefab.GetComponentsInChildren<Renderer>().ForEach(s => s.transform.rotation *= Quaternion.Euler(90, 0, 0));
             GraphData.State.Add(builtPrefab);
         }
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
-            GameObject prefabOutput = builtPrefab;
+            //GameObject prefabOutput = builtPrefab;
 
-            if (prefabOutput)
+            if (builtPrefab)
             {
                 switch (info.Name)
                 {
@@ -80,7 +82,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                         return true;
 
                     case nameof(manifoldOutput):
-                        values = CreateManifold();
+                        values = new List<object> { CreateManifold() };
                         return true;
 
                     default:
@@ -92,54 +94,65 @@ namespace Didimo.AssetFitter.Editor.Graph
             return base.GetOutputValues(info, out values);
         }
 
-        public override List<object> CreateManifold()
+        public override Mesh CreateManifold()
         {
-            Mesh mesh = GetShapeSkin().sharedMesh;
+            SkinnedMeshRenderer skin = GetShapeSkin();
+            Mesh mesh = skin.BakeMeshPreserveBindings();
+
             Mesh combined = CombineMeshesIntoSubMeshes(new[] {
                 GetSubMesh(mesh, BodySurface.Head),
                 GetSubMesh(mesh, BodySurface.Body),
                 GetSubMesh(mesh, BodySurface.Arm),
                 GetSubMesh(mesh, BodySurface.Leg),
             });
-            return CommandMeshIndexToUV.IndexToUV(
-                    Seams.MergeEdges(new List<Mesh> { combined })).ToList<object>();
+
+            //Matrix4x4 matrix = Matrix4x4.Rotate(Quaternion.Euler(-90, 0, 0));
+            //return CommandMeshTransform.TransformVertices(CommandMeshIndexToUV.IndexToUV(Seams.MergeEdges(new List<Mesh> { combined })), matrix)[0];
+            return CommandMeshIndexToUV.IndexToUV(Seams.MergeEdges(new List<Mesh> { combined }))[0];
 
         }
 
-        Mesh GetSubMesh(Mesh mesh, BodySurface surface)
+        static Mesh GetSubMesh(Mesh mesh, BodySurface surface)
         {
             BodySurface[] order = ReallusionBodySurface;
             int subMeshIndex = order.ToList().IndexOf(surface);
             Mesh subMesh = ExtractSubMesh(mesh, subMeshIndex);
 
-            /*  Quaternion rotation = Quaternion.Euler(90, 0, 0);
-              subMesh.vertices = subMesh.vertices.Select(v => rotation * v).ToArray();
-              subMesh.normals = subMesh.normals.Select(v => rotation * v).ToArray();
-              subMesh.RecalculateBounds();
-              subMesh.RecalculateTangents(); */
 
-            subMesh.name = prefabOutput.name + "_" + Enum.GetName(typeof(BodySurface), surface);
+            subMesh.name = mesh.name + "_" + Enum.GetName(typeof(BodySurface), surface);
             return subMesh;
         }
 
         SkinnedMeshRenderer GetShapeSkin() =>
-            prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
+            builtPrefab.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 FirstOrDefault(s => s.name.Contains("CC_Base_Body"));
 
         //Fetch gender from "Female / Male" key word in eyebrow GO that comes with Reallusion Avatars
         SkinnedMeshRenderer GetGender() =>
-            prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
+            builtPrefab.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 FirstOrDefault(s => s.name.Contains("Female"));
 
-        SkinnedMeshRenderer[] GetAccessorySkins() =>
-            prefabOutput.GetComponentsInChildren<SkinnedMeshRenderer>(true).
+        SkinnedMeshRenderer[] GetAccessorySkins()
+        {
+            var skins = builtPrefab.GetComponentsInChildren<SkinnedMeshRenderer>(true).
                 Where(s => !s.name.StartsWith("CC_Base_") &&
                            !s.name.Contains("Camera") &&
                            !s.name.Contains("Shadow")).ToArray();
 
+            // for (int i = 0; i < skins.Length; i++)
+            // {
+            //     Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            //     skins[i].sharedMesh.vertices = skins[i].sharedMesh.vertices.Select(v => rotation * v).ToArray();
+            //     skins[i].sharedMesh.normals = skins[i].sharedMesh.normals.Select(v => rotation * v).ToArray();
+            //     skins[i].sharedMesh.RecalculateBounds();
+            //     skins[i].sharedMesh.RecalculateTangents();
+            // }
+            return skins;
+        }
+
         MeshFilter[] GetAccessoryFilters()
         {
-            return prefabOutput.GetComponentsInChildren<MeshFilter>(true);
+            return builtPrefab.GetComponentsInChildren<MeshFilter>(true);
         }
 
         enum BodySurface
@@ -152,7 +165,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             Eyelash = 5,
         }
 
-        BodySurface[] ReallusionBodySurface =
+        static BodySurface[] ReallusionBodySurface =
         {
             BodySurface.Head,
             BodySurface.Body,

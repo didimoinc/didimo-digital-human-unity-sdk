@@ -9,6 +9,6 @@ namespace Didimo.AssetFitter.Editor.Graph
     {
         public abstract Gender gender { get; }
         public abstract GameObject GetPrefab();
-        public abstract List<object> CreateManifold();
+        public abstract Mesh CreateManifold();
     }
 }

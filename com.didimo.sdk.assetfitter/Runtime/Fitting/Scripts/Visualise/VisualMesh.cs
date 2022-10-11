@@ -205,8 +205,6 @@ namespace Didimo.AssetFitter.Editor.Graph
                 public void DrawConnections(Transform[] fromBones, Transform selectedBone, float boneSize)
                 {
                     if (!skin || !boneRemap || !show) return;
-                    Matrix4x4 matrix = Handles.matrix;
-                    Handles.matrix = Matrix4x4.identity;
                     Transform[] toBones = skin.bones;
                     Dictionary<int, int> map = boneRemap.GetRemapTable(fromBones, toBones);
 
@@ -234,7 +232,6 @@ namespace Didimo.AssetFitter.Editor.Graph
                         }
                     }
                     Handles.color = c;
-                    Handles.matrix = matrix;
                 }
 
                 IEnumerable<string> GetRemapDifferences(Transform[] fromBones) => fromBones.Select(b => b.name).Except(boneRemap.remaps.Select(r => r.from));
@@ -284,8 +281,11 @@ namespace Didimo.AssetFitter.Editor.Graph
             public override void OnSceneGUI(VisualMeshEditor editor)
             {
                 if (!showBones) return;
+                Matrix4x4 matrix = Handles.matrix;
+                Handles.matrix = Matrix4x4.identity;
                 DrawRig(skin);
                 boneRemapCompare.DrawConnections(skin.bones, selectedBone, boneSize);
+                Handles.matrix = matrix;
             }
 
             void DrawRig(SkinnedMeshRenderer skin)

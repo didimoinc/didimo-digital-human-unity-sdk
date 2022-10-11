@@ -23,11 +23,11 @@ half getMainShadow(float3 wP)
 
 #endif
 
-void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, inout half3 diffuse, inout half3 psuedoSss, inout half3 transmission)
+void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, inout half3 diffuse, inout half3 psuedoSss, inout half3 transmission, in half shadowValue)
 {
 	half lambert = dot(tN, tD);
-	//diffuse += lightColor * max(0, lambert);
-	psuedoSss += lightColor * clamp(lambert + sssAdd, 0, 1);
+	//diffuse += lightColor * max(0, lambert);    
+	psuedoSss += lightColor * clamp(lambert + sssAdd, 0, 1) * shadowValue;
 	half tLambert = dot(-tN, tD) ;
 
 	//float LdotN = dot(lTd, tN);
@@ -37,6 +37,7 @@ void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, ino
 	transmission += lightColor * max(0, pow(tLambert,3.0));
 }
 
+#define TRANSMAP_ADJUST_AS_ITS_TOO_BRIGHT_IN_THE_WRONG_PLACES
 void PsuedoSSS_float(in half3x3 tS, in float3 wP, in float3 tN, in half4 ssUv, in half3 baseColor, in half3 sssColor, in half sssAdd, in half3 transColor, in half transMap, out half3 outColor)
 {
 #ifdef SHADERGRAPH_PREVIEW
@@ -53,8 +54,12 @@ void PsuedoSSS_float(in half3x3 tS, in float3 wP, in float3 tN, in half4 ssUv, i
 
 	float3 tD = normalize(mul(tS, mainLight.direction));
 	half ShadowAtten = getMainShadow(wP);
+    #ifdef TRANSMAP_ADJUST_AS_ITS_TOO_BRIGHT_IN_THE_WRONG_PLACES
+    transMap = max(0, transMap - 0.19);
+    transMap = transMap * transMap;
+    #endif
 
-	evalDiffuse(tN, tD, sssAdd, mainLight.color * mainLight.distanceAttenuation * ShadowAtten, diffuse, psuedoSss, transmission);
+	evalDiffuse(tN, tD, sssAdd, mainLight.color * mainLight.distanceAttenuation , diffuse, psuedoSss, transmission, ShadowAtten);
 
 	int pixelLightCount = GetAdditionalLightsCount();
 	for (int i = 0; i < pixelLightCount; ++i)
@@ -62,9 +67,9 @@ void PsuedoSSS_float(in half3x3 tS, in float3 wP, in float3 tN, in half4 ssUv, i
 		Light light = GetAdditionalLight(i, wP);
 		tD = normalize(mul(tS, light.direction));
 
-		evalDiffuse(tN, tD, sssAdd, light.color * light.distanceAttenuation * light.shadowAttenuation, diffuse, psuedoSss, transmission);
+		evalDiffuse(tN, tD, sssAdd, light.color * light.distanceAttenuation , diffuse, psuedoSss, transmission, light.shadowAttenuation);
 	}
-
+    
 	half3 wN = normalize(mul(tN, tS));
 
 	half3 indDiff = SampleSH(wN);
@@ -225,7 +230,7 @@ void Eye_float(in half3x3 tS,
 
 	NdotL = (NdotL + scattering) / (1.0 + scattering);
 
-	float3 diffuse = max(0.01, NdotL) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
+	float3 diffuse = max(0.0, NdotL) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
 
 	float3 irisSpec = evalBlinn(tD, itN, tV, highlightShadow, IrisShininess) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
 	float3 corneaSpec = evalBlinn(wD, tN, wV, highlightShadow, EyeShininess) * mainLight.color * mainLight.distanceAttenuation * ShadowAtten;
@@ -237,9 +242,10 @@ void Eye_float(in half3x3 tS,
 		tD = normalize(mul(tS, light.direction));
 		float NdotL = dot(itN, tD);
 		NdotL = (NdotL + scattering) / (1.0 + scattering);
-		diffuse += max(0.01, NdotL) * light.color * light.distanceAttenuation * light.shadowAttenuation;
-		irisSpec += evalBlinn(tD, itN, tV, highlightShadow, IrisShininess) * light.color * light.distanceAttenuation * light.shadowAttenuation;
-		corneaSpec += evalBlinn(light.direction, tN, wV, highlightShadow, EyeShininess) * light.color * light.distanceAttenuation * light.shadowAttenuation;
+        float shadow = light.shadowAttenuation;
+		diffuse += max(0.00, NdotL) * light.color * light.distanceAttenuation * shadow;
+		irisSpec += evalBlinn(tD, itN, tV, highlightShadow, IrisShininess) * light.color * light.distanceAttenuation * shadow;
+		corneaSpec += evalBlinn(light.direction, tN, wV, highlightShadow, EyeShininess) * light.color * light.distanceAttenuation * shadow;
 	}
 
 	irisSpec *= refrHeight * 4;

@@ -116,6 +116,33 @@ namespace Didimo.AssetFitter.Editor.Graph
             }
         }
 
+        public static Mesh BakeMeshPreserveBindings(this SkinnedMeshRenderer skin)
+        {
+            Mesh bmesh = CloneAsset(skin.sharedMesh);
+            skin.BakeMesh(bmesh);
+            Mesh mesh = CloneAsset(skin.sharedMesh);
+            mesh.vertices = bmesh.vertices;
+            mesh.normals = bmesh.normals;
+            mesh.tangents = bmesh.tangents;
+            mesh.RecalculateBounds();
+            Debug.Log("BakeMeshPreserveBindings: " + skin.name);
+            //UnityEngine.Object.Instantiate(skin).sharedMesh = mesh;
+            return mesh;
+        }
+
+        // public static Mesh BakeMeshPreserveBindings2(this SkinnedMeshRenderer skin)
+        // {
+        //     Mesh bmesh = CloneAsset(skin.sharedMesh);
+        //     skin.BakeMesh(bmesh);
+        //     Mesh mesh = CloneAsset(skin.sharedMesh);
+        //     mesh.vertices = bmesh.vertices.Select(v => v + Vector3.left).ToArray();
+        //     mesh.normals = bmesh.normals;
+        //     mesh.tangents = bmesh.tangents;
+        //     mesh.RecalculateBounds();
+        //     Debug.Log("BakeMeshPreserveBindings: " + skin.name);
+        //     return mesh;
+        // }
+
         public static Mesh GetMesh(this Renderer renderer) =>
             renderer is SkinnedMeshRenderer ? (renderer as SkinnedMeshRenderer).sharedMesh :
                 (renderer.TryGetComponent(out MeshFilter filter) ? filter.sharedMesh : null);
