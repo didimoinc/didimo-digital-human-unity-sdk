@@ -14,7 +14,7 @@ namespace Didimo.Core.Deformables
         private static List<Deformable> GetDeformablesFromDatabase(string databaseName)
         {
             DeformableDatabase deformableDatabase = Resources.Load<DeformableDatabase>(databaseName);
-            return new List<Deformable>(deformableDatabase.Deformables);
+            return deformableDatabase != null? new List<Deformable>(deformableDatabase.Deformables) : new List<Deformable>();
         }
 
         public static List<Deformable> GetPublicDeformables() => GetDeformablesFromDatabase(PUBLIC_DATABASE);

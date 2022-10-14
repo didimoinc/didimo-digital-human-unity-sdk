@@ -37,13 +37,16 @@ namespace  Didimo.Core.Utility
             result.tangents = source.tangents;
             result.colors = source.colors;
             result.triangles = source.triangles;
-
+            result.boneWeights = source.boneWeights;
+            result.bindposes = source.bindposes;
+            
             List<SubMeshDescriptor> subMeshDescriptors = new List<SubMeshDescriptor>(source.subMeshCount);
             for (int submeshIndex = 0; submeshIndex < source.subMeshCount; submeshIndex++)
             {
                 subMeshDescriptors.Add(source.GetSubMesh(submeshIndex));
             }
             result.SetSubMeshes(subMeshDescriptors);
+
 
             return result;
         }
