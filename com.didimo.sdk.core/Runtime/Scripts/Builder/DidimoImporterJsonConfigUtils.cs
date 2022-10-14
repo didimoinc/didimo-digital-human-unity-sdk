@@ -199,7 +199,8 @@ namespace Didimo.Builder
             Action<Object> onObjectCreated)
         {
             GameObject didimoHair = didimoComponents.Parts.HairMesh.gameObject;
-            var deformableDatabase = DeformableUtils.GetAllDeformables();
+
+            List<Deformable> deformableDatabase = DeformableUtils.GetAllDeformables();
             GameObject prefabHair = deformableDatabase.FirstOrDefault(d => d.name.Equals(hairProperties.meshId))
                 ?.gameObject;
             if (prefabHair != null)
