@@ -240,10 +240,14 @@ namespace Didimo.Builder
                 
                 deformedMesh.boneWeights = boneWeights;
                 deformedMesh.bindposes = didimoMesh.bindposes;
-                targetSkinMR.sharedMesh = deformedMesh;
+                MeshUtils.CopyMesh(deformedMesh, targetSkinMR.sharedMesh);
                 
                 Hair hair = didimoHair.AddComponent<Hair>();
                 hair.SetPreset(hairProperties.color);
+            }
+            else
+            {
+                Debug.Log("Prefab was null");
             }
         }
 
