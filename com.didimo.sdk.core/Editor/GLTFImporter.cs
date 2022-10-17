@@ -65,67 +65,86 @@ namespace Didimo.Core.Editor
         {
             ShaderResources shaderResources = ResourcesLoader.ShaderResources();
 
-            if (shaderResources == null)
+            GameObject rootNode = null;
+
+            try
             {
-                Debug.LogError("Shader resources was null.");
-                return;
-            }
-
-            MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
-
-            if (importSettings == null) importSettings = new ImportSettings();
-            importSettings.animationSettings.useLegacyClips = true;
-            importSettings.shaderForName = shaderName =>
-            {
-                materialBuilder.FindIdealShader(shaderName, out Shader shader);
-                return shader;
-            };
-
-            DidimoImporterJsonConfig didimoImporterJsonConfig =
-                DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(ctx.assetPath)!);
-            importSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
-
-            Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath), importSettings,
-                gltfObject =>
+                if (shaderResources == null)
                 {
+                    Debug.LogError("Shader resources was null.");
+                    return;
+                }
+
+                MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
+
+                if (importSettings == null) importSettings = new ImportSettings();
+                importSettings.animationSettings.useLegacyClips = true;
+                importSettings.shaderForName = shaderName =>
+                {
+                    materialBuilder.FindIdealShader(shaderName, out Shader shader);
+                    return shader;
+                };
+
+                DidimoImporterJsonConfig didimoImporterJsonConfig =
+                    DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(ctx.assetPath)!);
+                importSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
+
+                Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath),
+                    importSettings,
+                    gltfObject =>
+                    {
+                        if (didimoImporterJsonConfig != null)
+                        {
+                            // We will be settings the materials and importing the textures after importing the gltf
+                            gltfObject.images = null;
+                            gltfObject.textures = null;
+                            gltfObject.materials = null;
+                            gltfObject.extensions ??= new GLTFObject.Extensions();
+                            gltfObject.extensions.Didimo = new DidimoExtension();
+                        }
+                    }, Format.GLTF);
+                rootNode = importResult.rootObject;
+
+                if (importResult.isDidimo || didimoImporterJsonConfig != null)
+                {
+                    importResult.isDidimo = true;
+                    importSettings.isDidimo = true;
+
                     if (didimoImporterJsonConfig != null)
                     {
-                        // We will be settings the materials and importing the textures after importing the gltf
-                        gltfObject.images = null;
-                        gltfObject.textures = null;
-                        gltfObject.materials = null;
-                        gltfObject.extensions ??= new GLTFObject.Extensions();
-                        gltfObject.extensions.Didimo = new DidimoExtension();
+                        DidimoImporterJsonConfigUtils.SetupDidimoForEditor(importResult.rootObject,
+                            didimoImporterJsonConfig, assetPath, importResult.animationClips,
+                            importResult.resetAnimationClip, null);
+                        GLTFBuildData.SetAvatar(importSettings, importResult.rootObject);
                     }
-                }, Format.GLTF);
-            
-            if (importResult.isDidimo || didimoImporterJsonConfig != null)
-            {
-                importResult.isDidimo = true;
-                importSettings.isDidimo = true;
-                
-                if (didimoImporterJsonConfig != null)
-                {
-                    DidimoImporterJsonConfigUtils.SetupDidimoForEditor(importResult.rootObject,
-                        didimoImporterJsonConfig, assetPath, importResult.animationClips,
-                        importResult.resetAnimationClip, null);
-                    GLTFBuildData.SetAvatar(importSettings, importResult.rootObject);
+                    else
+                    {
+                        GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings, ctx.assetPath);
+                    }
+
+                    // Save asset with reset pose Animation Clip
+                    List<AnimationClip> gltfAnimationClips = importResult.animationClips.ToList();
+                    if (importResult.resetAnimationClip != null)
+                        gltfAnimationClips.Add(importResult.resetAnimationClip);
+                    GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx,
+                        importSettings);
                 }
                 else
                 {
-                    GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings, ctx.assetPath);
+                    // Save asset
+                    GLTFAssetUtility.SaveToAsset(importResult.rootObject, importResult.animationClips, ctx,
+                        importSettings);
                 }
-                
-                // Save asset with reset pose Animation Clip
-                List<AnimationClip> gltfAnimationClips = importResult.animationClips.ToList();
-                if (importResult.resetAnimationClip != null) gltfAnimationClips.Add(importResult.resetAnimationClip);
-                GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx,
-                    importSettings);
+
             }
-            else
+            catch
             {
-                // Save asset
-                GLTFAssetUtility.SaveToAsset(importResult.rootObject, importResult.animationClips, ctx, importSettings);
+                if (rootNode != null)
+                {
+                    DestroyImmediate(rootNode);
+                }
+
+                throw;
             }
         }
 

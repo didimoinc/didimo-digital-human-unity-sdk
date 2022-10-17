@@ -13,6 +13,34 @@ namespace  Didimo.Core.Utility
 
     public static class MeshUtils
     {
+
+        public static void CopyMesh(Mesh source, Mesh target)
+        {
+            target.Clear();
+            target.vertices = source.vertices;
+            target.normals = source.normals;
+            target.uv = source.uv;
+            target.uv2 = source.uv2;
+            target.uv3 = source.uv3;
+            target.uv4 = source.uv4;
+            target.uv5 = source.uv5;
+            target.uv6 = source.uv6;
+            target.uv7 = source.uv7;
+            target.uv8 = source.uv8;
+            target.tangents = source.tangents;
+            target.colors = source.colors;
+            target.boneWeights = source.boneWeights;
+            target.bindposes = source.bindposes;
+            target.triangles = source.triangles;
+            
+            List<SubMeshDescriptor> subMeshDescriptors = new List<SubMeshDescriptor>(source.subMeshCount);
+            for (int submeshIndex = 0; submeshIndex < source.subMeshCount; submeshIndex++)
+            {
+                subMeshDescriptors.Add(source.GetSubMesh(submeshIndex));
+            }
+            target.SetSubMeshes(subMeshDescriptors);
+        }
+        
         /// <summary>
         /// Create a new mesh from an existing mesh with updated vertex positions,
         /// while keeping other properties intact. Also copies sub-meshes.
@@ -37,13 +65,16 @@ namespace  Didimo.Core.Utility
             result.tangents = source.tangents;
             result.colors = source.colors;
             result.triangles = source.triangles;
-
+            result.boneWeights = source.boneWeights;
+            result.bindposes = source.bindposes;
+            
             List<SubMeshDescriptor> subMeshDescriptors = new List<SubMeshDescriptor>(source.subMeshCount);
             for (int submeshIndex = 0; submeshIndex < source.subMeshCount; submeshIndex++)
             {
                 subMeshDescriptors.Add(source.GetSubMesh(submeshIndex));
             }
             result.SetSubMeshes(subMeshDescriptors);
+
 
             return result;
         }

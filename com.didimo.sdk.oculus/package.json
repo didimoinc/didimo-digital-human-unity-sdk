@@ -1,6 +1,6 @@
 {
   "name": "com.didimo.sdk.oculus",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "displayName": "Didimo SDK - Oculus",
   "description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\nThis module contains an example Oculus integration to help you get up and running builing didimos into your Oculus experiences as quick as possible.",
   "unity": "2020.3",
@@ -9,7 +9,7 @@
   "licensesUrl": "https://privacy.didimo.co/didimo-source-code-license/",
   "license": "Didimo Source Code License",
   "dependencies": {
-    "com.didimo.sdk.core": "4.5.0",
+    "com.didimo.sdk.core": "4.5.1",
     "com.unity.netcode.gameobjects": "1.0.0"
   },
   "keywords": [

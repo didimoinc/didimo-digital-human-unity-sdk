@@ -199,7 +199,8 @@ namespace Didimo.Builder
             Action<Object> onObjectCreated)
         {
             GameObject didimoHair = didimoComponents.Parts.HairMesh.gameObject;
-            var deformableDatabase = DeformableUtils.GetAllDeformables();
+
+            List<Deformable> deformableDatabase = DeformableUtils.GetAllDeformables();
             GameObject prefabHair = deformableDatabase.FirstOrDefault(d => d.name.Equals(hairProperties.meshId))
                 ?.gameObject;
             if (prefabHair != null)
@@ -218,19 +219,36 @@ namespace Didimo.Builder
 
                 Mesh prefabMesh = prefabHair.GetComponent<MeshFilter>().sharedMesh;
                 Mesh didimoMesh = targetSkinMR.sharedMesh;
+                Mesh deformedMesh = didimoComponents.Deformables.DeformMesh(prefabMesh, hairProperties.meshName);
 
-                didimoMesh.name = hairProperties.meshName;
-
-                didimoMesh.subMeshCount = prefabMesh.subMeshCount;
-                for (int i = 0; i < prefabMesh.subMeshCount; i++)
+                // The hair mesh that comes from the DGP can have different number of vertices from the hair mesh on the SDK
+                // We need to update the bone weights accordingly
+                // This assumes all bone weights are the same
+                BoneWeight[] boneWeights = didimoMesh.boneWeights;
+                if (boneWeights.Length > prefabMesh.vertices.Length)
                 {
-                    didimoMesh.SetSubMesh(i, prefabMesh.GetSubMesh(i));
+                    // Remove excess weights
+                    boneWeights = boneWeights.SkipLast(boneWeights.Length - prefabMesh.vertices.Length).ToArray();
                 }
-
-                targetSkinMR.sharedMesh = didimoMesh;
+                else if (boneWeights.Length < prefabMesh.vertices.Length)
+                {
+                    // Add missing weights
+                    int weightsNum = boneWeights.Length;
+                    int missingWeightsNum  = prefabMesh.vertices.Length - weightsNum;
+                    Array.Resize(ref boneWeights, prefabMesh.vertices.Length);
+                    Array.Fill(boneWeights, boneWeights.First(),weightsNum, missingWeightsNum);
+                }
+                
+                deformedMesh.boneWeights = boneWeights;
+                deformedMesh.bindposes = didimoMesh.bindposes;
+                MeshUtils.CopyMesh(deformedMesh, targetSkinMR.sharedMesh);
                 
                 Hair hair = didimoHair.AddComponent<Hair>();
                 hair.SetPreset(hairProperties.color);
+            }
+            else
+            {
+                Debug.Log("Prefab was null");
             }
         }
 

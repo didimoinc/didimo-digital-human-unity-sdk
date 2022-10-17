@@ -1,20 +1,31 @@
 using System.Collections.Generic;
 using System.Linq;
-using Didimo.Core.Deformables;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Didimo.Core.Deformables
 {
     public static class DeformableUtils
     {
+
         private const string PUBLIC_DATABASE   = "DeformableDatabase";
         private const string EXPERIMENTAL_DATABASE = "ExperimentalDeformableDatabase";
 
         private static List<Deformable> GetDeformablesFromDatabase(string databaseName)
         {
+            List<Deformable> result = new List<Deformable>();
             DeformableDatabase deformableDatabase = Resources.Load<DeformableDatabase>(databaseName);
-            return new List<Deformable>(deformableDatabase.Deformables);
+            if(deformableDatabase != null)
+            {
+                result = new List<Deformable>(deformableDatabase.Deformables);
+                // Unity has a bug, where when we import multiple glTF didimos at the same time, the second call to Resources.Load might return missing reference exceptions
+                // If we unload the asset, it doesn't happen anymore
+                Resources.UnloadAsset(deformableDatabase);
+            }
+
+            return result;
         }
 
         public static List<Deformable> GetPublicDeformables() => GetDeformablesFromDatabase(PUBLIC_DATABASE);
@@ -24,6 +35,7 @@ namespace Didimo.Core.Deformables
         {
             List<Deformable> deformables = GetPublicDeformables();
             deformables.AddRange(GetExperimentalDeformables());
+            
             return deformables;
         }
 

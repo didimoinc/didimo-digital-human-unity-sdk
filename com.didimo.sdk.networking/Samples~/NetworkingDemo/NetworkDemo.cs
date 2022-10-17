@@ -49,6 +49,12 @@ namespace Didimo.Networking
                 return;
             }
             
+            if (!Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("Error", "To use this feature you must first enter play mode", "OK");
+                return;
+            }
+            
             string photoFilePath = EditorUtility.OpenFilePanel("Choose a photo", "", "png,jpg");
             if (string.IsNullOrEmpty(photoFilePath)) return;
             ProgressMessage = "Creating your didimo";
@@ -108,6 +114,12 @@ namespace Didimo.Networking
                 EditorUtility.DisplayDialog("Error", "Please wait for the current request to complete.", "OK");
                 return;
 
+            }
+            
+            if (!Application.isPlaying)
+            {
+                EditorUtility.DisplayDialog("Error", "To use this feature you must first enter play mode", "OK");
+                return;
             }
 
             string chosenKey = didimoList[selectedDidimo];
