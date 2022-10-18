@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8884379042139902133}
   - component: {fileID: 6180900347676221309}
   m_Layer: 0
-  m_Name: BaseballHat_Hair_003
+  m_Name: baseball_cap_hair_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

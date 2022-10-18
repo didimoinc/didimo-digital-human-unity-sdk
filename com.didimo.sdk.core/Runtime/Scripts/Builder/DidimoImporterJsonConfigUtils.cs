@@ -208,7 +208,7 @@ namespace Didimo.Builder
                 SkinnedMeshRenderer targetSkinMR = didimoHair.GetComponent<SkinnedMeshRenderer>();
 
                 List<Material> newMaterials = new List<Material>();
-                foreach (Material mat in prefabHair.GetComponent<MeshRenderer>().sharedMaterials)
+                foreach (Material mat in prefabHair.GetComponentsInChildren<MeshRenderer>().First().sharedMaterials)
                 {
                     Material newMaterial = new Material(mat);
                     onObjectCreated?.Invoke(newMaterial);
@@ -217,7 +217,7 @@ namespace Didimo.Builder
 
                 targetSkinMR.sharedMaterials = newMaterials.ToArray();
 
-                Mesh prefabMesh = prefabHair.GetComponent<MeshFilter>().sharedMesh;
+                Mesh prefabMesh = prefabHair.GetComponentsInChildren<MeshFilter>().First().sharedMesh;
                 Mesh didimoMesh = targetSkinMR.sharedMesh;
                 Mesh deformedMesh = didimoComponents.Deformables.DeformMesh(prefabMesh, hairProperties.meshName);
 
