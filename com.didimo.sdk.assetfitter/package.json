@@ -1,6 +1,6 @@
 {
   "name": "com.didimo.sdk.assetfitter",
-  "version": "4.5.1-pre.1",
+  "version": "4.5.2-pre.1",
   "displayName": "Didimo SDK - Asset Fitter",
   "description": "Didimo provides a cloud-based automated service that enables the generation of digital humans from a simple selfie. We call these didimos.\n\nThis module allows you to fit assets in to your didimo.",
   "unity": "2020.3",
@@ -9,7 +9,7 @@
   "licensesUrl": "https://privacy.didimo.co/didimo-source-code-license/",
   "license": "Didimo Source Code License",
   "dependencies": {
-    "com.didimo.sdk.core": "4.5.1"
+    "com.didimo.sdk.core": "4.5.2"
   },
   "keywords": [
     "avatar",
