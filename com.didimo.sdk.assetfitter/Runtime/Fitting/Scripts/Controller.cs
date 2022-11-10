@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using static Didimo.AssetFitter.Editor.Graph.AssetTools;
+using static Didimo.AssetFitter.Editor.Graph.Controller;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
@@ -19,12 +21,20 @@ namespace Didimo.AssetFitter.Editor.Graph
         public string path;
         public CommandPrefabSave.SaveType saveType;
 
+        public int usingGraphIndex = -1;
+
+        internal int GetGraphIndex(AssetGraph graph) => Array.IndexOf(assetGraphs, graph);
+
         public AssetGraph GetValidGraph(GameObject input, GameObject output)
         {
-            foreach (var graph in assetGraphs)
-                if (graph.IsValid(input, output, saveType))
-                    return graph;
-            return null;
+            var validGraph = assetGraphs.FirstOrDefault(g => g.IsValid(input, output, saveType));
+            if (usingGraphIndex > -1)
+            {
+                int index = GetGraphIndex(validGraph);
+                if (index > -1) usingGraphIndex = index;
+                return assetGraphs[usingGraphIndex];
+            }
+            return validGraph;
         }
 
         [Serializable]
@@ -32,14 +42,15 @@ namespace Didimo.AssetFitter.Editor.Graph
         {
             public GraphData graph;
             public Gender gender;
+            public string name => graph?.name ?? "Null graph";
 
-            GraphData tempGraph;
+            [HideInInspector] GraphData tempGraph;
 
             public void Run(GameObject input, GameObject output, CommandPrefabSave.SaveType saveType)
             {
-                if (IsValid(input, output, saveType))
-                    tempGraph.Run();
-
+                if (!IsValid(input, output, saveType))
+                    throw new Exception("Graph is not valid!");
+                tempGraph.Run();
             }
 
             public bool IsValid(GameObject input, GameObject output, CommandPrefabSave.SaveType saveType)
@@ -48,41 +59,33 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                 tempGraph = AssetTools.CloneAsset(graph);
 
-                CommandDaz3D daz3DNode = tempGraph.FindNode<CommandDaz3D>("input");
                 CommandDidimo didimoNode = tempGraph.FindNode<CommandDidimo>("output");
+                // if (!didimoNode) throw new Exception("No didimo to Output");
+
+                CommandAvatar avatarNode = tempGraph.FindNode<CommandAvatar>("input");
+                // if (!avatarNode) throw new Exception("No 3rd Party Avatar Input");
+
                 CommandPrefabSave prefabNode = tempGraph.FindNode<CommandPrefabSave>("SavePrefab");
+                // if (!prefabNode) throw new Exception("Save Node not correct");
 
-                if (!daz3DNode)
-                    Debug.LogError("No 3rd Party Avatar Input");
-
-                if (!didimoNode)
-                    Debug.LogError("No didimo to Output");
-
-                if (!prefabNode)
-                    Debug.LogError("Save Node not correct");
-
-                if (daz3DNode)
+                if (avatarNode)
                 {
-                    daz3DNode.prefabOutput = input;
-                    if (daz3DNode.gender == gender)
+                    avatarNode.avatarPrefab = input;
+                    if (avatarNode.gender == gender)
                     {
                         if (didimoNode)
                         {
-                            didimoNode.prefabOutput = output;
-
+                            didimoNode.avatarPrefab = output;
                             if (prefabNode)
                             {
                                 prefabNode.saveType = saveType;
                                 return true;
                             }
-
-
                         }
                     }
                 }
                 return false;
             }
-
             public static implicit operator bool(AssetGraph empty) => empty != null;
         }
     }
@@ -139,7 +142,6 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         public override void OnInspectorGUI()
         {
-
             DrawLabel(target.title, Styles.Title);
 
             DrawLinkButton(target.documentation, Styles.Link);
@@ -148,21 +150,52 @@ namespace Didimo.AssetFitter.Editor.Graph
             DrawLabel(target.description, Styles.Body);
             GUILayout.Space(LineSpace);
 
-            target.input = GameObjectDropBox(target.input, "3rd Party Avatar", Validate3rdParty);
-            GUILayout.Space(LineSpace);
-
-            target.output = GameObjectDropBox(target.output, "Target Didimo", ValidateDidimo);
-            GUILayout.Space(LineSpace);
+            bool AvatarsHorizontal = true;
+            if (AvatarsHorizontal)
+            {
+                GUILayout.BeginHorizontal();
+                target.input = GameObjectDropBox(target.input, "3rd Party Avatar", Validate3rdParty);
+                GUILayout.Space(4);
+                target.output = GameObjectDropBox(target.output, "Target Didimo", ValidateDidimo);
+                GUILayout.EndHorizontal();
+                GUILayout.Space(LineSpace);
+            }
+            else
+            {
+                target.input = GameObjectDropBox(target.input, "3rd Party Avatar", Validate3rdParty);
+                GUILayout.Space(LineSpace);
+                target.output = GameObjectDropBox(target.output, "Target Didimo", ValidateDidimo);
+                GUILayout.Space(LineSpace);
+            }
 
             //EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(Controller.saveType)));
 
-            Controller.AssetGraph graph = target.GetValidGraph(target.input, target.output);
-            GUI.enabled = graph;
 
+            Controller.AssetGraph graph = target.GetValidGraph(target.input, target.output);
+
+            UsingGraph(graph);
+            GUILayout.Space(LineSpace);
+            RunGraph(graph);
+        }
+
+        void RunGraph(AssetGraph graph)
+        {
+            GUI.enabled = graph;
             if (GUILayout.Button("Transfer Assets", Styles.Button, GUILayout.Height(50)))
-            {
                 graph.Run(target.input, target.output, target.saveType);
-            }
+
+        }
+
+        void UsingGraph(AssetGraph graph)
+        {
+            var graphs = new[] { "Unknown graph" }.Concat(target.assetGraphs.Select(g => g.name)).ToArray();
+
+            var index = target.usingGraphIndex > -1 || !graph ? target.usingGraphIndex : Array.IndexOf(graphs, graph.name);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Using Graph:");
+            target.usingGraphIndex = EditorGUILayout.Popup(index + 1, graphs) - 1;
+            GUILayout.EndHorizontal();
         }
 
         public void DrawEditor()
@@ -182,10 +215,15 @@ namespace Didimo.AssetFitter.Editor.Graph
         #region "GameObject drop box"
         GameObject GameObjectDropBox(GameObject gameObject, string title, Func<GameObject[], GameObject> validate)
         {
+            GUILayout.BeginVertical();
             DrawLabel(title, Styles.Header);
-            Rect area = GUILayoutUtility.GetRect(64, Mathf.Min(360, Screen.width * 1f));// GUILayout.ExpandWidth(true));
+            Rect area = GUILayoutUtility.GetRect(64, Mathf.Min(200, Screen.width * 1f));// GUILayout.ExpandWidth(true));
 
-            if (gameObject) DrawGameObject(gameObject, area);
+            if (gameObject)
+            {
+                gameObject = EditorGUILayout.ObjectField(gameObject, gameObject.GetType(), true) as GameObject;
+                DrawGameObject(gameObject, area);
+            }
             else
             {
                 GUI.Box(area, "");
@@ -206,6 +244,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                     }
                 }
             }
+            GUILayout.EndVertical();
             return gameObject;
         }
         #endregion
@@ -250,7 +289,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 { normal = { textColor = Color.white }, wordWrap = true, fontSize = 26, richText = true, };
 
                 Header = new GUIStyle(EditorStyles.label)
-                { wordWrap = true, fontStyle = FontStyle.Bold, fontSize = 18, richText = true, };
+                { wordWrap = false, fontStyle = FontStyle.Bold, fontSize = 18, richText = true, };
 
                 Link = new GUIStyle(EditorStyles.label)
                 { wordWrap = false, normal = { textColor = new Color32(255, 154, 0, 255) }, fontSize = 14, richText = true, }; //stretchWidth = false

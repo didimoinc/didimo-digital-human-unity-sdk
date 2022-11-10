@@ -17,15 +17,16 @@ MonoBehaviour:
   documentation: https://developer.didimo.co/docs
   titleImage: {fileID: 2800000, guid: a2fb67ab00cd84eada6468e70c3a4bb1, type: 3}
   assetGraphs:
-  - graph: {fileID: 11400000, guid: a1eed697a18a38b42922271fbc89135d, type: 2}
-    gender: 1
-  - graph: {fileID: 11400000, guid: 65f522bf440437547a8d39d848851532, type: 2}
-    gender: 2
   - graph: {fileID: 11400000, guid: e40dad89dcf302242b2c2c8aa205711e, type: 2}
     gender: 2
   - graph: {fileID: 11400000, guid: 3d61f81de39fed841942a35730abe291, type: 2}
     gender: 1
-  input: {fileID: 8883477598605462427, guid: 68641e66a05eb40b4889360159452609, type: 3}
+  - graph: {fileID: 11400000, guid: a1eed697a18a38b42922271fbc89135d, type: 2}
+    gender: 1
+  - graph: {fileID: 11400000, guid: 65f522bf440437547a8d39d848851532, type: 2}
+    gender: 2
+  input: {fileID: 919132149155446097, guid: 8e349e8471da547cca97b19364cb8a4a, type: 3}
   output: {fileID: 3619099142778357334, guid: 25f4a8b73aa9645f9af1b9a44d1cdecc, type: 3}
   path: Asset/Output
   saveType: 1
+  usingGraphIndex: 3

@@ -18,7 +18,7 @@ namespace Didimo.Builder
 {
     public class DidimoImporterJsonConfigUtils
     {
-        const string JSON_NAME = "avatar_info.json";
+        public const string JSON_NAME = "avatar_info.json";
 
         public static DidimoImporterJsonConfig GetConfigAtFolder(string folder)
         {
@@ -318,7 +318,7 @@ namespace Didimo.Builder
             {"eyelashes", BodyPart.EyeLashesMesh}
         };
 
-        public static readonly string[] SRGBMaps = {"albedo"};
+        public static readonly string[] SRGBMaps = {"albedo", "albedo_opacity"};
         public static readonly string[] NormalMaps = {"normal", "micronormal"};
 
         public static void BuildDidimoParts(DidimoComponents didimoComponents,

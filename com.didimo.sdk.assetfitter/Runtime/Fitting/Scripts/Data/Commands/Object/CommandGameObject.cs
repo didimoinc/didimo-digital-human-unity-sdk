@@ -30,8 +30,9 @@ namespace Didimo.AssetFitter.Editor.Graph
         [Output("Manifold")] public Mesh manifoldOutput;
 
 
-        public override Gender gender => Gender.Male;
-        public override GameObject GetPrefab() => prefabOutput;
+        public override Gender gender => throw new Exception("No gender identity!");
+
+        public override GameObject avatarPrefab { get => prefabOutput; set => prefabOutput = value; }
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {

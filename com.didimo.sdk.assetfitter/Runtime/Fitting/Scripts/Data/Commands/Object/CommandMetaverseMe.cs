@@ -26,7 +26,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         public override Gender gender => !GetGender() ? Gender.None :
             (GetGender() ? Gender.Male : Gender.Female);
 
-        public override GameObject GetPrefab() => prefabOutput;
+        public override GameObject avatarPrefab { get => prefabOutput; set => prefabOutput = value; }
 
         GameObject builtPrefab;
         internal override void Build()

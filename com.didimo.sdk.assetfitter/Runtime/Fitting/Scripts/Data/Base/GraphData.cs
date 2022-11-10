@@ -65,7 +65,11 @@ namespace Didimo.AssetFitter.Editor.Graph
         public void AddNode(GraphNode node) => nodes.Add(node);
         public void RemoveNode(GraphNode node) => nodes.Remove(node);
         public GraphNode FindNode(string guid) => nodes.FirstOrDefault(n => n.guid == guid);
-        public T FindNode<T>(string id) where T : GraphNode => nodes.FirstOrDefault(n => n.GetType() == typeof(T) && n.id == id) as T;
+
+        public IEnumerable<T> FindNodes<T>() where T : GraphNode => nodes.Where(n => typeof(T).IsAssignableFrom(n.GetType())).Cast<T>();
+        public T FindNode<T>(string id) where T : GraphNode => (T)FindNodes<T>().FirstOrDefault(n => n.id == id);
+
+        public GraphNode GetNode(string id) => nodes.FirstOrDefault(n => n.id == id);
 
         // Edges ///////////////
         public GraphEdge AddEdge(GraphEdge.Connector input, GraphEdge.Connector output)

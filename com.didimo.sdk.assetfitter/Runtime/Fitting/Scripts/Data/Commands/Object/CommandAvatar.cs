@@ -8,7 +8,7 @@ namespace Didimo.AssetFitter.Editor.Graph
     public abstract class CommandAvatar : GraphNode, IExposable
     {
         public abstract Gender gender { get; }
-        public abstract GameObject GetPrefab();
+        public abstract GameObject avatarPrefab { get; set; }
         public abstract Mesh CreateManifold();
     }
 }

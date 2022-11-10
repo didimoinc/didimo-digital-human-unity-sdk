@@ -17,12 +17,11 @@ namespace Didimo.AssetFitter.Editor.Graph
     [HeaderColor("#50009FCC")]
     public class CommandFitToDidimo : GraphNode
     {
-        [Input("Source Skin", true)] public SkinnedMeshRenderer sourceSkinInput;
+        [Input("Source Skin")] public SkinnedMeshRenderer sourceSkinInput;
         [Input("Accessories Skin")] public SkinnedMeshRenderer accessoriesInput;
         [Input("Accessories Filter")] public MeshFilter accessoriesFilterInput;
         [Input("Bone Map")] public BoneIndexRemap boneMapInput;
         [Input("Prefab", true)] public GameObject prefabInput;
-        [Input("Wrap", true)] public Mesh wrapMesh;
         [Input("TPS", true)] public TPSWeights tpsWeightsInput;
         [Output("Prefab")] public GameObject prefabOutput;
         [Expose] public bool excludeDidimoMeshes;
