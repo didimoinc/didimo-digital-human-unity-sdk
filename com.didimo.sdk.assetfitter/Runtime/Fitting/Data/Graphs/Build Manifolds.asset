@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: Build Manifolds
   m_EditorClassIdentifier: 
   nodes:
-  - rid: 6066813063423066114
-  - rid: 6066813063423066115
-  - rid: 6066813063423066116
-  - rid: 6066813063423066117
-  - rid: 6066813063423066118
-  - rid: 6066813063423066119
-  - rid: 6066813063423066120
-  - rid: 6066813063423066121
-  - rid: 6066813063423066122
-  - rid: 6066813063423066123
-  - rid: 6066813063423066125
-  - rid: 6066813063423066252
+  - rid: 5739699287493705754
+  - rid: 5739699287493705755
+  - rid: 5739699287493705756
+  - rid: 5739699287493705757
+  - rid: 5739699287493705758
+  - rid: 5739699287493705759
+  - rid: 5739699287493705760
+  - rid: 5739699287493705761
+  - rid: 5739699287493705762
+  - rid: 5739699287493705763
+  - rid: 5739699287493705764
+  - rid: 5739699287493705765
   edges:
   - input:
-      node: 6a1455aa-382b-45df-9e1e-3e270cd2d9ae
+      node: 0aab832b-7424-4b6a-bdc3-c9acefa74b51
       field: meshInput
     output:
-      node: 7bca3652-f2fe-4fb7-bcff-405a2402845e
+      node: 11ebf404-2d61-44ea-8990-ef8c0cce2d20
       field: manifoldOutput
-  viewPosition: {x: -649, y: -417, z: 0}
-  viewScale: {x: 1, y: 1, z: 1}
+  viewPosition: {x: -179, y: -345, z: 0}
+  viewScale: {x: 0.8695652, y: 0.8695652, z: 1}
   config:
     exposeFields: []
   references:
     version: 2
     RefIds:
-    - rid: 6066813063423066114
+    - rid: 5739699287493705754
       type: {class: CommandDaz3D, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 5530d6eb-9d66-46d6-bab6-2aa7a0295929
@@ -68,15 +68,15 @@ MonoBehaviour:
         accessoryFilterOutput: {fileID: 0}
         manifoldOutput: {fileID: 0}
         eyelashFilter: 0
-    - rid: 6066813063423066115
+    - rid: 5739699287493705755
       type: {class: CommandDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 7eea826e-53b3-4b68-a59b-b2c75130700a
-        id: 
-        position: {x: 613, y: -180}
-        expanded: 0
-        prefabOutput: {fileID: 3619099142778357334, guid: 25f4a8b73aa9645f9af1b9a44d1cdecc, type: 3}
-        templateOutput: {fileID: 0}
+        id: Male
+        position: {x: 613, y: -221}
+        expanded: 1
+        prefabOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
+        templateOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
         headOutput: {fileID: 0}
         leyeOutput: {fileID: 0}
         reyeOutput: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
         bodyOutput: {fileID: 0}
         garmentOutput: {fileID: 0}
         manifoldOutput: {fileID: 0}
-    - rid: 6066813063423066116
+    - rid: 5739699287493705756
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: cc49ecff-1a97-466a-b9b2-74e6b313e708
@@ -96,7 +96,7 @@ MonoBehaviour:
         path: AssetFitter/Runtime/Models/Manifolds/Daz3D G8F Manifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066117
+    - rid: 5739699287493705757
       type: {class: CommandDaz3D, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: d05633ed-61fb-4889-a5e4-5cf4f00ed050
@@ -125,15 +125,15 @@ MonoBehaviour:
         accessoryFilterOutput: {fileID: 0}
         manifoldOutput: {fileID: 0}
         eyelashFilter: 0
-    - rid: 6066813063423066118
+    - rid: 5739699287493705758
       type: {class: CommandDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 41d4a90b-21af-472e-8a46-4ec34481614c
-        id: 
-        position: {x: 613, y: -278}
-        expanded: 0
-        prefabOutput: {fileID: 3619099142778357334, guid: 7f026df738a644558a4d925ef3ceb849, type: 3}
-        templateOutput: {fileID: 0}
+        id: Female
+        position: {x: 613, y: -542}
+        expanded: 1
+        prefabOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
+        templateOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
         headOutput: {fileID: 0}
         leyeOutput: {fileID: 0}
         reyeOutput: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
         bodyOutput: {fileID: 0}
         garmentOutput: {fileID: 0}
         manifoldOutput: {fileID: 0}
-    - rid: 6066813063423066119
+    - rid: 5739699287493705759
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 4eb251ab-7718-4b45-b4f0-7e0a6e195c52
@@ -150,10 +150,10 @@ MonoBehaviour:
         position: {x: 900, y: -170}
         expanded: 1
         meshInput: {fileID: 0}
-        path: AssetFitter/Runtime/Models/Manifolds/Didimo Male Manifold
+        path: AssetFitter/Runtime/Models/Didimo_2.5.12/Manifolds/Didimo Male Manifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066120
+    - rid: 5739699287493705760
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: fbf9361f-423d-4d2a-b96b-d8e6a8e7f4f0
@@ -161,10 +161,10 @@ MonoBehaviour:
         position: {x: 900, y: -350}
         expanded: 1
         meshInput: {fileID: 0}
-        path: AssetFitter/Runtime/Models/Manifolds/Didimo Female Manifold
+        path: AssetFitter/Runtime/Models/Didimo_2.5.12/Manifolds/Didimo Female Manifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066121
+    - rid: 5739699287493705761
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: ea62a1b7-ff6d-40b6-893a-738de9943a96
@@ -175,7 +175,7 @@ MonoBehaviour:
         path: AssetFitter/Runtime/Models/Manifolds/Daz3D G8M Manifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066122
+    - rid: 5739699287493705762
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 6a1455aa-382b-45df-9e1e-3e270cd2d9ae
@@ -186,37 +186,25 @@ MonoBehaviour:
         path: temp/ReallusionCC3+MaleManifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066123
+    - rid: 5739699287493705763
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 0aab832b-7424-4b6a-bdc3-c9acefa74b51
         id: 
-        position: {x: 900, y: 911}
+        position: {x: 816, y: 911}
         expanded: 1
         meshInput: {fileID: 0}
-        path: temp/Metaverseme/MetaverseMeMaleTemplate
+        path: temp/Metaverseme/MetaverseMeFemaleManifold
         actionType: 1
         fileType: 2
-    - rid: 6066813063423066125
-      type: {class: CommandMetaverseMe, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
-      data:
-        guid: aa0ce63a-5c23-4987-929b-7e492e68c6ea
-        id: 
-        position: {x: 613, y: 888}
-        expanded: 1
-        prefabOutput: {fileID: 919132149155446097, guid: ec4b7c68953cbf549a3064a98663b4de, type: 3}
-        shapeOutput: {fileID: 0}
-        accessoryOutput: {fileID: 0}
-        accessoryFilterOutput: {fileID: 0}
-        manifoldOutput: {fileID: 0}
-    - rid: 6066813063423066252
+    - rid: 5739699287493705764
       type: {class: CommandReallusion, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
         guid: 7bca3652-f2fe-4fb7-bcff-405a2402845e
         id: 
         position: {x: 576, y: 449}
         expanded: 1
-        prefabOutput: {fileID: 919132149155446097, guid: 7a13e878f3e58c544b8efca1b5bef040, type: 3}
+        prefabOutput: {fileID: 919132149155446097, guid: 8aca729629b328549b6828459d29bdcd, type: 3}
         shapeOutput: {fileID: 0}
         headOutput: {fileID: 0}
         bodyOutput: {fileID: 0}
@@ -224,6 +212,18 @@ MonoBehaviour:
         legOutput: {fileID: 0}
         nailsOutput: {fileID: 0}
         eyelashOutput: {fileID: 0}
+        accessoryOutput: {fileID: 0}
+        accessoryFilterOutput: {fileID: 0}
+        manifoldOutput: {fileID: 0}
+    - rid: 5739699287493705765
+      type: {class: CommandMetaverseMe, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 11ebf404-2d61-44ea-8990-ef8c0cce2d20
+        id: 
+        position: {x: 522, y: 911}
+        expanded: 1
+        prefabOutput: {fileID: 919132149155446097, guid: 2689727c0d18a214f8d4c64b4af542ec, type: 3}
+        shapeOutput: {fileID: 0}
         accessoryOutput: {fileID: 0}
         accessoryFilterOutput: {fileID: 0}
         manifoldOutput: {fileID: 0}

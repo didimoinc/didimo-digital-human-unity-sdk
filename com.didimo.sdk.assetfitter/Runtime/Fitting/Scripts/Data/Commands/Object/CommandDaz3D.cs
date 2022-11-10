@@ -42,7 +42,8 @@ namespace Didimo.AssetFitter.Editor.Graph
         public override Gender gender => !GetCharacterShapeSkin() ? Gender.None :
             (GetCharacterShapeSkin().sharedMesh.name.Contains("8Female") ? Gender.Female : Gender.Male);
 
-        public override GameObject GetPrefab() => prefabOutput;
+        // public override GameObject GetPrefab() => prefabOutput;
+        public override GameObject avatarPrefab { get => prefabOutput; set => prefabOutput = value; }
 
         GameObject builtPrefab;
 
@@ -135,7 +136,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             return prefabOutput.GetComponentsInChildren<MeshFilter>(true);
         }
 
-        string CharacterNameId => GetPrefab().transform.GetChild(0).name;
+        string CharacterNameId => prefabOutput.transform.GetChild(0).name;
 
         public enum EyelashFilter
         {

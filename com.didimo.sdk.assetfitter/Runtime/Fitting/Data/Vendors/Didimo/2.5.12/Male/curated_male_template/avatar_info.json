@@ -1,0 +1,67 @@
+{
+    "meshList": [
+        {
+            "meshName": "ddmo_body",
+            "bodyPart": "body",
+            "textures": {
+                "albedo": "ddmo_body_albedo.png",
+                "normal": "ddmo_body_normal.png",
+                "micronormal": "ddmo_body_micronormal.png",
+                "AO": "ddmo_body_AO.png",
+                "SSS_AO": "ddmo_body_SSS_AO_mask.png",
+                "specular": "ddmo_body_spec.png",
+                "roughness": "ddmo_body_rough.png",
+                "translucency": "ddmo_body_trans.png",
+                "cavity": "ddmo_body_cavity.png"
+            }
+        },
+        {
+            "meshName": "ddmo_head",
+            "bodyPart": "head",
+            "textures": {
+                "albedo": "ddmo_head_albedo.png",
+                "normal": "ddmo_head_normal.png",
+                "micronormal": "ddmo_head_micronormal.png",
+                "AO": "ddmo_head_AO.png",
+                "SSS_AO": "ddmo_head_SSS_AO_mask.png",
+                "specular": "ddmo_head_spec.png",
+                "roughness": "ddmo_head_rough.png",
+                "translucency": "ddmo_head_trans.png",
+                "cavity": "ddmo_head_cavity.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyeLeft",
+            "bodyPart": "leftEye",
+            "textures": {
+                "albedo": "ddmo_eye_albedo.png",
+                "normal": "ddmo_eye_normal.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyeRight",
+            "bodyPart": "rightEye",
+            "textures": {
+                "albedo": "ddmo_eye_albedo.png",
+                "normal": "ddmo_eye_normal.png"
+            }
+        },
+        {
+            "meshName": "ddmo_mouth",
+            "bodyPart": "mouth",
+            "textures": {
+                "albedo": "ddmo_mouth_albedo.png",
+                "normal": "ddmo_mouth_normal.png",
+                "AO": "ddmo_mouth_AO.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyelashes",
+            "bodyPart": "eyelashes",
+            "textures": {
+                "albedo_opacity": "ddmo_eyelashes_albedo_opacity.png"
+            }
+        }
+    ],
+    "animationFrames": {}
+}

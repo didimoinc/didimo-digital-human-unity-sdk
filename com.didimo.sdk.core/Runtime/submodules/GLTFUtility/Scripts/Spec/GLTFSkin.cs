@@ -49,6 +49,10 @@ namespace Didimo.GLTFUtility {
 					mesh.bindposes = bindPoses;
 				}
 				smr.sharedMesh = mesh;
+
+				mesh.RecalculateBounds();
+				smr.bounds = mesh.bounds;
+
 				return smr;
 			}
 		}

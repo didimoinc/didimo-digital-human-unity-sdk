@@ -1,0 +1,1956 @@
+{
+    "commonDir": "",
+    "formatVersion": 13,
+    "nodes": {
+        "Didimo_Female": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 0,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Female Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": -273.86137991270874,
+            "y": -338.6120905980685
+        },
+        "Didimo_Female1": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 15,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Female Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 847.2377561757298,
+            "y": -337.05102433185914
+        },
+        "Didimo_Female2": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 30,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Female Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 387.5553604706042,
+            "y": 282.71049086238406
+        },
+        "Didimo_Male": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 8,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Male Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 277.5956973004166,
+            "y": -338.6121034938474
+        },
+        "Didimo_Male1": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 16,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Male Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 1323.7639301224945,
+            "y": -337.0509970276097
+        },
+        "Didimo_Male2": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 25,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/Didimo Male Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 894.9556654497201,
+            "y": 282.71054906270274
+        },
+        "Didimo_to_Daz3d_Female": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 4,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "$PROJECT_DIR/Wraps/Didimo to Daz3d Female (Wrap).obj"
+                },
+                "geom": {
+                    "connectedNodeId": 3
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": -118.4411080509517,
+            "y": 104.03375767156788
+        },
+        "Didimo_to_Daz3d_Male": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 11,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "$PROJECT_DIR/Wraps/Didimo to Daz3d Male (Wrap).obj"
+                },
+                "geom": {
+                    "connectedNodeId": 10
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": 436.5957468181311,
+            "y": 104.03375938684644
+        },
+        "Didimo_to_ReadyPlayerMe_Female": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 21,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Assets/reallusion/Manifolds/Didimo to ReallusionCC Female.obj"
+                },
+                "geom": {
+                    "connectedNodeId": 19
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": 993.4663712389198,
+            "y": 104.03376249052258
+        },
+        "Didimo_to_ReadyPlayerMe_Male": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 22,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "$PROJECT_DIR/Wraps/Didimo to ReadyPlayerMe Male (Wrap).obj"
+                },
+                "geom": {
+                    "connectedNodeId": 20
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": 1427.8884948017367,
+            "y": 104.0337633009326
+        },
+        "Didimo_to_ReallusionCC_Female": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 33,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "$PROJECT_DIR/Wraps/Didimo to ReallusionCC3 Female (Wrap).obj"
+                },
+                "geom": {
+                    "connectedNodeId": 32
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": 533.7839755337942,
+            "y": 723.7952776847658
+        },
+        "Didimo_to_ReallusionCC_Male": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 28,
+            "nodeType": "SaveGeom",
+            "params": {
+                "createDirectories": {
+                    "value": true
+                },
+                "dracoCompression": {
+                    "value": 0
+                },
+                "dracoNormalQuant": {
+                    "value": 30
+                },
+                "dracoTexCoordQuant": {
+                    "value": 30
+                },
+                "dracoVertexQuant": {
+                    "value": 30
+                },
+                "fileName": {
+                    "value": "$PROJECT_DIR/Wraps/Didimo to ReallusionCC Male.obj"
+                },
+                "geom": {
+                    "connectedNodeId": 27
+                },
+                "includeTransform": {
+                    "value": true
+                },
+                "saveNormals": {
+                    "value": true
+                }
+            },
+            "x": 999.0802301289621,
+            "y": 723.795309391245
+        },
+        "G8F": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 1,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Packages/com.didimo.sdk.assetfitter/Runtime/Models/ThirdPartyManifolds/Daz3D G8F Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 24.0588996721674,
+            "y": -338.6121059647724
+        },
+        "G8M": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 9,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Packages/com.didimo.sdk.assetfitter/Runtime/Models/ThirdPartyManifolds/Daz3D G8M Manifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 581.1834390635773,
+            "y": -338.6120822312695
+        },
+        "ReadyPlayerMe_Female": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 17,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "$PROJECT_DIR/template_female_reallusion.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": -90,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 1095.0706684737293,
+            "y": -337.05100857360753
+        },
+        "ReadyPlayerMe_Male": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 18,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Packages/com.didimo.sdk.assetfitter/Runtime/Models/ThirdPartyManifolds/ReadyPlayerMeMaleManifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 1527.4575972204952,
+            "y": -337.0510381666397
+        },
+        "Reallusion_CC3F": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 31,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Packages/com.didimo.sdk.assetfitter/Runtime/Models/ThirdPartyManifolds/ReallusionCC3+FemaleManifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 635.3882727686037,
+            "y": 282.71050662063567
+        },
+        "Reallusion_CC3M": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 26,
+            "nodeType": "LoadGeom",
+            "params": {
+                "fileName": {
+                    "value": "D:/Didimo/unity-sdk/Packages/com.didimo.sdk.assetfitter/Runtime/Models/ThirdPartyManifolds/ReallusionCC3+MaleManifold.obj"
+                },
+                "rotation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "scale": {
+                    "value": 1
+                },
+                "texture": {
+                },
+                "translation": {
+                    "value": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "visualParam": {
+                    "value": {
+                        "colorBack": {
+                            "b": 85,
+                            "g": 85,
+                            "r": 85
+                        },
+                        "colorFront": {
+                            "b": 255,
+                            "g": 129,
+                            "r": 61
+                        },
+                        "colorWire": {
+                            "b": 34,
+                            "g": 26,
+                            "r": 17
+                        },
+                        "isLightingEnabled": true,
+                        "isSurfaceEnabled": true,
+                        "isWireframeEnabled": false,
+                        "surfaceFillType": 1
+                    }
+                }
+            },
+            "x": 1098.6493325477209,
+            "y": 282.7105079236727
+        },
+        "SelectPointPairs": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 12,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 8
+                },
+                "geomRight": {
+                    "connectedNodeId": 9
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [ [ 12950, 0.8995683193206787, 0.03480596840381622 ], [ 12628, 0.018673956394195557, 0.19591812789440155 ], [ 12552, 0.7769286632537842, 0.1772562712430954 ], [ 12718, 0.06745149940252304, 0.823971152305603 ], [ 12911, 0.6412158012390137, 0.05927243083715439 ], [ 7821, 0.05745592713356018, 0.5780291557312012 ], [ 7478, 0.3561553359031677, 0.0605049766600132 ], [ 7428, 0.07203742861747742, 0.5217774510383606 ], [ 7593, 0.8059918284416199, 0.15010830760002136 ], [ 7784, 0.7853151559829712, 0.026562649756669998 ], [ 8805, 0.29118525981903076, 0.46877703070640564 ], [ 8730, 0.2857789397239685, 0.5078113675117493 ], [ 8831, 0.3595818281173706, 0.2586790919303894 ], [ 8755, 0.4057936370372772, 0.4171561598777771 ], [ 8575, 0.3161918818950653, 0.552546501159668 ], [ 14182, 0.4051847457885742, 0.516392707824707 ], [ 14259, 0.5198308229446411, 0.06159558892250061 ], [ 14158, 0.5929365754127502, 0.30192917585372925 ], [ 14232, 0.3666685223579407, 0.48260974884033203 ], [ 13996, 0.36326855421066284, 0.4637781083583832 ], [ 13103, 0.1569880247116089, 0.09910223633050919 ], [ 7978, 0.6480346918106079, 0.03948317840695381 ], [ 8054, 0.05448395013809204, 0.6178878545761108 ], [ 13101, 0.7980304956436157, 0.08000030368566513 ], [ 8000, 0.01681363582611084, 0.7003467082977295 ], [ 8002, 0.11335736513137817, 0.22342124581336975 ], [ 7879, 0.11062023043632507, 0.5002006888389587 ], [ 7804, 0.2621638774871826, 0.12877243757247925 ], [ 8060, 0.13866037130355835, 0.33926406502723694 ], [ 8057, 0.8227667808532715, 0.03949005529284477 ], [ 13124, 0.032609403133392334, 0.0457758754491806 ], [ 13149, 0.6990145444869995, 0.15914587676525116 ], [ 13153, 0.6340162754058838, 0.12068677693605423 ], [ 12931, 0.7333610653877258, 0.036400169134140015 ], [ 13097, 0.8076791167259216, 0.1577700674533844 ], [ 13099, 0.34044206142425537, 0.07991880178451538 ] ]
+                },
+                "pointsRight": {
+                    "value": [ [ 12870, 0.5278943181037903, 0.3680240213871002 ], [ 16860, 0.07183116674423218, 0.004581780638545752 ], [ 16464, 0.21793067455291748, 0.14107948541641235 ], [ 16528, 0.2034766674041748, 0.3502504229545593 ], [ 16327, 0.22094833850860596, 0.19136328995227814 ], [ 15903, 0.20966681838035583, 0.4733278751373291 ], [ 15543, 0.19468557834625244, 0.7563815116882324 ], [ 15511, 0.44011208415031433, 0.1234939694404602 ], [ 15550, 0.18698441982269287, 0.09280440211296082 ], [ 15615, 0.7112393379211426, 0.09759257733821869 ], [ 22938, 0.22255894541740417, 0.32715117931365967 ], [ 22902, 0.2791662812232971, 0.3104715943336487 ], [ 22867, 0.3874053359031677, 0.07953700423240662 ], [ 22830, 0.5060540437698364, 0.33974823355674744 ], [ 22813, 0.1532055139541626, 0.2530045509338379 ], [ 19399, 0.3620240092277527, 0.46218615770339966 ], [ 19434, 0.037676841020584106, 0.5356888771057129 ], [ 19471, 0.2708554267883301, 0.3347911834716797 ], [ 19507, 0.21364617347717285, 0.10851987451314926 ], [ 19381, 0.2767939567565918, 0.44497573375701904 ], [ 12345, 0.047426819801330566, 0.7953101992607117 ], [ 15376, 0.6910950541496277, 0.013454960659146309 ], [ 15286, 0.15359562635421753, 0.5587185025215149 ], [ 12256, 0.17028778791427612, 0.8204643130302429 ], [ 15728, 0.0959373265504837, 0.7435646057128906 ], [ 13811, 0.7689119577407837, 0.013851960189640522 ], [ 14576, 0.40476053953170776, 0.39470532536506653 ], [ 13812, 0.20433689653873444, 0.7703704237937927 ], [ 14493, 0.049188971519470215, 0.6491426229476929 ], [ 14494, 0.043823957443237305, 0.2127360701560974 ], [ 12699, 0.5254495143890381, 0.31780701875686646 ], [ 10779, 0.041085392236709595, 0.5398420095443726 ], [ 11545, 0.2697049677371979, 0.424314022064209 ], [ 10823, 0.7605021595954895, 0.009468126110732555 ], [ 11460, 0.0948219895362854, 0.5226870179176331 ], [ 11429, 0.5697689056396484, 0.2324918806552887 ] ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": true
+                }
+            },
+            "x": 436.5957300305244,
+            "y": -228.84458436088516
+        },
+        "SelectPointPairs1": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 14,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 0
+                },
+                "geomRight": {
+                    "connectedNodeId": 1
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [ [ 7821, 0.25979113578796387, 0.07738514244556427 ], [ 7478, 0.9863678812980652, 0.009126527234911919 ], [ 7428, 0.01683095097541809, 0.4946306347846985 ], [ 7592, 0.12241135537624359, 0.8253459334373474 ], [ 7552, 0.19217872619628906, 0.6106661558151245 ], [ 12950, 0.3723834156990051, 0.06849495321512222 ], [ 12601, 0.03023865818977356, 0.5524872541427612 ], [ 12552, 0.5102015137672424, 0.1912960708141327 ], [ 12717, 0.7841317057609558, 0.20257596671581268 ], [ 12908, 0.14095920324325562, 0.6768337488174438 ], [ 13996, 0.55898118019104, 0.4350247383117676 ], [ 14182, 0.5151572227478027, 0.21659605205059052 ], [ 14259, 0.35781583189964294, 0.27096664905548096 ], [ 14159, 0.5531467199325562, 0.4352038502693176 ], [ 14233, 0.5014679431915283, 0.4031522870063782 ], [ 8568, 0.1281375288963318, 0.5374372005462646 ], [ 8754, 0.6513534188270569, 0.3458717465400696 ], [ 8831, 0.3944562077522278, 0.47462716698646545 ], [ 8731, 0.5502570867538452, 0.32930901646614075 ], [ 8804, 0.43415889143943787, 0.06764121353626251 ], [ 7978, 0.06669372320175171, 0.05427012965083122 ], [ 8055, 0.17737361788749695, 0.5592814087867737 ], [ 13103, 0.21323412656784058, 0.28366774320602417 ], [ 13179, 0.7335273027420044, 0.13781508803367615 ], [ 8061, 0.39119890332221985, 0.4441039264202118 ], [ 13185, 0.5580196976661682, 0.4104081988334656 ], [ 13002, 0.29126423597335815, 0.06882420927286148 ], [ 7966, 0.6298162937164307, 0.2546417713165283 ], [ 7804, 0.11629533767700195, 0.014143292792141438 ], [ 8058, 0.5343834161758423, 0.09852167963981628 ], [ 12967, 0.5389530658721924, 0.11923597753047943 ], [ 13180, 0.16398458182811737, 0.6815062165260315 ], [ 7963, 0.19639211893081665, 0.095018669962883 ], [ 7877, 0.645330011844635, 0.22131332755088806 ], [ 13149, 0.1564408540725708, 0.013113129884004593 ], [ 13091, 0.8364282846450806, 0.10446947813034058 ], [ 8000, 0.07467465102672577, 0.7379593849182129 ], [ 13126, 0.2032250165939331, 0.21805541217327118 ], [ 10640, 0.12876290082931519, 0.34653499722480774 ] ]
+                },
+                "pointsRight": {
+                    "value": [ [ 16247, 0.33029603958129883, 0.5300657749176025 ], [ 15887, 0.04866740107536316, 0.9320522546768188 ], [ 17076, 0.0776781439781189, 0.018980486318469048 ], [ 17142, 0.14884841442108154, 0.016162443906068802 ], [ 15960, 0.12960320711135864, 0.824077308177948 ], [ 13214, 0.5823345184326172, 0.19133605062961578 ], [ 12857, 0.31283146142959595, 0.22421878576278687 ], [ 12839, 0.7250499725341797, 0.03183132782578468 ], [ 16875, 0.06262105703353882, 0.04149758443236351 ], [ 12926, 0.014653846621513367, 0.7624767422676086 ], [ 19754, 0.356733500957489, 0.11390537768602371 ], [ 19772, 0.31577104330062866, 0.2290581613779068 ], [ 19809, 0.3534829020500183, 0.3836723864078522 ], [ 19845, 0.03706681728363037, 0.4608157277107239 ], [ 19880, 0.17718839645385742, 0.4310954809188843 ], [ 23217, 0.19225189089775085, 0.33209463953971863 ], [ 23234, 0.5670337080955505, 0.25697603821754456 ], [ 23271, 0.4629083275794983, 0.0403907410800457 ], [ 23306, 0.5114640593528748, 0.3621339201927185 ], [ 23342, 0.4883825182914734, 0.28793540596961975 ], [ 15721, 0.17132237553596497, 0.6493052840232849 ], [ 15628, 0.012250065803527832, 0.8638006448745728 ], [ 12688, 0.5785917639732361, 0.23130667209625244 ], [ 12592, 0.3125048875808716, 0.10658640414476395 ], [ 14837, 0.6095039248466492, 0.35452085733413696 ], [ 11166, 0.848590075969696, 0.0702003687620163 ], [ 11889, 0.7766740918159485, 0.011119545437395573 ], [ 14921, 0.03643539547920227, 0.6268367767333984 ], [ 14156, 0.29956337809562683, 0.6244861483573914 ], [ 14805, 0.713355541229248, 0.20422768592834473 ], [ 11125, 0.4599541425704956, 0.33966442942619324 ], [ 11772, 0.27897489070892334, 0.10120535641908646 ], [ 14153, 0.28525471687316895, 0.1966237723827362 ], [ 14923, 0.11509346961975098, 0.4850587248802185 ], [ 11890, 0.3883129358291626, 0.4362378716468811 ], [ 11124, 0.012600362300872803, 0.30150458216667175 ], [ 16075, 0.09596115350723267, 0.6323094964027405 ], [ 11120, 0.5223008394241333, 0.3327369689941406 ], [ 13042, 0.5151683688163757, 0.1249086931347847 ] ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": true
+                }
+            },
+            "x": -118.44111152723852,
+            "y": -228.8445913692528
+        },
+        "SelectPointPairs2": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 23,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 15
+                },
+                "geomRight": {
+                    "connectedNodeId": 17
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [ [ 7827, 0.02280879020690918, 0.04519403353333473 ], [ 7476, 0.24984604120254517, 0.018454352393746376 ], [ 7428, 0.09033423662185669, 0.31377968192100525 ], [ 7592, 0.0887138843536377, 0.5420815944671631 ], [ 7552, 0.08767107129096985, 0.44063180685043335 ], [ 12947, 0.9565294981002808, 0.006998562719672918 ], [ 12598, 0.04506847262382507, 0.5091915726661682 ], [ 12552, 0.2826412320137024, 0.04156668484210968 ], [ 12717, 0.6239112615585327, 0.05418100953102112 ], [ 12677, 0.8298871517181396, 0.035919368267059326 ], [ 7978, 0.1117590069770813, 0.007019888609647751 ], [ 13103, 0.12084698677062988, 0.2608487606048584 ], [ 13002, 0.6844990253448486, 0.034052710980176926 ], [ 12931, 0.6885773539543152, 0.08374062925577164 ], [ 13181, 0.4602140784263611, 0.17107951641082764 ], [ 12858, 0.35787075757980347, 0.6320351958274841 ], [ 7879, 0.8345123529434204, 0.15212462842464447 ], [ 7804, 0.0036987662315368652, 0.001725996844470501 ], [ 8058, 0.09046679735183716, 0.5318085551261902 ], [ 8054, 0.30782365798950195, 0.06389253586530685 ], [ 15505, 0.06506912410259247, 0.6894466876983643 ], [ 10562, 0.6152629852294922, 0.05636878311634064 ], [ 8804, 0.41942790150642395, 0.11169330775737762 ], [ 8731, 0.40118783712387085, 0.4639759659767151 ], [ 8831, 0.32988429069519043, 0.4375709891319275 ], [ 8755, 0.21532130241394043, 0.2214478999376297 ], [ 8569, 0.3878956735134125, 0.1873100847005844 ], [ 14232, 0.30554330348968506, 0.4677063226699829 ], [ 14158, 0.5137174129486084, 0.35912206768989563 ], [ 14259, 0.4560660421848297, 0.1455046683549881 ], [ 14183, 0.0698322057723999, 0.4964573383331299 ], [ 13997, 0.3790585994720459, 0.126591295003891 ], [ 1025, 0.041895076632499695, 0.9285149574279785 ], [ 4374, 0.11595416069030762, 0.3275188207626343 ] ]
+                },
+                "pointsRight": {
+                    "value": [ [ 7706, 0.17187368869781494, 0.4635719954967499 ], [ 8052, 0.22721265256404877, 0.7619301676750183 ], [ 8103, 0.04850393533706665, 0.3352791666984558 ], [ 7939, 0.17444932460784912, 0.10357145965099335 ], [ 7746, 0.06592941284179688, 0.30529865622520447 ], [ 2586, 0.99163419008255, 0.004848985467106104 ], [ 2930, 0.026607394218444824, 0.047820109874010086 ], [ 2978, 0.0023784637451171875, 0.40575137734413147 ], [ 2814, 0.10983150452375412, 0.8288262486457825 ], [ 2623, 0.05237993597984314, 0.7649409770965576 ], [ 7552, 0.037091195583343506, 0.04348059743642807 ], [ 2428, 0.06564968824386597, 0.24903172254562378 ], [ 2379, 0.11865603923797607, 0.20765937864780426 ], [ 2346, 0.22646641731262207, 0.7291422486305237 ], [ 2352, 0.10025535523891449, 0.8531398177146912 ], [ 2672, 0.2752455472946167, 0.4555879533290863 ], [ 7655, 0.02224777638912201, 0.8114349842071533 ], [ 7563, 0.1591806411743164, 0.07035773992538452 ], [ 7557, 0.04234212636947632, 0.2390628308057785 ], [ 7477, 0.828059732913971, 0.11083411425352097 ], [ 26, 0.36751753091812134, 0.02119731530547142 ], [ 4968, 0.20873397588729858, 0.39462360739707947 ], [ 6726, 0.22707787156105042, 0.29945895075798035 ], [ 6800, 0.4665161967277527, 0.2683429718017578 ], [ 6700, 0.20380815863609314, 0.3102315366268158 ], [ 6776, 0.3444744944572449, 0.5636112689971924 ], [ 6962, 0.46101197600364685, 0.2823958992958069 ], [ 1299, 0.34942078590393066, 0.5387938022613525 ], [ 1372, 0.5022646188735962, 0.04055009409785271 ], [ 1273, 0.3338155448436737, 0.44066500663757324 ], [ 1349, 0.4011923670768738, 0.2488178312778473 ], [ 1528, 0.1832716166973114, 0.38731709122657776 ], [ 14778, 0.8273437023162842, 0.04002861678600311 ], [ 11741, 0.2952158451080322, 0.6417665481567383 ] ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": true
+                }
+            },
+            "x": 966.0802916119882,
+            "y": -265.4429649170147
+        },
+        "SelectPointPairs3": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 24,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 16
+                },
+                "geomRight": {
+                    "connectedNodeId": 18
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [ [ 8755, 0.32205140590667725, 0.15286116302013397 ], [ 8831, 0.30266866087913513, 0.4836018979549408 ], [ 8731, 0.6995109915733337, 0.28281739354133606 ], [ 8805, 0.3414918780326843, 0.3907110393047333 ], [ 8568, 0.2729833722114563, 0.490482896566391 ], [ 13997, 0.44426125288009644, 0.32076552510261536 ], [ 14183, 0.4513079524040222, 0.30497878789901733 ], [ 14259, 0.4469905495643616, 0.33847102522850037 ], [ 14159, 0.5567651987075806, 0.3368503749370575 ], [ 14232, 0.5647109150886536, 0.28646737337112427 ], [ 7821, 0.05889071524143219, 0.763183057308197 ], [ 7476, 0.03923845291137695, 0.0722765177488327 ], [ 7428, 0.09118857979774475, 0.558346152305603 ], [ 7592, 0.1272743046283722, 0.7271189093589783 ], [ 7552, 0.06978517770767212, 0.8849338293075562 ], [ 12945, 0.06199604272842407, 0.2703772783279419 ], [ 12603, 0.010404124855995178, 0.793357789516449 ], [ 12552, 0.5776843428611755, 0.09491530060768127 ], [ 12717, 0.8441031575202942, 0.0594622977077961 ], [ 12908, 0.04712282121181488, 0.7120277285575867 ], [ 13103, 0.007587254047393799, 0.012465777806937695 ], [ 7978, 0.010328173637390137, 0.0289008729159832 ], [ 10581, 0.40648967027664185, 0.49803024530410767 ], [ 13489, 0.11750221252441406, 0.0024496333207935095 ], [ 1025, 0.07882887125015259, 0.14902228116989136 ], [ 1514, 0.06571965664625168, 0.8432295322418213 ], [ 2772, 0.1573113203048706, 0.7203162908554077 ], [ 1471, 0.6672835946083069, 0.16679690778255463 ], [ 4948, 0.41403478384017944, 0.18913963437080383 ], [ 4859, 0.2952408790588379, 0.3175560235977173 ], [ 5079, 0.0015097856521606445, 0.1720706820487976 ], [ 4722, 0.2120874524116516, 0.10359187424182892 ], [ 2509, 0.15426337718963623, 0.1838655322790146 ], [ 3295, 0.13979676365852356, 0.8208361268043518 ], [ 5616, 0.05767863988876343, 0.0009071608074009418 ], [ 1365, 0.04194438457489014, 0.313618004322052 ], [ 1885, 0.010444454848766327, 0.8892744183540344 ], [ 15089, 0.374436616897583, 0.018569229170680046 ], [ 13410, 0.06768370419740677, 0.9281269311904907 ], [ 8187, 0.13314685225486755, 0.6538047194480896 ], [ 12588, 0.3854219913482666, 0.01360190100967884 ], [ 7500, 0.0060610175132751465, 0.36742061376571655 ], [ 9208, 0.42782625555992126, 0.35872384905815125 ], [ 14637, 0.3836219608783722, 0.13247449696063995 ], [ 7231, 0.10427999496459961, 0.32508227229118347 ], [ 12357, 0.7128660082817078, 0.22513934969902039 ], [ 11066, 0.25018516182899475, 0.44075676798820496 ], [ 13232, 0.725534200668335, 0.15890337526798248 ], [ 12121, 0.7636741995811462, 0.0197604987770319 ], [ 12270, 0.10895457863807678, 0.6246178150177002 ], [ 12417, 0.048266056925058365, 0.9106169939041138 ], [ 5988, 0.3641221523284912, 0.5160220265388489 ], [ 6145, 0.005137264728546143, 0.19998590648174286 ], [ 8109, 0.3078109920024872, 0.33141908049583435 ], [ 7110, 0.08072537183761597, 0.18288713693618774 ], [ 7149, 0.51701819896698, 0.24019396305084229 ], [ 7294, 0.02928626537322998, 0.06285309791564941 ], [ 9278, 0.7852995991706848, 0.16867901384830475 ], [ 9273, 0.21342501044273376, 0.2957458198070526 ], [ 6069, 0.4427330195903778, 0.5422565340995789 ], [ 6955, 0.34578680992126465, 0.12262037396430969 ], [ 8656, 0.6211391687393188, 0.23577715456485748 ], [ 8705, 0.48158687353134155, 0.5170776844024658 ], [ 14959, 0.2580532133579254, 0.730836033821106 ], [ 14768, 0.0197293758392334, 0.37592005729675293 ], [ 11370, 0.4740661084651947, 0.1383698284626007 ], [ 11309, 0.30619385838508606, 0.5086870193481445 ], [ 12049, 0.24362947046756744, 0.7026379704475403 ], [ 14048, 0.354786217212677, 0.27722305059432983 ], [ 14753, 0.2978404462337494, 0.296994149684906 ], [ 10334, 0.38956794142723083, 0.2575920820236206 ], [ 8438, 0.5657222270965576, 0.06497569382190704 ], [ 6171, 0.17068755626678467, 0.006579145323485136 ], [ 6205, 0.4756360352039337, 0.3928890824317932 ], [ 13861, 0.17484745383262634, 0.3841291666030884 ], [ 14776, 0.5197360515594482, 0.15333707630634308 ], [ 11329, 0.296073853969574, 0.6929228901863098 ], [ 11077, 0.10516633838415146, 0.7860001921653748 ], [ 13278, 0.5998827219009399, 0.35780587792396545 ], [ 12250, 0.6685112714767456, 0.09459056705236435 ], [ 5952, 0.6226010322570801, 0.11915439367294312 ], [ 8152, 0.07827037572860718, 0.36985287070274353 ], [ 7127, 0.4978097677230835, 0.12539078295230865 ], [ 11071, 0.37404346466064453, 0.5409450531005859 ], [ 12126, 0.361131489276886, 0.041806623339653015 ], [ 12394, 0.4067142605781555, 0.21898043155670166 ], [ 7185, 0.2843037545681, 0.6474698781967163 ], [ 7313, 0.21339255571365356, 0.28504568338394165 ] ]
+                },
+                "pointsRight": {
+                    "value": [ [ 4098, 0.3772847056388855, 0.20849747955799103 ], [ 4303, 0.045767225325107574, 0.8555631041526794 ], [ 1874, 0.11142033338546753, 0.11731427162885666 ], [ 4226, 0.7836042642593384, 0.07543255388736725 ], [ 1724, 0.13124239444732666, 0.6991913318634033 ], [ 3196, 0.021380245685577393, 0.07818979769945145 ], [ 3534, 0.034283995628356934, 0.2983568608760834 ], [ 3090, 0.4903241991996765, 0.2290697693824768 ], [ 3348, 0.17331260442733765, 0.17795990407466888 ], [ 3640, 0.3424888551235199, 0.6229429841041565 ], [ 1403, 0.8249416947364807, 0.06258445978164673 ], [ 1415, 0.5368475914001465, 0.3364255428314209 ], [ 1415, 0.226176917552948, 0.10673878341913223 ], [ 1421, 0.5795973539352417, 0.09122586250305176 ], [ 1423, 0.05437725782394409, 0.17927846312522888 ], [ 2877, 0.17494651675224304, 0.7663454413414001 ], [ 2887, 0.7010605335235596, 0.2426827847957611 ], [ 2889, 0.09208422899246216, 0.39076513051986694 ], [ 2895, 0.046394094824790955, 0.7114958763122559 ], [ 2902, 0.41611653566360474, 0.4256990849971771 ], [ 2965, 0.32089468836784363, 0.21886217594146729 ], [ 1491, 0.3640021085739136, 0.10821551829576492 ], [ 201, 0.5755724906921387, 0.04242070019245148 ], [ 326, 0.08741423487663269, 0.5675333142280579 ], [ 5825, 0.7473146915435791, 0.19674378633499146 ], [ 7846, 0.34727755188941956, 0.6462437510490417 ], [ 5052, 0.32009637355804443, 0.5815615057945251 ], [ 7868, 0.11968150734901428, 0.7227017283439636 ], [ 8325, 0.2592962682247162, 0.3749435544013977 ], [ 7804, 0.29987597465515137, 0.06853137165307999 ], [ 8335, 0.17741656303405762, 0.03381495177745819 ], [ 7166, 0.3818078637123108, 0.3733136057853699 ], [ 6919, 0.04637801647186279, 0.4025396704673767 ], [ 8295, 0.2048034518957138, 0.6181156635284424 ], [ 8089, 0.08997002243995667, 0.6449547410011292 ], [ 5831, 0.47766563296318054, 0.1809684783220291 ], [ 5667, 0.35399723052978516, 0.6247519850730896 ], [ 4347, 0.9107972383499146, 0.014492104761302471 ], [ 4335, 0.19357383251190186, 0.08111090958118439 ], [ 4383, 0.7045426964759827, 0.1902383416891098 ], [ 3013, 0.08779841661453247, 0.2097855508327484 ], [ 1539, 0.17645013332366943, 0.3808215260505676 ], [ 1063, 0.4511444568634033, 0.17484259605407715 ], [ 2537, 0.6048715114593506, 0.08389698714017868 ], [ 740, 0.03747063875198364, 0.9345936179161072 ], [ 2290, 0.08390658348798752, 0.84284907579422 ], [ 2262, 0.2449655532836914, 0.33030104637145996 ], [ 2267, 0.12187844514846802, 0.03479505330324173 ], [ 2113, 0.1494818925857544, 0.8008176684379578 ], [ 2143, 0.4923136234283447, 0.1315031200647354 ], [ 2947, 0.5828891396522522, 0.32245954871177673 ], [ 4376, 0.4923200011253357, 0.025911753997206688 ], [ 715, 0.6159478425979614, 0.3578883707523346 ], [ 721, 0.22012153267860413, 0.4911048114299774 ], [ 759, 0.5698121786117554, 0.35922130942344666 ], [ 804, 0.1380854845046997, 0.7886787056922913 ], [ 851, 0.018679678440093994, 0.7807515263557434 ], [ 1229, 0.25345221161842346, 0.6589903831481934 ], [ 1200, 0.7350650429725647, 0.05458034202456474 ], [ 1048, 0.048288494348526, 0.6918975114822388 ], [ 1067, 0.2960087060928345, 0.272554486989975 ], [ 987, 0.2198704183101654, 0.4405880868434906 ], [ 1919, 0.08413413912057877, 0.8545879125595093 ], [ 2731, 0.4936501681804657, 0.18519185483455658 ], [ 2742, 0.20091581344604492, 0.05010070279240608 ], [ 2538, 0.5287278294563293, 0.2842807471752167 ], [ 2550, 0.9067063331604004, 0.04327775165438652 ], [ 2560, 0.023817002773284912, 0.00524494843557477 ], [ 2424, 0.12532442808151245, 0.2913261950016022 ], [ 3721, 0.19116632640361786, 0.7369112968444824 ], [ 4003, 0.4888421893119812, 0.49616774916648865 ], [ 1140, 0.7944735884666443, 0.02418368309736252 ], [ 977, 8.881092071533203e-06, 0.30285194516181946 ], [ 1022, 0.004859268665313721, 0.47045472264289856 ], [ 2613, 0.8412542343139648, 0.13939055800437927 ], [ 2451, 0.20178228616714478, 0.02265031822025776 ], [ 2484, 0.08790832757949829, 0.2836529612541199 ], [ 2255, 0.5883955955505371, 0.3308674395084381 ], [ 2278, 0.40107297897338867, 0.05145767703652382 ], [ 2366, 0.08944612741470337, 0.26504382491111755 ], [ 670, 0.09559798240661621, 0.2675722539424896 ], [ 739, 0.1430748701095581, 0.04509877786040306 ], [ 812, 0.35379308462142944, 0.2790733575820923 ], [ 2258, 0.16219139099121094, 0.0002774435270112008 ], [ 2328, 0.01987522840499878, 0.6773812770843506 ], [ 2394, 0.46658140420913696, 0.11153456568717957 ], [ 779, 0.175388365983963, 0.45878544449806213 ], [ 830, 0.2845572829246521, 0.6514804363250732 ] ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": true
+                }
+            },
+            "x": 1427.888500379036,
+            "y": -204.53387424437187
+        },
+        "SelectPointPairs4": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 29,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 25
+                },
+                "geomRight": {
+                    "connectedNodeId": 26
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [  ]
+                },
+                "pointsRight": {
+                    "value": [  ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": false
+                }
+            },
+            "x": 999.0802360129105,
+            "y": 371.6552647469167
+        },
+        "SelectPointPairs5": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 34,
+            "nodeType": "SelectPointPairs",
+            "params": {
+                "fileNameLeft": {
+                    "value": ""
+                },
+                "fileNameRight": {
+                    "value": ""
+                },
+                "geomLeft": {
+                    "connectedNodeId": 30
+                },
+                "geomRight": {
+                    "connectedNodeId": 31
+                },
+                "pointsFormatLeft": {
+                    "value": 0
+                },
+                "pointsFormatRight": {
+                    "value": 0
+                },
+                "pointsLeft": {
+                    "value": [ [ 8755, 0.30761605501174927, 0.394862562417984 ], [ 8831, 0.37172380089759827, 0.16608241200447083 ], [ 8731, 0.4939877986907959, 0.26391008496284485 ], [ 8804, 0.30300819873809814, 0.12569710612297058 ], [ 8568, 0.20899304747581482, 0.6465738415718079 ], [ 14183, 0.14094793796539307, 0.5346860289573669 ], [ 14259, 0.1808972954750061, 0.6340562105178833 ], [ 14159, 0.45433467626571655, 0.42072752118110657 ], [ 14232, 0.20515161752700806, 0.35204946994781494 ], [ 13996, 0.2047092169523239, 0.6356149315834045 ], [ 10374, 0.49455466866493225, 0.12237349897623062 ], [ 15505, 0.2512785792350769, 0.5205965638160706 ], [ 7821, 0.08760201930999756, 0.11128693073987961 ], [ 7476, 0.035855233669281006, 0.43928414583206177 ], [ 7428, 0.06373357772827148, 0.4283495247364044 ], [ 7592, 0.10042130947113037, 0.6220625638961792 ], [ 7552, 0.00030791759490966797, 0.6662647724151611 ], [ 12944, 0.10239121317863464, 0.46750450134277344 ], [ 12601, 0.097012460231781, 0.22815945744514465 ], [ 12552, 0.4230130612850189, 0.08118446916341782 ], [ 12717, 0.9116529226303101, 0.040388986468315125 ], [ 12908, 0.17711491882801056, 0.6568489670753479 ], [ 13103, 0.09666863083839417, 0.5134079456329346 ], [ 7978, 0.42955321073532104, 0.04156379774212837 ], [ 1026, 0.011829465627670288, 0.6822395920753479 ], [ 3877, 0.08832195401191711, 0.6505876183509827 ], [ 4846, 0.10020288825035095, 0.8797090649604797 ], [ 4930, 0.3107486367225647, 0.668459951877594 ], [ 2157, 0.19298112392425537, 0.1200261116027832 ] ]
+                },
+                "pointsRight": {
+                    "value": [ [ 20050, 0.05998674035072327, 0.5135655999183655 ], [ 17205, 0.1908852458000183, 0.29725730419158936 ], [ 20144, 0.1545829474925995, 0.4734092354774475 ], [ 19660, 0.3839545249938965, 0.4189586639404297 ], [ 19326, 0.3749525547027588, 0.23231931030750275 ], [ 20571, 0.14082157611846924, 0.590275228023529 ], [ 14784, 0.5363442301750183, 0.27219778299331665 ], [ 15227, 0.1305786371231079, 0.5407862663269043 ], [ 15988, 0.6293413043022156, 0.36600014567375183 ], [ 14197, 0.2819410562515259, 0.28236255049705505 ], [ 10225, 0.43149077892303467, 0.011992571875452995 ], [ 11373, 0.02744835615158081, 0.011491130106151104 ], [ 24303, 0.3417425751686096, 0.11804302036762238 ], [ 23998, 0.6828314661979675, 0.049435097724199295 ], [ 24120, 0.3899368345737457, 0.5173452496528625 ], [ 24846, 0.9079530239105225, 0.009594816714525223 ], [ 24993, 0.05442965030670166, 0.2792714536190033 ], [ 22040, 0.39769667387008667, 0.15868628025054932 ], [ 21734, 0.12129057943820953, 0.6551283001899719 ], [ 21856, 0.6888177394866943, 0.09474130719900131 ], [ 22582, 0.08298493176698685, 0.8040176033973694 ], [ 22724, 0.07498994469642639, 0.8232278823852539 ], [ 21611, 0.4009682834148407, 0.48327380418777466 ], [ 23866, 0.2797822654247284, 0.2730949819087982 ], [ 3388, 0.5138218998908997, 0.44837579131126404 ], [ 6876, 0.36968713998794556, 0.4748282730579376 ], [ 4500, 0.46287479996681213, 0.36006131768226624 ], [ 4402, 0.529780387878418, 0.2710089385509491 ], [ 7328, 0.41036930680274963, 0.4831320345401764 ] ]
+                },
+                "sourceLeft": {
+                    "value": 0
+                },
+                "sourceRight": {
+                    "value": 0
+                },
+                "symmetryLeft": {
+                    "value": 0
+                },
+                "symmetryRight": {
+                    "value": 0
+                },
+                "syncTransform": {
+                    "value": {
+                        "offset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "rotationQuat": {
+                            "scalar": 1,
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": 1,
+                        "translation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                },
+                "syncViews": {
+                    "value": true
+                }
+            },
+            "x": 506.3978959068626,
+            "y": 354.3185502772285
+        },
+        "Wrapping": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 3,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 1
+                },
+                "geomFloating": {
+                    "connectedNodeId": 0
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 14,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": -118.4410992241643,
+            "y": -27.185618511407654
+        },
+        "Wrapping1": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": false,
+            "nodeId": 10,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 9
+                },
+                "geomFloating": {
+                    "connectedNodeId": 8
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 12,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": 436.5957288134152,
+            "y": -27.185614757552145
+        },
+        "Wrapping2": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 19,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 17
+                },
+                "geomFloating": {
+                    "connectedNodeId": 15
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 23,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": 993.4663923916755,
+            "y": -37.89247399797779
+        },
+        "Wrapping3": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 20,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 18
+                },
+                "geomFloating": {
+                    "connectedNodeId": 16
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 24,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": 1427.8885011021607,
+            "y": -37.89248402541739
+        },
+        "Wrapping4": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 27,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 26
+                },
+                "geomFloating": {
+                    "connectedNodeId": 25
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 29,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": 999.080236429386,
+            "y": 581.869062064895
+        },
+        "Wrapping5": {
+            "color": {
+                "a": 0,
+                "b": 0,
+                "g": 0,
+                "r": 0
+            },
+            "hasColor": false,
+            "isAlwaysVisible": true,
+            "nodeId": 32,
+            "nodeType": "Wrapping",
+            "params": {
+                "autocompute": {
+                    "value": false
+                },
+                "geomFixed": {
+                    "connectedNodeId": 31
+                },
+                "geomFloating": {
+                    "connectedNodeId": 30
+                },
+                "globalControlPointsWeightFinal": {
+                    "value": 10
+                },
+                "globalControlPointsWeightInitial": {
+                    "value": 100
+                },
+                "globalPoint2PlaneFittingWeight": {
+                    "value": 1
+                },
+                "globalPoint2PointFittingWeight": {
+                    "value": 0.10000000149011612
+                },
+                "globalSmoothWeightMax": {
+                    "value": 1
+                },
+                "globalSmoothWeightMin": {
+                    "value": 0.10000000149011612
+                },
+                "maxDp": {
+                    "value": 0.009999999776482582
+                },
+                "maxOptimizationIterations": {
+                    "value": 100
+                },
+                "minCosBetweenNormals": {
+                    "value": 0.6499999761581421
+                },
+                "minDp": {
+                    "value": 0.0020000000949949026
+                },
+                "nICPIterations": {
+                    "value": 15
+                },
+                "nNodesToUse": {
+                    "value": 8
+                },
+                "nOptimizationIterations": {
+                    "value": 30
+                },
+                "nSubdivisions": {
+                    "value": 6
+                },
+                "points": {
+                    "connectedNodeId": 34,
+                    "value": {
+                        "first": [  ],
+                        "second": [  ]
+                    }
+                },
+                "polygons": {
+                    "value": [  ]
+                },
+                "samplingMaxMultiplier": {
+                    "value": 5
+                },
+                "samplingMinMultiplier": {
+                    "value": 0.6000000238418579
+                }
+            },
+            "x": 533.7839966865499,
+            "y": 581.8690411962655
+        }
+    },
+    "pythonCode": "",
+    "timeline": {
+        "current": 0,
+        "max": 25,
+        "min": 0
+    }
+}

@@ -57,7 +57,7 @@ namespace Didimo.Core.Editor
 
     public class GLTFImporter : ScriptedImporter
     {
-        public const int GLTF_IMPORTER_VERSION = 17;
+        public const int GLTF_IMPORTER_VERSION = 19;
 
         public ImportSettings importSettings;
 

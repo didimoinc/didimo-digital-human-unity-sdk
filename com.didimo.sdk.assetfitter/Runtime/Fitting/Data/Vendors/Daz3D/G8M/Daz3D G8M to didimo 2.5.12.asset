@@ -1,0 +1,291 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40423e9e92b984db6b1da9874e174066, type: 3}
+  m_Name: Daz3D G8M to didimo 2.5.12
+  m_EditorClassIdentifier: 
+  nodes:
+  - rid: 5739699242419093562
+  - rid: 5739699242419093563
+  - rid: 5739699242419093564
+  - rid: 5739699242419093565
+  - rid: 5739699242419093566
+  - rid: 5739699242419093567
+  - rid: 5739699242419093568
+  - rid: 5739699242419093569
+  - rid: 5739699242419093570
+  - rid: 5739699242419093571
+  - rid: 5739699242419093572
+  - rid: 5739699242419093573
+  - rid: 5739699242419093574
+  edges:
+  - input:
+      node: 33d37745-8d2b-4039-a827-df807a15e6c2
+      field: mesh1Input
+    output:
+      node: 075da0e4-d41e-4434-9caf-e1faac3bcf74
+      field: meshOutput
+  - input:
+      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
+      field: meshInput
+    output:
+      node: a9e9adc4-9d7d-44db-bddd-3d660ffba9aa
+      field: manifoldOutput
+  - input:
+      node: 33d37745-8d2b-4039-a827-df807a15e6c2
+      field: mesh2Input
+    output:
+      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
+      field: meshOutput
+  - input:
+      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
+      field: mesh2Input
+    output:
+      node: 6af0008a-c0e2-42a9-b8da-b030172ccdb3
+      field: meshOutput
+  - input:
+      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
+      field: mesh1Input
+    output:
+      node: 8c0c482d-03ca-4594-96a3-488e3c509b4d
+      field: manifoldOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: tpsWeightsInput
+    output:
+      node: 33d37745-8d2b-4039-a827-df807a15e6c2
+      field: tpsWeightsOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: prefabInput
+    output:
+      node: a9e9adc4-9d7d-44db-bddd-3d660ffba9aa
+      field: prefabOutput
+  - input:
+      node: 6ab17ac4-7f51-4154-8fe1-7ddcefbe2f3a
+      field: prefabInput
+    output:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: prefabOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: wrapMesh
+    output:
+      node: 075da0e4-d41e-4434-9caf-e1faac3bcf74
+      field: meshOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: accessoriesFilterInput
+    output:
+      node: ddc5b845-9fae-47e4-9ce6-961b5eb3037b
+      field: accessoryFilterOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: boneMapInput
+    output:
+      node: f3fce50f-2f53-435b-b436-b0faaf1d53f7
+      field: boneIndexRemapOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: sourceSkinInput
+    output:
+      node: ddc5b845-9fae-47e4-9ce6-961b5eb3037b
+      field: shapeOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: accessoriesInput
+    output:
+      node: ddc5b845-9fae-47e4-9ce6-961b5eb3037b
+      field: accessoryOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: boneMapInput
+    output:
+      node: d212b231-6cd3-4b84-840d-8678cbd5f869
+      field: boneIndexRemapOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: boneMapInput
+    output:
+      node: ee934264-ec2d-4eef-ad27-0de39c6a7ace
+      field: boneIndexRemapOutput
+  - input:
+      node: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+      field: boneMapInput
+    output:
+      node: 97917be2-95af-4f28-aace-11a534b47adb
+      field: boneIndexRemapOutput
+  viewPosition: {x: -92, y: 95, z: 0}
+  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  config:
+    exposeFields: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5739699242419093562
+      type: {class: CommandMeshValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 075da0e4-d41e-4434-9caf-e1faac3bcf74
+        id: 
+        position: {x: 629, y: 418}
+        expanded: 1
+        meshOutput: {fileID: -2432090755550338912, guid: 76945d3496372874db57c2a8530e93f1, type: 3}
+    - rid: 5739699242419093563
+      type: {class: CommandTPSWeightsCreate, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 33d37745-8d2b-4039-a827-df807a15e6c2
+        id: 
+        position: {x: 870, y: 533}
+        expanded: 1
+        mesh1Input: {fileID: 0}
+        mesh2Input: {fileID: 0}
+        tpsWeightsOutput: {fileID: 0}
+    - rid: 5739699242419093564
+      type: {class: CommandDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: a9e9adc4-9d7d-44db-bddd-3d660ffba9aa
+        id: output
+        position: {x: 304, y: 329}
+        expanded: 0
+        prefabOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
+        templateOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
+        headOutput: {fileID: 0}
+        leyeOutput: {fileID: 0}
+        reyeOutput: {fileID: 0}
+        eyeLashOutput: {fileID: 0}
+        mouthOutput: {fileID: 0}
+        bodyOutput: {fileID: 0}
+        garmentOutput: {fileID: 0}
+        manifoldOutput: {fileID: 0}
+    - rid: 5739699242419093565
+      type: {class: CommandPrefabSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 6ab17ac4-7f51-4154-8fe1-7ddcefbe2f3a
+        id: SavePrefab
+        position: {x: 1379, y: 153}
+        expanded: 1
+        prefabInput: {fileID: 0}
+        path: _AssetFitterOuputs
+        saveType: 1
+    - rid: 5739699242419093566
+      type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: f3fce50f-2f53-435b-b436-b0faaf1d53f7
+        id: 
+        position: {x: 789, y: -48}
+        expanded: 1
+        boneIndexRemapOutput: {fileID: 11400000, guid: 288c4c5e086a743409a33b784d943b29, type: 2}
+    - rid: 5739699242419093567
+      type: {class: CommandDaz3D, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: ddc5b845-9fae-47e4-9ce6-961b5eb3037b
+        id: input
+        position: {x: 304, y: 167}
+        expanded: 0
+        prefabOutput: {fileID: 0}
+        shapeOutput: {fileID: 0}
+        faceOutput: {fileID: 0}
+        lipsOutput: {fileID: 0}
+        teethOutput: {fileID: 0}
+        torsoOutput: {fileID: 0}
+        earsOutput: {fileID: 0}
+        legsOutput: {fileID: 0}
+        eyeSocketOutput: {fileID: 0}
+        mouthOutput: {fileID: 0}
+        armsOutput: {fileID: 0}
+        pupilsOutput: {fileID: 0}
+        eyeMoistureOutput: {fileID: 0}
+        fingenailsOutput: {fileID: 0}
+        corneaOutput: {fileID: 0}
+        irisesOutput: {fileID: 0}
+        scleraOutput: {fileID: 0}
+        toenailsOutput: {fileID: 0}
+        accessoryOutput: {fileID: 0}
+        accessoryFilterOutput: {fileID: 0}
+        manifoldOutput: {fileID: 0}
+        eyelashFilter: 1
+    - rid: 5739699242419093568
+      type: {class: CommandMeshValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 6af0008a-c0e2-42a9-b8da-b030172ccdb3
+        id: 
+        position: {x: 384, y: 604}
+        expanded: 1
+        meshOutput: {fileID: -2432090755550338912, guid: 052fd0f9ba5059d4aa6045bfccce6c1a, type: 3}
+    - rid: 5739699242419093569
+      type: {class: CommandDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 8c0c482d-03ca-4594-96a3-488e3c509b4d
+        id: 
+        position: {x: 304, y: 464}
+        expanded: 0
+        prefabOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
+        templateOutput: {fileID: 3619099142778357334, guid: 4614700daeb7e4241bd6bc670f9b2a0e, type: 3}
+        headOutput: {fileID: 0}
+        leyeOutput: {fileID: 0}
+        reyeOutput: {fileID: 0}
+        eyeLashOutput: {fileID: 0}
+        mouthOutput: {fileID: 0}
+        bodyOutput: {fileID: 0}
+        garmentOutput: {fileID: 0}
+        manifoldOutput: {fileID: 0}
+    - rid: 5739699242419093570
+      type: {class: CommandMeshVertexOrder, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: b937c836-9d8d-4ed6-a124-6167d8d27a50
+        id: 
+        position: {x: 629, y: 557}
+        expanded: 1
+        meshInput: {fileID: 0}
+        mesh1Input: {fileID: 0}
+        mesh2Input: {fileID: 0}
+        meshOutput: {fileID: 0}
+        threshold: 0.0001
+    - rid: 5739699242419093571
+      type: {class: CommandFitToDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 4f400b33-414d-4358-a7c7-c9ce991de8d4
+        id: 
+        position: {x: 1089, y: 167}
+        expanded: 1
+        sourceSkinInput: {fileID: 0}
+        accessoriesInput: {fileID: 0}
+        accessoriesFilterInput: {fileID: 0}
+        boneMapInput: {fileID: 0}
+        prefabInput: {fileID: 0}
+        wrapMesh: {fileID: 0}
+        tpsWeightsInput: {fileID: 0}
+        prefabOutput: {fileID: 0}
+        excludeDidimoMeshes: 0
+    - rid: 5739699242419093572
+      type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: d212b231-6cd3-4b84-840d-8678cbd5f869
+        id: 
+        position: {x: 789, y: 60}
+        expanded: 1
+        boneIndexRemapOutput: {fileID: 11400000, guid: 48752da7f7e4e3046989a93ddc35c24c, type: 2}
+    - rid: 5739699242419093573
+      type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: ee934264-ec2d-4eef-ad27-0de39c6a7ace
+        id: 
+        position: {x: 789, y: -159}
+        expanded: 1
+        boneIndexRemapOutput: {fileID: 11400000, guid: fe7858288ae1f3c4cbe2c1b1754d2c7d, type: 2}
+    - rid: 5739699242419093574
+      type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
+      data:
+        guid: 97917be2-95af-4f28-aace-11a534b47adb
+        id: 
+        position: {x: 789, y: -267}
+        expanded: 1
+        boneIndexRemapOutput: {fileID: 11400000, guid: 22a3671ca61dea142833006a200b55dd, type: 2}
