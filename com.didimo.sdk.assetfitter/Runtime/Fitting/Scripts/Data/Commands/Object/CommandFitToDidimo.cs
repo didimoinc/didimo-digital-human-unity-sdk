@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEditor;
+using System.Globalization;
+using Didimo.Extensions;
 using static Didimo.AssetFitter.Editor.Graph.GeomTools;
 using static Didimo.AssetFitter.Editor.Graph.AssetTools;
 using static Didimo.AssetFitter.Editor.Graph.AssetFitterHelper;
@@ -24,7 +26,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         [Input("Prefab", true)] public GameObject prefabInput;
         [Input("TPS", true)] public TPSWeights tpsWeightsInput;
         [Output("Prefab")] public GameObject prefabOutput;
-        [Expose] public bool excludeDidimoMeshes;
+        [Expose] public Options options = Options.IncludeDidimoMeshes;
 
         protected override bool GetOutputValues(FieldInfo info, out List<object> values)
         {
@@ -39,9 +41,6 @@ namespace Didimo.AssetFitter.Editor.Graph
             {
                 GameObject didimo = CloneAsset(GetInputValue<GameObject>(nameof(prefabInput)));
                 values = new List<object> { didimo };
-
-                //excludeDidimoMeshes
-                //exclude didimo.GetComponentsInChildren<Renderer>(true);
 
                 SkinnedMeshRenderer primarySkin = didimo.GetComponentInChildren<SkinnedMeshRenderer>();
 
@@ -123,8 +122,10 @@ namespace Didimo.AssetFitter.Editor.Graph
                     obj.AddComponent<MeshRenderer>().sharedMaterials = filter.GetComponent<MeshRenderer>().sharedMaterials;
                 }
 
-                //exclude didimo meshes here:`
-                // renderers.ForEach(r=>DestroyImmediate(r.gameObject))
+                if ((options & Options.IncludeDidimoMeshes) == 0)
+                    didimo.GetComponentsInChildren<SkinnedMeshRenderer>().
+                        Where(s => s.name.StartsWith("ddmo_", true, new CultureInfo("en-US"))).
+                        ForEach(s => Object.DestroyImmediate(s));
                 return true;
             }
             return base.GetOutputValues(info, out values);
@@ -166,5 +167,11 @@ namespace Didimo.AssetFitter.Editor.Graph
             }
             return remap;
         }
+    }
+
+    [System.Flags]
+    public enum Options
+    {
+        IncludeDidimoMeshes = 1 << 0,
     }
 }
