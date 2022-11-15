@@ -104,7 +104,7 @@ namespace Didimo.Core.Editor
         public static void GenerateMergedAndAtlasedTextureMaterialsForSelected(GameObject[] objects,
             int materialSwitcherSlot = DidimoMaterialSwitcher.COMBINED_ATLASED_MATERIAL_SET, bool numberAtlasedTextures = false)
         {
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources();
             Material[] altasMaterialSlots = new Material[16];
             int i = 0;
             Dictionary<String, int> UniqueMaterialNames = new Dictionary<String, int>();
@@ -274,20 +274,20 @@ namespace Didimo.Core.Editor
         }
 
         public static Material[] BuildUniqueMaterials(Material[] ml, Dictionary<Material, Material> uniqueMaterials, string materialFileName, string newMergedTexturePrefix,
-            Shader oldShader, Shader newShader, bool forceCreateMaterialEvenIfPresent, bool forceCreateTextures)
+            Material oldMaterial, Material newMaterial, bool forceCreateMaterialEvenIfPresent, bool forceCreateTextures)
         {
             List<Material> newMatList = new List<Material>();
             for (var i = 0; i < ml.Length; ++i)
             {
                 Material newMat = null;
                 var m = ml[i];
-                if (m.shader == oldShader)
+                if (m.shader == oldMaterial)
                 {
                     if (!uniqueMaterials.ContainsKey(m))
                     {
                         if (forceCreateMaterialEvenIfPresent || !File.Exists(materialFileName))
                         {
-                            newMat = CreateMaterialCopy(m, materialFileName, newMergedTexturePrefix, newShader, forceCreateTextures);
+                            newMat = CreateMaterialCopy(m, materialFileName, newMergedTexturePrefix, newMaterial, forceCreateTextures);
                         }
                         else
                         {
@@ -309,12 +309,12 @@ namespace Didimo.Core.Editor
             return newMatList.ToArray();
         }
 
-        public static Material CreateMaterialCopy(Material sourceMaterial, string newMaterialPath, string newTexturePrefix, Shader newShader, bool forceCreateTextures)
+        public static Material CreateMaterialCopy(Material sourceMaterial, string newMaterialPath, string newTexturePrefix, Material newMaterial, bool forceCreateTextures)
         {
-            if (newShader != null)
+            if (newMaterial != null)
             {
                 //an attempt to get unity to behave rather than fail silently
-                var mat = new Material(newShader);
+                var mat = new Material(newMaterial);
                 var dir = Directory.GetParent(newMaterialPath).FullName;
                 Directory.CreateDirectory(dir);
 
@@ -340,9 +340,9 @@ namespace Didimo.Core.Editor
             bool forceCreateMaterial = false, bool forceCreateTextures = false)
         {
             Dictionary<Material, Material> uniqueMaterials = new Dictionary<Material, Material>();
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
-            Shader separateSkinShader = shaderResources.Skin;
-            Shader mergedSkinShader = shaderResources.SkinMergedTextures;
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources();
+            Material separateSkinMaterial = materialResources.Skin;
+            Material mergedSkinMaterial = materialResources.SkinMergedTextures;
             MaterialUtility.EnsureMaterialSwitcher(objects,
                 true); //Ensures material switchers (and, if a group is selected, material switcher global index controller) are added to appropriate mesh renderers
             foreach (GameObject go in objects)
@@ -371,8 +371,8 @@ namespace Didimo.Core.Editor
                             uniqueMaterials,
                             materialFileName,
                             materialName,
-                            shaderResources.Skin,
-                            shaderResources.SkinMergedTextures,
+                            materialResources.Skin,
+                            materialResources.SkinMergedTextures,
                             forceCreateMaterial,
                             forceCreateTextures);
                         DidimoMaterialSwitcher dms = smr.GetComponent<DidimoMaterialSwitcher>();
@@ -396,8 +396,8 @@ namespace Didimo.Core.Editor
                             uniqueMaterials,
                             materialFileName,
                             materialFileName,
-                            shaderResources.Skin,
-                            shaderResources.SkinMergedTextures,
+                            materialResources.Skin,
+                            materialResources.SkinMergedTextures,
                             forceCreateMaterial,
                             forceCreateTextures);
                         DidimoMaterialSwitcher dms = mr.GetComponent<DidimoMaterialSwitcher>();
@@ -427,8 +427,8 @@ namespace Didimo.Core.Editor
         {
             var ResourceID = ResourcesLoader.GetAppropriateID();
             var OtherID = (EPipelineType) ((int) ResourceID ^ 1);
-            ShaderResources currentResources = ResourcesLoader.ShaderResources(ResourceID);
-            ShaderResources otherResources = ResourcesLoader.ShaderResources(OtherID);
+            MaterialResources currentResources = ResourcesLoader.GetMaterialResources(ResourceID);
+            MaterialResources otherResources = ResourcesLoader.GetMaterialResources(OtherID);
 
             objects = ComponentUtility.CreateFlatList(objects).ToArray();
 
@@ -524,13 +524,13 @@ namespace Didimo.Core.Editor
                                         }
 
                                         string bpname = bpid.ToString();
-                                        Shader matShader = currentResources.GetShader(bpid, ShaderResources.EShaderType.SEPARATE_CHANNELS);
+                                        Material material = currentResources.GetMaterial(bpid, MaterialResources.EShaderType.SEPARATE_CHANNELS);
 
-                                        if (matShader != null && bpid != DidimoParts.BodyPart.Unknown)
+                                        if (material != null && bpid != DidimoParts.BodyPart.Unknown)
                                         {
-                                            Material NewMaterial = new Material(matShader);
+                                            Material NewMaterial = new Material(material);
                                             //first, copy material properties from old shader
-                                            MaterialBuilder.CopyMaterialProperties(sourceMaterial, NewMaterial, ShaderResources.MaterialPropertyAliasMap);
+                                            MaterialBuilder.CopyMaterialProperties(sourceMaterial, NewMaterial, MaterialResources.MaterialPropertyAliasMap);
 #if UNITY_EDITOR
                                             var meshFilePath = GetMeshFilePath(mesh);
                                             var materialFileName = meshFilePath + Path.DirectorySeparatorChar + bpname + ".mat" + pipelineSuffix[(int) ResourceID] + ".mat";

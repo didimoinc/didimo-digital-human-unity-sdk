@@ -28,8 +28,10 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3001
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -167,12 +169,14 @@ Material:
     - Vector1_edbee027f473426b8ceb7e31b86d7534: 0.991
     - Vector1_fecc576ca2d948b59b8bdff9c87cd785: 0
     - _AOFactor: 1
+    - _AOStrength: 1
     - _AlphaClip: 0
     - _AlphaLODbias: 0
     - _AlphaPower: 1
     - _AnisoHighlightRotation: 90
     - _Blend: 0
     - _BumpScale: 1
+    - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -211,7 +215,9 @@ Material:
     - _UseFlowMap: 1
     - _UseUniqueAO: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     - _alphaClipThreshold: 0.066
     - _envSpecMul: 0
     - _flowMultiplier: 1.025

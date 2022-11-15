@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Didimo.Core.Deformables;
-using Didimo.GLTFUtility;
+// using Didimo.GLTFUtility;
 using UnityEngine;
 
 namespace Didimo.Builder.GLTF
@@ -9,12 +9,12 @@ namespace Didimo.Builder.GLTF
     public static class GLTFDidimoHair 
     {
 
-        public static void ApplyHairMaterials(Importer.ImportResult gltfImportResult)
+        public static void ApplyHairMaterials(GameObject[] hairsObjects)
         {
 
-            if (gltfImportResult.hairsObjects == null) return;
+            if (hairsObjects == null) return;
             
-            foreach (GameObject gltfHairObject in gltfImportResult.hairsObjects)
+            foreach (GameObject gltfHairObject in hairsObjects)
             {
                 Deformable hair = DeformableUtils.GetAllDeformables().FirstOrDefault(d => d.name == gltfHairObject.name);
 

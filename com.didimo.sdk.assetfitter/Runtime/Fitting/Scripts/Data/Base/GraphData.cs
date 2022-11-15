@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 namespace Didimo.AssetFitter.Editor.Graph
 {
-    [CreateAssetMenu(fileName = "New Graph Data", menuName = "Didimo/Graph/Graph Data")]
+    [CreateAssetMenu(fileName = "New Graph Data", menuName = "Didimo/Graph/Graph Data", order = 10)]
     public class GraphData : ScriptableObject
     {
         [SerializeReference] public List<GraphNode> nodes = new List<GraphNode>();
@@ -30,41 +30,29 @@ namespace Didimo.AssetFitter.Editor.Graph
         public void Run()
         {
 #if UNITY_EDITOR
-            // if (State) return;
+            if (State) return;
 
-            // //Phase 2
-            // EditorApplication.delayCall += () => EditorApplication.delayCall += () =>
-            // {
-            //     Debug.Log("Run Complete");
-            //     State.Dispose();
-            //     State = null;
-            // };
+            //Phase 2
+            EditorApplication.delayCall += () => EditorApplication.delayCall += () =>
+            {
+                Debug.Log("Run Complete");
+                State.Dispose();
+                State = null;
+            };
 
-            // // Phase 0
-            // // State = new CachedState(this);
-            // // Debug.Log("State Created");
-
-            // Debug.Log("Starting Graph: '" + this.name + "'");
-            // Build();
-
-            // //Phase 1
-            // EditorApplication.delayCall += () =>
-            // {
-            //     Debug.Log("Parsing End Points");
-            //     this.nodes.ForEach(n => n.EndPoint());
-            // };
+            // Phase 0
+            State = new CachedState(this);
+            Debug.Log("State Created");
 
             Debug.Log("Starting Graph: '" + this.name + "'");
-            using (State = new CachedState(this))
+            Build();
+
+            //Phase 1
+            EditorApplication.delayCall += () =>
             {
-                Build();
+                Debug.Log("Parsing End Points");
                 this.nodes.ForEach(n => n.EndPoint());
-
-                // State.Dispose();
-            }
-            State = null;
-
-            Debug.Log("Run Complete");
+            };
 #endif
         }
 

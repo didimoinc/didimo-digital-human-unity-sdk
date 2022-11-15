@@ -130,16 +130,20 @@ namespace Didimo.Networking
             }
         }
 
-        public async Task<(bool success, DidimoComponents didimo)> CreateDidimoAndImportGltf(string photoPath, Configuration configuration = null,
+        public async Task<(bool success, DidimoComponents didimo)> CreateDidimoAndImportGltf(string photoPath,
+            Configuration configuration = null,
             Action<float> creationProgress = null)
         {
-            Task<(bool success, string path, string key)> createNewDidimoTask = CreateDidimoAndDownload(photoPath, null, null, creationProgress);
+            Task<(bool success, string path, string key)> createNewDidimoTask = CreateDidimoAndDownload(photoPath,
+                null, null, creationProgress);
             await createNewDidimoTask;
 
             return await Import(createNewDidimoTask.Result.key, createNewDidimoTask.Result.path, configuration);
         }
 
-        public async Task<(bool success, string filePath, string key)> CreateDidimoAndDownload(string photoPath, string downloadPath, Configuration configuration = null, Action<float> creationProgress = null)
+        public async Task<(bool success, string filePath, string key)> CreateDidimoAndDownload(string photoPath, string downloadPath, 
+            Configuration configuration = null, Action<float> creationProgress = null,
+            DidimoDetailsResponse.DownloadTransferFormatType format = DidimoDetailsResponse.DownloadTransferFormatType.Gltf)
         {
             DidimoNetworkingResources.NetworkConfig.DownloadRoot = downloadPath;
 
@@ -152,7 +156,7 @@ namespace Didimo.Networking
                 CheckForStatusUntilCompletion(createNewDidimoTask.Result.didimoKey, creationProgress);
             await checkForStatusUntilCompletionTask;
 
-            Downloadable downloadable = checkForStatusUntilCompletionTask.Result.status.GetDownloadableForTransferFormat(DidimoDetailsResponse.DownloadTransferFormatType.Gltf);
+            Downloadable downloadable = checkForStatusUntilCompletionTask.Result.status.GetDownloadableForTransferFormat(format);
             if (downloadable == null)
             {
                 Debug.LogError($"Failed to get downloadable of type {DidimoDetailsResponse.DownloadTransferFormatType.Gltf}");

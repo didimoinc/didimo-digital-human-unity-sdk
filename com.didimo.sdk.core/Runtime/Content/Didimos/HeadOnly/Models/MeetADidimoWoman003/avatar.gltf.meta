@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 1a647993838f8d54cb230402772f8f7f
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: f762c10ef46e7374fbb8914152259594, type: 3}
+  importSettings:
+    needsReimportForTextures: 0
+    materials: 1
+    generateLightmapUVs: 0
+    normals: 0
+    tangents: 0
+    animationType: 1
+    avatarDefinition: 1
+    avatar: {instanceID: 0}
+    isDidimo: 1

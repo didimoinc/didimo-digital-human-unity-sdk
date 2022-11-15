@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9733304321065857, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
+      propertyPath: m_Name
+      value: didimo004_HumanoidDemo
+      objectReference: {fileID: 0}
     - target: {fileID: 1451299405368282511, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
       propertyPath: m_Name
       value: didimo004_HumanoidDemo_Player
@@ -137,64 +141,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
---- !u!1 &6891165527758990938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1451299405368282511, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
-  m_PrefabInstance: {fileID: 5442137907945776085}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &1743991890
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6891165527758990938}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &3360763389516965522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6891165527758990938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae579e9cbe53143728c5c3417fac3039, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headTrackingDistance: 8
-  headTrackingAngle: 90
-  eyeHeight: 1.7
---- !u!114 &3586751502482718929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6891165527758990938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98071383555b54bbdb6f15726c129608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlType: 0
-  walkSpeed: 2
-  runSpeed: 6
-  lookForward: 3
-  waitTime: 5
-  waitChance: 0.3
-  currentSpeed: 0

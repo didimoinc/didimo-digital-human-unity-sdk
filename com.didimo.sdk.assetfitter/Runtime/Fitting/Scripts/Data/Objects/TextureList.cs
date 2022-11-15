@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
-    [CreateAssetMenu(fileName = "New Texture List", menuName = "Didimo/Graph/Asset Fitter/Lists/Texture List")]
+    [CreateAssetMenu(fileName = "New Texture List", menuName = "Didimo/Graph/Lists/Texture List")]
     public class TextureList : ScriptableObject
     {
         public Texture2D[] textures;

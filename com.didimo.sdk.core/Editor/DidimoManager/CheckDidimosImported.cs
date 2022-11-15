@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Didimo.Builder;
 using UnityEditor;
@@ -23,11 +24,12 @@ namespace Didimo.Core.Editor
                                                         .Where(asset => asset.StartsWith("Packages/com.didimo", StringComparison.InvariantCultureIgnoreCase) &&
                                                                         asset.EndsWith(".gltf", StringComparison.InvariantCultureIgnoreCase))
                                                         .ToList();
+                didimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(Path.GetDirectoryName(s)));
                 List<string> fbxDidimoPaths = AssetDatabase.GetAllAssetPaths()
                                                         .Where(asset => asset.StartsWith("Packages/com.didimo", StringComparison.InvariantCultureIgnoreCase) &&
                                                                         asset.EndsWith(".fbx", StringComparison.InvariantCultureIgnoreCase))
                                                         .ToList();
-                fbxDidimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(s));
+                fbxDidimoPaths.RemoveAll(s => !DidimoImporterJsonConfigUtils.CheckIfJsonExists(Path.GetDirectoryName(s)));
                 didimoPaths.AddRange(fbxDidimoPaths);
                 didimosToReimport = new List<string>();
                 foreach (string didimoPath in didimoPaths)
@@ -50,6 +52,8 @@ namespace Didimo.Core.Editor
             if (didimosToReimport.Count != 0)
             {
                 EditorGUILayout.HelpBox(ResolveText(), MessageType.Error);
+
+                EditorGUILayout.TextArea(string.Join("\n", didimosToReimport));
             }
 
             return didimosToReimport.Count == 0;

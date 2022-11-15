@@ -8,7 +8,9 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.LiveCapture.ARKitFaceCapture",
         "Unity.EditorCoroutines.Editor",
-        "Unity.Timeline"
+        "Unity.Timeline",
+        "glTFastEditor",
+        "glTFast"
     ],
     "includePlatforms": [
         "Editor"

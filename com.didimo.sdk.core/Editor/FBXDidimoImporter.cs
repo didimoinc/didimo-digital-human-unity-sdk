@@ -5,6 +5,11 @@ using System.IO;
 using System;
 using System.Linq;
 using Didimo.Builder;
+using Didimo.Core.Config;
+using Didimo.Core.Utility;
+using UnityEditor.Rendering;
+using UnityEngine.Rendering.Universal;
+using Object = System.Object;
 
 namespace Didimo.Core.Editor
 {
@@ -12,11 +17,10 @@ namespace Didimo.Core.Editor
     {
         public const string FBX_EXTENSION = ".fbx";
 
-        public static Dictionary<string, DidimoImporterJsonConfig> ImporterConfigCache = new ();
-
         AnimationClip[] animationClips = null;
         AnimationClip resetAnimationClip = null;
 
+        private static HashSet<string> importedObjects = new HashSet<string>();
         public override int GetPostprocessOrder()
         {
             return 10; // must be after unity's post processor so it doesn't overwrite our own stuff
@@ -39,6 +43,7 @@ namespace Didimo.Core.Editor
             importer.optimizeMeshPolygons = false;
             importer.optimizeMeshVertices = false;
             importer.isReadable = true;
+            // importer.preserveHierarchy = true;
             importer.weldVertices = false;
             importer.SaveAndReimport();
 
@@ -53,21 +58,39 @@ namespace Didimo.Core.Editor
             DidimoImporterJsonConfig importerJsonConfig = DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(assetPath));
             if (importerJsonConfig == null) return;
             
+            // ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+            // if (shaderResources == null)
+            // {
+            //     if (importedObjects.Add(assetPath))
+            //     {
+            //         // Try to reimport after we shader resources is imported
+            //         AssetDatabase.ImportAsset(assetPath);
+            //         return;
+            //     }
+            // }
+            
+            List<UnityEngine.Object> objects = new List<UnityEngine.Object>();
+            context.GetObjects(objects);
+            
+            // Remove all materials, as we'll be adding new ones
+            foreach (var obj in objects.Where(obj => obj as Material != null))
+            {
+                AssetDatabase.RemoveObjectFromAsset(obj);
+            }
+            
             animationClips = AnimationUtility.GetAnimationClips(g);
             // CleanupAnimations(animationClips, 0f, 0f, 0f);
 
             resetAnimationClip = GenerateResetAnimationClip(animationClips);
             context.AddObjectToAsset(resetAnimationClip.name, resetAnimationClip);
-            
-            DidimoImporterJsonConfigUtils.SetupDidimoForEditor(g, importerJsonConfig, assetPath, animationClips, resetAnimationClip,
-                material =>
+
+            DidimoImporterJsonConfigUtils.SetupDidimoForEditor(g, importerJsonConfig, context, assetPath, animationClips, "", resetAnimationClip,
+                createdObject =>
                 {
-                    context.AddObjectToAsset(material.name, material);
+                    context.AddObjectToAsset(createdObject.name, createdObject);
                 });
-            ImporterConfigCache.Remove(Path.GetDirectoryName(assetPath));
         }
 
-        
         void SplitAnimationClips(DidimoImporterJsonConfig importerJsonConfig)
         {
             IReadOnlyDictionary<string, int[]> targetData = importerJsonConfig.GetAllPoseClips();

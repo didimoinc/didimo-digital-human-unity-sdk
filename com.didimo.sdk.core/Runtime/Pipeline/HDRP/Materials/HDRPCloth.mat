@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HDRPCloth
+  m_Shader: {fileID: -6465566751694194690, guid: c241f6d248aab6b4eb2cb2409f1bb3c0, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Stitch_Rough_Metal_AO:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DecalAlphaClip: 0
+    - _DecalAsSDF: 0
+    - _DecalEmbossHeight: 0
+    - _DecalEmbossProfile: 0.01
+    - _DecalRotation: 0
+    - _DecalSDFSmoothing: 1
+    - _DecalSmoothness: 0
+    - _Decal_Metalicity: 0
+    - _EmbossDecal: 0
+    - _MainMetalicty: 0
+    - _MainSmoothness: 0
+    - _NormalStrength: 0.5
+    - _Test_Normals: 0
+    - _UseDecals: 0
+    - _UseUnityHeightToNormal: 1
+    - _slopedelta: 0.001
+    m_Colors:
+    - _BaseColour: {r: 1, g: 1, b: 1, a: 0}
+    - _DecalAxis: {r: 0, g: 0, b: 1, a: 0}
+    - _DecalColour: {r: 0, g: 0, b: 0, a: 0}
+    - _DecalOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _HatOriginOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _StitchColour: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector2_3f5fc5765bca4a70a39bc1e94e238594: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

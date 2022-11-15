@@ -6,10 +6,11 @@ namespace Didimo.Builder
 {
     public class StandardPipelineMaterialBuilder : MaterialBuilder
     {
-        public override bool FindIdealShader(string shaderName, out Shader shader)
+        public override bool FindIdealMaterial(string shaderName, out Material material)
         {
-            shader = Shader.Find("Standard");
-            return shader != null;
+            Shader shader = Shader.Find("Standard");
+            material = new Material(shader);
+            return material != null;
         }
 
         public override bool NameToProperty(string name, out string propertyName)

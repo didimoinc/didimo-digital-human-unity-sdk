@@ -9,7 +9,8 @@
 
 #ifndef DIDIMO_INCLUDED
 #define DIDIMO_INCLUDED
-
+#define ADDITIONAL_LIGHT_CALCULATE_SHADOWS
+#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
 #include "../../Common/Didimo.Common.hlsl"
 #ifndef SHADERGRAPH_PREVIEW 
 
@@ -21,7 +22,29 @@ half getMainShadow(float3 wP)
 	return SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, false);    
 }
 
+half getMainShadowBlur(float3 wP, float3 tangent, float3 binormal)
+{
+	float4 shadowCoord = TransformWorldToShadowCoord(wP);
+	
+	ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
+	half4 shadowParams = GetMainLightShadowParams();
+    
+	float sample=  SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), TransformWorldToShadowCoord(wP), shadowSamplingData, shadowParams, false);
+    sample    +=  SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), TransformWorldToShadowCoord(wP + tangent  ), shadowSamplingData, shadowParams, false);
+    sample    +=  SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), TransformWorldToShadowCoord(wP - tangent  ), shadowSamplingData, shadowParams, false);
+    sample    +=  SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), TransformWorldToShadowCoord(wP + binormal ), shadowSamplingData, shadowParams, false);
+    sample    +=  SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), TransformWorldToShadowCoord(wP - binormal ), shadowSamplingData, shadowParams, false);
+    return sample * 0.2f;
+}
+
+half getAdditionalLightShadow(int idx, half3 wP, half3 dir)
+{        
+    float sval = AdditionalLightRealtimeShadow(idx, wP, dir);
+    return sval;
+}
 #endif
+
+
 
 void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, inout half3 diffuse, inout half3 psuedoSss, inout half3 transmission, in half shadowValue)
 {
@@ -66,8 +89,8 @@ void PsuedoSSS_float(in half3x3 tS, in float3 wP, in float3 tN, in half4 ssUv, i
 	{
 		Light light = GetAdditionalLight(i, wP);
 		tD = normalize(mul(tS, light.direction));
-
-		evalDiffuse(tN, tD, sssAdd, light.color * light.distanceAttenuation , diffuse, psuedoSss, transmission, light.shadowAttenuation);
+        float shad = getAdditionalLightShadow(i, wP, light.direction);
+		evalDiffuse(tN, tD, sssAdd, light.color * light.distanceAttenuation , diffuse, psuedoSss, transmission, shad);
 	}
     
 	half3 wN = normalize(mul(tN, tS));
@@ -321,7 +344,7 @@ void evalDiffuse(in half3 tN, in half3 tD, half sssAdd, in half3 lightColor, ino
 */
 
 
-#define DOUBLE_SIDED_LIGHTING
+/*#define DOUBLE_SIDED_LIGHTING
 float doLightDot(in float3 normal, in float3 lightdirection, in float rimDot, in float transmissionFactor)
 {
 	float dp = dot(normal, lightdirection);
@@ -332,6 +355,26 @@ float doLightDot(in float3 normal, in float3 lightdirection, in float rimDot, in
 	return max(0.0, dp);
 #endif        
 }
+*/
+
+#define DOUBLE_SIDED_LIGHTING
+float doLightDot(in float3 normal, in float3 lightdirection, in float rimDot, in float transmissionFactor)
+{
+	float dp = dot(normal, lightdirection);
+    
+
+#ifdef DOUBLE_SIDED_LIGHTING  	
+	return  max(0, dp) + abs(min(0,dp)) * rimDot * transmissionFactor;
+    dp = (dp < 0.0)? dp * 0.1 : dp;
+        
+    //dp = clamp(dp, -0.2,1.0); //ensure reverse isn't ever as strong
+	return  min(1.0, abs(dp) + (rimDot * transmissionFactor) + 0.1);//max(0, dp) + abs(min(0,dp)) ;
+#else
+	return max(0.0, dp);
+#endif        
+	return max(0.0, dp);
+}
+
 
 float3 calculateDiffuseColour(in float3 normal, in float scatter, in float transmissionFactor, float3 lightdirection, in float3 lightcol, in float rimDot)
 {
@@ -364,7 +407,7 @@ void evalHairBrdf( in half3 lTd, in half3 lColor, in half3 tN, in half3 tT, in h
 	spec2 += max(0, evalKajiyaKay(tN, T2, halfVec, roughness2, shadow ) * lColor);
 }
 
-
+#define BLUR_SHADOW
 void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half3 tT, in float3 tV, in float2 uv, 
 				 in half3 baseColor, in half specExp1, in half specExp2, in half envRough, in half envSpecMul, 
 				 in half specShift, in half specShift2, in half flowMultiply, in half specMultiply, in half rootTipPos, in float AO, in float SSSfactor, in float transmissionFactor, in float transmissionHaloSharpness,
@@ -387,14 +430,20 @@ void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half
 	half3 spec2 = half3(0, 0, 0);
 
 	Light mainLight = GetMainLight();
+	#ifdef BLUR_SHADOW
+    const float blursize = 0.015;
+    half ShadowAtten = getMainShadowBlur(wP, mul(half3(blursize, 0.0f, 0.0f), tS),  mul(half3(0.0f, blursize, 0.0f) ,tS) );
+    #else
 	half ShadowAtten = getMainShadow(wP);
+    #endif
+
 
 	half3 tD = normalize(mul(tS, mainLight.direction)); //light direction in tangent space
 	half rough1 = specExp1;
 	half rough2 = specExp2;
 
 
-     evalHairBrdf(tD, (mainLight.color * mainLight.distanceAttenuation * ShadowAtten).rgb, tN, tT, tEtoV,
+    evalHairBrdf(tD, (mainLight.color * mainLight.distanceAttenuation * ShadowAtten).rgb, tN, tT, tEtoV,
                       rough1, rough2, specShift , specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
 				      diffuse, spec1, spec2);
 
@@ -403,7 +452,15 @@ void Hair_float( in half3x3 tS, in float3 wP, in float3 tP, in half3 tN, in half
 	{
 		Light light = GetAdditionalLight(i, wP);
 		tD = normalize(mul(tS, light.direction));
-		evalHairBrdf(tD, light.color * light.distanceAttenuation * light.shadowAttenuation, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
+        float shadowAtten = 1.0f;
+        //TODO: Additional lights work but *only* in opaque passes. This makes no sense and requires more research - can't do it now because it'd mean ignoring other things on my sprint \
+        //To be clear: We are aware that additional lights do not properly cast shadows in unity URP when we're doing our own inner-lighting loop
+        //This is a problem in ShaderGraph shaders *and* in text based shaders but it appears to be solvable in text based shaders, given that opaque text-based shaders correctly cast shadows.
+
+        //getAdditionalLightShadow(i, wP, light.direction); 
+        //float shadowAtten = light.shadowAttenuation; //doesn't seem to work using lit or unlit shader
+
+		evalHairBrdf(tD, light.color * light.distanceAttenuation * shadowAtten, tN, tT, tEtoV, rough1, rough2, specShift, specShift2, SSSfactor, transmissionFactor, transmissionHaloSharpness,
 							diffuse, spec1, spec2);
 	}
 

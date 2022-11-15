@@ -155,8 +155,8 @@ MonoBehaviour:
   fpsText: {fileID: 940372409}
   meshBreakdownText: {fileID: 1598599940}
   vertexCountText: {fileID: 485998135}
-  didimo: {fileID: 2086738063}
-  faceMesh: {fileID: 2086738064}
+  didimo: {fileID: 2086738064}
+  faceMesh: {fileID: 2086738063}
   rotationSpeed: 20
   rotationSpeedSlider: {fileID: 1853730652}
 --- !u!4 &400220372
@@ -172,7 +172,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &485998135 stripped
 MonoBehaviour:
@@ -270,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 766972789147560836, guid: 9a7305b121021f247bfadd826bc717d7, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 766972789147560836, guid: 9a7305b121021f247bfadd826bc717d7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -838,7 +838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3903712532357338088, guid: 7216569f97e8b2d45a626313cf9f42bf, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3903712532357338088, guid: 7216569f97e8b2d45a626313cf9f42bf, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1168,7 +1168,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1395694238
 MonoBehaviour:
@@ -1233,6 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1268,7 +1269,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1560622215 stripped
 GameObject:
@@ -1454,11 +1455,11 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 824a17fecef9b1b468e3a1b1a68ac426, type: 3}
 --- !u!1 &2086738063 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2660064861448689269, guid: 824a17fecef9b1b468e3a1b1a68ac426, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6745999859720494457, guid: 824a17fecef9b1b468e3a1b1a68ac426, type: 3}
   m_PrefabInstance: {fileID: 2086738062}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2086738064 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4014562751009169841, guid: 824a17fecef9b1b468e3a1b1a68ac426, type: 3}
+  m_CorrespondingSourceObject: {fileID: 678929715157899553, guid: 824a17fecef9b1b468e3a1b1a68ac426, type: 3}
   m_PrefabInstance: {fileID: 2086738062}
   m_PrefabAsset: {fileID: 0}

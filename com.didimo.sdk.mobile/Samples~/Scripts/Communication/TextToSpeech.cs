@@ -65,7 +65,7 @@ namespace Didimo.Mobile.Communication
             }
             catch (Exception e)
             {
-                errorCallback(objectPointer, e.Message);
+                errorCallback(objectPointer, e.ToString());
             }
         }
     }

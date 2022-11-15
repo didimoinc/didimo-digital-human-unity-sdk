@@ -15,82 +15,100 @@ namespace Didimo.Builder
         public Transform TargetTransformOverride { get; set; }
 
 
-        public virtual bool FindIdealShader(
-           string shaderName, out Shader shader)
+        public virtual bool FindIdealMaterial(
+           string shaderName, out Material material)
         {
-            shader = null;
+            material = null;
 
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources(EPipelineType.EPT_UNKNOWN);
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources(EPipelineType.EPT_UNKNOWN);
 
             switch (shaderName.ToLowerInvariant())
             {
                 case "eye":
-                    shader = shaderResources.Eye;
+                    material = materialResources.Eye;
                     break;
                 case "skin":
-                    shader = shaderResources.Skin;
+                    material = materialResources.Skin;
                     break;
                 case "mouth":
-                    shader = shaderResources.Mouth;
+                    material = materialResources.Mouth;
                     break;
                 case "transcolor":
-                    shader = shaderResources.Eyelash;
+                    material = materialResources.Eyelash;
                     break;
                 case "texturelighting":
-                    shader = shaderResources.UnlitTexture;
+                    material = materialResources.UnlitTexture;
                     break;
                 case "hair":
-                    shader = shaderResources.Hair;
+                    material = materialResources.Hair;
                     break;
                 case "cloth":
-                    shader = shaderResources.Cloth;
+                    material = materialResources.Cloth;
                     break;
             }
 
-            if (shader == null)
+            if (material == null)
             {
-                shader = Shader.Find(shaderName);
+                Shader shader = Shader.Find(shaderName); 
+                material = new Material(shader);
             }
 
-            return shader != null;
+            if (material != null)
+            {
+                // Create new instance of material
+                if (material != null)
+                {
+                    material = new Material(material);
+                }
+                material.name = shaderName;
+            }
+
+            return material != null;
         }
 
-        public virtual bool FindIdealShaderForBodyPart(
-           BodyPart bodyPart, out Shader shader)
+        public virtual bool FindIdealMaterialForBodyPart(
+           BodyPart bodyPart, out Material material)
         {
-            shader = null;
+            material = null;
 
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources(EPipelineType.EPT_UNKNOWN);
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources(EPipelineType.EPT_UNKNOWN);
 
+            if (materialResources == null) return false;
+            
             switch (bodyPart)
             {
                 case BodyPart.RightEyeMesh:
-                    shader = shaderResources.Eye;
+                    material = materialResources.Eye;
                     break;
                 case BodyPart.LeftEyeMesh:
-                    shader = shaderResources.Eye;
+                    material = materialResources.Eye;
                     break;
                 case BodyPart.BodyMesh:
-                    shader = shaderResources.Skin;
+                    material = materialResources.Skin;
                     break;
                 case BodyPart.HeadMesh:
-                    shader = shaderResources.Skin;
+                    material = materialResources.Skin;
                     break;
                 case BodyPart.MouthMesh:
-                    shader = shaderResources.Mouth;
+                    material = materialResources.Mouth;
                     break;
                 case BodyPart.EyeLashesMesh:
-                    shader = shaderResources.PBRTransparent;
+                    material = materialResources.EyelashTransparent;
                     break;
                 case BodyPart.HairMesh:
-                    shader = shaderResources.Hair;
+                    material = materialResources.Hair;
                     break;
                 case BodyPart.ClothingMesh:
-                    shader = shaderResources.Cloth;
+                    material = materialResources.Cloth;
                     break;
             }
 
-            return shader != null;
+            // Create new instance of material
+            if (material != null)
+            {
+                material = new Material(material);
+            }
+            return material != null;
         }
 
         public async Task<bool> TryBuild(DidimoBuildContext context, MaterialDataContainer materialDataContainer)
@@ -109,7 +127,7 @@ namespace Didimo.Builder
 
         public bool TryBuildMaterial(DidimoBuildContext context, MaterialData data, out Material material)
         {
-            if (!FindIdealShader(data.ShaderName, out Shader shader))
+            if (!FindIdealMaterial(data.ShaderName, out material))
             {
                 Debug.LogWarning($"Failed to load Material Instance. " +
                     "Could not locate appropriate shader ({data.ShaderName})");
@@ -117,7 +135,6 @@ namespace Didimo.Builder
                 return false;
             }
 
-            material = new Material(shader) { name = data.Name };
             if (material == null) return false;
 
             return TryApplyMaterialParameters(context, material, data);

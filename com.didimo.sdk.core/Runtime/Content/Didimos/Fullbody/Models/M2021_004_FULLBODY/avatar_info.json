@@ -1,0 +1,472 @@
+{
+    "meshList": [
+        {
+            "meshName": "ddmo_body",
+            "bodyPart": "body",
+            "textures": {
+                "albedo": "ddmo_body_albedo.png",
+                "normal": "ddmo_body_normal.png",
+                "micronormal": "ddmo_body_micronormal.png",
+                "AO": "ddmo_body_AO.png",
+                "SSS_AO": "ddmo_body_SSS_AO_mask.png",
+                "specular": "ddmo_body_spec.png",
+                "roughness": "ddmo_body_rough.png",
+                "translucency": "ddmo_body_trans.png",
+                "cavity": "ddmo_body_cavity.png",
+                "clothing_mask": "ddmo_body_clothing_mask.png"
+            }
+        },
+        {
+            "meshName": "ddmo_clothing",
+            "bodyPart": "clothing",
+            "textures": {
+                "albedo_opacity": "ddmo_clothing_albedo_opacity.png",
+                "normal": "ddmo_clothing_normal.png",
+                "AO": "ddmo_clothing_AO.png",
+                "metal_roughness": "ddmo_clothing_metal_rough.png"
+            }
+        },
+        {
+            "meshName": "ddmo_hair",
+            "bodyPart": "hair",
+            "textures": {
+                "albedo_opacity": "ddmo_hair_albedo_opacity.png"
+            },
+            "meshId": "hair_003",
+            "color": "light_blonde"
+        },
+        {
+            "meshName": "ddmo_head",
+            "bodyPart": "head",
+            "textures": {
+                "albedo": "ddmo_head_albedo.png",
+                "normal": "ddmo_head_normal.png",
+                "micronormal": "ddmo_head_micronormal.png",
+                "AO": "ddmo_head_AO.png",
+                "SSS_AO": "ddmo_head_SSS_AO_mask.png",
+                "specular": "ddmo_head_spec.png",
+                "roughness": "ddmo_head_rough.png",
+                "translucency": "ddmo_head_trans.png",
+                "cavity": "ddmo_head_cavity.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyeLeft",
+            "bodyPart": "leftEye",
+            "textures": {
+                "albedo": "ddmo_eye_albedo.png",
+                "normal": "ddmo_eye_normal.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyeRight",
+            "bodyPart": "rightEye",
+            "textures": {
+                "albedo": "ddmo_eye_albedo.png",
+                "normal": "ddmo_eye_normal.png"
+            }
+        },
+        {
+            "meshName": "ddmo_mouth",
+            "bodyPart": "mouth",
+            "textures": {
+                "albedo": "ddmo_mouth_albedo.png",
+                "normal": "ddmo_mouth_normal.png",
+                "AO": "ddmo_mouth_AO.png"
+            }
+        },
+        {
+            "meshName": "ddmo_eyelashes",
+            "bodyPart": "eyelashes",
+            "textures": {
+                "albedo_opacity": "ddmo_eyelashes_albedo_opacity.png"
+            }
+        }
+    ],
+    "animationFrames": {
+        "defaultExpressions": {
+            "Anger": [
+                104,
+                105
+            ],
+            "Disgust": [
+                106,
+                107
+            ],
+            "Fear": [
+                108,
+                109
+            ],
+            "Happy": [
+                110,
+                111
+            ],
+            "Sad": [
+                112,
+                113
+            ],
+            "Surprise": [
+                114,
+                115
+            ],
+            "Neutral": [
+                116,
+                117
+            ]
+        },
+        "ARKit": {
+            "eyeBlinkLeft": [
+                16,
+                17
+            ],
+            "eyeBlinkRight": [
+                18,
+                19
+            ],
+            "jawOpen": [
+                48,
+                50
+            ],
+            "browDownLeft": [
+                0,
+                1
+            ],
+            "browDownRight": [
+                2,
+                3
+            ],
+            "browInnerUp": [
+                4,
+                5
+            ],
+            "browOuterUpLeft": [
+                6,
+                7
+            ],
+            "browOuterUpRight": [
+                8,
+                9
+            ],
+            "cheekPuff": [
+                10,
+                11
+            ],
+            "cheekSquintLeft": [
+                12,
+                13
+            ],
+            "cheekSquintRight": [
+                14,
+                15
+            ],
+            "eyeLookDownLeft": [
+                20,
+                21
+            ],
+            "eyeLookDownRight": [
+                22,
+                23
+            ],
+            "eyeLookInLeft": [
+                24,
+                25
+            ],
+            "eyeLookInRight": [
+                26,
+                27
+            ],
+            "eyeLookOutLeft": [
+                28,
+                29
+            ],
+            "eyeLookOutRight": [
+                30,
+                31
+            ],
+            "eyeLookUpLeft": [
+                32,
+                33
+            ],
+            "eyeLookUpRight": [
+                34,
+                35
+            ],
+            "eyeSquintLeft": [
+                36,
+                37
+            ],
+            "eyeSquintRight": [
+                38,
+                39
+            ],
+            "eyeWideLeft": [
+                40,
+                41
+            ],
+            "eyeWideRight": [
+                42,
+                43
+            ],
+            "jawForward": [
+                44,
+                45
+            ],
+            "jawLeft": [
+                46,
+                47
+            ],
+            "jawRight": [
+                51,
+                52
+            ],
+            "mouthClose": [
+                53,
+                54
+            ],
+            "mouthDimpleLeft": [
+                55,
+                56
+            ],
+            "mouthDimpleRight": [
+                57,
+                58
+            ],
+            "mouthFrownLeft": [
+                59,
+                60
+            ],
+            "mouthFrownRight": [
+                61,
+                62
+            ],
+            "mouthFunnel": [
+                63,
+                65
+            ],
+            "mouthLeft": [
+                66,
+                67
+            ],
+            "mouthLowerDownLeft": [
+                68,
+                69
+            ],
+            "mouthLowerDownRight": [
+                70,
+                71
+            ],
+            "mouthPressLeft": [
+                72,
+                73
+            ],
+            "mouthPressRight": [
+                74,
+                75
+            ],
+            "mouthPucker": [
+                76,
+                77
+            ],
+            "mouthRight": [
+                78,
+                79
+            ],
+            "mouthRollLower": [
+                80,
+                81
+            ],
+            "mouthRollUpper": [
+                82,
+                83
+            ],
+            "mouthShrugLower": [
+                84,
+                85
+            ],
+            "mouthShrugUpper": [
+                86,
+                87
+            ],
+            "mouthSmileLeft": [
+                88,
+                89
+            ],
+            "mouthSmileRight": [
+                90,
+                91
+            ],
+            "mouthStretchLeft": [
+                92,
+                93
+            ],
+            "mouthStretchRight": [
+                94,
+                95
+            ],
+            "mouthUpperUpLeft": [
+                96,
+                97
+            ],
+            "mouthUpperUpRight": [
+                98,
+                99
+            ],
+            "noseSneerLeft": [
+                100,
+                101
+            ],
+            "noseSneerRight": [
+                102,
+                103
+            ]
+        },
+        "oculus": {
+            "sil": [
+                160,
+                161
+            ],
+            "PP": [
+                162,
+                163
+            ],
+            "FF": [
+                164,
+                165
+            ],
+            "TH": [
+                166,
+                167
+            ],
+            "DD": [
+                168,
+                169
+            ],
+            "kk": [
+                170,
+                171
+            ],
+            "CH": [
+                172,
+                173
+            ],
+            "SS": [
+                174,
+                175
+            ],
+            "nn": [
+                176,
+                177
+            ],
+            "RR": [
+                178,
+                179
+            ],
+            "aa": [
+                180,
+                181
+            ],
+            "E": [
+                182,
+                183
+            ],
+            "I": [
+                184,
+                185
+            ],
+            "O": [
+                186,
+                187
+            ],
+            "U": [
+                188,
+                189
+            ]
+        },
+        "amazonPolly": {
+            "phoneme_aa": [
+                118,
+                119
+            ],
+            "phoneme_ae_ax_ah": [
+                120,
+                121
+            ],
+            "phoneme_ao": [
+                122,
+                123
+            ],
+            "phoneme_aw": [
+                124,
+                125
+            ],
+            "phoneme_ay": [
+                126,
+                127
+            ],
+            "phoneme_d_t_n": [
+                128,
+                129
+            ],
+            "phoneme_er": [
+                130,
+                131
+            ],
+            "phoneme_ey_eh_uh": [
+                132,
+                133
+            ],
+            "phoneme_f_v": [
+                134,
+                135
+            ],
+            "phoneme_h": [
+                136,
+                137
+            ],
+            "phoneme_k_g_ng": [
+                138,
+                139
+            ],
+            "phoneme_l": [
+                140,
+                141
+            ],
+            "phoneme_ow": [
+                142,
+                143
+            ],
+            "phoneme_oy": [
+                144,
+                145
+            ],
+            "phoneme_p_b_m": [
+                146,
+                147
+            ],
+            "phoneme_r": [
+                148,
+                149
+            ],
+            "phoneme_s_z": [
+                150,
+                151
+            ],
+            "phoneme_sh_ch_jh_zh": [
+                152,
+                153
+            ],
+            "phoneme_th_dh": [
+                154,
+                155
+            ],
+            "phoneme_w_uw": [
+                156,
+                157
+            ],
+            "phoneme_y_iy_ih_ix": [
+                158,
+                159
+            ]
+        }
+    }
+}

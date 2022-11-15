@@ -10,13 +10,10 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static Didimo.Core.Config.ShaderResources;
+using static Didimo.Core.Config.MaterialResources;
 
 namespace Didimo.Core.Utility
 {
-
-
-
     public static class MaterialUtility
     {
         public enum BlendMode
@@ -79,7 +76,7 @@ namespace Didimo.Core.Utility
         {
             Dictionary<Material, Material> uniqueMaterials = new Dictionary<Material, Material>();
 
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources();
 
             foreach (GameObject go in objects)
             {
@@ -95,15 +92,15 @@ namespace Didimo.Core.Utility
                         {
                             if ((smr.name.ToLower().Contains("eyelash")) && !m.shader.name.ToLower().Contains("eyelash"))
                             {
-                                uniqueMaterials[m] = new Material(shaderResources.Eyelash);
+                                uniqueMaterials[m] = new Material(materialResources.Eyelash);
                             }
                             else if ((smr.name.ToLower().Contains("eye") || smr.name.ToLower().Contains("cornea")) && !m.shader.name.ToLower().Contains("eye"))
                             {
-                                uniqueMaterials[m] = new Material(shaderResources.Eye);
+                                uniqueMaterials[m] = new Material(materialResources.Eye);
                             }
                             else if ((smr.name.ToLower().Contains("skin") || smr.name.ToLower().Contains("baseface")) && !m.shader.name.ToLower().Contains("skin"))
                             {
-                                uniqueMaterials[m] = new Material(shaderResources.Skin);
+                                uniqueMaterials[m] = new Material(materialResources.Skin);
                             }
                             else
                                 uniqueMaterials[m] = new Material(m);
@@ -178,7 +175,7 @@ illum 2
             string text = System.IO.File.ReadAllText(filename);
             string [] materialdefs = text.Split("newmtl");
             EPipelineType pipelineID = ResourcesLoader.GetAppropriateID();
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources(pipelineID);
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources(pipelineID);
 
             for (var i = 0; i < materialdefs.Length; ++i)
             {                
@@ -190,7 +187,7 @@ illum 2
 
                     if (approvedMaterials ==null || approvedMaterials.Contains(name))
                     {
-                        Material newMat = new Material(shaderResources.BasicPBRLitShader);
+                        Material newMat = new Material(materialResources.BasicPBRLitShader);
                         newMat.name = name;
 
                         for (var j = 1; j < lines.Length; ++j)
@@ -496,7 +493,7 @@ illum 2
                     fileName.Contains("msaa", StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public static Shader GetHairShaderFromHairLayer(EHairLayer hairLayer, ShaderResources sr, bool usingMSAA)
+        public static Material GetHairMaterialFromHairLayer(EHairLayer hairLayer, MaterialResources sr, bool usingMSAA)
         {
             if (usingMSAA && (hairLayer != EHairLayer.HAT))
                 return sr.HairMSAA;
@@ -516,7 +513,7 @@ illum 2
             if (pipelineID == EPipelineType.EPT_UNKNOWN)
                 pipelineID = ResourcesLoader.GetAppropriateID();
             string PipelineSuffix = ResourcesLoader.PipelineName[(int)pipelineID];
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources(pipelineID);
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources(pipelineID);
             string[] NameSuffixes = { "_inner_opaque", "_inner", "_outer", "_hat", "_unknown" }; //Needs to match up with EHairLayer
             foreach (GameObject go in objects)
             {
@@ -571,7 +568,7 @@ illum 2
                         {
                             var nameLow = m ? m.name.ToLower() : "";
 
-                            layerTypes.Add(ShaderResources.ClassifyHairLayerFromName(nameLow));
+                            layerTypes.Add(MaterialResources.ClassifyHairLayerFromName(nameLow));
                             usingMSAA.Add(usingMSAAGlobal | ShouldUseMSAA(nameLow));
                             if (layerTypes[cmat] == EHairLayer.UNKNOWN)
                                 layerTypes[cmat] = (EHairLayer)Math.Min(cmat, (int)EHairLayer.OUTER);
@@ -587,7 +584,7 @@ illum 2
                             for (var i = 0; i < hairLayerCount; ++i)
                             {
                                 EHairLayer layer = layerTypes[i];
-                                Shader hairShader = GetHairShaderFromHairLayer(layer, shaderResources, usingMSAA[i]);
+                                // Material hairMaterial = GetHairMaterialFromHairLayer(layer, shaderResources, usingMSAA[i]);
 
                                 var materialFileName = meshFilePath + "/" + meshFileName + NameSuffixes[(int)layer] + "_" + PipelineSuffix + ".mat";
 
@@ -669,39 +666,37 @@ illum 2
                         for (var i = 0; i < hairLayerCount; ++i)
                         {
                             EHairLayer layer = layerTypes[i];
-                            Shader shader = GetHairShaderFromHairLayer(layer, shaderResources, usingMSAA[i]);
                             var materialFileName = meshFilePath + "/" + meshFileName + NameSuffixes[(int)layer] + "_" + PipelineSuffix + ".mat";
-                            Material mat = null;                            
-                            if (!alreadyCreatedMaterials.TryGetValue(materialFileName, out mat))
+                            if (!alreadyCreatedMaterials.TryGetValue(materialFileName, out Material material))
                             {
-                                mat = new Material(shader);                                 
-                                AssetDatabase.CreateAsset(mat, materialFileName);
+                                material = GetHairMaterialFromHairLayer(layer, materialResources, usingMSAA[i]);
+                                AssetDatabase.CreateAsset(material, materialFileName);
                                 var Textures = (layer == EHairLayer.HAT) ? ClothTextures : HairTextures;
                                 var shaderTextureNames = (layer == EHairLayer.HAT) ? cloth_material_texture_names : hair_material_texture_names;
                                 for (var j = 0; j < Textures.Length; ++j)
                                 {
                                     if (Textures[j] != null)
                                     {
-                                        int propIdx = mat.shader.FindPropertyIndex(shaderTextureNames[j]);
+                                        int propIdx = material.shader.FindPropertyIndex(shaderTextureNames[j]);
                                         if (propIdx !=
                                             -1) //the 'propertyIndex' isn't _really_ the property index so we still have to set it via its name (thanks, unity) but does tell us if the property exists at all
-                                            mat.SetTexture(shaderTextureNames[j], Textures[j]);
+                                            material.SetTexture(shaderTextureNames[j], Textures[j]);
                                         else
                                             Debug.Log("Problem found setting texture parameter '" + shaderTextureNames[j] + "'");
                                     }
                                 }
 
                                 if (layer != EHairLayer.HAT)
-                                    SetHairMaterialLayerDefaults(mat, layer); //non texture defaults that differ between layers and therefore cannot be stored as shader defaults
+                                    SetHairMaterialLayerDefaults(material, layer); //non texture defaults that differ between layers and therefore cannot be stored as shader defaults
                                 AssetDatabase.SaveAssets();
-                                mat = AssetDatabase.LoadAssetAtPath<Material>(materialFileName);
-                                alreadyCreatedMaterials[materialFileName] = mat;
+                                material = AssetDatabase.LoadAssetAtPath<Material>(materialFileName);
+                                alreadyCreatedMaterials[materialFileName] = material;
                             }
                             else
                             {
                                 Debug.Log("Material at '" + materialFileName + "' already created this session, not re-creating it");
                             }
-                            newMaterials.Add(mat);
+                            newMaterials.Add(material);
                         }
 
                         mr.sharedMaterials = newMaterials.ToArray();
@@ -813,7 +808,7 @@ illum 2
             if (dih == null) //still no dih? Try the SMR
                 dih = comp.GetComponent<DidimoInstancingHelper>();
 
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+            MaterialResources materialResources = ResourcesLoader.GetMaterialResources();
 
             Material[] newMatList = new Material[ml.Length];
             for (var i = 0; i < ml.Length; ++i)
@@ -826,7 +821,7 @@ illum 2
                 }
                 else
                 {
-                    if (m.shader == shaderResources.Skin || m.shader == shaderResources.SkinMergedTextures || m.shader == shaderResources.SkinMergedAtlasedTextures)
+                    if (m.shader == materialResources.Skin || m.shader == materialResources.SkinMergedTextures || m.shader == materialResources.SkinMergedAtlasedTextures)
                     {
                         var idx = -1;
                         if (dih != null)
