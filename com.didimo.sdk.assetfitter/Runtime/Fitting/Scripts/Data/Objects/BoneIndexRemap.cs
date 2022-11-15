@@ -7,7 +7,7 @@ using static Didimo.AssetFitter.Editor.Graph.GeomTools.CompareVertex;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
-    [CreateAssetMenu(fileName = "BoneIndexRemap", menuName = "Didimo/Graph/Bone Index Remap", order = 20)]
+    [CreateAssetMenu(fileName = "BoneIndexRemap", menuName = "Didimo/Graph/Asset Fitter/Bone Index Remap")]
     public class BoneIndexRemap : ScriptableObject
     {
         [Serializable]

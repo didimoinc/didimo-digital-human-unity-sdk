@@ -11,11 +11,11 @@ using Didimo.Extensions;
 namespace Didimo.AssetFitter.Editor.Graph
 {
     [System.Serializable]
-    [MenuPath("Object/MetaverseMe")]
-    [DisplayName("MetaverseMe")]
+    [MenuPath("Object/ReadyPlayerMe")]
+    [DisplayName("ReadyPlayerMe")]
     [Width(240)]
     [HeaderColor("#685cd4")]
-    public class CommandMetaverseMe : CommandAvatar
+    public class CommandReadyPlayerMe : CommandAvatar
     {
         [Output("Prefab"), Expose] public GameObject prefabOutput;
         [Output("Skin")] public SkinnedMeshRenderer shapeOutput;
