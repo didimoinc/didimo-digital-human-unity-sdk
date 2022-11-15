@@ -923,8 +923,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 178.00015258789063,
-            "y": 19.000003814697267
+            "x": 178.0,
+            "y": 11.0
         },
         "m_Blocks": [
             {
@@ -5591,14 +5591,14 @@
     "m_ActiveSubTarget": {
         "m_Id": "5fce51756fcb47a699c7439225eb907e"
     },
-    "m_AllowMaterialOverride": false,
-    "m_SurfaceType": 1,
+    "m_AllowMaterialOverride": true,
+    "m_SurfaceType": 0,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
     "m_AlphaClip": true,
-    "m_CastShadows": false,
+    "m_CastShadows": true,
     "m_ReceiveShadows": true,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false

@@ -3,7 +3,6 @@ using System.Globalization;
 using System;
 using System.IO;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,7 +15,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         public static bool GetAssetFolder(ref string assetPath)
         {
             if (String.IsNullOrEmpty(assetPath)) assetPath = EditorUtility.SaveFolderPanel("Save Mesh(es) to file", "Assets", "");
-            else assetPath = Application.dataPath + "/" + assetPath;
+            else assetPath = Path.Combine(Application.dataPath, assetPath);
             return !String.IsNullOrEmpty(assetPath) && GetAssetPath(ref assetPath);
         }
 #endif

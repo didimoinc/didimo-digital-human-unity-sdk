@@ -353,7 +353,7 @@ namespace Didimo.Mobile.Controller
 
             public void ResetNeck()
             {
-                Matrix4x4 wBone = primarySkin.rootBone.localToWorldMatrix * neckInverseBindPose;
+                Matrix4x4 wBone = didimo.transform.localToWorldMatrix * neckInverseBindPose;
                 NeckBone.position = wBone.MultiplyPoint3x4(Vector3.zero);
                 NeckBone.rotation = wBone.rotation;
             }
@@ -379,7 +379,7 @@ namespace Didimo.Mobile.Controller
                 for (int i = 0; i < bones.Length; i++)
                 {
                     if (bones[i] == didimo.transform) continue;
-                    Matrix4x4 wBone = primarySkin.rootBone.localToWorldMatrix * primarySkin.sharedMesh.bindposes[i].inverse;
+                    Matrix4x4 wBone = didimo.transform.localToWorldMatrix * primarySkin.sharedMesh.bindposes[i].inverse;
                     primarySkin.bones[i].position = wBone.MultiplyPoint3x4(Vector3.zero);
                     primarySkin.bones[i].rotation = wBone.rotation;
                 }

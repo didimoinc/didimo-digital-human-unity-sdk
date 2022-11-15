@@ -2,11 +2,11 @@
     "name": "Didimo.Core",
     "rootNamespace": "",
     "references": [
-        "GUID:516274028df58d04d856b8dd0b6c1f4d",
         "GUID:f620b241ece4c3d44b4b300894716741",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:f06555f75b070af458a003d92f9efb00",
-        "GUID:2665a8d13d1b3f18800f46e256720795"
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:a42927d1d4a3b4cda9b076a7adecb9cc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

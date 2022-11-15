@@ -216,7 +216,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &725371965
 MonoBehaviour:
@@ -322,7 +322,7 @@ Transform:
   m_Children:
   - {fileID: 795379191}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795379189
 GameObject:
@@ -572,7 +572,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: a445799d7520545449e276a9648d7682, type: 3}
 --- !u!1 &1207703265 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4396659522412786192, guid: a445799d7520545449e276a9648d7682, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1189630443227774276, guid: a445799d7520545449e276a9648d7682, type: 3}
   m_PrefabInstance: {fileID: 1207703264}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1207703266
@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8052edd37c5da4ba56c08244eb648a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Mapper: {fileID: 1848796583}
+  m_Mapper: {fileID: 0}
   m_EnabledChannels: 15
   m_BlendShapes:
     BrowDownLeft: 0
@@ -650,26 +650,6 @@ MonoBehaviour:
   m_HeadPositionEnabled: 1
   m_HeadOrientationEnabled: 1
   m_EyeOrientationEnabled: 1
---- !u!95 &1207703267
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207703265}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1574599391
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,7 +733,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1574599395
 MonoBehaviour:
@@ -788,15 +768,3 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1848796583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b2cc834a377df4dbc5c20b8006f14d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

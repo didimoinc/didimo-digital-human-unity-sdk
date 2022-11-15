@@ -83,8 +83,7 @@ namespace Didimo.AssetFitter.Editor.Graph
         public FieldViewEnum(object target, FieldInfo fieldInfo) : base(target, fieldInfo) { }
         protected override VisualElement createElement()
         {
-            var flagAtrribute = fieldInfo.FieldType.GetCustomAttribute<System.FlagsAttribute>();
-            BaseField<Enum> field = flagAtrribute == null ?
+            BaseField<Enum> field = fieldInfo.GetCustomAttribute<FlagsAttribute>() == null ?
                 new EnumField(fieldInfo.GetValue(target) as System.Enum) as BaseField<Enum> :
                 new EnumFlagsField(fieldInfo.GetValue(target) as System.Enum) as BaseField<Enum>;
 

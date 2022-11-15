@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
-    [CreateAssetMenu(fileName = "New Mesh List", menuName = "Didimo/Graph/Asset Fitter/Lists/Mesh List")]
+    [CreateAssetMenu(fileName = "New Mesh List", menuName = "Didimo/Graph/Lists/Mesh List")]
     public class MeshList : ScriptableObject
     {
         public Mesh[] meshes;

@@ -1,3 +1,5 @@
+using Didimo.Core.Config;
+using Didimo.Core.Utility;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,8 +12,6 @@ namespace Didimo.Core.Editor
 {
     public class CheckUrpSelected : IProjectSettingIssue
     {
-        private const string PATH = "Packages/com.didimo.sdk.core/Runtime/Pipeline/URP/UniversalRP-HighQuality.asset";
-
         public const string REASON =
             "didimos can only be rendered with URP.\n" +
             "Please select a UniversalRenderPipelineAsset in" +
@@ -37,12 +37,8 @@ namespace Didimo.Core.Editor
 
         public void Resolve()
         {
-            RenderPipelineAsset obj = AssetDatabase.LoadAssetAtPath(
-                PATH, typeof(RenderPipelineAsset)) as RenderPipelineAsset;
-
-            GraphicsSettings.renderPipelineAsset = obj;
-            QualitySettings.renderPipeline = obj;
-        }
+            ResourcesLoader.SetPipeline(EPipelineType.EPT_URP);
+         }
 
         public string ResolveText()
         {

@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.Rendering;
-using static Didimo.Core.Config.ShaderResources;
+using static Didimo.Core.Config.MaterialResources;
 
 namespace  Didimo.Core.Utility
 {

@@ -38,26 +38,41 @@ Shader "hair_opaque_MSAA"
         _SDF_AAFactor("SDF_AAFactor", Float) = 0
         _SDF_gamma("SDF_gamma", Float) = 0
         _AlphaPower("AlphaPower", Range(0.001, 10)) = 1
+         [ToggleUI]_AlphaToMask("_AlphaToMask", Float) = 1
+        [HideInInspector]_Surface("_Surface", Float) = 0
+        [HideInInspector]_CastShadows("_CastShadows", Float) = 1
+        [HideInInspector]_ReceiveShadows("_ReceiveShadows", Float) = 1          
+        [HideInInspector]_Blend("_Blend", Float) = 0
+        [HideInInspector]_AlphaClip("_AlphaClip", Float) = 1
+        [HideInInspector]_SrcBlend("_SrcBlend", Float) = 1
+        [HideInInspector]_DstBlend("_DstBlend", Float) = 0
+        [HideInInspector][ToggleUI]_ZWrite("_ZWrite", Float) = 1
+        [HideInInspector]_ZWriteControl("_ZWriteControl", Float) = 0
+        [HideInInspector]_ZTest("_ZTest", Float) = 4
+        [HideInInspector]_Cull("_Cull", Float) = 2
+        [HideInInspector]_QueueOffset("_QueueOffset", Float) = 0
+        [HideInInspector]_QueueControl("_QueueControl", Float) = -1
         [HideInInspector]_QueueOffset("_QueueOffset", Float) = 0
         [HideInInspector]_QueueControl("_QueueControl", Float) = -1
         [HideInInspector][NoScaleOffset]unity_Lightmaps("unity_Lightmaps", 2DArray) = "" {}
         [HideInInspector][NoScaleOffset]unity_LightmapsInd("unity_LightmapsInd", 2DArray) = "" {}
         [HideInInspector][NoScaleOffset]unity_ShadowMasks("unity_ShadowMasks", 2DArray) = "" {}
+        
     }
     SubShader
     {
         Tags
         {
             "RenderPipeline"="UniversalPipeline"
-            "RenderType"="Opaque"
+            "RenderType"="Transparent"
             "UniversalMaterialType" = "Unlit"
             "Queue"="AlphaTest"
-            "ShaderGraphShader"="true"
+            "ShaderGraphShader"="false"
             "ShaderGraphTargetId"="UniversalUnlitSubTarget"
         }
         Pass
         {
-            AlphaToMask On /// alpha-to-coverage pass
+            
             Name "Universal Forward"
             Tags
             {
@@ -65,10 +80,11 @@ Shader "hair_opaque_MSAA"
             }
         
         // Render State
-        Cull Off
-        Blend One Zero
-        ZTest LEqual
-        ZWrite On
+        AlphaToMask [_AlphaToMask] /// alpha-to-coverage pass
+        Cull [_Cull]
+        Blend [_SrcBlend] [_DstBlend]
+        ZTest [_ZTest]
+        ZWrite [_ZWrite]
         
         // Debug
         // <None>
@@ -136,8 +152,7 @@ Shader "hair_opaque_MSAA"
         }
         Pass
         {
-            AlphaToMask On /// alpha-to-coverage pass
-
+           
             Name "DepthOnly"
             Tags
             {
@@ -145,10 +160,13 @@ Shader "hair_opaque_MSAA"
             }
         
         // Render State
-        Cull Off
-        ZTest LEqual
-        ZWrite On
-        ColorMask 0
+         ColorMask 0
+
+        AlphaToMask [_AlphaToMask] /// alpha-to-coverage pass
+        Cull [_Cull]
+     
+        ZTest [_ZTest]
+        ZWrite [_ZWrite]
         
         // Debug
         // <None>
@@ -215,9 +233,11 @@ Shader "hair_opaque_MSAA"
             }
         
         // Render State
-        Cull Off
-        ZTest LEqual
-        ZWrite On
+        AlphaToMask [_AlphaToMask] /// alpha-to-coverage pass
+        Cull [_Cull]
+     
+        ZTest [_ZTest]
+        ZWrite [_ZWrite]
         
         // Debug
         // <None>
@@ -289,8 +309,10 @@ Shader "hair_opaque_MSAA"
             }
         
         // Render State
-        Cull Off
-        ZTest LEqual
+       AlphaToMask [_AlphaToMask] /// alpha-to-coverage pass
+        Cull [_Cull]
+     
+        ZTest On
         ZWrite On
         ColorMask 0
         
@@ -359,7 +381,7 @@ Shader "hair_opaque_MSAA"
             }
         
         // Render State
-        Cull Off
+        Cull back
         
         // Debug
         // <None>
@@ -572,12 +594,17 @@ Shader "hair_opaque_MSAA"
                 // LightMode: <None>
             }
         
-        // Render State
-        Cull Off
-        Blend One Zero
-        ZTest LEqual
-        ZWrite On
+        // Render State    
         
+        AlphaToMask [_AlphaToMask] /// alpha-to-coverage pass
+        Cull [_Cull]
+        Blend [_SrcBlend] [_DstBlend]
+        ZTest [_ZTest]
+        ZWrite [_ZWrite]
+        
+
+        
+
         // Debug
         // <None>
         

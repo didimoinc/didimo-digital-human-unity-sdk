@@ -28,6 +28,8 @@ namespace Didimo.Networking
         {
             this.features = features;
             FilePath = filePath;
+            if (filePath == null) return;
+            
             if (filePath.EndsWith(".jpg") || filePath.EndsWith(".jpeg"))
             {
                 mimeType = "image/jpeg";
@@ -46,19 +48,34 @@ namespace Didimo.Networking
             }
         }
 
-        protected byte[] GetSerializedData() => File.ReadAllBytes(FilePath);
+        protected byte[] GetSerializedData() => FilePath != null ? File.ReadAllBytes(FilePath) : null;
 
         protected override UnityWebRequest CreateRequest(Uri uri)
         {
             WWWForm form = new WWWForm();
-            form.AddField(INPUT_TYPE_HEADER, INPUT_TYPE);
-            foreach (ApiFeature apiFeatures in features)
+
+            bool addInput = true;
+            foreach (ApiFeature apiFeature in features)
             {
-                form.AddField(apiFeatures.FeatureName, apiFeatures.FeatureValue);
+                if (apiFeature.FeatureName == INPUT_TYPE_HEADER)
+                {
+                    addInput = false;
+                }
+                
+                form.AddField(apiFeature.FeatureName, apiFeature.FeatureValue);
+            }
+            
+            if (addInput)
+            {
+                form.AddField(INPUT_TYPE_HEADER, INPUT_TYPE);
             }
 
-            form.AddBinaryData(INPUT_TYPE, GetSerializedData(), FileName, mimeType);
-
+            byte[] serializedData = GetSerializedData();
+            if (serializedData != null)
+            {
+                form.AddBinaryData(INPUT_TYPE, serializedData, FileName, mimeType);
+            }
+                
             UnityWebRequest request = UnityWebRequest.Post(uri, form);
 
             return request;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: b428091db7f724b42a1fc372d08b4858, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.15406221, g: 0.14564379, b: 0.13858391, a: 1}
+  m_IndirectSpecularColor: {r: 0.16263153, g: 0.14198464, b: 0.12652169, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -280,6 +280,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 501478839918128013, guid: 6d1f8fdc2bf9f424eb03c5e26c9db83e, type: 3}
+      propertyPath: field of view
+      value: 14.514284
+      objectReference: {fileID: 0}
+    - target: {fileID: 501478839918128013, guid: 6d1f8fdc2bf9f424eb03c5e26c9db83e, type: 3}
+      propertyPath: m_FocalLength
+      value: 141.35083
+      objectReference: {fileID: 0}
+    - target: {fileID: 501478839918128013, guid: 6d1f8fdc2bf9f424eb03c5e26c9db83e, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -416,9 +424,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   didimos:
-  - {fileID: 6411848505292989810, guid: c3c1ed8037e953046b03435526050f40, type: 3}
-  - {fileID: 2197075809755276547, guid: 8a46a602e60710a4096ed0ffd0cb75b6, type: 3}
-  - {fileID: 5271575700022038309, guid: 503c60dc3e6a20a4dab07ac18f7aa849, type: 3}
+  - {fileID: 5547853388418493308, guid: c3c1ed8037e953046b03435526050f40, type: 3}
+  - {fileID: 8051006177063974905, guid: 8a46a602e60710a4096ed0ffd0cb75b6, type: 3}
+  - {fileID: 5080419648595821685, guid: 503c60dc3e6a20a4dab07ac18f7aa849, type: 3}
   scrollTime: 0.5
   scrollToDidimo: 0
 --- !u!4 &892001400

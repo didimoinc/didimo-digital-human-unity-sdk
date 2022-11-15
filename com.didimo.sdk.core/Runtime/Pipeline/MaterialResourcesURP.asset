@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf5a93391d54a9890a69b5ee1c0641a, type: 3}
+  m_Name: MaterialResourcesURP
+  m_EditorClassIdentifier: 
+  Eye: {fileID: 2100000, guid: 4c5914a73a30c014fbcaa52e1e4025b6, type: 2}
+  Skin: {fileID: 2100000, guid: f6fe4a08971c89b468b19f387c0009b8, type: 2}
+  SkinMergedTextures: {fileID: 2100000, guid: 78cd525cdce32a24ba6d1b74a218a1bf, type: 2}
+  SkinMergedAtlasedTextures: {fileID: 2100000, guid: 3f2b231464189f242986de2c1e8dd4fb, type: 2}
+  Mouth: {fileID: 2100000, guid: 164b422f39bd84c4d83b42c4fe1664aa, type: 2}
+  Eyelash: {fileID: 2100000, guid: b9d661ad13895154bbab39a625d11c0a, type: 2}
+  EyelashTransparent: {fileID: 2100000, guid: f94dcbc74b85edb4b94dc0911eec8ca3, type: 2}
+  UnlitTexture: {fileID: 2100000, guid: 0339a75f34ba6ac438ff6e41b72b4d4f, type: 2}
+  BasicPBRLitShader: {fileID: 2100000, guid: dbf456ef632ca5745894b260c4e03760, type: 2}
+  Hair: {fileID: 2100000, guid: a588f12678db9b64d9eac763dec4c487, type: 2}
+  HairOpaque: {fileID: 2100000, guid: f9d979ed0a2ee6545b1d015857277ba2, type: 2}
+  HairMSAA: {fileID: 2100000, guid: 3b155180fe7b012408e6ba3c8824154a, type: 2}
+  Cloth: {fileID: 2100000, guid: 79b9acc745e1c524c92e5ad0cbb3a746, type: 2}

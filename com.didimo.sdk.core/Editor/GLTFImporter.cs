@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Didimo.Builder;
-using Didimo.Builder.GLTF;
-using Didimo.Core.Config;
 using Didimo.Core.Utility;
-using Didimo.GLTFUtility;
+using Didimo.Editor.Inspector;
+using GLTFast.Editor;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -19,33 +17,33 @@ namespace Didimo.Core.Editor
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
             string[] movedFromAssetPaths, bool didDomainReload)
         {
-            // If we just imported a shared texture, re-import didimos that need the textures
-            if (importedAssets.FirstOrDefault(asset =>
-                    Path.GetFullPath(asset).StartsWith(Path.GetFullPath(GLTFImage.GltfImageSharedPath))) != null)
-            {
-                List<string> allDidimoPaths =
-                    Directory.GetFiles("Assets", "*.gltf", SearchOption.AllDirectories).ToList();
-                foreach (var packageRoot in new[] {"Packages", "Library/PackageCache"})
-                {
-                    foreach (var package in Directory.EnumerateDirectories(packageRoot))
-                    {
-                        if (package.Replace("\\", "/").StartsWith(packageRoot + "/com.didimo"))
-                        {
-                            allDidimoPaths.AddRange(Directory.GetFiles(package, "*.gltf", SearchOption.AllDirectories));
-                        }
-                    }
-                }
-
-                foreach (string didimoPath in allDidimoPaths)
-                {
-                    GLTFImporter importer = AssetImporter.GetAtPath(didimoPath) as GLTFImporter;
-                    if (importer != null && importer.importSettings.needsReimportForTextures)
-                    {
-                        importer.importSettings.needsReimportForTextures = false;
-                        importer.SaveAndReimport();
-                    }
-                }
-            }
+            // // If we just imported a shared texture, re-import didimos that need the textures
+            // if (importedAssets.FirstOrDefault(asset =>
+            //         Path.GetFullPath(asset).StartsWith(Path.GetFullPath(GLTFImage.GltfImageSharedPath))) != null)
+            // {
+            //     List<string> allDidimoPaths =
+            //         Directory.GetFiles("Assets", "*.gltf", SearchOption.AllDirectories).ToList();
+            //     foreach (var packageRoot in new[] {"Packages", "Library/PackageCache"})
+            //     {
+            //         foreach (var package in Directory.EnumerateDirectories(packageRoot))
+            //         {
+            //             if (package.Replace("\\", "/").StartsWith(packageRoot + "/com.didimo"))
+            //             {
+            //                 allDidimoPaths.AddRange(Directory.GetFiles(package, "*.gltf", SearchOption.AllDirectories));
+            //             }
+            //         }
+            //     }
+            //
+            //     foreach (string didimoPath in allDidimoPaths)
+            //     {
+            //         GLTFImporter importer = AssetImporter.GetAtPath(didimoPath) as GLTFImporter;
+            //         if (importer != null && importer.importSettings.needsReimportForTextures)
+            //         {
+            //             importer.importSettings.needsReimportForTextures = false;
+            //             importer.SaveAndReimport();
+            //         }
+            //     }
+            // }
         }
     }
 
@@ -57,95 +55,122 @@ namespace Didimo.Core.Editor
 
     public class GLTFImporter : ScriptedImporter
     {
-        public const int GLTF_IMPORTER_VERSION = 19;
+        public const int GLTF_IMPORTER_VERSION = 24;
 
         public ImportSettings importSettings;
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            ShaderResources shaderResources = ResourcesLoader.ShaderResources();
+            MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
 
-            GameObject rootNode = null;
-
-            try
+            if (importSettings == null) importSettings = new ImportSettings();
+            // importSettings.animationSettings.useLegacyClips = true;
+            importSettings.materialForName = shaderName =>
             {
-                if (shaderResources == null)
-                {
-                    Debug.LogError("Shader resources was null.");
-                    return;
-                }
+                materialBuilder.FindIdealMaterial(shaderName, out Material material);
+                return material;
+            };
 
-                MaterialBuilder.CreateBuilderForCurrentPipeline(out MaterialBuilder materialBuilder);
+            DidimoImporterJsonConfig didimoImporterJsonConfig =
+                DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(ctx.assetPath)!);
+            importSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
 
-                if (importSettings == null) importSettings = new ImportSettings();
-                importSettings.animationSettings.useLegacyClips = true;
-                importSettings.shaderForName = shaderName =>
+
+            GltfImporter importer = new GltfImporter();
+            importer.importSettings = new();
+
+            // Didimo glTFs only contain facial poses as animation, which must be imported as legacy
+            if (didimoImporterJsonConfig != null)
+            {
+                importer.importSettings.animationMethod = GLTFast.ImportSettings.AnimationMethod.Legacy;
+                importer.editorImportSettings = new EditorImportSettings
                 {
-                    materialBuilder.FindIdealShader(shaderName, out Shader shader);
-                    return shader;
+                    generateSecondaryUVSet = importSettings.generateLightmapUVs
                 };
-
-                DidimoImporterJsonConfig didimoImporterJsonConfig =
-                    DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(ctx.assetPath)!);
-                importSettings.postMaterialCreate = material => materialBuilder.PostMaterialCreate(material);
-
-                Importer.ImportResult importResult = Importer.LoadFromFile(Path.GetFullPath(ctx.assetPath),
-                    importSettings,
-                    gltfObject =>
-                    {
-                        if (didimoImporterJsonConfig != null)
-                        {
-                            // We will be settings the materials and importing the textures after importing the gltf
-                            gltfObject.images = null;
-                            gltfObject.textures = null;
-                            gltfObject.materials = null;
-                            gltfObject.extensions ??= new GLTFObject.Extensions();
-                            gltfObject.extensions.Didimo = new DidimoExtension();
-                        }
-                    }, Format.GLTF);
-                rootNode = importResult.rootObject;
-
-                if (importResult.isDidimo || didimoImporterJsonConfig != null)
-                {
-                    importResult.isDidimo = true;
-                    importSettings.isDidimo = true;
-
-                    if (didimoImporterJsonConfig != null)
-                    {
-                        DidimoImporterJsonConfigUtils.SetupDidimoForEditor(importResult.rootObject,
-                            didimoImporterJsonConfig, assetPath, importResult.animationClips,
-                            importResult.resetAnimationClip, null);
-                        GLTFBuildData.SetAvatar(importSettings, importResult.rootObject);
-                    }
-                    else
-                    {
-                        GLTFBuildData.BuildFromScriptedImporter(importResult, importSettings, ctx.assetPath);
-                    }
-
-                    // Save asset with reset pose Animation Clip
-                    List<AnimationClip> gltfAnimationClips = importResult.animationClips.ToList();
-                    if (importResult.resetAnimationClip != null)
-                        gltfAnimationClips.Add(importResult.resetAnimationClip);
-                    GLTFAssetUtility.SaveToAsset(importResult.rootObject, gltfAnimationClips.ToArray(), ctx,
-                        importSettings);
-                }
-                else
-                {
-                    // Save asset
-                    GLTFAssetUtility.SaveToAsset(importResult.rootObject, importResult.animationClips, ctx,
-                        importSettings);
-                }
-
             }
-            catch
+
+            GltfImporter.ImportResult importResult = importer.OnImportAsset(ctx, didimoImporterJsonConfig == null);
+
+            if ( /* importResult.isDidimo ||*/ didimoImporterJsonConfig != null)
             {
-                if (rootNode != null)
+                importSettings.isDidimo = true;
+                
+                DidimoImporterJsonConfigUtils.SetupDidimoForEditor(ctx.mainObject as GameObject,
+                    didimoImporterJsonConfig, ctx, assetPath, importResult.animationClips, "",
+                    importResult.resetClip,
+                    createdObject =>
+                    {
+                        ctx.AddObjectToAsset(createdObject.name, createdObject);
+                    });
+
+                SetAvatar(importSettings, ctx.mainObject as GameObject);
+                if (importSettings.avatar != null)
                 {
-                    DestroyImmediate(rootNode);
+                    ctx.AddObjectToAsset(importSettings.avatar.name, importSettings.avatar);
+                }
+            }
+        }
+
+        private static void SetAvatar(ImportSettings importSettings, GameObject root)
+        {
+            if ((importSettings.animationType == ImportSettings.AnimationType.Generic ||
+                 importSettings.animationType == ImportSettings.AnimationType.Humanoid) &&
+                importSettings.avatarDefinition != ImportSettings.AvatarDefinition.NoAvatar)
+            {
+                Animator animator = ComponentUtility.GetOrAdd<Animator>(root);
+
+                if (importSettings.avatarDefinition == ImportSettings.AvatarDefinition.CreateFromThisModel)
+                {
+                    if (importSettings.animationType == ImportSettings.AnimationType.Generic)
+                    {
+                        importSettings.avatar = AvatarBuilder.BuildGenericAvatar(root, "");
+                    }
+                    else if (importSettings.animationType == ImportSettings.AnimationType.Humanoid)
+                    {
+                        BuildHumanoidAvatar(root, importSettings);
+                    }
                 }
 
-                throw;
+                animator.avatar = importSettings.avatar;
+                animator.avatar.name = "avatar";
             }
+        }
+
+        private static void BuildHumanoidAvatar(GameObject root, ImportSettings importSettings)
+        {
+            HumanDescription humanDescription = new HumanDescription();
+            Transform[] transforms = root.GetComponentsInChildren<Transform>();
+            List<SkeletonBone> skeletonBones = new List<SkeletonBone>(transforms.Length);
+
+            Avatar defaultAvatar = ResourcesLoader.DidimoDefaultAvatar();
+
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                SkeletonBone skeletonBone = new SkeletonBone();
+                skeletonBone.name = transforms[i].name;
+                try
+                {
+                    skeletonBone.rotation = defaultAvatar.humanDescription.skeleton
+                        .First(s => s.name == skeletonBone.name).rotation;
+                }
+                catch (Exception)
+                {
+                    // Debug.LogWarning(e);
+                    // Skip this bone
+                    continue;
+                }
+
+                skeletonBone.position = transforms[i].localPosition;
+                //skeletonBone[i].rotation = transforms[i].localRotation;
+                skeletonBone.scale = transforms[i].localScale;
+                skeletonBones.Add(skeletonBone);
+            }
+
+            humanDescription.skeleton = skeletonBones.ToArray();
+            //humanDescription.skeleton = defaultAvatar.humanDescription.skeleton.Clone() as SkeletonBone[];
+            humanDescription.human = defaultAvatar.humanDescription.human;
+
+            importSettings.avatar = AvatarBuilder.BuildHumanAvatar(root, humanDescription);
         }
 
         public override bool SupportsRemappedAssetType(Type type)

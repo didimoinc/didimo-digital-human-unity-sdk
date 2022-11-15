@@ -2494,8 +2494,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1490.0,
-            "y": -725.0,
+            "x": -1590.0,
+            "y": -605.0,
             "width": 158.0,
             "height": 77.0
         }
@@ -4863,10 +4863,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1206.0001220703125,
-            "y": -528.0000610351563,
-            "width": 208.0,
-            "height": 302.0
+            "x": -1165.9998779296875,
+            "y": -217.00003051757813,
+            "width": 207.9998779296875,
+            "height": 302.0000305175781
         }
     },
     "m_Slots": [
@@ -7682,15 +7682,15 @@
     "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
     "m_ObjectId": "99b609fdefef4cb48c6f9370b7ee1a0e",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "85b818a0b44341d09c9397348eddf1f1"
     },
     "m_Name": "TangentBasis",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1903.0,
-            "y": -923.0,
+            "x": -1798.0001220703125,
+            "y": -978.0,
             "width": 208.0,
             "height": 278.0
         }
@@ -8731,10 +8731,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1647.0,
-            "y": -188.00003051757813,
+            "x": -1640.0,
+            "y": -1470.0,
             "width": 208.0,
-            "height": 316.0
+            "height": 315.0
         }
     },
     "m_Slots": [

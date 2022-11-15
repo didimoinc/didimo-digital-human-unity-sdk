@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
-using Didimo.GLTFUtility;
+// using Didimo.GLTFUtility;
 using GLTFImporter = Didimo.Core.Editor.GLTFImporter;
 using Object = UnityEngine.Object;
 
@@ -25,7 +25,7 @@ namespace Didimo.Editor.Inspector
             // Default = 0,
             Model,
             Rig,
-            Animation,
+            // Animation,
             Materials
         }
 
@@ -50,7 +50,7 @@ namespace Didimo.Editor.Inspector
                 //     break;
 
                 case (int) Tab.Model:
-
+                
                     DrawModelTabUI(importer);
                     break;
 
@@ -58,10 +58,10 @@ namespace Didimo.Editor.Inspector
                     DrawRigTabUI(importer);
                     break;
 
-                case (int) Tab.Animation:
-
-                    DrawAnimationTabUI(importer);
-                    break;
+                // case (int) Tab.Animation:
+                //
+                //     DrawAnimationTabUI(importer);
+                //     break;
 
                 case (int) Tab.Materials:
                     DrawMaterialsTabUI(importer);
@@ -76,7 +76,7 @@ namespace Didimo.Editor.Inspector
         private void DrawModelTabUI(GLTFImporter importer)
         {
             SerializedProperty importSettings = serializedObject.FindProperty("importSettings");
-            string[] exposedProperties = {"normals", "tangents", "generateLightmapUVs"};
+            string[] exposedProperties = {/*"normals", "tangents",*/ "generateLightmapUVs"};
 
             foreach (string exposedProperty in exposedProperties)
             {
@@ -130,12 +130,12 @@ namespace Didimo.Editor.Inspector
         {
             importer.importSettings.materials = GUILayout.Toggle(importer.importSettings.materials, "Import materials");
 
-            SerializedProperty importSettings = serializedObject.FindProperty("importSettings");
-            if (!importer.importSettings.isDidimo)
-            {
-                SerializedProperty shaderSettings = importSettings.FindPropertyRelative("shaderOverrides");
-                EditorGUILayout.PropertyField(shaderSettings);
-            }
+            // SerializedProperty importSettings = serializedObject.FindProperty("importSettings");
+            // if (!importer.importSettings.isDidimo)
+            // {
+            //     SerializedProperty shaderSettings = importSettings.FindPropertyRelative("shaderOverrides");
+            //     EditorGUILayout.PropertyField(shaderSettings);
+            // }
 
             if (GUILayout.Button("Use glTF Materials"))
             {

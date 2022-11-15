@@ -119,9 +119,7 @@ namespace Didimo.Speech
         {
             Uri fileUri = new Uri(filePath);
             using UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip(fileUri, AudioType.MPEG);
-            // Probably not needed.
-            DownloadHandlerAudioClip audioDownloadHandler = new DownloadHandlerAudioClip(fileUri, AudioType.MPEG);
-            webRequest.downloadHandler = audioDownloadHandler;
+            DownloadHandlerAudioClip audioDownloadHandler = webRequest.downloadHandler as DownloadHandlerAudioClip;
 
             await webRequest.SendWebRequest();
 

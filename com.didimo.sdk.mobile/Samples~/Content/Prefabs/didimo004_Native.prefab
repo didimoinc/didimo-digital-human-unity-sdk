@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9733304321065857, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
+      propertyPath: m_Name
+      value: didimo004_Native
+      objectReference: {fileID: 0}
     - target: {fileID: 1451299405368282511, guid: d97dedd85583ab042866c4a3194807f8, type: 3}
       propertyPath: m_Name
       value: avatar_004

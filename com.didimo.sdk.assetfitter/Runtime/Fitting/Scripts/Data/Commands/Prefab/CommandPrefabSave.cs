@@ -24,9 +24,6 @@ namespace Didimo.AssetFitter.Editor.Graph
     {
         [Input("Prefab")] public GameObject prefabInput;
         [Input("Path")] [Expose] public string path;
-
-        [Expose] public Options options = Options.IncludeMaterials | Options.IncludeTextures;
-
         [Expose] public SaveType saveType;// = SaveType.UnityAsset;
 #if UNITY_EDITOR
         internal override void EndPoint(bool Build = false)
@@ -39,6 +36,7 @@ namespace Didimo.AssetFitter.Editor.Graph
                 {
                     for (int i = 0; i < prefabs.Count; i++)
                     {
+                        string assetPath = string.Format(path + "/prefab-{0:000}.prefab", i);
                         GameObject prefab = prefabs[i] as GameObject;
 
                         if (PrefabUtility.GetPrefabAssetType(prefab) != PrefabAssetType.NotAPrefab)
@@ -46,10 +44,8 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                         if (saveType == SaveType.UnityAsset)
                         {
-                            string assetPath = path + "/asset-" + DateTime.Now.ToString("yyMMdd-HHmmss" + DateTime.Now.Millisecond); //"yyyy'-'MM'-'dd'T'HH':'mm':'ss");
-                            PathTools.CreatePath(assetPath);
                             WriteAllAssets(prefab, assetPath);
-                            CreateAsset(prefab, assetPath + "/" + prefab.name + ".prefab");
+                            CreateAsset(prefab, assetPath);
                             UnityEngine.Object.DestroyImmediate(prefab);
                         }
                     }
@@ -61,8 +57,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             }
         }
 
-
-        void WriteAllAssets(GameObject gameObject, string assetPath)
+        static void WriteAllAssets(GameObject gameObject, string assetPath)
         {
             Dictionary<UnityEngine.Object, UnityEngine.Object> objectCache = new Dictionary<UnityEngine.Object, UnityEngine.Object>();
 
@@ -120,37 +115,31 @@ namespace Didimo.AssetFitter.Editor.Graph
 
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
-                return CreateAsset(texture, path + "/" + texture.name + ".png", Create, true);
+                return CreateAsset(texture, path + texture.name + ".png", Create, true);
             }
 
             Material ExportMaterial(Material material, string path)
             {
-                if ((options & Options.IncludeMaterials) > 0)
+                void Create(Material asset, string p) => AssetDatabase.CreateAsset(CloneAsset(asset), p);
+
+                material = CreateAsset(material, path + material.name + ".mat", Create);
+                // Debug.Log("ExportMaterial: Path " + path + material.name + ".mat" + " and mat -> " + material.name);
+
+                foreach (string name in GetTextureProperties(material).Where(p => material.GetTexture(p)))
                 {
-                    void Create(Material asset, string p) => AssetDatabase.CreateAsset(CloneAsset(asset), p);
-
-                    material = CreateAsset(material, path + "/" + material.name + ".mat", Create);
-                    // Debug.Log("ExportMaterial: Path " + path + material.name + ".mat" + " and mat -> " + material.name);
-
-                    if ((options & Options.IncludeTextures) > 0)
-                    {
-                        foreach (string name in GetTextureProperties(material).Where(p => material.GetTexture(p)))
-                        {
-                            // Debug.Log("ExportMaterial(SetText): texture path " + path + " and text used -> " + name);
-                            material.SetTexture(name, ExportTexture(material.GetTexture(name) as Texture2D, path));
-                        }
-
-                    }
-                    AssetDatabase.SaveAssets();
-                    AssetDatabase.Refresh();
+                    // Debug.Log("ExportMaterial(SetText): texture path " + path + " and text used -> " + name);
+                    material.SetTexture(name, ExportTexture(material.GetTexture(name) as Texture2D, path));
                 }
+
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
                 return material;
             }
 
             Mesh ExportMesh(Mesh mesh, string path)
             {
                 void Create(Mesh asset, string p) => AssetDatabase.CreateAsset(CloneAsset(asset), p);
-                mesh = CreateAsset(mesh, path + "/" + mesh.name + ".mesh", Create);
+                mesh = CreateAsset(mesh, path + mesh.name + ".mesh", Create);
                 // Debug.Log("ExportMesh: Path " + path + mesh.name + ".asset" + " and mesh -> " + mesh.name);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -170,7 +159,7 @@ namespace Didimo.AssetFitter.Editor.Graph
             foreach (var renderer in GetAllRenderers(gameObject))
             {
                 Debug.Log("Renderers: Rname " + renderer.name + " gName: " + renderer.gameObject.name);
-                ExportRenderer(renderer, assetPath + "/" + renderer.name + "/");
+                ExportRenderer(renderer, assetPath + renderer.name + "/");
             }
 
             AssetDatabase.SaveAssets();
@@ -182,14 +171,6 @@ namespace Didimo.AssetFitter.Editor.Graph
             Simulate = 0,
             Hierarchy = 1,
             UnityAsset = 2,
-        }
-
-        [Flags]
-        public enum Options
-        {
-            // Default = IncludeMaterials | IncludeTextures,
-            IncludeMaterials = 1 << 0,
-            IncludeTextures = 1 << 1,
         }
     }
 }
