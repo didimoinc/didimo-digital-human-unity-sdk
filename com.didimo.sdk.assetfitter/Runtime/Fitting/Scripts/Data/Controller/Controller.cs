@@ -8,7 +8,7 @@ using static Didimo.AssetFitter.Editor.Graph.Controller;
 
 namespace Didimo.AssetFitter.Editor.Graph
 {
-    // [CreateAssetMenu(fileName = "New Asset Fitter", menuName = "Didimo/Graph/Asset Fitter", order = 0)]
+    [CreateAssetMenu(fileName = "New Controller", menuName = "Didimo/Graph/Asset Fitter/Controller")]
     public class Controller : ScriptableObject
     {
         public string title;
@@ -275,7 +275,7 @@ namespace Didimo.AssetFitter.Editor.Graph
 
         // bool drawButton(string text) => GUILayout.Button(text, Styles.Button);
 
-        static class Styles
+        public static class Styles
         {
             static Styles()
             {
