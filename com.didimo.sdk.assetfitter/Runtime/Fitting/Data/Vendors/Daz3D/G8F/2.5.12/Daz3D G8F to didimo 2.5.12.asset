@@ -20,8 +20,6 @@ MonoBehaviour:
   - rid: 8683548821136605380
   - rid: 8683548821136605381
   - rid: 8683548821136605382
-  - rid: 8683548821136605383
-  - rid: 8683548821136605384
   - rid: 8683548821136605385
   - rid: 8683548821136605386
   - rid: 8683548821136605387
@@ -33,30 +31,6 @@ MonoBehaviour:
       field: mesh1Input
     output:
       node: 075da0e4-d41e-4434-9caf-e1faac3bcf74
-      field: meshOutput
-  - input:
-      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
-      field: mesh2Input
-    output:
-      node: 6af0008a-c0e2-42a9-b8da-b030172ccdb3
-      field: meshOutput
-  - input:
-      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
-      field: mesh1Input
-    output:
-      node: 8c0c482d-03ca-4594-96a3-488e3c509b4d
-      field: manifoldOutput
-  - input:
-      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
-      field: meshInput
-    output:
-      node: a9e9adc4-9d7d-44db-bddd-3d660ffba9aa
-      field: manifoldOutput
-  - input:
-      node: 33d37745-8d2b-4039-a827-df807a15e6c2
-      field: mesh2Input
-    output:
-      node: b937c836-9d8d-4ed6-a124-6167d8d27a50
       field: meshOutput
   - input:
       node: 7ca6db23-3d22-43ff-b8f8-d9a5fed7c56d
@@ -102,12 +76,6 @@ MonoBehaviour:
       field: tpsWeightsOutput
   - input:
       node: 7ca6db23-3d22-43ff-b8f8-d9a5fed7c56d
-      field: wrapMesh
-    output:
-      node: 075da0e4-d41e-4434-9caf-e1faac3bcf74
-      field: meshOutput
-  - input:
-      node: 7ca6db23-3d22-43ff-b8f8-d9a5fed7c56d
       field: sourceSkinInput
     output:
       node: ddc5b845-9fae-47e4-9ce6-961b5eb3037b
@@ -124,8 +92,14 @@ MonoBehaviour:
     output:
       node: 8bfd65ff-7a0e-4989-aa69-87287c82bbb9
       field: boneIndexRemapOutput
-  viewPosition: {x: -29, y: 133, z: 0}
-  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
+  - input:
+      node: 33d37745-8d2b-4039-a827-df807a15e6c2
+      field: mesh2Input
+    output:
+      node: 6af0008a-c0e2-42a9-b8da-b030172ccdb3
+      field: meshOutput
+  viewPosition: {x: -26, y: 4, z: 0}
+  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
   config:
     exposeFields: []
   references:
@@ -136,7 +110,7 @@ MonoBehaviour:
       data:
         guid: 075da0e4-d41e-4434-9caf-e1faac3bcf74
         id: 
-        position: {x: 625, y: 453}
+        position: {x: 635, y: 475}
         expanded: 1
         meshOutput: {fileID: -2432090755550338912, guid: e99cd067f18a6ef4a85490ce94f127fd, type: 3}
     - rid: 8683548821136605377
@@ -156,8 +130,8 @@ MonoBehaviour:
         id: output
         position: {x: 304, y: 350}
         expanded: 0
-        prefabOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
-        templateOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
+        prefabOutput: {fileID: 4499123344997166499, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
+        templateOutput: {fileID: 4499123344997166499, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
         headOutput: {fileID: 0}
         leyeOutput: {fileID: 0}
         reyeOutput: {fileID: 0}
@@ -175,6 +149,7 @@ MonoBehaviour:
         expanded: 1
         prefabInput: {fileID: 0}
         path: _AssetFitterOutputs
+        options: 3
         saveType: 1
     - rid: 8683548821136605380
       type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
@@ -218,38 +193,9 @@ MonoBehaviour:
       data:
         guid: 6af0008a-c0e2-42a9-b8da-b030172ccdb3
         id: 
-        position: {x: 304, y: 649}
+        position: {x: 635, y: 592}
         expanded: 1
         meshOutput: {fileID: -2432090755550338912, guid: 9b5cf713800234a41a0fc270537c8f06, type: 3}
-    - rid: 8683548821136605383
-      type: {class: CommandDidimo, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
-      data:
-        guid: 8c0c482d-03ca-4594-96a3-488e3c509b4d
-        id: 
-        position: {x: 304, y: 508}
-        expanded: 0
-        prefabOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
-        templateOutput: {fileID: 3619099142778357334, guid: bb0d31d8106a71d498a2b55b211ca771, type: 3}
-        headOutput: {fileID: 0}
-        leyeOutput: {fileID: 0}
-        reyeOutput: {fileID: 0}
-        eyeLashOutput: {fileID: 0}
-        mouthOutput: {fileID: 0}
-        bodyOutput: {fileID: 0}
-        garmentOutput: {fileID: 0}
-        manifoldOutput: {fileID: 0}
-    - rid: 8683548821136605384
-      type: {class: CommandMeshVertexOrder, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
-      data:
-        guid: b937c836-9d8d-4ed6-a124-6167d8d27a50
-        id: 
-        position: {x: 625, y: 601}
-        expanded: 1
-        meshInput: {fileID: 0}
-        mesh1Input: {fileID: 0}
-        mesh2Input: {fileID: 0}
-        meshOutput: {fileID: 0}
-        threshold: 0.0001
     - rid: 8683548821136605385
       type: {class: CommandMeshSave, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
@@ -281,10 +227,9 @@ MonoBehaviour:
         accessoriesFilterInput: {fileID: 0}
         boneMapInput: {fileID: 0}
         prefabInput: {fileID: 0}
-        wrapMesh: {fileID: 0}
         tpsWeightsInput: {fileID: 0}
         prefabOutput: {fileID: 0}
-        excludeDidimoMeshes: 0
+        options: 1
     - rid: 8683548821136605388
       type: {class: CommandRigRemapValue, ns: Didimo.AssetFitter.Editor.Graph, asm: Didimo.AssetFitter}
       data:
