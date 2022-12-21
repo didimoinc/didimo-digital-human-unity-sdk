@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -92,18 +93,24 @@ namespace GLTFast.Export {
 
         HashSet<Extension> m_ExtensionsUsedOnly;
         HashSet<Extension> m_ExtensionsRequired;
-        
+
+        public Func<Task> beforeSaveAction = null;
         List<Scene> m_Scenes;
-        List<Node> m_Nodes;
+        public List<Node> m_Nodes;
+        public GltfAnimation[] m_Animations;
         List<Mesh> m_Meshes;
+        List<Skin> m_Skins;
+        List<Transform[]> m_uBones;
+        Dictionary<UnityEngine.Mesh, Skin> m_SkinMap;
         List<Material> m_Materials;
         List<Texture> m_Textures;
         List<Image> m_Images;
         List<Schema.Camera> m_Cameras;
         List<LightPunctual> m_Lights;
         List<Sampler> m_Samplers;
-        List<Accessor> m_Accessors;
-        List<BufferView> m_BufferViews;
+        public List<Accessor> m_Accessors;
+        public List<BufferView> m_BufferViews;
+        public Buffer m_animationBuffer;
 
         List<ImageExportBase> m_ImageExports;
         List<SamplerKey> m_SamplerKeys;
@@ -135,7 +142,7 @@ namespace GLTFast.Export {
             m_State = State.Initialized;
             m_DeferAgent = deferAgent ?? new UninterruptedDeferAgent();
         }
-
+        
         /// <inheritdoc />
         public uint AddNode(
             float3? translation = null,
@@ -153,9 +160,15 @@ namespace GLTFast.Export {
             m_Nodes.Add(node);
             return (uint) m_Nodes.Count - 1;
         }
-        
+
+        public void AddMeshAndSkinToNode(int nodeId, UnityEngine.Mesh uMesh, int[] materialIds)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc />
-        public void AddMeshToNode(int nodeId, UnityEngine.Mesh uMesh, int[] materialIds) {
+        public void AddMeshAndSkinToNode(int nodeId, UnityEngine.Mesh uMesh, int[] materialIds, Transform[] bones) {
+            if ((m_Settings.componentMask & ComponentType.Mesh) == 0) return;
             CertifyNotDisposed();
             var node = m_Nodes[nodeId];
 
@@ -164,11 +177,15 @@ namespace GLTFast.Export {
                 m_NodeMaterials[nodeId] = materialIds;
             }
 
-            node.mesh = AddMesh(uMesh);
+            AddMeshAndSkin(uMesh, bones, out node.mesh, out node.skin);
         }
 
         /// <inheritdoc />
         public bool AddCamera(UnityEngine.Camera uCamera, out int cameraId) {
+            if ((m_Settings.componentMask & ComponentType.Camera) == 0) {
+                cameraId = -1;
+                return false;
+            }
             CertifyNotDisposed();
 
             var camera = new Camera();
@@ -204,12 +221,29 @@ namespace GLTFast.Export {
 
         /// <inheritdoc />
         public bool AddLight(Light uLight, out int lightId) {
+            if ((m_Settings.componentMask & ComponentType.Light) == 0) {
+                lightId = -1;
+                return false;
+            }
             CertifyNotDisposed();
             var light = new LightPunctual {
                 name = uLight.name
             };
 
-            switch (uLight.type) {
+            var lightType = uLight.type;
+            
+            var renderPipeline = RenderPipelineUtils.renderPipeline;
+#if USING_HDRP
+            HDAdditionalLightData lightHd = null;
+            if (renderPipeline == RenderPipeline.HighDefinition) {
+                lightHd = uLight.gameObject.GetComponent<HDAdditionalLightData>();
+                if (lightHd.type == HDLightType.Area) {
+                    lightType = LightType.Area;
+                }
+            }
+#endif
+            
+            switch (lightType) {
                 case LightType.Spot:
                     light.typeEnum = LightPunctual.Type.Spot;
                     light.spot = new SpotLight {
@@ -237,7 +271,6 @@ namespace GLTFast.Export {
             light.lightColor = uLight.color.linear;
             light.range = uLight.range;
             
-            var renderPipeline = RenderPipelineUtils.renderPipeline;
             switch (renderPipeline) {
                 case RenderPipeline.BuiltIn:
                     light.intensity = uLight.intensity * Mathf.PI;
@@ -247,7 +280,6 @@ namespace GLTFast.Export {
                     break;
 #if USING_HDRP
                 case RenderPipeline.HighDefinition:
-                    var lightHd = uLight.gameObject.GetComponent<HDAdditionalLightData>();
 
                     float GetIntensity(LightUnit unit) {
                         if (lightHd.lightUnit == unit) {
@@ -510,6 +542,7 @@ namespace GLTFast.Export {
                 return false;
             }
 
+            
             var isBinary = m_Settings.format == GltfFormat.Binary;
 
             const uint headerSize = 12; // 4 bytes magic + 4 bytes version + 4 bytes length (uint each)
@@ -649,19 +682,29 @@ namespace GLTFast.Export {
             var success = await BakeImages(directory);
 
             if (!success) return false;
-            
-            if (m_BufferStream != null && m_BufferStream.Length > 0) {
-                m_Gltf.buffers = new[] {
-                    new Buffer {
+
+            await beforeSaveAction?.Invoke()!;
+
+            if (m_BufferStream != null && m_BufferStream.Length > 0)
+            {
+                List<Buffer> buffers = new List<Buffer>();
+                buffers.Add(new Buffer
+                    {
                         uri = bufferPath,
                         byteLength = (uint) m_BufferStream.Length
-                    }
-                };
-            }
+                    });
 
+                if (m_animationBuffer != null)
+                {
+                    buffers.Add(m_animationBuffer);
+                }
+                m_Gltf.buffers = buffers.ToArray();
+            }
+            
             m_Gltf.scenes = m_Scenes?.ToArray();
             m_Gltf.nodes = m_Nodes?.ToArray();
             m_Gltf.meshes = m_Meshes?.ToArray();
+            m_Gltf.skins = m_Skins?.ToArray();
             m_Gltf.accessors = m_Accessors?.ToArray();
             m_Gltf.bufferViews = m_BufferViews?.ToArray();
             m_Gltf.materials = m_Materials?.ToArray();
@@ -669,6 +712,7 @@ namespace GLTFast.Export {
             m_Gltf.textures = m_Textures?.ToArray();
             m_Gltf.samplers = m_Samplers?.ToArray();
             m_Gltf.cameras = m_Cameras?.ToArray();
+            m_Gltf.animations = m_Animations;
 
             if (m_Lights != null && m_Lights.Count > 0) {
                 RegisterExtensionUsage(Extension.LightsPunctual);
@@ -787,6 +831,7 @@ namespace GLTFast.Export {
             var uMesh = m_UnityMeshes[meshId];
 
             var vertexAttributes = uMesh.GetVertexAttributes();
+            
             var strides = new int[k_MAXStreamCount];
             var alignments = new int[k_MAXStreamCount];
 
@@ -873,10 +918,65 @@ namespace GLTFast.Export {
                         break;
                     case VertexAttribute.BlendIndices:
                         attributes.JOINTS_0 = accessorId;
+                        accessor.componentType = GLTFComponentType.UnsignedShort;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
+
+            // Add skin
+            if (uMesh.bindposes != null && uMesh.bindposes.Length > 0)
+            {
+                Skin skin = m_SkinMap[uMesh];
+                Transform[] uBones = m_uBones[m_Skins.IndexOf(skin)];
+            
+                var accessor = new Accessor {
+                    byteOffset = 0,
+                    componentType = GLTFComponentType.Float,
+                    count = uBones.Length,
+                    typeEnum = GLTFAccessorAttributeType.MAT4
+                };
+                
+                var accessorId = AddAccessor(accessor);
+                skin.inverseBindMatrices = accessorId;
+                
+                List<uint> joints = new List<uint>();
+                for (int i = 0; i < uBones.Length; i++)
+                {
+                    uint boneIdx = (uint) m_Nodes.FindIndex(node => node.name == uBones[i].name);
+                    joints.Add(boneIdx);
+                }
+
+                skin.joints = joints.ToArray();
+                
+                Profiler.BeginSample("BindPoseMatricesJobSchedule");
+                var bindPoseCount = uMesh.bindposes.Length;
+                var matrices = new NativeArray<float4x4>(bindPoseCount, Allocator.TempJob);
+                var resultMatrices = new NativeArray<float4x4>(bindPoseCount, Allocator.TempJob);
+
+                for (int i = 0; i < bindPoseCount; i++)
+                {
+                    matrices[i] = uMesh.bindposes[i];
+                }
+                
+                var job = new ExportJobs.ConvertMatrixJob {
+                    input = matrices,
+                    output = resultMatrices
+                }.Schedule(bindPoseCount, k_DefaultInnerLoopBatchCount);
+                Profiler.EndSample();
+                while (!job.IsCompleted) {
+                    await Task.Yield();
+                }
+                Profiler.BeginSample("BindPoseMatricesJobSchedule");
+                job.Complete(); // TODO: Wait until thread is finished
+                
+                accessor.bufferView = WriteBufferViewToBuffer(
+                    resultMatrices.Reinterpret<byte>(sizeof(float)*4*4), BufferViewTarget.None
+                );
+                matrices.Dispose();
+                resultMatrices.Dispose();
+                Profiler.EndSample();
             }
 
             var streamCount = 1;
@@ -953,6 +1053,7 @@ namespace GLTFast.Export {
                     job.Complete(); // TODO: Wait until thread is finished
                     indexBufferViewId = WriteBufferViewToBuffer(
                         destIndices.Reinterpret<byte>(sizeof(ushort)),
+                        BufferViewTarget.ElementArrayBuffer,
                         byteAlignment:sizeof(ushort)
                         );
                     destIndices.Dispose();
@@ -973,6 +1074,7 @@ namespace GLTFast.Export {
                     job.Complete(); // TODO: Wait until thread is finished
                     indexBufferViewId = WriteBufferViewToBuffer(
                         destIndices.Reinterpret<byte>(sizeof(ushort)),
+                        BufferViewTarget.ElementArrayBuffer,
                         byteAlignment:sizeof(ushort)
                         );
                     destIndices.Dispose();
@@ -996,6 +1098,7 @@ namespace GLTFast.Export {
                     job.Complete(); // TODO: Wait until thread is finished
                     indexBufferViewId = WriteBufferViewToBuffer(
                         destIndices.Reinterpret<byte>(sizeof(uint)),
+                        BufferViewTarget.ElementArrayBuffer,
                         byteAlignment:sizeof(uint)
                         );
                     destIndices.Dispose();
@@ -1016,6 +1119,7 @@ namespace GLTFast.Export {
                     job.Complete(); // TODO: Wait until thread is finished
                     indexBufferViewId = WriteBufferViewToBuffer(
                         destIndices.Reinterpret<byte>(sizeof(uint)),
+                        BufferViewTarget.ElementArrayBuffer,
                         byteAlignment:sizeof(uint)
                         );
                     destIndices.Dispose();
@@ -1034,7 +1138,7 @@ namespace GLTFast.Export {
                 inputStreams[stream] = meshData.GetVertexData<byte>(stream);
                 outputStreams[stream] = new NativeArray<byte>(inputStreams[stream], Allocator.TempJob);
             }
-            
+
             foreach (var pair in attrDataDict) {
                 var vertexAttribute = pair.Key;
                 var attrData = pair.Value;
@@ -1047,7 +1151,7 @@ namespace GLTFast.Export {
                             vertexCount,
                             inputStreams[attrData.stream],
                             outputStreams[attrData.stream]
-                            );
+                        );
                         break;
                     case VertexAttribute.Tangent:
                         await ConvertTangentAttribute(
@@ -1056,15 +1160,36 @@ namespace GLTFast.Export {
                             vertexCount,
                             inputStreams[attrData.stream],
                             outputStreams[attrData.stream]
-                            );
+                        );
+                        break;
+                    
+                    case VertexAttribute.BlendIndices:
+                        Profiler.BeginSample("ConvertSkinningAttributesJob");
+                        var previousArraySize = outputStreams[attrData.stream].Length;
+                        // indices are uint*4 in Unity, and ushort*4 in glTF
+                        var strideDifference = (sizeof(uint) - sizeof(ushort)) * 4; 
+                        outputStreams[attrData.stream].Dispose();
+                        // gltf data will be smaller, resize the native array
+                        outputStreams[attrData.stream] = new NativeArray<byte>(previousArraySize - strideDifference * vertexCount, Allocator.TempJob);
+                        await ConvertSkinningAttributes(
+                            attrData,
+                            strides[attrData.stream],
+                            strides[attrData.stream] - strideDifference,
+                            vertexCount,
+                            inputStreams[attrData.stream],
+                            outputStreams[attrData.stream]
+                        );
+                        Profiler.EndSample();
+
+                        strides[attrData.stream] -= strideDifference;
                         break;
                 }
             }
-
             var bufferViewIds = new int[streamCount];
             for (var stream = 0; stream < streamCount; stream++) {
                 bufferViewIds[stream] = WriteBufferViewToBuffer(
                     outputStreams[stream],
+                    BufferViewTarget.ArrayBuffer,
                     strides[stream],
                     alignments[stream]
                     );
@@ -1509,7 +1634,7 @@ namespace GLTFast.Export {
                         // TODO: Write from file to buffer stream directly
                         var imageBytes = imageExport.GetData();
                         if (imageBytes != null) {
-                            m_Images[imageId].bufferView = WriteBufferViewToBuffer(imageBytes);
+                            m_Images[imageId].bufferView = WriteBufferViewToBuffer(imageBytes, BufferViewTarget.None);
                         }
                     }
                     else if (imageDest == ImageDestination.SeparateFile) {
@@ -1562,6 +1687,40 @@ namespace GLTFast.Export {
             return job;
         }
 
+        static async Task ConvertSkinningAttributes(
+            AttributeData indicesAttrData,
+            int byteStride,
+            int outputByteStride,
+            int vertexCount,
+            NativeArray<byte> input,
+            NativeArray<byte> output
+        )
+        {
+            var job = CreateConvertSkinningAttributesJob(indicesAttrData, byteStride, outputByteStride, vertexCount, input, output);
+            while (!job.IsCompleted) {
+                await Task.Yield();
+            }
+            job.Complete(); // TODO: Wait until thread is finished
+        }
+        
+        static unsafe JobHandle CreateConvertSkinningAttributesJob(
+            AttributeData indicesAttrData,
+            int byteStride,
+            int outputByteStride,
+            int vertexCount,
+            NativeArray<byte> input,
+            NativeArray<byte> output
+        ) {
+            var job = new ExportJobs.ConvertSkinningJob {
+                input = (byte*)input.GetUnsafeReadOnlyPtr(),
+                inputByteStride = byteStride,
+                indicesOffset = indicesAttrData.offset,
+                output = (byte*)output.GetUnsafePtr(),
+                outputByteStride =  outputByteStride
+            }.Schedule(vertexCount, k_DefaultInnerLoopBatchCount);
+            return job;
+        }
+        
         static async Task ConvertTangentAttribute(
             AttributeData attrData,
             uint byteStride,
@@ -1655,35 +1814,43 @@ namespace GLTFast.Export {
             return node;
         }
         
-        int AddMesh(UnityEngine.Mesh uMesh) {
-            int meshId;
-            
+        void AddMeshAndSkin(UnityEngine.Mesh uMesh, Transform[] bones, out int meshId, out int skinId)
+        {
+            meshId = -1;
+            skinId = -1;
 #if !UNITY_EDITOR
             if (!uMesh.isReadable) {
                 m_Logger?.Error(LogCode.MeshNotReadable, uMesh.name);
-                return -1;
+                return;
             }
 #endif
        
-            if (m_UnityMeshes!=null) {
-                meshId = m_UnityMeshes.IndexOf(uMesh);
-                if (meshId >= 0) {
-                    return meshId;
-                }
+            meshId = m_UnityMeshes?.IndexOf(uMesh) ?? -1;
+            if (meshId == -1) {
+                var mesh = new Mesh {
+                    name = uMesh.name
+                };
+                m_Meshes = m_Meshes ?? new List<Mesh>();
+                m_UnityMeshes = m_UnityMeshes ?? new List<UnityEngine.Mesh>();
+                m_Meshes.Add(mesh);
+                m_UnityMeshes.Add(uMesh);
+                meshId = m_Meshes.Count - 1;
             }
 
-            var mesh = new Mesh {
-                name = uMesh.name
-            };
-            m_Meshes = m_Meshes ?? new List<Mesh>();
-            m_UnityMeshes = m_UnityMeshes ?? new List<UnityEngine.Mesh>();
-            m_Meshes.Add(mesh);
-            m_UnityMeshes.Add(uMesh);
-            meshId = m_Meshes.Count - 1;
-            return meshId;
+            m_Skins = m_Skins ?? new List<Skin>();
+            m_uBones = m_uBones ?? new List<Transform[]>();
+            m_SkinMap = m_SkinMap ?? new Dictionary<UnityEngine.Mesh, Skin>();
+            if (!m_SkinMap.ContainsKey(uMesh))
+            {
+                m_Skins.Add(new Skin());
+                m_SkinMap[uMesh] = m_Skins.Last();
+                m_uBones.Add(bones);
+            }
+
+            skinId = m_Skins.IndexOf(m_SkinMap[uMesh]);
         }
 
-        unsafe int WriteBufferViewToBuffer( byte[] bufferViewData, int? byteStride = null) {
+        unsafe int WriteBufferViewToBuffer( byte[] bufferViewData, BufferViewTarget target, int? byteStride = null) {
             var bufferHandle = GCHandle.Alloc(bufferViewData,GCHandleType.Pinned);
             fixed (void* bufferAddress = &bufferViewData[0]) {
                 var nativeData = NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<byte>(bufferAddress,bufferViewData.Length,Allocator.None);
@@ -1691,7 +1858,7 @@ namespace GLTFast.Export {
                 var safetyHandle = AtomicSafetyHandle.Create();
                 NativeArrayUnsafeUtility.SetAtomicSafetyHandle(array: ref nativeData, safetyHandle);
 #endif
-                var bufferViewId = WriteBufferViewToBuffer(nativeData, byteStride);
+                var bufferViewId = WriteBufferViewToBuffer(nativeData, target, byteStride);
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
                 AtomicSafetyHandle.Release(safetyHandle);
 #endif
@@ -1717,6 +1884,7 @@ namespace GLTFast.Export {
         /// Writes the given data to the main buffer, creates a bufferView and returns its index
         /// </summary>
         /// <param name="bufferViewData">Content to write to buffer</param>
+        /// <param name="bufferViewTarget">Target of the bufferView</param>
         /// <param name="byteStride">The byte size of an element. Provide it,
         /// if it cannot be inferred from the accessor</param>
         /// <param name="byteAlignment">If not zero, the offsets of the bufferView
@@ -1724,7 +1892,7 @@ namespace GLTFast.Export {
         /// if required; see https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#data-alignment )
         /// </param>
         /// <returns>Buffer view index</returns>
-        int WriteBufferViewToBuffer(NativeArray<byte> bufferViewData, int? byteStride = null, int byteAlignment = 0) {
+        int WriteBufferViewToBuffer(NativeArray<byte> bufferViewData, BufferViewTarget bufferViewTarget, int? byteStride = null, int byteAlignment = 0) {
             Profiler.BeginSample("WriteBufferViewToBuffer");
             var buffer = CertifyBuffer();
             var byteOffset = buffer.Length;
@@ -1745,6 +1913,7 @@ namespace GLTFast.Export {
                 buffer = 0,
                 byteOffset = (int)byteOffset,
                 byteLength = bufferViewData.Length,
+                target = (int)bufferViewTarget
             };
             if (byteStride.HasValue) {
                 // Adhere data alignment rules

@@ -23,13 +23,17 @@ Material:
   m_Name: hair_006.obj_inner_URP
   m_Shader: {fileID: 4800000, guid: e525686ef61cd8d499a00e14e36fb3ab, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHATEST_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -74,20 +78,30 @@ Material:
     - Vector1_d736b3961f494ab4bf4caef93b0473b3: 0.16
     - _AOFactor: 0.1
     - _AOStrength: 1
+    - _AlphaClip: 1
     - _AlphaLODbias: 1
-    - _AlphaPower: 0.23
+    - _AlphaMultiply: 1.69
+    - _AlphaPower: 0.5
+    - _AlphaToMask: 1
     - _AnisoHighlightRotation: -321
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DstBlend: 10
     - _EnvRough: 1
     - _EnvSpecularScale: 0.1
     - _MeshTangentRotation: 90
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _SDF_AAFactor: 0
     - _SDF_gamma: 0
     - _SDF_smoothing: 0
     - _SDF_toggle: 0
     - _ScaterFactor: 0
     - _ScatterFactor: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _TangentFlowMapRotation: 270
     - _TestNormals: 0
     - _TestTangents: 0
@@ -96,6 +110,9 @@ Material:
     - _UseFlowMap: 1
     - _UseUniqueAO: 0
     - _UseUniqueAOMap: 0
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     - _alphaClipThreshold: 0.05
     - _flowMultiplier: 1
     - _hairAlbedoMultiply: 0.5

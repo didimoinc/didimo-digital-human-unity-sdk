@@ -58,7 +58,7 @@ namespace Didimo
                     }
                     
                     GameObject didimoGO = new GameObject($"didimo_{didimoKey}");
-                    await gltfDidimo.InstantiateMainScene(didimoGO.transform);
+                    await gltfDidimo.InstantiateMainSceneAsync(didimoGO.transform);
                     
                     DidimoImporterJsonConfig didimoImporterJsonConfig =
                         DidimoImporterJsonConfigUtils.GetConfigAtFolder(Path.GetDirectoryName(didimoFilePath)!);

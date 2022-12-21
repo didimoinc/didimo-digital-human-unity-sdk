@@ -1,4 +1,4 @@
-﻿using Didimo.Core.Utility;
+using Didimo.Core.Utility;
 using System;
 using UnityEngine;
 
@@ -11,6 +11,14 @@ namespace Didimo.Core.Deformables
         protected string[] idealBoneNames;
 
         public string ID => name;
+        [SerializeField]
+        string assetID = null;
+
+        public string AssetID
+        {
+            get => assetID;
+            set { assetID = value; }
+        }
 
         public virtual bool SingleInstancePerDidimo => false;
         public string[] IdealBoneNames 

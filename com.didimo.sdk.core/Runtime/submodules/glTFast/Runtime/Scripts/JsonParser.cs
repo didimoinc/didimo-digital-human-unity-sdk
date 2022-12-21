@@ -20,9 +20,9 @@ using UnityEngine.Profiling;
 namespace GLTFast {
     
     using Schema;
-    
-    class JsonParser {
-        internal static Root ParseJson(string json) {
+
+    public class JsonParser {
+        public static Root ParseJson(string json) {
             // JsonUtility sometimes creates non-null default instances of objects-type members
             // even though there are none in the original JSON.
             // This work-around makes sure not existent JSON nodes will be null in the result.

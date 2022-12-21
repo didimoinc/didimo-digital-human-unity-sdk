@@ -25,12 +25,13 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHATEST_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -77,13 +78,14 @@ Material:
     - _AOStrength: 0.5
     - _AlphaClip: 1
     - _AlphaLODbias: 1
+    - _AlphaMultiply: 1.41
     - _AlphaPower: 1
     - _AlphaToMask: 1
     - _AnisoHighlightRotation: 0
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EnvRough: 1
     - _EnvSpecularScale: 0.1
     - _MeshTangentRotation: 90
@@ -95,8 +97,8 @@ Material:
     - _SDF_smoothing: 0
     - _SDF_toggle: 0
     - _ScaterFactor: 0
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _TangentFlowMapRotation: 270
     - _TestNormals: 0
     - _TestTangents: 0

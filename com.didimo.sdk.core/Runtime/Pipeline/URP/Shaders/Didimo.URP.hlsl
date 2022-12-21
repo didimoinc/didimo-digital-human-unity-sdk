@@ -10,7 +10,11 @@
 #ifndef DIDIMO_INCLUDED
 #define DIDIMO_INCLUDED
 #define ADDITIONAL_LIGHT_CALCULATE_SHADOWS
+#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
+#if ASE_SRP_VERSION >= 110000
+	#pragma multi_compile _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+#endif
 #include "../../Common/Didimo.Common.hlsl"
 #ifndef SHADERGRAPH_PREVIEW 
 

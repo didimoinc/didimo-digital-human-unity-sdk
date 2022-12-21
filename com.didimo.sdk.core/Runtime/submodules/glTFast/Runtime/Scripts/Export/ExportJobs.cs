@@ -86,6 +86,98 @@ namespace GLTFast.Export {
         }
         
         [BurstCompile]
+        public unsafe struct ConvertMatrixJob : IJobParallelFor {
+
+            public uint byteStride;
+            
+            [ReadOnly]
+            [NativeDisableUnsafePtrRestriction]
+            public NativeArray<float4x4> input;
+            
+            [WriteOnly]
+            [NativeDisableUnsafePtrRestriction]
+            public NativeArray<float4x4> output;
+
+            public void Execute(int i) {
+                
+                var tmp = input[i];
+                tmp.c0.y *= -1;
+                tmp.c0.z *= -1;
+                
+                tmp.c1.x *= -1;
+            
+                tmp.c2.x *= -1;
+            
+                tmp.c3.x *= -1;
+
+                output[i] = tmp;
+            }
+        }
+        
+        [BurstCompile]
+        public unsafe struct ConvertSkinningJob : IJobParallelFor {
+
+            struct ushort4
+            {
+                public ushort4(uint x, uint y, uint z, uint w)
+                {
+                    this.x = (ushort)x;
+                    this.y = (ushort)y;
+                    this.z = (ushort)z;
+                    this.w = (ushort)w;
+                }
+                
+                ushort x;
+                ushort y;
+                ushort z;
+                ushort w;
+            }
+            
+            public int inputByteStride;
+            public int indicesOffset;
+            public int outputByteStride;
+            
+            [ReadOnly]
+            [NativeDisableUnsafePtrRestriction]
+            public byte* input;
+            
+            [WriteOnly]
+            [NativeDisableUnsafePtrRestriction]
+            public byte* output;
+
+            private const int unityIndicesSize = sizeof(uint) * 4;
+            private const int gltfIndicesSize = sizeof(short) * 4;
+            
+            public void Execute(int i)
+            {
+                var inputIndex = input + i * inputByteStride;
+                var outputIndex = output + i * outputByteStride;
+    
+                // if there is non-indices data before the indices data, copy it
+                if(indicesOffset > 0)
+                {
+                    UnsafeUtility.MemCpy(outputIndex,inputIndex, indicesOffset);
+                }
+
+                // if there is non-indices data after the indices data, copy it
+                if (indicesOffset < inputByteStride - unityIndicesSize)
+                {
+                    UnsafeUtility.MemCpy(outputIndex + indicesOffset + gltfIndicesSize,
+                        inputIndex + indicesOffset + unityIndicesSize, 
+                        inputByteStride - indicesOffset - unityIndicesSize);
+                }
+
+                var inputIndexPtr = (uint4*)(indicesOffset + input + i * inputByteStride);
+                var outIndexPtr = (ushort4*)(indicesOffset + output + i * outputByteStride);
+
+                // Set the correct values for the indices
+                var tmpIndex = *inputIndexPtr;
+                ushort4 tmpOut = new ushort4(tmpIndex[0], tmpIndex[1], tmpIndex[2], tmpIndex[3]);
+                *outIndexPtr = tmpOut;
+            }
+        }
+        
+        [BurstCompile]
         public unsafe struct ConvertTangentFloatJob : IJobParallelFor {
 
             public uint byteStride;

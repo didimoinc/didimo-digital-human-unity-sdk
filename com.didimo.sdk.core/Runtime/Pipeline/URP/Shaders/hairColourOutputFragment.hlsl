@@ -12,7 +12,7 @@
         {
             SurfaceDescription surface = (SurfaceDescription)0;
                                 
-            SG_MainHairSubGraph_float(_specExp1, _specExp2, _EnvRough, _specShift, _specShift2, _flowMultiplier, _specMultiply, UnityBuildTexture2DStructNoScale(_SpecShift), UnityBuildTexture2DStructNoScale(_NormalMap), _alphaClipThreshold, UnityBuildTexture2DStructNoScale(_Albedo), UnityBuildTexture2DStructNoScale(_rootToTip), UnityBuildTexture2DStructNoScale(_flowMap), _AnisoHighlightRotation, _TestNormals, _TestTangents, _UseFlowMap, _AOFactor, _AOStrength, UnityBuildTexture2DStructNoScale(_Opacity), _AlphaPower, _AlphaLODbias, _UseUniqueAOMap, UnityBuildTexture2DStructNoScale(_AOMap), UnityBuildTexture2DStructNoScale(_AOMapUnique), _HairColor, _EnvSpecularScale, _TangentFlowMapRotation, _MeshTangentRotation, _SDF_smoothing, _SDF_AAFactor, _SDF_gamma, _SDF_toggle, _ScaterFactor, _TransmissionStrength, _TransmissionHaloSharpness, IN, surface.AlphaClipThreshold, surface.BaseColor, surface.Alpha);
+            SG_MainHairSubGraph_float(_specExp1, _specExp2, _EnvRough, _specShift, _specShift2, _flowMultiplier, _specMultiply, UnityBuildTexture2DStructNoScale(_SpecShift), UnityBuildTexture2DStructNoScale(_NormalMap), _alphaClipThreshold, UnityBuildTexture2DStructNoScale(_Albedo), UnityBuildTexture2DStructNoScale(_rootToTip), UnityBuildTexture2DStructNoScale(_flowMap), _AnisoHighlightRotation, _TestNormals, _TestTangents, _UseFlowMap, _AOFactor, _AOStrength, UnityBuildTexture2DStructNoScale(_Opacity), _AlphaPower, _AlphaMultiply, _AlphaLODbias, _UseUniqueAOMap, UnityBuildTexture2DStructNoScale(_AOMap), UnityBuildTexture2DStructNoScale(_AOMapUnique), _HairColor, _EnvSpecularScale, _TangentFlowMapRotation, _MeshTangentRotation, _SDF_smoothing, _SDF_AAFactor, _SDF_gamma, _SDF_toggle, _ScaterFactor, _TransmissionStrength, _TransmissionHaloSharpness, IN, surface.AlphaClipThreshold, surface.BaseColor, surface.Alpha);
             
             return surface;
         }
@@ -71,8 +71,12 @@
             output.TangentSpaceViewDirection = mul(tangentSpaceTransform, output.WorldSpaceViewDirection);
             output.WorldSpacePosition = input.positionWS;
             output.TangentSpacePosition = float3(0.0f, 0.0f, 0.0f);
-            output.uv0 = input.texCoord0;
+            output.uv0 = input.texCoord0;            
             output.uv1 = input.texCoord1;
+            #ifdef FLIP_V
+            output.uv0.y = 1.0 - output.uv0.y;
+            output.uv1.y = 1.0 - output.uv1.y;
+            #endif
         #if defined(SHADER_STAGE_FRAGMENT) && defined(VARYINGS_NEED_CULLFACE)
         #define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN output.FaceSign =                    IS_FRONT_VFACE(input.cullFace, true, false);
         #else

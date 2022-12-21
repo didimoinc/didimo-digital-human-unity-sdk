@@ -16,8 +16,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using Camera = UnityEngine.Camera;
+using Material = UnityEngine.Material;
+using Mesh = UnityEngine.Mesh;
 
 namespace GLTFast.Export {
 
@@ -28,10 +32,9 @@ namespace GLTFast.Export {
     /// </summary>
     public class GameObjectExport {
 
-        GltfWriter m_Writer;
+        public GltfWriter m_Writer;
         IMaterialExport m_MaterialExport;
         GameObjectExportSettings m_Settings;
-        ICodeLogger m_Logger;
 
         /// <summary>
         /// Provides glTF export of GameObject based scenes and hierarchies.
@@ -53,7 +56,6 @@ namespace GLTFast.Export {
             m_Settings = gameObjectExportSettings ?? new GameObjectExportSettings();
             m_Writer = new GltfWriter(exportSettings, deferAgent, logger);
             m_MaterialExport = materialExport ?? MaterialExport.GetDefaultMaterialExport();
-            m_Logger = logger;
         }
 
         /// <summary>
@@ -73,7 +75,6 @@ namespace GLTFast.Export {
             var success = true;
             for (var index = 0; index < gameObjects.Length; index++) {
                 var gameObject = gameObjects[index];
-                if(m_Settings.onlyActiveInHierarchy && !gameObject.activeInHierarchy) continue;
                 success &= AddGameObject(gameObject,tempMaterials, out var nodeId);
                 if (nodeId >= 0) {
                     rootNodes.Add((uint)nodeId);
@@ -92,8 +93,13 @@ namespace GLTFast.Export {
         /// After the export this instance cannot be re-used!
         /// </summary>
         /// <param name="path">glTF destination file path</param>
+        /// <param name="cancellationToken">Token to submit cancellation requests. The default value is None.</param>
         /// <returns>True if the glTF file was created successfully, false otherwise</returns>
-        public async Task<bool> SaveToFileAndDispose(string path) {
+        public async Task<bool> SaveToFileAndDispose(
+            string path,
+            CancellationToken cancellationToken = default
+            ) 
+        {
             CertifyNotDisposed();
             var success = await m_Writer.SaveToFileAndDispose(path);
             m_Writer = null;
@@ -106,8 +112,13 @@ namespace GLTFast.Export {
         /// After the export this instance cannot be re-used!
         /// </summary>
         /// <param name="stream">glTF destination stream</param>
+        /// <param name="cancellationToken">Token to submit cancellation requests. The default value is None.</param>
         /// <returns>True if the glTF file was written successfully, false otherwise</returns>
-        public async Task<bool> SaveToStreamAndDispose(Stream stream) {
+        public async Task<bool> SaveToStreamAndDispose(
+            Stream stream,
+            CancellationToken cancellationToken = default
+            )
+        {
             CertifyNotDisposed();
             var success = await m_Writer.SaveToStreamAndDispose(stream);
             m_Writer = null;
@@ -120,7 +131,8 @@ namespace GLTFast.Export {
             }
         }
         bool AddGameObject(GameObject gameObject, List<Material> tempMaterials, out int nodeId ) {
-            if (m_Settings.onlyActiveInHierarchy && !gameObject.activeInHierarchy) {
+            if (m_Settings.onlyActiveInHierarchy && !gameObject.activeInHierarchy
+                || gameObject.CompareTag("EditorOnly")) {
                 nodeId = -1;
                 return true;
             }
@@ -143,26 +155,48 @@ namespace GLTFast.Export {
             }
 
             var transform = gameObject.transform;
-            nodeId = (int) m_Writer.AddNode(
-                transform.localPosition,
-                transform.localRotation,
-                transform.localScale,
-                children,
-                gameObject.name
-                );
-            Mesh mesh = null;
+
+            var onIncludedLayer = ( (1<<gameObject.layer) & m_Settings.layerMask) != 0;
             
+            if (onIncludedLayer || children != null) {
+                nodeId = (int) m_Writer.AddNode(
+                    transform.localPosition,
+                    transform.localRotation,
+                    transform.localScale,
+                    children,
+                    gameObject.name
+                    );
+                
+                if (onIncludedLayer) {
+                    AddNodeComponents(gameObject, tempMaterials, nodeId);
+                }
+            }
+            else {
+                nodeId = -1;
+            }
+            
+            return success;
+        }
+
+        void AddNodeComponents(GameObject gameObject, List<Material> tempMaterials, int nodeId) {
             tempMaterials.Clear();
-            
+            Mesh mesh = null;
+            Transform[] bones = null;
             if (gameObject.TryGetComponent(out MeshFilter meshFilter)) {
-                mesh = meshFilter.sharedMesh;
                 if (gameObject.TryGetComponent(out Renderer renderer)) {
-                    renderer.GetSharedMaterials(tempMaterials);
+                    if (renderer.enabled || m_Settings.disabledComponents) {
+                        mesh = meshFilter.sharedMesh;
+                        renderer.GetSharedMaterials(tempMaterials);
+                    }
                 }
             } else
             if (gameObject.TryGetComponent(out SkinnedMeshRenderer smr)) {
-                mesh = smr.sharedMesh;
-                smr.GetSharedMaterials(tempMaterials);
+                if (smr.enabled || m_Settings.disabledComponents)
+                {
+                    bones = smr.bones;
+                    mesh = smr.sharedMesh;
+                    smr.GetSharedMaterials(tempMaterials);
+                }
             }
 
             var materialIds = new int[tempMaterials.Count];
@@ -176,21 +210,24 @@ namespace GLTFast.Export {
             }
 
             if (mesh != null) {
-                m_Writer.AddMeshToNode(nodeId,mesh,materialIds);
+                m_Writer.AddMeshAndSkinToNode(nodeId,mesh,materialIds, bones);
             }
 
             if (gameObject.TryGetComponent(out Camera camera)) {
-                if (m_Writer.AddCamera(camera, out var cameraId)) {
-                    m_Writer.AddCameraToNode(nodeId,cameraId);
+                if (camera.enabled || m_Settings.disabledComponents) {
+                    if (m_Writer.AddCamera(camera, out var cameraId)) {
+                        m_Writer.AddCameraToNode(nodeId,cameraId);
+                    }
                 }
             }
             
             if (gameObject.TryGetComponent(out Light light)) {
-                if (m_Writer.AddLight(light, out var lightId)) {
-                    m_Writer.AddLightToNode(nodeId,lightId);
+                if (light.enabled || m_Settings.disabledComponents) {
+                    if (m_Writer.AddLight(light, out var lightId)) {
+                        m_Writer.AddLightToNode(nodeId, lightId);
+                    }
                 }
             }
-            return success;
         }
     }
 }
