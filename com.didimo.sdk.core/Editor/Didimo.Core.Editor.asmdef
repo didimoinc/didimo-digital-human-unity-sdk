@@ -10,7 +10,8 @@
         "Unity.EditorCoroutines.Editor",
         "Unity.Timeline",
         "glTFastEditor",
-        "glTFast"
+        "glTFast",
+        "glTFast.Editor"
     ],
     "includePlatforms": [
         "Editor"
