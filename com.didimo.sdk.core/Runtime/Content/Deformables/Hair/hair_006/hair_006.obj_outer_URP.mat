@@ -68,7 +68,7 @@ Material:
     - _AOStrength: 0.5
     - _AlphaClip: 1
     - _AlphaLODbias: 1
-    - _AlphaPower: 0.83
+    - _AlphaPower: 0.59
     - _AnisoHighlightRotation: 0
     - _Blend: 0
     - _CastShadows: 0

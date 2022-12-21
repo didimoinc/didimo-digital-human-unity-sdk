@@ -107,6 +107,8 @@ namespace Didimo.Core.Config
         public static string GetHairIDFromObject(Hair hair)
         {
             var meshes = hair.GetComponentsInChildren<MeshFilter>();
+            if (hair.AssetID != null && hair.AssetID != "")
+                return hair.AssetID;
             var hairpiece_name = ExtractValidHairName(hair.gameObject.name);
             foreach (var m in meshes)
             {
@@ -264,6 +266,7 @@ namespace Didimo.Core.Config
                 var hairpieceName = HairLayerSettings.GetHairIDFromObject(hairObject);
                 HairLayerDatabaseEntry bestOuterMatch = null;
                 HairLayerDatabaseEntry bestInnerMatch = null;
+                hairpieceName = hairpieceName.Split(".")[0]; //DGP postfixes .obj to the name, we want to ignore that
                 if (hairpieceName != null)
                 {
                     foreach (HairLayerDatabaseEntry hldbe in list)

@@ -21,7 +21,6 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
-  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -83,7 +82,8 @@ Material:
     - _AlphaClipThresholdPrepass: 0.5
     - _AlphaClipThresholdShadow: 0.5
     - _AlphaLODbias: 1
-    - _AlphaPower: 1.01
+    - _AlphaMultiply: 1.27
+    - _AlphaPower: 0.87
     - _AlphaToMask: 0
     - _AnisoHighlightRotation: 0
     - _Blend: 0
@@ -123,9 +123,9 @@ Material:
     - _UseUniqueAOMap: 0
     - _WorkflowMode: 1
     - _ZTest: 4
-    - _ZWrite: 0
-    - _ZWriteControl: 0
-    - _alphaClipThreshold: 0.05
+    - _ZWrite: 1
+    - _ZWriteControl: 1
+    - _alphaClipThreshold: 0.355
     - _flowMultiplier: 1
     - _hairAlbedoMultiply: 0.5
     - _hairScaleNudge: 0

@@ -24,7 +24,7 @@ namespace Didimo.Core.Deformables
         private static readonly int PROPERTY_SPECEXP1 = Shader.PropertyToID("_specExp1");
         private static readonly int PROPERTY_FLOWMULTIPLY = Shader.PropertyToID("_flowMultiplier");
         private static readonly int HAIR_SCALE_NUDGE = Shader.PropertyToID("_hairScaleNudge");
-
+       
         [Header("Hair")] [SerializeField] [OnValueChanged("ApplyHairPropertiesToHierarchy")]
         protected Texture2D hairCapTexture;
 

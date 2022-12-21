@@ -42,7 +42,6 @@ void CombineAverage5x5_float(
         m40 + m41 + m42 + m43 + m44) / 25.0;
 }
 
-
 void MultiTapUVGenerator5x5_float(in float2 uv, in float TS, 
                             out float2 uv1, out float2 uv2, out float2 uv3, out float2 uv4, out float2 uv5, 
                             out float2 uv6, out float2 uv7, out float2 uv8 , out float2 uv9, out float2 uv10,

@@ -40,7 +40,7 @@ void GenerateRandomFloat_float(float3 input, out float ret)
     ret = GenerateRandom(input);
 }
 
-float2 RotateZ(const in float2 vPos, const in float fAngle)
+float2 RotateZ( in float2 vPos,  in float fAngle)
 {
 	const float DEG_TO_RAD = 0.01745329251;
 	const float fAngleRad = fAngle * DEG_TO_RAD;
@@ -493,5 +493,33 @@ void EyeRefracion_float(in float2 UV, in float DepthPlaneOffset, in float3 MidPl
     IrisUVMask_float(IrisUVRadius, UV, LimbusUVWidth, OutputIrisUVMask);
     OutputRefracedUV = lerp(UVIrisScaled + UV, UV, OutputIrisUVMask.x);
 }
+
+//https://blog.selfshadow.com/publications/blending-in-detail/
+
+//normal blending via partial derivatives
+float3 NormalBlend_PD(in float3 n1, in float3 n2)
+{
+    return normalize(float3(n1.xy*n2.z + n2.xy*n1.z, n1.z*n2.z));
+}
+//whiteout blending
+float3 NormalBlend_Whiteout(in float3 n1, in float3 n2)
+{
+    return normalize(float3(n1.xy + n2.xy, n1.z*n2.z));    
+}
+
+//UDN - most efficient, unreal method
+float3 NormalBlend_UR(in float3 n1, in float3 n2)
+{
+    return normalize(float3(n1.xy + n2.xy, n1.z));
+}
+
+//Quaternion derived blend
+float3 NormalBlend_Quat(in float3 n1, in float3 n2)
+{
+    //float3 t = tex2D(texBase,   uv).xyz*float3( 2,  2, 2) + float3(-1, -1,  0);
+    //float3 u = tex2D(texDetail, uv).xyz*float3(-2, -2, 2) + float3( 1,  1, -1);
+    float3 r = n1*dot(n1, n2)/n1.z - n2;
+}
+
 
 #endif

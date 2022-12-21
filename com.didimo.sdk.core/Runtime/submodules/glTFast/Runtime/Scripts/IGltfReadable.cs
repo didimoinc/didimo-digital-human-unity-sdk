@@ -38,14 +38,15 @@ namespace GLTFast {
         int textureCount { get; }
 
         /// <summary>
-        /// Fetch Material by index
+        /// Get a Unity Material by its glTF material index 
         /// </summary>
-        /// <param name="index">glTF index</param>
-        /// <returns>Unity Material</returns>
+        /// <param name="index">glTF material index</param>
+        /// <returns>Corresponding Unity Material</returns>
         Material GetMaterial(int index = 0);
         
         /// <summary>
-        /// Default material, supposed to be used when no material was assigned
+        /// Returns a fallback material to be used when no material was
+        /// assigned (provided by the <see cref="Materials.IMaterialGenerator"/>)
         /// </summary>
         /// <returns>Default material</returns>
         Material GetDefaultMaterial();
@@ -113,6 +114,12 @@ namespace GLTFast {
         /// <param name="index">glTF image index</param>
         /// <returns>De-serialized glTF image</returns>
         Schema.Image GetSourceImage(int index = 0);
+        
+        /// <summary>
+        /// Get source (de-serialized glTF) light
+        /// </summary>
+        /// <param name="index">glTF light index</param>
+        /// <returns>De-serialized glTF light</returns>
         Schema.LightPunctual GetSourceLightPunctual(uint index);
 
         /// <summary>

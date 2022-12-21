@@ -8,11 +8,11 @@
         
         SurfaceDescription SurfaceDescriptionFunction(SurfaceDescriptionInputs IN)
         {
-            SurfaceDescription surface = (SurfaceDescription)0;                                
+            SurfaceDescription surface = (SurfaceDescription)0;                                            
             SG_MainHairSubGraph_float(_specExp1, _specExp2, _EnvRough, _specShift, _specShift2, _flowMultiplier,
              _specMultiply, UnityBuildTexture2DStructNoScale(_SpecShift), UnityBuildTexture2DStructNoScale(_NormalMap), _alphaClipThreshold,
              UnityBuildTexture2DStructNoScale(_Albedo), UnityBuildTexture2DStructNoScale(_rootToTip), UnityBuildTexture2DStructNoScale(_flowMap),
-             _AnisoHighlightRotation, _TestNormals, _TestTangents, _UseFlowMap, _AOFactor, _AOStrength, UnityBuildTexture2DStructNoScale(_Opacity), _AlphaPower, _AlphaLODbias, _UseUniqueAOMap, UnityBuildTexture2DStructNoScale(_AOMap), UnityBuildTexture2DStructNoScale(_AOMapUnique), _HairColor, _EnvSpecularScale, _TangentFlowMapRotation, _MeshTangentRotation, _SDF_smoothing, _SDF_AAFactor, _SDF_gamma, _SDF_toggle, _ScaterFactor, _TransmissionStrength, _TransmissionHaloSharpness, IN, surface.AlphaClipThreshold, surface.BaseColor, surface.Alpha);
+             _AnisoHighlightRotation, _TestNormals, _TestTangents, _UseFlowMap, _AOFactor, _AOStrength, UnityBuildTexture2DStructNoScale(_Opacity), _AlphaPower, _AlphaMultiply, _AlphaLODbias, _UseUniqueAOMap, UnityBuildTexture2DStructNoScale(_AOMap), UnityBuildTexture2DStructNoScale(_AOMapUnique), _HairColor, _EnvSpecularScale, _TangentFlowMapRotation, _MeshTangentRotation, _SDF_smoothing, _SDF_AAFactor, _SDF_gamma, _SDF_toggle, _ScaterFactor, _TransmissionStrength, _TransmissionHaloSharpness, IN, surface.AlphaClipThreshold, surface.BaseColor, surface.Alpha);
             return surface;
         }
         

@@ -22,13 +22,15 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: hair_007.obj_inner_opaque_URP
   m_Shader: {fileID: -6465566751694194690, guid: 0616f8e6a2b798d4dbe76afbff13b7a5, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHATEST_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -73,9 +75,14 @@ Material:
     m_Floats:
     - _AOFactor: 0.1
     - _AOStrength: 0.5
+    - _AlphaClip: 1
     - _AlphaLODbias: 1
     - _AlphaPower: 1
     - _AnisoHighlightRotation: -165
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DstBlend: 0
     - _EnvRough: 1
     - _EnvSpecularScale: 0.1
     - _MeshTangentRotation: 90
@@ -86,6 +93,8 @@ Material:
     - _SDF_smoothing: 0
     - _SDF_toggle: 0
     - _ScaterFactor: 0
+    - _SrcBlend: 1
+    - _Surface: 0
     - _TangentFlowMapRotation: 270
     - _TestNormals: 0
     - _TestTangents: 0
@@ -93,6 +102,9 @@ Material:
     - _TransmissionStrength: 0.16
     - _UseFlowMap: 1
     - _UseUniqueAOMap: 0
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     - _alphaClipThreshold: 0.015
     - _flowMultiplier: 3.58
     - _hairAlbedoMultiply: 0.5

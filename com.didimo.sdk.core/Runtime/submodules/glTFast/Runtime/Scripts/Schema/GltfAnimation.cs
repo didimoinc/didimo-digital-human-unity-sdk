@@ -38,8 +38,26 @@ namespace GLTFast.Schema {
 		internal void GltfSerialize(JsonWriter writer) {
 			writer.AddObject();
 			GltfSerializeRoot(writer);
-			writer.Close();
-			throw new System.NotImplementedException($"GltfSerialize missing on {GetType()}");
+            
+            if(channels != null && channels.Length > 0)
+            {
+                writer.AddArray("channels");
+                foreach( var channel in channels) {
+                    channel.GltfSerialize(writer);
+                }
+                writer.CloseArray();
+            }
+
+            if (samplers != null && samplers.Length > 0)
+            {
+                writer.AddArray("samplers");
+                foreach( var sample in samplers) {
+                    sample.GltfSerialize(writer);
+                }
+                writer.CloseArray();
+            }
+
+            writer.Close();
 		}
     }
     
@@ -67,7 +85,16 @@ namespace GLTFast.Schema {
 	    public AnimationChannelTarget target;
 	    
 	    internal void GltfSerialize(JsonWriter writer) {
-		    throw new System.NotImplementedException($"GltfSerialize missing on {GetType()}");
+            
+            writer.AddObject();
+
+            writer.AddProperty("sampler", sampler);
+            
+            writer.AddProperty("target");
+            target.GltfSerialize(writer);
+            // writer.Close();
+            
+            writer.Close();
 	    }
     }
 
@@ -100,7 +127,13 @@ namespace GLTFast.Schema {
 	    }
 	    
 	    internal void GltfSerialize(JsonWriter writer) {
-		    throw new System.NotImplementedException($"GltfSerialize missing on {GetType()}");
+            
+            writer.AddObject();
+
+            writer.AddProperty("path", path);
+            writer.AddProperty("node", node);
+            
+            writer.Close();
 	    }
     }
     
@@ -155,6 +188,20 @@ namespace GLTFast.Schema {
 	    /// output accessor's componentType must be `FLOAT`.
 	    /// </summary>
 	    public int output;
+        
+        internal void GltfSerialize(JsonWriter writer) {
+            
+            writer.AddObject();
+
+            writer.AddProperty("input", input);
+            writer.AddProperty("output", output);
+            if(interpolationEnum != InterpolationType.Unknown)
+            {
+                writer.AddProperty("interpolation", interpolation);
+            }
+            
+            writer.Close();
+        }
     }
 }
 

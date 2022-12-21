@@ -31,7 +31,7 @@
                                  UnityTexture2D specShiftMap, UnityTexture2D normalMap,UnityTexture2D albedoMap, UnityTexture2D rootToTipMap, UnityTexture2D flowMap, UnityTexture2D AOMapUnique, UnityTexture2D OpacityMap, UnityTexture2D AOMap,
                                  float alphaClipThreshold, float specExp1, float specExp2, float EnvRough, float specShift, float specShift2, float flowMultiplier, float specMultiply,
                                  float anisoHighlightRotation, float testNormalsBool, float testTangentsBool, float useFlowMapBool,
-                                 float AOFactor, float AOStrength, float alphaPower, float alphaLODbias, float useUniqueAOBool,
+                                 float AOFactor, float AOStrength, float alphaPower, float alphaMultiply, float alphaLODbias, float useUniqueAOBool,
                                  float4 colour, float envSpecMul, float flowMapRotation, float meshFlowRotation, float SDFSmoothing,
                                  float SDFAAFactor, float SDFGamma, float SDFToggleBool, float scatterFactor, float transmissionStrength, float transmissionHaloSharpness,
                                  SurfaceDescriptionInputs IN, out float AlphaClip_1, out float3 Colour_2, out float Alpha_3);
@@ -316,7 +316,7 @@ void Unity_Lerp_float3(float3 A, float3 B, float3 T, out float3 Out)
             SG_MainHairSubGraph_float(specShiftMap_, normalMap_, albedoMap_, rootToTipMap_, flowMap_, AOMapUnique_, OpacityMap_, AOMap_,
                         alphaClipThreshold, specExp1, specExp2, EnvRough, specShift, specShift2, flowMultiplier, specMultiply,
                         anisoHighlightRotation, testNormalsBool, testTangentsBool, useFlowMapBool,
-                        AOFactor, AOStrength, alphaPower, alphaLODbias, useUniqueAOBool,
+                        AOFactor, AOStrength, alphaPower, alphaMultiply, alphaLODbias, useUniqueAOBool,
                         colour, envSpecMul, flowMapRotation, meshFlowRotation, SDFSmoothing,
                         SDFAAFactor, SDFGamma, SDFToggleBool, scatterFactor, transmissionStrength, transmissionHaloSharpness,
                         IN, surface.AlphaClipThreshold, surface.BaseColor, surface.AlphaClipThreshold);

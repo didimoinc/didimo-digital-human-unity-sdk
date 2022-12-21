@@ -30,7 +30,8 @@ namespace GLTFast
     public class GltfBoundsAsset : GltfAsset {
 
         /// <summary>
-        /// If true, a box collider encapsulating the glTF asset is created
+        /// If true, a box collider encapsulating the glTF scene is created
+        /// (only if the built-in Physics module is enabled).
         /// </summary>
         [Tooltip("If true, a box collider encapsulating the glTF asset is created")]
         public bool createBoxCollider = true;
@@ -57,10 +58,10 @@ namespace GLTFast
                 var insta = (GameObjectBoundsInstantiator) GetDefaultInstantiator(logger);
                 // Auto-Instantiate
                 if (sceneId>=0) {
-                    success = await importer.InstantiateScene(insta, sceneId);
+                    success = await importer.InstantiateSceneAsync(insta, sceneId);
                     currentSceneId = success ? sceneId : (int?)null;
                 } else {
-                    success = await importer.InstantiateMainScene(insta);
+                    success = await importer.InstantiateMainSceneAsync(insta);
                     currentSceneId = importer.defaultSceneIndex;
                 }
 

@@ -12,7 +12,7 @@ Shader "hair_opaque_MSAA"
         _EnvRough("EnvRough", Range(0, 10)) = 1
         _EnvSpecularScale("EnvSpecularScale", Range(0, 10)) = 0.1
         _specShift("specShift", Range(-10, 10)) = 0.1
-        _specShift2("specShift2", Range(-10, 10)) = 0.12
+        _specShift2("specShift2", Range(-10, 10)) = 0.12    
         _flowMultiplier("FlowMultiplier", Range(-50, 50)) = 3.58
         _hairAlbedoMultiply("hairAlbedoMultiply", Range(0, 1)) = 0.5
         _specMultiply("specMultiply", Range(0, 100)) = 2
@@ -38,6 +38,7 @@ Shader "hair_opaque_MSAA"
         _SDF_AAFactor("SDF_AAFactor", Float) = 0
         _SDF_gamma("SDF_gamma", Float) = 0
         _AlphaPower("AlphaPower", Range(0.001, 10)) = 1
+        _AlphaMultiply("AlphaMultiply", Range(0.001, 10)) = 1
          [ToggleUI]_AlphaToMask("_AlphaToMask", Float) = 1
         [HideInInspector]_Surface("_Surface", Float) = 0
         [HideInInspector]_CastShadows("_CastShadows", Float) = 1
@@ -114,7 +115,7 @@ Shader "hair_opaque_MSAA"
         #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
         #pragma multi_compile_fragment _ DEBUG_DISPLAY
         // GraphKeywords: <None>
-        
+        //#define FLIP_V
         // Defines
         /* WARNING: $splice Could not find named fragment 'PassInstancing' */
         #define SHADERPASS SHADERPASS_UNLIT

@@ -18,7 +18,7 @@
         #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
         #include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
+        #define USE_SEPARATE_OPACITY
         struct Attributes
         {
              float3 positionOS : POSITION;
@@ -189,6 +189,7 @@
         half _SDF_AAFactor;
         half _SDF_gamma;
         half _AlphaPower;
+        half _AlphaMultiply;
         CBUFFER_END
         
         // Object and Global properties
@@ -324,7 +325,7 @@
         void SG_MainHairSubGraph_float(
         float SpecExp1, float SpecExp2, float EnvRough, float SpecShift, float SpecShift2, 
         float FlowMultipler, float SpecMultiply, UnityTexture2D SpecShiftTex, UnityTexture2D NormalTex, float AlphaClipThreshold, UnityTexture2D AlbedoTex, UnityTexture2D RootToTipTex, UnityTexture2D FlowMapTex,
-        float AnisoHighlightRotation, float TestNormalsBool, float TestTangentsBool, float UseFlowMapBool, float AOFactor, float AOStrength, UnityTexture2D OpacityTex, float AlphaPower, float AlphaLODBias, 
+        float AnisoHighlightRotation, float TestNormalsBool, float TestTangentsBool, float UseFlowMapBool, float AOFactor, float AOStrength, UnityTexture2D OpacityTex, float AlphaPower,float AlphaMultiply, float AlphaLODBias, 
         float UseUniqueAOBool, UnityTexture2D AOMapTex, UnityTexture2D AOMapUniqueTex, float4 Colour, float EnvSpecMul, float FlowMapRotation, float MeshFlowRotation, float SDFSmoothing, float SDFAAFactor, float SDFGamma, 
         float SDFToggleBool, float ScatterFactor, float TransmissionStrength, float TransmissionHaloSharpness, 
         SurfaceDescriptionInputs IN, out float AlphaClip, out float3 OutColour, out float OutAlpha)
@@ -346,10 +347,10 @@
             float3 TangentResult = lerp(MeshTangentRotated_TS, FlowMapTangent_TS, (FlowMultipler.xxx));
             TangentResult = branch(UseFlowMapBool, TangentResult, MeshTangentRotated_TS);
             float3 TangentResultTangentSpace =  packNormal(normalize(mul(tangentBasis3x3_t, TangentResult)));            
-             float4 AbledoTexSample = SAMPLE_TEXTURE2D(AlbedoTex.tex, AlbedoTex.samplerstate, AlbedoTex.GetTransformedUV(IN.uv0.xy));
+            float4 AlbedoTexSample = SAMPLE_TEXTURE2D(AlbedoTex.tex, AlbedoTex.samplerstate, AlbedoTex.GetTransformedUV(IN.uv0.xy));
     
             float3 offsetColour = float3(0.009433985, 0.009433985, 0.009433985);           
-            float3 albedoColour = (Colour.rgb * AbledoTexSample) +  (IsGammaSpace() ? offsetColour : SRGBToLinear(offsetColour.rgb));
+            float3 albedoColour = (Colour.rgb * AlbedoTexSample) +  (IsGammaSpace() ? offsetColour : SRGBToLinear(offsetColour.rgb));
         
             float4 RootToTipSample = SAMPLE_TEXTURE2D(RootToTipTex.tex, RootToTipTex.samplerstate, RootToTipTex.GetTransformedUV(IN.uv0.xy));             
             float4 AOMapUniqueTexSample = SAMPLE_TEXTURE2D(AOMapUniqueTex.tex, AOMapUniqueTex.samplerstate, AOMapUniqueTex.GetTransformedUV(IN.uv1.xy));        
@@ -361,7 +362,11 @@
             float3 hairFunctionColourResult;
             Hair_float(tangentBasis3x3, IN.WorldSpacePosition, IN.TangentSpacePosition, IN.TangentSpaceNormal, TangentResult, IN.TangentSpaceViewDirection, IN.uv0.xy, albedoColour, SpecExp1, SpecExp2, EnvRough, EnvSpecMul, SpecShift, SpecShift2, FlowMultipler, SpecMultiply, (RootToTipSample.rgba).x, AOResult, ScatterFactor, TransmissionStrength, TransmissionHaloSharpness, hairFunctionColourResult);            
             OutColour = branch(TestTangentsBool, TangentResultTangentSpace, branch(TestNormalsBool, IN.WorldSpaceNormal, hairFunctionColourResult));
+            #ifdef USE_SEPARATE_OPACITY
             float4 OpacityTexSample = SAMPLE_TEXTURE2D(OpacityTex.tex, OpacityTex.samplerstate, OpacityTex.GetTransformedUV(IN.uv0.xy));
+            #else
+            float4 OpacityTexSample = float4(AlbedoTexSample.a,AlbedoTexSample.a,AlbedoTexSample.a,AlbedoTexSample.a);
+            #endif
             
             float SDFAlphaResult;
             calcSDFAlpha_float(float2 (0, 0), OpacityTexSample.r, AlphaClipThreshold, SDFSmoothing, SDFAAFactor, SDFGamma, SDFAlphaResult);                        
@@ -370,11 +375,15 @@
             #if defined(SHADER_API_GLES) && (SHADER_TARGET < 30)
               float OpacitySampleLOD = 0.0f;
             #else
+            #ifdef USE_SEPARATE_OPACITY
               float OpacitySampleLOD = SAMPLE_TEXTURE2D_LOD(OpacityTex.tex, UnityBuildSamplerStateStruct(SamplerState_Trilinear_Repeat).samplerstate, OpacityTex.GetTransformedUV(IN.uv0.xy), AlphaLODBias).r;
+            #else
+              float OpacitySampleLOD = OpacityTexSample.r;
+            #endif
             #endif
     
             float WhichAlpha = branch(SDFToggleBool, SDFAlphaResult, OpacitySampleLOD);
-            OutAlpha = pow(WhichAlpha, AlphaPower);
+            OutAlpha = clamp(pow(WhichAlpha * AlphaMultiply, AlphaPower), 0.0, 1.0);
             AlphaClip = AlphaClipThreshold;
         
         }

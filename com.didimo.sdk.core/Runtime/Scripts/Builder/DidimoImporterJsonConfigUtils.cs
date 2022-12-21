@@ -365,6 +365,7 @@ namespace Didimo.Builder
                 MeshUtils.CopyMesh(deformedMesh, targetSkinMR.sharedMesh);
                 
                 Hair hair = didimoHair.AddComponent<Hair>();
+                hair.AssetID = hairProperties.meshId;
                 hair.SetPreset(hairProperties.color);
             }
             else

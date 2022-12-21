@@ -1,16 +1,5 @@
 # Features
 
-*glTFast* requires Unity 2019.4 or newer.
-
-### Legend
-
-- ✅ Fully supported
-- ☑️ Partially supported
-- ℹ️ Planned (click for issue)
-- ⛔️ No plan to support (click for issue)
-- `?`: Unknown / Untested
-- `n/a`: Not available
-
 ## Platforms
 
 All of Unity's platforms are supported. glTFast is tested or was reported to run on:
@@ -124,7 +113,7 @@ The glTF 2.0 specification is fully supported, with only a few minor remarks.
 | KHR_texture_transform | ✅ | ✅
 | KHR_mesh_quantization | ✅ | 
 | KHR_texture_basisu | ✅ | 
-| KHR_lights_punctual | ✅ | 
+| KHR_lights_punctual | ✅ | ✅
 | KHR_materials_clearcoat | [ℹ️][ClearCoat] | 
 | KHR_materials_sheen | [ℹ️][Sheen] | 
 | KHR_materials_transmission | [ℹ️][Transmission] | 
@@ -184,6 +173,7 @@ Not investigated yet:
 | IOR                           | [ℹ️][IOR]      | [ℹ️][IOR]      | [⛔️][IOR]      |
 | Specular                      | [ℹ️][Specular] | [ℹ️][Specular] | [⛔️][Specular] |
 | Volume                        | [ℹ️][Volume]   | [ℹ️][Volume]   | [⛔️][Volume]   |
+| Point clouds                  |      |     | Unlit only |
 
 <sup>1</sup>: Physically-Based Rendering (PBR) material model
 
@@ -255,6 +245,19 @@ Possibly incomplete list of things that are known to not work with Entities yet:
 - Make sure to enable [Hybrid Renderer V2](https://docs.unity3d.com/Packages/com.unity.rendering.hybrid@0.11/manual/creating-a-new-hybrid-renderer-project.html)
 - Use `GltfEntityAsset` instead of `GltfAsset`
 - For customized behavior, use the `EntityInstantiator` instead of the `GameObjectInstantiator`
+
+## Unity Version Support
+
+*glTFast* requires Unity 2019.4 or newer.
+
+## Legend
+
+- ✅ Fully supported
+- ☑️ Partially supported
+- ℹ️ Planned (click for issue)
+- ⛔️ No plan to support (click for issue)
+- `?`: Unknown / Untested
+- `n/a`: Not available
 
 [AnimationMecanim]: https://github.com/atteneder/glTFast/issues/167
 [AnimationPlayables]: https://github.com/atteneder/glTFast/issues/166  
