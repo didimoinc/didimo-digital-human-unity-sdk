@@ -9,5 +9,5 @@ the [Developer Portal](https://developer.didimo.co/docs).
 
 ## BodyDemo
 
-Example of how to use Unity's Generic and Humanoid avatars to have body animation on your didimos, with one sample scene for each.
-The scenes use Unity's Nav Mesh components to automatically control didimo NPCs, and a didimo you can control with the WASD keys.
+Example of how to use Unity's Humanoid avatars to have body animation on your didimos, with one sample scene.
+The scene uses Unity's Nav Mesh components to automatically control didimo NPCs, and a didimo you can control with the WASD keys.
