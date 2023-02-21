@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeetADidimoMan
       objectReference: {fileID: 0}
+    - target: {fileID: 4035751276211767113, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
+      propertyPath: m_Name
+      value: didimo_LookatTargetExample
+      objectReference: {fileID: 0}
     - target: {fileID: 7303367718340499084, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -57,3 +61,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
+--- !u!1 &6359967181962153281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 15458050307804202, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
+  m_PrefabInstance: {fileID: 6374228959138890091}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1183024399 &6495815541139931223
+LookAtConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359967181962153281}
+  m_Enabled: 1
+  m_Weight: 0.5
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_Roll: 0
+  m_WorldUpObject: {fileID: 0}
+  m_UseUpObject: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 0}
+    weight: 1
