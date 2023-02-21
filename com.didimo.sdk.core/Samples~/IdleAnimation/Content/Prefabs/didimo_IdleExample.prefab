@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 2409268170827866663, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
       propertyPath: didimo
       value: 
-      objectReference: {fileID: 2059818809473989397}
+      objectReference: {fileID: 0}
     - target: {fileID: 2409268170827866663, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
       propertyPath: LeftEyeHoleMatrix.e00
       value: -0.011656708
@@ -170,7 +170,11 @@ PrefabInstance:
     - target: {fileID: 3056618828787056542, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
       propertyPath: didimo
       value: 
-      objectReference: {fileID: 2059818809473989397}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035751276211767113, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
+      propertyPath: m_Name
+      value: didimo_IdleExample
+      objectReference: {fileID: 0}
     - target: {fileID: 7303367718340499084, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -245,29 +249,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
---- !u!114 &2059818809473989397 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6195902357248846884, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
-  m_PrefabInstance: {fileID: 5289959446729971505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6696307764600577836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76f80de7e1a6b67448c36e33327bd67b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &6696307764600577836 stripped
+--- !u!1 &8171896361204142200 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1551391631200667677, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4035751276211767113, guid: 39bc812cdc9328a4aa60334dbf283ee6, type: 3}
   m_PrefabInstance: {fileID: 5289959446729971505}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9213598370157006728
+--- !u!114 &22347932348289193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6696307764600577836}
+  m_GameObject: {fileID: 8171896361204142200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c6a0764896e1144aacea5ecd8b0e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  didimo: {fileID: 0}
+  MocapAnimations:
+  - {fileID: 4900000, guid: dbaea1a16deabf5409c4340ed97c71e9, type: 3}
+  - {fileID: 4900000, guid: 499a6e153106cc843b6cd03d876c1411, type: 3}
+  - {fileID: 4900000, guid: b5976235888a0014295c2a42835ea5e5, type: 3}
+  minAnimationDuration: 2
+  maxAnimationDuration: 5
+  crossFadeDuration: 0.3
+--- !u!114 &2005649781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171896361204142200}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4c6a0764896e1144aacea5ecd8b0e98, type: 3}
@@ -282,26 +295,6 @@ MonoBehaviour:
   - {fileID: 4900000, guid: f00c26fea7945294b8e987a62e973db2, type: 3}
   - {fileID: 4900000, guid: 7bfa1b83f437f3042a198d57a24ec62d, type: 3}
   - {fileID: 4900000, guid: 8ed073c35b037d94e96730701d84a3c7, type: 3}
-  minAnimationDuration: 2
-  maxAnimationDuration: 5
-  crossFadeDuration: 0.3
---- !u!114 &6566021962842000908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6696307764600577836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4c6a0764896e1144aacea5ecd8b0e98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  didimo: {fileID: 0}
-  MocapAnimations:
-  - {fileID: 4900000, guid: dbaea1a16deabf5409c4340ed97c71e9, type: 3}
-  - {fileID: 4900000, guid: 499a6e153106cc843b6cd03d876c1411, type: 3}
-  - {fileID: 4900000, guid: b5976235888a0014295c2a42835ea5e5, type: 3}
   minAnimationDuration: 2
   maxAnimationDuration: 5
   crossFadeDuration: 0.3

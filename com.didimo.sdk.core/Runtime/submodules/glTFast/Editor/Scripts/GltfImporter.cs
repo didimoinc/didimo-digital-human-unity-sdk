@@ -99,7 +99,7 @@ namespace GLTFast.Editor {
         {
             throw new Exception("This importer should be disabled. Use Didimo's importer (GLTFImporter.cs) instead.");
         }
-        public /* override */ ImportResult OnImportAsset(AssetImportContext ctx, bool importMaterialsAndImages = true) {
+        public /* override */ ImportResult OnImportAsset(AssetImportContext ctx, bool importMaterialsAndImages) {
 
             reportItems = null;
 

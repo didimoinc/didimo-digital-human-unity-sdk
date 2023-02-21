@@ -14,7 +14,7 @@ ScriptedImporter:
     generateLightmapUVs: 0
     normals: 0
     tangents: 0
-    animationType: 1
+    animationType: 2
     avatarDefinition: 1
     avatar: {fileID: -8473373598174160398, guid: c892c9d58e56d54409a611f58ab51298, type: 3}
     isDidimo: 1
